@@ -7,4 +7,4 @@ androidMinSdkVersionProp=16
 androidTargetSdkVersionProp=20
 androidCompileSdkVersionProp=20
 androidBuildToolsVersionProp=20.0.0
-androidGradlePluginVersionProp=0.12.+
+androidGradlePluginVersionProp=0.12.1

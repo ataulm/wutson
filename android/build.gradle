@@ -10,16 +10,28 @@ android {
         targetSdkVersion androidTargetSdkVersionProp
         versionCode Integer.valueOf(androidVersionCodeProp)
         versionName androidVersionNameProp
+
+        Calendar instance = Calendar.getInstance()
+        instance.setTimeInMillis(System.currentTimeMillis())
+        def buildTime = instance.getTime()
+        buildConfigField "String", "BUILD_TIME", "\"$buildTime\""
+
+        buildConfigField "String", "TMDB_API_KEY", "\"$api_key\""
     }
 
+
     buildTypes {
-        release {
+        debug {
             runProguard false
+        }
+        release {
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
+    compile project(':core')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
