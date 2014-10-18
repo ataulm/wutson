@@ -16,11 +16,8 @@ public class DiscoverTvParser implements Parser<DiscoverTv> {
     }
 
     @Override
-    public DiscoverTv parse() {
-        // TODO: clearly this input should be passed in parse(String input) when we do for realsies
-        String input = MockDiscoverTv.JSON;
-
-        GsonDiscoverTv gsonDiscoverTv = gson.fromJson(input, GsonDiscoverTv.class);
+    public DiscoverTv parse(String json) {
+        GsonDiscoverTv gsonDiscoverTv = gson.fromJson(json, GsonDiscoverTv.class);
         return DiscoverTv.from(gsonDiscoverTv);
     }
 
