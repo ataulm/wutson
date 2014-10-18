@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+dependencies {
+    compile project(':core')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
 android {
     compileSdkVersion Integer.valueOf(androidCompileSdkVersionProp)
     buildToolsVersion androidBuildToolsVersionProp
@@ -15,7 +20,6 @@ android {
         instance.setTimeInMillis(System.currentTimeMillis())
         def buildTime = instance.getTime()
         buildConfigField "String", "BUILD_TIME", "\"$buildTime\""
-
         buildConfigField "String", "TMDB_API_KEY", "\"$api_key\""
     }
 
@@ -29,9 +33,4 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
-
-dependencies {
-    compile project(':core')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
 }
