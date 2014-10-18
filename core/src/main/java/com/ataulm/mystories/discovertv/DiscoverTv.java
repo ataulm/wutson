@@ -3,7 +3,7 @@ package com.ataulm.mystories.discovertv;
 import java.util.ArrayList;
 import java.util.List;
 
-class DiscoverTv {
+public class DiscoverTv {
 
     private final List<Show> shows;
 
@@ -29,7 +29,7 @@ class DiscoverTv {
         private final String posterPath;
         private final String firstAirDate;
         private final double popularity;
-        private final int voteAverage;
+        private final double voteAverage;
         private final int voteCount;
 
         static Show from(GsonDiscoverTv.Show gsonDiscoverTvShow) {
@@ -42,7 +42,7 @@ class DiscoverTv {
                     gsonDiscoverTvShow.voteCount);
         }
 
-        Show(int id, String name, String posterPath, String firstAirDate, double popularity, int voteAverage, int voteCount) {
+        Show(int id, String name, String posterPath, String firstAirDate, double popularity, double voteAverage, int voteCount) {
             this.id = id;
             this.name = name;
             this.posterPath = posterPath;

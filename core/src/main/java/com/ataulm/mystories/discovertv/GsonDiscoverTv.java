@@ -36,7 +36,7 @@ class GsonDiscoverTv {
         double popularity;
 
         @SerializedName("vote_average")
-        int voteAverage;
+        double voteAverage;
 
         @SerializedName("vote_count")
         int voteCount;
