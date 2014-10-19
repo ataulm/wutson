@@ -29,6 +29,10 @@ public class DiscoverTv {
         this.shows = shows;
     }
 
+    public int size() {
+        return shows.size();
+    }
+
     static class Show {
 
         private final int id;
