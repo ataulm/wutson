@@ -1,6 +1,6 @@
 package com.ataulm.mystories.discovertv;
 
-public class MockDiscoverTv {
+public final class MockDiscoverTv {
 
     public static final String JSON = "{\n" +
             "    \"page\": 1,\n" +
