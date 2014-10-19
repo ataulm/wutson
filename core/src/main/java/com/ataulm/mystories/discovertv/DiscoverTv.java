@@ -1,11 +1,18 @@
 package com.ataulm.mystories.discovertv;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DiscoverTv {
 
+    private final static DiscoverTv NOTHING_TO_WATCH = new DiscoverTv(Collections.<Show>emptyList());
+
     private final List<Show> shows;
+
+    public static DiscoverTv empty() {
+        return NOTHING_TO_WATCH;
+    }
 
     static DiscoverTv from(GsonDiscoverTv gsonDiscoverTv) {
         List<GsonDiscoverTv.Show> gsonDiscoverTvShows = gsonDiscoverTv.results;
