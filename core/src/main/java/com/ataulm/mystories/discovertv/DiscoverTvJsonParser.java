@@ -1,17 +1,17 @@
 package com.ataulm.mystories.discovertv;
 
-import com.ataulm.mystories.Parser;
+import com.ataulm.mystories.JsonParser;
 import com.google.gson.Gson;
 
-public class DiscoverTvParser implements Parser<DiscoverTv> {
+public class DiscoverTvJsonParser implements JsonParser<DiscoverTv> {
 
     private final Gson gson;
 
-    public static DiscoverTvParser newInstance() {
-        return new DiscoverTvParser(new Gson());
+    public static DiscoverTvJsonParser newInstance() {
+        return new DiscoverTvJsonParser(new Gson());
     }
 
-    DiscoverTvParser(Gson gson) {
+    DiscoverTvJsonParser(Gson gson) {
         this.gson = gson;
     }
 

@@ -1,6 +1,6 @@
 package com.ataulm.mystories;
 
-public interface Parser<T> {
+public interface JsonParser<T> {
 
     T parse(String json);
 

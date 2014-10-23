@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.ataulm.mystories.discovertv.DiscoverTv;
-import com.ataulm.mystories.discovertv.DiscoverTvParser;
+import com.ataulm.mystories.discovertv.DiscoverTvJsonParser;
 import com.ataulm.mystories.discovertv.MockDiscoverTv;
 
 public class DiscoverTvActivity extends Activity {
@@ -24,7 +24,7 @@ public class DiscoverTvActivity extends Activity {
         DiscoverTvAdapter discoverTvAdapter = DiscoverTvAdapter.newInstance();
         recyclerView.setAdapter(discoverTvAdapter);
 
-        DiscoverTvParser parser = DiscoverTvParser.newInstance();
+        DiscoverTvJsonParser parser = DiscoverTvJsonParser.newInstance();
         DiscoverTv discoverTv = parser.parse(MockDiscoverTv.JSON);
         discoverTvAdapter.updateWith(discoverTv);
     }
