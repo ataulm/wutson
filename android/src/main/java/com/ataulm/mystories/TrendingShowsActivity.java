@@ -5,11 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.ataulm.mystories.tmdb.discovertv.DiscoverTv;
-import com.ataulm.mystories.tmdb.discovertv.DiscoverTvJsonParser;
-import com.ataulm.mystories.tmdb.discovertv.MockDiscoverTv;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,17 +28,8 @@ public class TrendingShowsActivity extends Activity {
     }
 
     private List<Show> getTrendingShows() {
-        DiscoverTvJsonParser parser = DiscoverTvJsonParser.newInstance();
-        DiscoverTv discoverTv = parser.parse(MockDiscoverTv.JSON);
-
-        List<DiscoverTv.Show> discoverTvShows = discoverTv.getShows();
-        List<Show> shows = new ArrayList<Show>(discoverTvShows.size());
-
-        for (DiscoverTv.Show discoverTvShow : discoverTvShows) {
-            shows.add(Show.from(discoverTvShow));
-        }
-
-        return shows;
+        ShowsProvider showsProvider = new ShowsProvider();
+        return showsProvider.fetchTrendingShows();
     }
 
     private static class TrendingShowsAdapter extends RecyclerView.Adapter {
