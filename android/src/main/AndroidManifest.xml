@@ -7,7 +7,7 @@
     android:icon="@drawable/ic_launcher"
     android:theme="@style/AppTheme">
 
-    <activity android:name=".DiscoverTvActivity">
+    <activity android:name=".TrendingShowsActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
