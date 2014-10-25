@@ -1,4 +1,4 @@
-package com.ataulm.mystories.configuration;
+package com.ataulm.mystories.tmdb.configuration;
 
 import com.ataulm.mystories.JsonParser;
 import com.google.gson.Gson;

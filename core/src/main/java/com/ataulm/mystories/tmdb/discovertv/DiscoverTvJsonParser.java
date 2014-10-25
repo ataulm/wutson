@@ -1,4 +1,4 @@
-package com.ataulm.mystories.discovertv;
+package com.ataulm.mystories.tmdb.discovertv;
 
 import com.ataulm.mystories.JsonParser;
 import com.google.gson.Gson;

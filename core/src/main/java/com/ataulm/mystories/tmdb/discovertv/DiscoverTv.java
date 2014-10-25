@@ -1,4 +1,4 @@
-package com.ataulm.mystories.discovertv;
+package com.ataulm.mystories.tmdb.discovertv;
 
 import java.util.ArrayList;
 import java.util.Collections;

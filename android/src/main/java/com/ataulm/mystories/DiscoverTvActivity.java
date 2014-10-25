@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.ataulm.mystories.discovertv.DiscoverTv;
-import com.ataulm.mystories.discovertv.DiscoverTvJsonParser;
-import com.ataulm.mystories.discovertv.MockDiscoverTv;
+import com.ataulm.mystories.tmdb.discovertv.DiscoverTv;
+import com.ataulm.mystories.tmdb.discovertv.DiscoverTvJsonParser;
+import com.ataulm.mystories.tmdb.discovertv.MockDiscoverTv;
 
 public class DiscoverTvActivity extends Activity {
 
