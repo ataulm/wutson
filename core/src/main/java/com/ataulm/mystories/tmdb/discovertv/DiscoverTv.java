@@ -33,7 +33,7 @@ public class DiscoverTv {
         return shows.size();
     }
 
-    static class Show {
+    public static class Show {
 
         private final int id;
         private final String name;
@@ -61,6 +61,18 @@ public class DiscoverTv {
             this.popularity = popularity;
             this.voteAverage = voteAverage;
             this.voteCount = voteCount;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getPosterPath() {
+            return posterPath;
         }
 
     }
