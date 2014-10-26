@@ -2,7 +2,9 @@ package com.ataulm.mystories;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Collections;
@@ -22,6 +24,7 @@ public class TrendingShowsActivity extends Activity {
         RecyclerView trendingShowsList = (RecyclerView) findViewById(R.id.trending_shows_list);
         TrendingShowsAdapter trendingShowsAdapter = TrendingShowsAdapter.newInstance();
         trendingShowsList.setAdapter(trendingShowsAdapter);
+        trendingShowsList.setLayoutManager(new LinearLayoutManager(this));
 
         List<Show> trendingShows = getTrendingShows();
         trendingShowsAdapter.updateWith(trendingShows);
@@ -32,7 +35,7 @@ public class TrendingShowsActivity extends Activity {
         return showsProvider.fetchTrendingShows();
     }
 
-    private static class TrendingShowsAdapter extends RecyclerView.Adapter {
+    private static class TrendingShowsAdapter extends RecyclerView.Adapter<TrendingShowsViewHolder> {
 
         private List<Show> shows;
 
@@ -50,19 +53,27 @@ public class TrendingShowsActivity extends Activity {
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        public TrendingShowsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
             // TODO: create view holder
             return null;
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+        public void onBindViewHolder(TrendingShowsViewHolder viewHolder, int i) {
             // TODO: bind data to view?
         }
 
         @Override
         public int getItemCount() {
             return shows.size();
+        }
+
+    }
+
+    private static class TrendingShowsViewHolder extends RecyclerView.ViewHolder  {
+
+        public TrendingShowsViewHolder(View itemView) {
+            super(itemView);
         }
 
     }
