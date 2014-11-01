@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="TrendingShows" />
+
+  <style name="TrendingShows.Item">
+    <item name="android:paddingLeft">@dimen/trending_shows_item_padding_left</item>
+    <item name="android:paddingTop">@dimen/trending_shows_item_padding_top</item>
+    <item name="android:paddingRight">@dimen/trending_shows_item_padding_right</item>
+    <item name="android:paddingBottom">@dimen/trending_shows_item_padding_bottom</item>
+  </style>
+
+</resources>
