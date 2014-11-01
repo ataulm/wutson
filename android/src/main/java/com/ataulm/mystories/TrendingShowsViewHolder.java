@@ -11,8 +11,8 @@ class TrendingShowsViewHolder extends RecyclerView.ViewHolder {
         this.trendingShowsItemView = itemView;
     }
 
-    public void bindViewTo(Show show) {
-        // TODO: update the view with the show
+    public void present(Show show) {
+        // TODO: update view with model
     }
 
 }

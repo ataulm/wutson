@@ -30,34 +30,19 @@ class TrendingShowsAdapter extends RecyclerView.Adapter<TrendingShowsViewHolder>
     @Override
     public TrendingShowsViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        TrendingShowsItemView view;
-        switch (viewType) {
-            case VIEW_TYPE_STANDARD:
-                view = (TrendingShowsItemView) layoutInflater.inflate(R.layout.view_trending_shows_list_standard, viewGroup, false);
-                break;
-            case VIEW_TYPE_EMPHASISED:
-                view = (TrendingShowsItemView) layoutInflater.inflate(R.layout.view_trending_shows_list_emphasised, viewGroup, false);
-                break;
-            default:
-                throw new IllegalArgumentException("Cannot create ViewHolder for unknown viewType: " + viewType);
-        }
+        TrendingShowsItemView view = (TrendingShowsItemView) layoutInflater.inflate(R.layout.view_trending_shows_list_standard, viewGroup, false);
         return new TrendingShowsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(TrendingShowsViewHolder viewHolder, int position) {
         Show show = shows.get(position);
-        viewHolder.bindViewTo(show);
+        viewHolder.present(show);
     }
 
     @Override
     public int getItemCount() {
         return shows.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
     }
 
 }
