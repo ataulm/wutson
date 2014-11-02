@@ -1,6 +1,8 @@
 package com.ataulm.mystories;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
 class TrendingShowsViewHolder extends RecyclerView.ViewHolder {
 
@@ -11,8 +13,15 @@ class TrendingShowsViewHolder extends RecyclerView.ViewHolder {
         this.trendingShowsItemView = itemView;
     }
 
-    public void present(Show show) {
-        // TODO: update view with model
+    public void present(final Show show) {
+        trendingShowsItemView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), show.getName(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
 }

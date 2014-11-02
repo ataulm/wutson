@@ -22,6 +22,10 @@ public class Show {
         this.posterPath = posterPath;
     }
 
+    public String getName() {
+        return name.toString();
+    }
+
     public String getPosterPathAsUrl() {
         return posterPath.asUrl();
     }
