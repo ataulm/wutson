@@ -8,11 +8,12 @@ import android.widget.FrameLayout;
 class TrendingShowsItemView extends FrameLayout {
 
     public TrendingShowsItemView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public TrendingShowsItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setFocusableInTouchMode(true);
     }
 
     @Override

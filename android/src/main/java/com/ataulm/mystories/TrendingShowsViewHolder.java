@@ -14,6 +14,7 @@ class TrendingShowsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void present(final Show show) {
+        trendingShowsItemView.setContentDescription(show.getName());
         trendingShowsItemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
