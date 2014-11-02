@@ -8,7 +8,8 @@ class TrendingShowsLayoutManager extends GridLayoutManager {
     private static final int COLUMN_COUNT = 2;
 
     public static TrendingShowsLayoutManager newInstance(Context context) {
-        return new TrendingShowsLayoutManager(context, COLUMN_COUNT);
+        TrendingShowsLayoutManager layoutManager = new TrendingShowsLayoutManager(context, COLUMN_COUNT);
+        return layoutManager;
     }
 
     private TrendingShowsLayoutManager(Context context, int spanCount) {
