@@ -16,7 +16,7 @@ public class ActivityToolbar extends Toolbar {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int desiredHeight = getResources().getDimensionPixelSize(R.dimen.actionbar_height);
+        int desiredHeight = getResources().getDimensionPixelSize(R.dimen.toolbar_height);
         int desiredHeightMeasureSpec = MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, desiredHeightMeasureSpec);
     }
