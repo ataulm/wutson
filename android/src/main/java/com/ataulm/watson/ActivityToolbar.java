@@ -1,4 +1,4 @@
-package com.ataulm.mystories;
+package com.ataulm.watson;
 
 import android.content.Context;
 import android.support.v7.widget.Toolbar;

@@ -1,4 +1,4 @@
-package com.ataulm.mystories;
+package com.ataulm.watson;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

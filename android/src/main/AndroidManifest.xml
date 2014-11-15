@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.ataulm.mystories">
+  package="com.ataulm.watson">
 
   <application
     android:allowBackup="true"
@@ -7,7 +7,7 @@
     android:icon="@drawable/ic_launcher"
     android:theme="@style/AppTheme">
 
-    <activity android:name=".TrendingShowsActivity">
+    <activity android:name="com.ataulm.watson.TrendingShowsActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

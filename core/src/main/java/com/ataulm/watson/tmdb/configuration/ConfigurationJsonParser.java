@@ -1,6 +1,6 @@
-package com.ataulm.mystories.tmdb.configuration;
+package com.ataulm.watson.tmdb.configuration;
 
-import com.ataulm.mystories.JsonParser;
+import com.ataulm.watson.JsonParser;
 import com.google.gson.Gson;
 
 public class ConfigurationJsonParser implements JsonParser<Configuration> {

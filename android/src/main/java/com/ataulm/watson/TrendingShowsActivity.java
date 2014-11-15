@@ -1,4 +1,4 @@
-package com.ataulm.mystories;
+package com.ataulm.watson;
 
 import android.app.Activity;
 import android.os.Bundle;

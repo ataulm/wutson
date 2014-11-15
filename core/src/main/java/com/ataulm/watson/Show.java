@@ -1,6 +1,6 @@
-package com.ataulm.mystories;
+package com.ataulm.watson;
 
-import com.ataulm.mystories.tmdb.discovertv.DiscoverTv;
+import com.ataulm.watson.tmdb.discovertv.DiscoverTv;
 
 public class Show {
 

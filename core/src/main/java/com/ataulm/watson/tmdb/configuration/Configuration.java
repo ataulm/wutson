@@ -1,4 +1,4 @@
-package com.ataulm.mystories.tmdb.configuration;
+package com.ataulm.watson.tmdb.configuration;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package com.ataulm.mystories;
+package com.ataulm.watson;
 
-import com.ataulm.mystories.tmdb.discovertv.DiscoverTv;
-import com.ataulm.mystories.tmdb.discovertv.DiscoverTvJsonParser;
-import com.ataulm.mystories.tmdb.discovertv.MockDiscoverTv;
+import com.ataulm.watson.tmdb.discovertv.DiscoverTv;
+import com.ataulm.watson.tmdb.discovertv.DiscoverTvJsonParser;
+import com.ataulm.watson.tmdb.discovertv.MockDiscoverTv;
 
 import java.util.ArrayList;
 import java.util.List;

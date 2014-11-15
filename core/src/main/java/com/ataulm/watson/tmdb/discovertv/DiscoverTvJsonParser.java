@@ -1,6 +1,6 @@
-package com.ataulm.mystories.tmdb.discovertv;
+package com.ataulm.watson.tmdb.discovertv;
 
-import com.ataulm.mystories.JsonParser;
+import com.ataulm.watson.JsonParser;
 import com.google.gson.Gson;
 
 public class DiscoverTvJsonParser implements JsonParser<DiscoverTv> {

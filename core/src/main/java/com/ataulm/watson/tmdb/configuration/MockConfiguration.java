@@ -1,4 +1,4 @@
-package com.ataulm.mystories.tmdb.configuration;
+package com.ataulm.watson.tmdb.configuration;
 
 public final class MockConfiguration {
 
