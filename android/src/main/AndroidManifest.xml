@@ -7,12 +7,16 @@
     android:icon="@drawable/ic_launcher"
     android:theme="@style/AppTheme">
 
-    <activity android:name="com.ataulm.watson.TrendingShowsActivity">
+    <activity android:name="com.ataulm.watson.TrendingShowsActivity" />
+
+    <activity-alias
+      android:name="activity.primary_launcher"
+      android:targetActivity="com.ataulm.watson.TrendingShowsActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
-    </activity>
+    </activity-alias>
 
   </application>
 
