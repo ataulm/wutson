@@ -8,6 +8,14 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
+def androidCompileSdkVersionProp = 21
+def androidBuildToolsVersionProp = '21'
+def androidMinSdkVersionProp = 16
+def androidTargetSdkVersionProp = 21
+def androidVersionCodeProp = 1
+def androidVersionNameProp = '0.0.1'
+def tmdbApiKey = hasProperty('tmdbApiKey') ? tmdbApiKey : 'provide this in gradle.properties'
+
 android {
     compileSdkVersion Integer.valueOf(androidCompileSdkVersionProp)
     buildToolsVersion androidBuildToolsVersionProp
@@ -23,7 +31,7 @@ android {
         instance.setTimeInMillis(System.currentTimeMillis())
         def buildTime = instance.getTime()
         buildConfigField "String", "BUILD_TIME", "\"$buildTime\""
-        buildConfigField "String", "TMDB_API_KEY", "\"$api_key\""
+        buildConfigField "String", "TMDB_API_KEY", "\"$tmdbApiKey\""
     }
 
 

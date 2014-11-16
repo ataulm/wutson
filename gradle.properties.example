@@ -1,10 +1,2 @@
 # https://www.themoviedb.org/account > API
-api_key=1a2b3c4d5e6f7g8h9i0j6f7g8h9i0j
-
-androidVersionCodeProp=1
-androidVersionNameProp=0.0.1
-androidMinSdkVersionProp=16
-androidTargetSdkVersionProp=21
-androidCompileSdkVersionProp=21
-androidBuildToolsVersionProp=21
-androidGradlePluginVersionProp=0.13.3
+tmdbApiKey=1a2b3c4d5e6f7g8h9i0j6f7g8h9i0j
