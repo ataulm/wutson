@@ -1,4 +1,4 @@
-package com.ataulm.watson;
+package com.ataulm.wutson;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

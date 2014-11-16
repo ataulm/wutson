@@ -1,4 +1,4 @@
-package com.ataulm.watson;
+package com.ataulm.wutson;
 
 import android.app.Activity;
 import android.os.Bundle;

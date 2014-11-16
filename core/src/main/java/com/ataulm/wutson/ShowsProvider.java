@@ -1,8 +1,8 @@
-package com.ataulm.watson;
+package com.ataulm.wutson;
 
-import com.ataulm.watson.tmdb.discovertv.DiscoverTv;
-import com.ataulm.watson.tmdb.discovertv.DiscoverTvJsonParser;
-import com.ataulm.watson.tmdb.discovertv.MockDiscoverTv;
+import com.ataulm.wutson.tmdb.discovertv.DiscoverTv;
+import com.ataulm.wutson.tmdb.discovertv.DiscoverTvJsonParser;
+import com.ataulm.wutson.tmdb.discovertv.MockDiscoverTv;
 
 import java.util.ArrayList;
 import java.util.List;

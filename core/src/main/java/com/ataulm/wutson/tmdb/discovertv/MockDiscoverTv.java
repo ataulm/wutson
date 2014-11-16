@@ -1,4 +1,4 @@
-package com.ataulm.watson.tmdb.discovertv;
+package com.ataulm.wutson.tmdb.discovertv;
 
 public final class MockDiscoverTv {
 

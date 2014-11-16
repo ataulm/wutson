@@ -1,4 +1,4 @@
-package com.ataulm.watson;
+package com.ataulm.wutson;
 
 public interface JsonParser<T> {
 

@@ -1,4 +1,4 @@
-package com.ataulm.watson;
+package com.ataulm.wutson;
 
 import android.content.Context;
 import android.util.AttributeSet;

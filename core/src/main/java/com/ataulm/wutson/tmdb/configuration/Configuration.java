@@ -1,4 +1,4 @@
-package com.ataulm.watson.tmdb.configuration;
+package com.ataulm.wutson.tmdb.configuration;
 
 import java.util.List;
 

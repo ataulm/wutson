@@ -13,7 +13,7 @@ android {
     buildToolsVersion androidBuildToolsVersionProp
 
     defaultConfig {
-        applicationId "com.ataulm.watson"
+        applicationId "com.ataulm.wutson"
         minSdkVersion androidMinSdkVersionProp
         targetSdkVersion androidTargetSdkVersionProp
         versionCode Integer.valueOf(androidVersionCodeProp)

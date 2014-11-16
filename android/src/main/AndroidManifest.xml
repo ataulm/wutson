@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.ataulm.watson">
+  package="com.ataulm.wutson">
 
   <application
     android:allowBackup="true"
@@ -7,11 +7,11 @@
     android:icon="@drawable/ic_launcher"
     android:theme="@style/AppTheme">
 
-    <activity android:name="com.ataulm.watson.TrendingShowsActivity" />
+    <activity android:name="com.ataulm.wutson.TrendingShowsActivity" />
 
     <activity-alias
       android:name="activity.primary_launcher"
-      android:targetActivity="com.ataulm.watson.TrendingShowsActivity">
+      android:targetActivity="com.ataulm.wutson.TrendingShowsActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

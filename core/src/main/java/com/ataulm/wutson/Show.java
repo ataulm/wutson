@@ -1,6 +1,6 @@
-package com.ataulm.watson;
+package com.ataulm.wutson;
 
-import com.ataulm.watson.tmdb.discovertv.DiscoverTv;
+import com.ataulm.wutson.tmdb.discovertv.DiscoverTv;
 
 public class Show {
 

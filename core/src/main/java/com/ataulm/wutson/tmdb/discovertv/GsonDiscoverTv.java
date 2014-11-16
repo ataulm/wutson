@@ -1,4 +1,4 @@
-package com.ataulm.watson.tmdb.discovertv;
+package com.ataulm.wutson.tmdb.discovertv;
 
 import com.google.gson.annotations.SerializedName;
 

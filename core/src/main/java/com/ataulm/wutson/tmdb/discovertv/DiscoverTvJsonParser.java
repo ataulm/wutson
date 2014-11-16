@@ -1,6 +1,6 @@
-package com.ataulm.watson.tmdb.discovertv;
+package com.ataulm.wutson.tmdb.discovertv;
 
-import com.ataulm.watson.JsonParser;
+import com.ataulm.wutson.JsonParser;
 import com.google.gson.Gson;
 
 public class DiscoverTvJsonParser implements JsonParser<DiscoverTv> {
