@@ -5,6 +5,8 @@ branches:
     - dev
     - master
 
+script: "./gradlew build"
+
 android:
   components:
     # Use the latest revision of Android SDK Tools
