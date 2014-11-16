@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-class TrendingShowsItemView extends FrameLayout {
+public class TrendingShowsItemView extends FrameLayout {
 
     public TrendingShowsItemView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
