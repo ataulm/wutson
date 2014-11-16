@@ -1,4 +1,10 @@
 language: android
+
+branches:
+  only:
+    - dev
+    - master
+
 android:
   components:
     # Use the latest revision of Android SDK Tools
