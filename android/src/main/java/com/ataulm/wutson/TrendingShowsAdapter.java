@@ -9,9 +9,6 @@ import java.util.List;
 
 class TrendingShowsAdapter extends RecyclerView.Adapter<TrendingShowsViewHolder> {
 
-    private static final int VIEW_TYPE_STANDARD = 1;
-    private static final int VIEW_TYPE_EMPHASISED = 2;
-
     private List<Show> shows;
 
     static TrendingShowsAdapter newInstance() {

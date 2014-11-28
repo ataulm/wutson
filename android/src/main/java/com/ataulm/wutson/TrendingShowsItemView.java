@@ -13,6 +13,7 @@ public class TrendingShowsItemView extends FrameLayout {
 
     public TrendingShowsItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        // TODO: dis fudged up UX. Y U NO LISTEN? - Romain Guy, probably
         setFocusableInTouchMode(true);
     }
 

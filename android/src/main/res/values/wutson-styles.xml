@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Wutson" />
+
+  <style name="Wutson.Base" parent="Theme.AppCompat.Light.NoActionBar" />
+
+  <style name="Wutson.Toolbar">
+    <item name="android:background">@drawable/bg_actionbar</item>
+    <item name="navigationIcon">@drawable/ic_nav</item>
+  </style>
+
+</resources>
