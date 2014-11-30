@@ -34,7 +34,7 @@ class TrendingShowsAdapter extends RecyclerView.Adapter<TrendingShowsViewHolder>
     @Override
     public void onBindViewHolder(TrendingShowsViewHolder viewHolder, int position) {
         Show show = shows.get(position);
-        viewHolder.present(show);
+        viewHolder.updateWith(show);
     }
 
     @Override
