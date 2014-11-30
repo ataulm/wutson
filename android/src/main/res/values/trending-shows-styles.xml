@@ -8,6 +8,8 @@
     <item name="android:paddingTop">@dimen/trending_shows_item_padding_top</item>
     <item name="android:paddingRight">@dimen/trending_shows_item_padding_right</item>
     <item name="android:paddingBottom">@dimen/trending_shows_item_padding_bottom</item>
+    <item name="android:foreground">@drawable/selector_trending_shows_item</item>
+    <item name="android:focusable">true</item>
   </style>
 
 </resources>
