@@ -10,4 +10,9 @@
     android:src="@drawable/trending_shows_item"
     android:contentDescription="@null" />
 
+  <TextView
+    android:id="@+id/trending_shows_item_title"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
 </merge>
