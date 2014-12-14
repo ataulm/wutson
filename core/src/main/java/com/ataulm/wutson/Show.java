@@ -42,7 +42,6 @@ public class Show {
         Show show = (Show) o;
 
         return id.equals(show.id);
-
     }
 
     @Override
