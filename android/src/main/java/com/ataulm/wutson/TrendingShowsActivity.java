@@ -11,6 +11,12 @@ import java.util.List;
 
 public class TrendingShowsActivity extends Activity {
 
+    private final Provider<List<Show>> showsProvider;
+
+    TrendingShowsActivity() {
+        showsProvider = new ShowsProvider();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +49,7 @@ public class TrendingShowsActivity extends Activity {
     }
 
     private List<Show> getTrendingShows() {
-        return new ShowsProvider().fetchTrendingShows();
+        return showsProvider.provide();
     }
 
 }
