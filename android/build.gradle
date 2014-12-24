@@ -9,7 +9,7 @@ dependencies {
 }
 
 def androidCompileSdkVersionProp = 21
-def androidBuildToolsVersionProp = '21'
+def androidBuildToolsVersionProp = '21.1.2'
 def androidMinSdkVersionProp = 16
 def androidTargetSdkVersionProp = 21
 def androidVersionCodeProp = 1
