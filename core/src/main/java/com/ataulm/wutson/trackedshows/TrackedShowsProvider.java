@@ -1,26 +1,28 @@
-package com.ataulm.wutson;
+package com.ataulm.wutson.trackedshows;
 
+import com.ataulm.wutson.Provider;
 import com.ataulm.wutson.tmdb.discovertv.DiscoverTv;
 import com.ataulm.wutson.tmdb.discovertv.DiscoverTvJsonParser;
 import com.ataulm.wutson.tmdb.discovertv.MockDiscoverTv;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ShowsProvider implements Provider<Shows> {
+public class TrackedShowsProvider implements Provider<TrackedShows> {
 
     @Override
-    public Shows provide() {
+    public TrackedShows provide() {
         DiscoverTvJsonParser parser = DiscoverTvJsonParser.newInstance();
         DiscoverTv discoverTv = parser.parse(MockDiscoverTv.JSON);
 
         List<DiscoverTv.Show> discoverTvShows = discoverTv.getShows();
+        List<TrackedShow> listOfTrackedShows = new ArrayList<>(discoverTvShows.size());
 
-        Shows.Builder showsBuilder = new Shows.Builder();
         for (DiscoverTv.Show discoverTvShow : discoverTvShows) {
-            showsBuilder.add(Show.from(discoverTvShow));
+            listOfTrackedShows.add(TrackedShow.from(discoverTvShow));
         }
 
-        return showsBuilder.toShows();
+        return new TrackedShows(listOfTrackedShows);
     }
 
 }
