@@ -4,24 +4,23 @@ import com.ataulm.wutson.tmdb.discovertv.DiscoverTv;
 import com.ataulm.wutson.tmdb.discovertv.DiscoverTvJsonParser;
 import com.ataulm.wutson.tmdb.discovertv.MockDiscoverTv;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ShowsProvider implements Provider<List<Show>> {
+public class ShowsProvider implements Provider<Shows> {
 
     @Override
-    public List<Show> provide() {
+    public Shows provide() {
         DiscoverTvJsonParser parser = DiscoverTvJsonParser.newInstance();
         DiscoverTv discoverTv = parser.parse(MockDiscoverTv.JSON);
 
         List<DiscoverTv.Show> discoverTvShows = discoverTv.getShows();
-        List<Show> shows = new ArrayList<>(discoverTvShows.size());
 
+        Shows.Builder showsBuilder = new Shows.Builder();
         for (DiscoverTv.Show discoverTvShow : discoverTvShows) {
-            shows.add(Show.from(discoverTvShow));
+            showsBuilder.add(Show.from(discoverTvShow));
         }
 
-        return shows;
+        return showsBuilder.toShows();
     }
 
 }

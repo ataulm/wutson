@@ -7,13 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.List;
-
 public class TrendingShowsActivity extends Activity {
 
-    private final Provider<List<Show>> showsProvider;
+    private final Provider<Shows> showsProvider;
 
-    TrendingShowsActivity() {
+    public TrendingShowsActivity() {
         showsProvider = new ShowsProvider();
     }
 
@@ -48,7 +46,7 @@ public class TrendingShowsActivity extends Activity {
         adapter.onUpdate(getTrendingShows());
     }
 
-    private List<Show> getTrendingShows() {
+    private Shows getTrendingShows() {
         return showsProvider.provide();
     }
 

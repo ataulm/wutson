@@ -4,22 +4,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import java.util.Collections;
-import java.util.List;
-
 class TrendingShowsAdapter extends RecyclerView.Adapter<TrendingShowsViewHolder> {
 
-    private List<Show> shows;
+    private Shows shows;
 
     static TrendingShowsAdapter newInstance() {
-        return new TrendingShowsAdapter(Collections.<Show>emptyList());
+        return new TrendingShowsAdapter(Shows.empty());
     }
 
-    TrendingShowsAdapter(List<Show> shows) {
+    TrendingShowsAdapter(Shows shows) {
         this.shows = shows;
     }
 
-    public void onUpdate(List<Show> shows) {
+    public void onUpdate(Shows shows) {
         this.shows = shows;
         notifyDataSetChanged();
     }
