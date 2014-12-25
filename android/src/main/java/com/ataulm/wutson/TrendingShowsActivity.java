@@ -7,9 +7,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.List;
-
 public class TrendingShowsActivity extends Activity {
+
+    private final Fetcher<Shows> showsFetcher;
+
+    public TrendingShowsActivity() {
+        showsFetcher = new ShowsFetcher();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +46,8 @@ public class TrendingShowsActivity extends Activity {
         adapter.onUpdate(getTrendingShows());
     }
 
-    private List<Show> getTrendingShows() {
-        return new ShowsProvider().fetchTrendingShows();
+    private Shows getTrendingShows() {
+        return showsFetcher.fetch();
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.List;
 class GsonDiscoverTv {
 
     @SerializedName("page")
-    int data;
+    int page;
 
     @SerializedName("results")
     List<Show> results;
