@@ -24,7 +24,9 @@ public class TrackedShowsFetcher implements Fetcher<TrackedShows>, AsyncFetcher<
         List<TrackedShow> listOfTrackedShows = new ArrayList<>(discoverTvShows.size());
 
         for (DiscoverTv.Show discoverTvShow : discoverTvShows) {
-            listOfTrackedShows.add(TrackedShow.from(discoverTvShow));
+            // TODO: this unknown is not cool. Fetcher<T> should aggregate data to return a complete T
+            String nextEpisodeName = "Unknown";
+            listOfTrackedShows.add(TrackedShow.from(discoverTvShow, nextEpisodeName));
         }
 
         return new TrackedShows(listOfTrackedShows);
