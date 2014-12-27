@@ -7,7 +7,6 @@
     android:icon="@drawable/ic_launcher"
     android:allowBackup="true">
 
-    <activity android:name="com.ataulm.wutson.TrendingShowsActivity" />
     <activity android:name="com.ataulm.wutson.trackedshows.TrackedShowsActivity" />
     <activity android:name="com.ataulm.wutson.ShowActivity" />
 

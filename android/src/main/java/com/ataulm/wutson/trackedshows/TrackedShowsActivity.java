@@ -13,7 +13,7 @@ import rx.Subscription;
 
 public class TrackedShowsActivity extends ActionBarActivity {
 
-    private TrackedShowsAdapter trackedShowsAdapter;
+    private TrackedShowsAdapter adapter;
     private Subscription trackedShowsSubscription;
 
     @Override
@@ -23,13 +23,13 @@ public class TrackedShowsActivity extends ActionBarActivity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.tracked_shows_list);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        trackedShowsAdapter = new TrackedShowsAdapter();
-        recyclerView.setAdapter(trackedShowsAdapter);
+        adapter = new TrackedShowsAdapter();
+        recyclerView.setAdapter(adapter);
 
         AsyncFetcher<TrackedShows> showsFetcher = new TrackedShowsFetcher();
         Observable<TrackedShows> trackedShowsObservable = showsFetcher.newFetchObservable();
         trackedShowsSubscription = trackedShowsObservable.subscribe(new Observer());
-        // TODO: start loading-anims
+        // TODO: start loading-indicator
     }
 
     @Override
@@ -43,19 +43,19 @@ public class TrackedShowsActivity extends ActionBarActivity {
 
         @Override
         public void onCompleted() {
-            // TODO: stop loading-anims
+            // TODO: stop loading-indicator
         }
 
         @Override
         public void onError(Throwable e) {
-            // TODO: stop loading-anims
+            // TODO: stop loading-indicator
             // TODO: show error to user
         }
 
         @Override
         public void onNext(TrackedShows trackedShows) {
-            trackedShowsAdapter.update(trackedShows);
-            trackedShowsAdapter.notifyDataSetChanged();
+            adapter.update(trackedShows);
+            adapter.notifyDataSetChanged();
         }
 
     }
