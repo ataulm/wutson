@@ -33,7 +33,7 @@ public class TrackedShowsFetcher implements Fetcher<TrackedShows>, AsyncFetcher<
     }
 
     @Override
-    public Observable<TrackedShows> fetchAsync() {
+    public Observable<TrackedShows> newFetchObservable() {
         return Observable.create(new Observable.OnSubscribe<TrackedShows>() {
 
             @Override

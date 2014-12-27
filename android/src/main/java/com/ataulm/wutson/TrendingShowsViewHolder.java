@@ -16,7 +16,6 @@ class TrendingShowsViewHolder extends RecyclerView.ViewHolder {
 
     public void updateWith(final Show show) {
         trendingShowsItemView.setContentDescription(show.getName());
-
         titleView.setText(show.getName());
     }
 

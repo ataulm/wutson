@@ -4,6 +4,6 @@ import rx.Observable;
 
 public interface AsyncFetcher<T> {
 
-    Observable<T> fetchAsync();
+    Observable<T> newFetchObservable();
 
 }
