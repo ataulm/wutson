@@ -1,4 +1,4 @@
 #!/bin/bash
 source ../gradle.properties;
 tmdb_id_for_newsroom=15621;
-curl -X GET https://api.themoviedb.org/3/tv/$tmdb_id_for_newsroom/external_ids?api_key=$tmdbApiKey
+curl -X GET https://api.themoviedb.org/3/tv/$tmdb_id_for_newsroom/external_ids?api_key=$tmdbApiKey | python -mjson.tool
