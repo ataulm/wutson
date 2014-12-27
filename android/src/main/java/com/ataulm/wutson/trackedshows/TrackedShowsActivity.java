@@ -55,7 +55,6 @@ public class TrackedShowsActivity extends ActionBarActivity {
         @Override
         public void onNext(TrackedShows trackedShows) {
             adapter.update(trackedShows);
-            adapter.notifyDataSetChanged();
         }
 
     }
