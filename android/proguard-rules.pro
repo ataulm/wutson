@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# RxJava
+-keep class rx.** { *; }
+-keep interface rx.** { *; }
+-dontwarn rx.internal.util.unsafe.**
+-dontwarn rx.observables.**
