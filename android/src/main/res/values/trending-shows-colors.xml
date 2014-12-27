@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-  <color name="selector_trending_shows_item_focused_pressed">@color/black_50</color>
-  <color name="selector_trending_shows_item_pressed">@color/black_25</color>
-  <color name="selector_trending_shows_item_focused">@color/black_10</color>
-
-</resources>

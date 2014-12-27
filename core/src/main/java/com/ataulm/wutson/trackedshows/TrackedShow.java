@@ -9,10 +9,9 @@ public class TrackedShow {
     private final String nextEpisodeName;
     private final String posterUrl;
 
-    public static TrackedShow from(DiscoverTv.Show discoverTvShow) {
+    public static TrackedShow from(DiscoverTv.Show discoverTvShow, String nextEpisodeName) {
         String id = String.valueOf(discoverTvShow.getId());
         String showName = discoverTvShow.getName();
-        String nextEpisodeName = "Unknown";
         String posterUrl = discoverTvShow.getPosterPath();
 
         return new TrackedShow(id, showName, nextEpisodeName, posterUrl);

@@ -11,7 +11,7 @@
     android:layout_height="wrap_content" />
 
   <android.support.v7.widget.RecyclerView
-    android:id="@+id/trending_shows_list"
+    android:id="@+id/tracked_shows_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 </LinearLayout>
