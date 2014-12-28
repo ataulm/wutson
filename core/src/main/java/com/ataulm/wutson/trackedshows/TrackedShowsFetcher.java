@@ -1,6 +1,5 @@
 package com.ataulm.wutson.trackedshows;
 
-import com.ataulm.wutson.AsyncFetcher;
 import com.ataulm.wutson.Fetcher;
 import com.ataulm.wutson.tmdb.discovertv.DiscoverTv;
 import com.ataulm.wutson.tmdb.discovertv.DiscoverTvJsonParser;
@@ -9,11 +8,7 @@ import com.ataulm.wutson.tmdb.discovertv.MockDiscoverTv;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
-
-public class TrackedShowsFetcher implements Fetcher<TrackedShows>, AsyncFetcher<TrackedShows> {
+public class TrackedShowsFetcher implements Fetcher<TrackedShows> {
 
     @Override
     public TrackedShows fetch() {
@@ -30,20 +25,6 @@ public class TrackedShowsFetcher implements Fetcher<TrackedShows>, AsyncFetcher<
         }
 
         return new TrackedShows(listOfTrackedShows);
-    }
-
-    @Override
-    public Observable<TrackedShows> newFetchObservable() {
-        return Observable.create(new Observable.OnSubscribe<TrackedShows>() {
-
-            @Override
-            public void call(Subscriber<? super TrackedShows> subscriber) {
-                TrackedShows shows = fetch();
-                subscriber.onNext(shows);
-                subscriber.onCompleted();
-            }
-
-        }).subscribeOn(Schedulers.io());
     }
 
 }

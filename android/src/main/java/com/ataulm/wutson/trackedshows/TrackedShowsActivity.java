@@ -26,8 +26,8 @@ public class TrackedShowsActivity extends ActionBarActivity {
         adapter = new TrackedShowsAdapter();
         recyclerView.setAdapter(adapter);
 
-        AsyncFetcher<TrackedShows> showsFetcher = new TrackedShowsFetcher();
-        Observable<TrackedShows> trackedShowsObservable = showsFetcher.newFetchObservable();
+        AsyncFetcher<TrackedShows> showsFetcher = TrackedShowsAsyncFetcher.newInstance();
+        Observable<TrackedShows> trackedShowsObservable = showsFetcher.fetch();
         trackedShowsSubscription = trackedShowsObservable.subscribe(new Observer());
         // TODO: start loading-indicator
     }
