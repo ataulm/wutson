@@ -8,11 +8,12 @@
     android:allowBackup="true">
 
     <activity android:name="com.ataulm.wutson.trackedshows.TrackedShowsActivity" />
+    <activity android:name="com.ataulm.wutson.popularshows.PopularShowsActivity" />
     <activity android:name="com.ataulm.wutson.ShowActivity" />
 
     <activity-alias
       android:name="activity.primary_launcher"
-      android:targetActivity="com.ataulm.wutson.trackedshows.TrackedShowsActivity">
+      android:targetActivity="com.ataulm.wutson.popularshows.PopularShowsActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
