@@ -3,6 +3,7 @@ language: android
 branches:
   only:
     - dev
+    - travis_test
     - master
 
 script: "./gradlew build"
