@@ -8,6 +8,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:21.0.2"
     compile 'com.android.support:recyclerview-v7:21.0.0'
     compile 'io.reactivex:rxandroid:0.23.0'
+    compile 'com.novoda:image-loader:2.0-BETA'
 }
 
 def androidCompileSdkVersionProp = 21

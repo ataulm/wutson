@@ -11,5 +11,16 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+
+        def mahBintrayUsername = hasProperty('bintrayUsername') ? bintrayUsername : System.env.bintrayUsername
+        def mahBintrayPassword = hasProperty('bintrayPassword') ? bintrayPassword : System.env.bintrayPassword
+
+        maven {
+            credentials {
+                username mahBintrayUsername
+                password mahBintrayPassword
+            }
+            url 'http://dl.bintray.com/novoda/maven-private'
+        }
     }
 }

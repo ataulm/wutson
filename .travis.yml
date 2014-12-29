@@ -1,25 +1,19 @@
 language: android
-
 branches:
   only:
-    - dev
-    - travis_test
-    - master
-
+  - dev
+  - travis_test
+  - master
 script: "./gradlew build"
-
 android:
   components:
-    # Use the latest revision of Android SDK Tools
-    - platform-tools
-    - tools
-
-    # The BuildTools version used by your project
-    - build-tools-21.1.2
-
-    # The SDK version used to compile your project
-    - android-21
-
-    # Additional components
-    - extra-google-m2repository
-    - extra-android-m2repository
+  - platform-tools
+  - tools
+  - build-tools-21.1.2
+  - android-21
+  - extra-google-m2repository
+  - extra-android-m2repository
+env:
+  global:
+  - secure: fwPqjObm6WRRY7Dg+vQGznlC7hMlvStgdOlWloRB2M5RPUBwbc2akKeKP1lITMPlMDEXHhx6m5OTQwjDel8Z/7ej5XkjsoxXOlKH+S//aD05lzza50eGDSWNVGSR40Qau8aG0coO51cnkE4RwplhKo0aBhX1a2/AlirlpBeHnK8=
+  - secure: vJTr0HekfIMFu1UUSY0KERyz23KsRzeDlIJebaTYro8maRqG4CE4ek/T1+fktqazJpBI9yYGN9UbwQK8evyfhQ9k873rBlJ/3vzPADqQGicq5ivhUrreNljdFEaxp8lmvVQ/2n23/KjTFvcrWrlbIS2NZ+5Wfsn5ZKU4npVdlXA=
