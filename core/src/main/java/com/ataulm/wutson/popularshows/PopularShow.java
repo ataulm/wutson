@@ -17,7 +17,8 @@ public class PopularShow {
     public static PopularShow from(DiscoverTv.Show discoverTvShow) {
         String id = String.valueOf(discoverTvShow.getId());
         String showName = discoverTvShow.getName();
-        String voteAverage = VOTE_FORMATTER.format(discoverTvShow.getVoteAverage());
+        double voteAverageRaw = discoverTvShow.getVoteAverage();
+        String voteAverage = voteAverageRaw == 0 ? "" : VOTE_FORMATTER.format(voteAverageRaw);
         String posterUrl = discoverTvShow.getPosterPath();
 
         return new PopularShow(id, showName, voteAverage, posterUrl);
