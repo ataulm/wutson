@@ -68,6 +68,10 @@ public class DiscoverTv {
             return posterPath;
         }
 
+        public double getVoteAverage() {
+            return voteAverage;
+        }
+
     }
 
 }
