@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <dimen name="popular_shows_item_padding_left">0dp</dimen>
+  <dimen name="popular_shows_item_padding_top">0dp</dimen>
+  <dimen name="popular_shows_item_padding_right">0dp</dimen>
+  <dimen name="popular_shows_item_padding_bottom">0dp</dimen>
+
+</resources>

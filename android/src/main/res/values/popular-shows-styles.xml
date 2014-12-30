@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="PopularShows" />
+
+  <style name="PopularShows.Item">
+    <item name="android:paddingLeft">@dimen/popular_shows_item_padding_left</item>
+    <item name="android:paddingTop">@dimen/popular_shows_item_padding_bottom</item>
+    <item name="android:paddingRight">@dimen/popular_shows_item_padding_bottom</item>
+    <item name="android:paddingBottom">@dimen/popular_shows_item_padding_bottom</item>
+    <!--This should be popular-->
+    <item name="android:foreground">@drawable/tracked_shows_item_foreground</item>
+    <item name="android:focusable">true</item>
+  </style>
+
+</resources>

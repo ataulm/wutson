@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/TrackedShows.Item"
+<com.ataulm.wutson.popularshows.PopularShowsListItemView xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/PopularShows.Item"
   android:layout_width="wrap_content"
-  android:layout_height="80dp">
+  android:layout_height="wrap_content">
 
   <ImageView
     android:id="@+id/popular_shows_image_poster"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scaleType="centerCrop"
     android:contentDescription="@null" />
 
   <TextView
@@ -19,7 +20,7 @@
   <TextView
     android:id="@+id/popular_shows_vote_average_name"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="30dp"
     android:layout_gravity="bottom" />
 
-</FrameLayout>
+</com.ataulm.wutson.popularshows.PopularShowsListItemView>
