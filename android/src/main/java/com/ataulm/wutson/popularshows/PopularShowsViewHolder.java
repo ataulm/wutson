@@ -1,11 +1,13 @@
 package com.ataulm.wutson.popularshows;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
+import com.novoda.pxfetcher.PixelFetchers;
 
 class PopularShowsViewHolder extends RecyclerView.ViewHolder {
 
@@ -25,7 +27,9 @@ class PopularShowsViewHolder extends RecyclerView.ViewHolder {
 
         showTextView.setText(show.getShowName());
         voteAverageTextView.setText(show.getVoteAverage());
-        // TODO: bind poster
+
+        Context context = itemView.getContext();
+        PixelFetchers.getInstance(context).load("http://i0.kym-cdn.com/photos/images/newsfeed/000/173/576/Wat8.jpg", posterImageView);
     }
 
 }
