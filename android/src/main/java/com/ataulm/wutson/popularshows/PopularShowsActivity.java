@@ -22,7 +22,7 @@ public class PopularShowsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_popular_shows);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.popular_shows_list);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.popular_shows_grid_items_horizontal)));
         adapter = new PopularShowsAdapter();
         recyclerView.setAdapter(adapter);
 
