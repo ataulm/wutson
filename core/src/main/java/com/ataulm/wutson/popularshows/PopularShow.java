@@ -1,5 +1,7 @@
 package com.ataulm.wutson.popularshows;
 
+import com.ataulm.wutson.tmdb.ImageUrlBuilder;
+import com.ataulm.wutson.tmdb.configuration.Configuration;
 import com.ataulm.wutson.tmdb.discovertv.DiscoverTv;
 
 import java.text.DecimalFormat;
@@ -14,12 +16,12 @@ public class PopularShow {
     private final String voteAverage;
     private final String posterUrl;
 
-    public static PopularShow from(DiscoverTv.Show discoverTvShow) {
+    public static PopularShow from(DiscoverTv.Show discoverTvShow, Configuration configuration) {
         String id = String.valueOf(discoverTvShow.getId());
         String showName = discoverTvShow.getName();
         double voteAverageRaw = discoverTvShow.getVoteAverage();
         String voteAverage = voteAverageRaw == 0 ? "" : VOTE_FORMATTER.format(voteAverageRaw);
-        String posterUrl = discoverTvShow.getPosterPath();
+        String posterUrl = new ImageUrlBuilder(configuration).posterPathFor(discoverTvShow);
 
         return new PopularShow(id, showName, voteAverage, posterUrl);
     }

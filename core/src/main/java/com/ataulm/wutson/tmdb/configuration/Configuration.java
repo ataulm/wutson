@@ -35,6 +35,10 @@ public class Configuration {
         this.images = images;
     }
 
+    public String getSecureImageBaseUrl() {
+        return images.secureBaseUrl;
+    }
+
     static class Images {
 
         private final String baseUrl;
