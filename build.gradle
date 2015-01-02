@@ -14,8 +14,8 @@ allprojects {
 
         maven {
             credentials {
-                username hasProperty('bintrayUsername') ? bintrayUsername : System.env.bintrayUsername
-                password hasProperty('bintrayPassword') ? bintrayPassword : System.env.bintrayPassword
+                username project.hasProperty('bintrayUsername') ? bintrayUsername : System.env.bintrayUsername
+                password project.hasProperty('bintrayPassword') ? bintrayPassword : System.env.bintrayPassword
             }
             url 'http://dl.bintray.com/novoda/maven-private'
         }

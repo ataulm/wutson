@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.ataulm.wutson.R;
 import com.bumptech.glide.Glide;
 
-class PopularShowsListItemView extends FrameLayout {
+public class PopularShowsListItemView extends FrameLayout {
 
     private static final double POSTER_RATIO = 1.5;
 
