@@ -2,8 +2,9 @@ apply plugin: 'java'
 
 dependencies {
     compile 'com.google.code.gson:gson:2.3'
-    compile 'io.reactivex:rxjava:1.0.0'
-
+    compile 'io.reactivex:rxjava:1.0.4'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.okhttp:okhttp:2.2.0'
     testCompile 'junit:junit:4.11'
     testCompile 'org.easytesting:fest-assert-core:2.0M10'
     testCompile 'org.mockito:mockito-all:1.9.5'
