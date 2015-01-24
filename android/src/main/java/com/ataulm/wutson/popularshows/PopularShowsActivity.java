@@ -8,20 +8,35 @@ import com.ataulm.wutson.WutsonActivity;
 import com.ataulm.wutson.tmdb.TmdbPopularShow;
 import com.ataulm.wutson.tmdb.TmdbPopularShows;
 
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class PopularShowsActivity extends WutsonActivity {
 
+    private Subscription popularShowsSubscription;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popular_shows);
+    }
 
-        getDataRepository().getPopularShows()
+    @Override
+    protected void onResume() {
+        super.onResume();
+        popularShowsSubscription = getDataRepository().getPopularShows()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
+    }
+
+    @Override
+    protected void onPause() {
+        if (!popularShowsSubscription.isUnsubscribed()) {
+            popularShowsSubscription.unsubscribe();
+        }
+        super.onPause();
     }
 
     private class Observer implements rx.Observer<TmdbPopularShows> {
