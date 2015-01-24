@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_pref_key_version">preference_key_about_version</string>
+  <string name="settings_pref_category_key_about">preference_category_about</string>
+  <string name="settings_pref_key_oss">preference_key_about_oss</string>
+  <string name="software_licenses">Software licenses</string>
+  <string name="version">Version</string>
+  <string name="about">About</string>
+</resources>

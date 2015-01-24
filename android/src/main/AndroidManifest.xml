@@ -12,10 +12,11 @@
     android:allowBackup="true">
 
     <activity android:name="com.ataulm.wutson.popularshows.PopularShowsActivity" />
+    <activity android:name="com.ataulm.wutson.settings.SettingsActivity" />
 
     <activity-alias
       android:name="activity.primary_launcher"
-      android:targetActivity="com.ataulm.wutson.popularshows.PopularShowsActivity">
+      android:targetActivity="com.ataulm.wutson.settings.SettingsActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
