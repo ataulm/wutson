@@ -6,21 +6,21 @@ import java.util.List;
 
 public class TmdbTvShow {
 
-    @SerializedName("name")
-    String name;
-
     @SerializedName("id")
     String id;
 
+    @SerializedName("name")
+    String name;
+
     @SerializedName("seasons")
-    List<Object> seasons;
+    List<TmdbSeason> tmdbSeasons;
 
     public String getName() {
         return name;
     }
 
-    public List<Object> getSeasons() {
-        return seasons;
+    public List<TmdbSeason> getTmdbSeasons() {
+        return tmdbSeasons;
     }
 
 }

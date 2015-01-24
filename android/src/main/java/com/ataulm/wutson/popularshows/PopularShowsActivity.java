@@ -5,12 +5,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import com.ataulm.wutson.BuildConfig;
+import com.ataulm.wutson.DataRepository;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.TmdbApiFactory;
-import com.ataulm.wutson.tmdb.TmdbTvShow;
+import com.ataulm.wutson.tmdb.TmdbPopularShow;
+import com.ataulm.wutson.tmdb.TmdbPopularShows;
 
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -23,28 +24,34 @@ public class PopularShowsActivity extends ActionBarActivity {
 
         TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(BuildConfig.TMDB_API_KEY);
         TmdbApi api = tmdbApiFactory.createApi();
-        Observable<TmdbTvShow> show = api.getShow("1399");
-        show.subscribeOn(Schedulers.io())
+        DataRepository dataRepository = new DataRepository(api);
+
+        dataRepository.getPopularShows()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new rx.Observer<TmdbTvShow>() {
+                .subscribe(new Observer());
+    }
 
-            @Override
-            public void onCompleted() {
-                Log.d("THING", "onCompleted");
+    private class Observer implements rx.Observer<TmdbPopularShows> {
+
+        @Override
+        public void onCompleted() {
+            Log.d("THING", "onCompleted");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            throw new Error(e);
+        }
+
+        @Override
+        public void onNext(TmdbPopularShows tmdbPopularShows) {
+            Log.d("THING", "onCompleted");
+            for (TmdbPopularShow tmdbPopularShow : tmdbPopularShows) {
+                Log.d("THING", tmdbPopularShow.toString());
             }
+        }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e("THING", e.getMessage());
-            }
-
-            @Override
-            public void onNext(TmdbTvShow tmdbTvShow) {
-                Log.d("THING", tmdbTvShow.getName());
-                Log.d("THING", "seasons: " + tmdbTvShow.getSeasons().size());
-            }
-
-        });
     }
 
 }
