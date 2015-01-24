@@ -1,25 +1,24 @@
 package com.ataulm.wutson.popularshows;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.WutsonApplication;
+import com.ataulm.wutson.WutsonActivity;
 import com.ataulm.wutson.tmdb.TmdbPopularShow;
 import com.ataulm.wutson.tmdb.TmdbPopularShows;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class PopularShowsActivity extends ActionBarActivity {
+public class PopularShowsActivity extends WutsonActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popular_shows);
 
-        ((WutsonApplication) getApplication()).getDataRepository().getPopularShows()
+        getDataRepository().getPopularShows()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
