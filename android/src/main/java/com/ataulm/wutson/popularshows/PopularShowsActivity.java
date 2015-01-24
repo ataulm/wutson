@@ -4,11 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
-import com.ataulm.wutson.BuildConfig;
-import com.ataulm.wutson.DataRepository;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.tmdb.TmdbApi;
-import com.ataulm.wutson.tmdb.TmdbApiFactory;
+import com.ataulm.wutson.WutsonApplication;
 import com.ataulm.wutson.tmdb.TmdbPopularShow;
 import com.ataulm.wutson.tmdb.TmdbPopularShows;
 
@@ -22,11 +19,7 @@ public class PopularShowsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popular_shows);
 
-        TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(BuildConfig.TMDB_API_KEY);
-        TmdbApi api = tmdbApiFactory.createApi();
-        DataRepository dataRepository = new DataRepository(api);
-
-        dataRepository.getPopularShows()
+        ((WutsonApplication) getApplication()).getDataRepository().getPopularShows()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
