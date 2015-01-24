@@ -12,7 +12,6 @@
     android:allowBackup="true">
 
     <activity android:name="com.ataulm.wutson.popularshows.PopularShowsActivity" />
-    <activity android:name="com.ataulm.wutson.ShowActivity" />
 
     <activity-alias
       android:name="activity.primary_launcher"
