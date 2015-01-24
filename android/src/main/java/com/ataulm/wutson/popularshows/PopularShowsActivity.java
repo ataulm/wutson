@@ -2,61 +2,49 @@ package com.ataulm.wutson.popularshows;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
-import com.ataulm.wutson.AsyncFetcher;
+import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.tmdb.TmdbApi;
+import com.ataulm.wutson.tmdb.TmdbApiFactory;
+import com.ataulm.wutson.tmdb.TmdbTvShow;
 
 import rx.Observable;
-import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class PopularShowsActivity extends ActionBarActivity {
-
-    private PopularShowsAdapter adapter;
-    private Subscription popularShowsSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popular_shows);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.popular_shows_list);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.popular_shows_grid_items_horizontal)));
-        adapter = new PopularShowsAdapter();
-        recyclerView.setAdapter(adapter);
+        TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(BuildConfig.TMDB_API_KEY);
+        TmdbApi api = tmdbApiFactory.createApi();
+        Observable<TmdbTvShow> show = api.getShow("1399");
+        show.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new rx.Observer<TmdbTvShow>() {
 
-        AsyncFetcher<PopularShows> showsFetcher = PopularShowsAsyncFetcher.newInstance();
-        Observable<PopularShows> popularShowsObservable = showsFetcher.fetch();
-        popularShowsSubscription = popularShowsObservable.subscribe(new Observer());
-        // TODO: start loading-indicator
-    }
+            @Override
+            public void onCompleted() {
+                Log.d("THING", "onCompleted");
+            }
 
-    @Override
-    protected void onDestroy() {
-        popularShowsSubscription.unsubscribe();
-        super.onDestroy();
-    }
+            @Override
+            public void onError(Throwable e) {
+                Log.e("THING", e.getMessage());
+            }
 
-    // QUESTION: Is there any benefit to making this inner class static?
-    private class Observer implements rx.Observer<PopularShows> {
+            @Override
+            public void onNext(TmdbTvShow tmdbTvShow) {
+                Log.d("THING", tmdbTvShow.getName());
+                Log.d("THING", "seasons: " + tmdbTvShow.getSeasons().size());
+            }
 
-        @Override
-        public void onCompleted() {
-            // TODO: stop loading-indicator
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            // TODO: stop loading-indicator
-            // TODO: show error to user
-        }
-
-        @Override
-        public void onNext(PopularShows popularShows) {
-            adapter.update(popularShows);
-        }
-
+        });
     }
 
 }

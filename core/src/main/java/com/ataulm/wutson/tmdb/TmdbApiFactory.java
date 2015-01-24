@@ -1,10 +1,10 @@
-package com.ataulm.wutson.popularshows;
+package com.ataulm.wutson.tmdb;
 
 import retrofit.Endpoint;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 
-public final class TmdbRestAdapter {
+public class TmdbApiFactory {
 
     private static final String QUERY_PARAM_API_KEY = "api_key";
     private static final String ENDPOINT_URL = "https://api.themoviedb.org/3";
@@ -12,7 +12,7 @@ public final class TmdbRestAdapter {
 
     private final RestAdapter restAdapter;
 
-    public TmdbRestAdapter newInstance(final String apiKey) {
+    public static TmdbApiFactory newInstance(final String apiKey) {
         RequestInterceptor tmdbRequestInterceptor = new RequestInterceptor() {
 
             @Override
@@ -41,15 +41,15 @@ public final class TmdbRestAdapter {
                 .setRequestInterceptor(tmdbRequestInterceptor)
                 .build();
 
-        return new TmdbRestAdapter(restAdapter);
+        return new TmdbApiFactory(restAdapter);
     }
 
-    private TmdbRestAdapter(RestAdapter restAdapter) {
+    TmdbApiFactory(RestAdapter restAdapter) {
         this.restAdapter = restAdapter;
     }
 
-    public RestAdapter getRestAdapter() {
-        return restAdapter;
+    public TmdbApi createApi() {
+        return restAdapter.create(TmdbApi.class);
     }
 
 }
