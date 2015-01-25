@@ -1,4 +1,4 @@
-package com.ataulm.wutson.tmdb;
+package com.ataulm.wutson.model;
 
 import retrofit.Endpoint;
 import retrofit.RequestInterceptor;

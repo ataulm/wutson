@@ -1,7 +1,7 @@
 package com.ataulm.wutson;
 
-import com.ataulm.wutson.tmdb.TmdbApi;
-import com.ataulm.wutson.tmdb.TmdbPopularShows;
+import com.ataulm.wutson.model.PopularShows;
+import com.ataulm.wutson.model.TmdbApi;
 
 import rx.Observable;
 import rx.functions.Action1;
@@ -11,7 +11,7 @@ import rx.subjects.BehaviorSubject;
 public class DataRepository {
 
     private final TmdbApi api;
-    private final BehaviorSubject<TmdbPopularShows> popularShowsSubject;
+    private final BehaviorSubject<PopularShows> popularShowsSubject;
 
     private boolean popularShowsInitialised;
 
@@ -20,7 +20,7 @@ public class DataRepository {
         this.popularShowsSubject = BehaviorSubject.create();
     }
 
-    public Observable<TmdbPopularShows> getPopularShows() {
+    public Observable<PopularShows> getPopularShows() {
         if (!popularShowsInitialised) {
             refreshPopularShows();
         }
@@ -34,11 +34,11 @@ public class DataRepository {
                 .subscribe(popularShowsSubject);
     }
 
-    private Action1<TmdbPopularShows> markAsInitialised() {
-        return new Action1<TmdbPopularShows>() {
+    private Action1<PopularShows> markAsInitialised() {
+        return new Action1<PopularShows>() {
 
             @Override
-            public void call(TmdbPopularShows shows) {
+            public void call(PopularShows shows) {
                 popularShowsInitialised = true;
             }
 

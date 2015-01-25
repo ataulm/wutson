@@ -1,11 +1,11 @@
-package com.ataulm.wutson.tmdb;
+package com.ataulm.wutson.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class TmdbPopularShows implements Iterable<TmdbPopularShow> {
+public class PopularShows implements Iterable<PopularShows.Show> {
 
     @SerializedName("id")
     String id;
@@ -14,7 +14,7 @@ public class TmdbPopularShows implements Iterable<TmdbPopularShow> {
     String page;
 
     @SerializedName("results")
-    List<TmdbPopularShow> shows;
+    List<Show> shows;
 
     @SerializedName("total_pages")
     int totalPages;
@@ -23,8 +23,11 @@ public class TmdbPopularShows implements Iterable<TmdbPopularShow> {
     int totalResults;
 
     @Override
-    public Iterator<TmdbPopularShow> iterator() {
+    public Iterator<Show> iterator() {
         return shows.iterator();
+    }
+
+    public class Show {
     }
 
 }

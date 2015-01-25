@@ -2,8 +2,8 @@ package com.ataulm.wutson;
 
 import android.app.Application;
 
-import com.ataulm.wutson.tmdb.TmdbApi;
-import com.ataulm.wutson.tmdb.TmdbApiFactory;
+import com.ataulm.wutson.model.TmdbApi;
+import com.ataulm.wutson.model.TmdbApiFactory;
 
 public class WutsonApplication extends Application {
 

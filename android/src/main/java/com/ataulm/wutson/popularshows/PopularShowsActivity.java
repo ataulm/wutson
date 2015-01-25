@@ -9,9 +9,8 @@ import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.WutsonTopLevelActivity;
+import com.ataulm.wutson.model.PopularShows;
 import com.ataulm.wutson.settings.SettingsActivity;
-import com.ataulm.wutson.tmdb.TmdbPopularShow;
-import com.ataulm.wutson.tmdb.TmdbPopularShows;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,7 +65,7 @@ public class PopularShowsActivity extends WutsonTopLevelActivity {
         super.onPause();
     }
 
-    private class Observer implements rx.Observer<TmdbPopularShows> {
+    private class Observer implements rx.Observer<PopularShows> {
 
         @Override
         public void onCompleted() {
@@ -79,10 +78,10 @@ public class PopularShowsActivity extends WutsonTopLevelActivity {
         }
 
         @Override
-        public void onNext(TmdbPopularShows tmdbPopularShows) {
+        public void onNext(PopularShows popularShows) {
             Log.d("THING", "onCompleted");
-            for (TmdbPopularShow tmdbPopularShow : tmdbPopularShows) {
-                Log.d("THING", tmdbPopularShow.toString());
+            for (PopularShows.Show popularShow : popularShows) {
+                Log.d("THING", popularShow.toString());
             }
         }
 
