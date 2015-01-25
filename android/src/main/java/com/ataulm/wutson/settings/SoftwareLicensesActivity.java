@@ -8,7 +8,7 @@ import com.ataulm.wutson.R;
 
 public class SoftwareLicensesActivity extends ActionBarActivity {
 
-    private static final String URL_LICENSES = "file:///android_asset/licenses.html";
+    private static final String URL_LICENSES = "file:///android_asset/software-licenses.html";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
