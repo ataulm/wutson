@@ -6,8 +6,14 @@ import java.util.List;
 
 public class Configuration {
 
+    private static final int POSTER_SIZE_STANDARD = 2;
+
     @SerializedName("images")
     Images images;
+
+    public String getCompletePosterPath(String posterPath) {
+        return images.baseUrl + images.posterSizes.get(POSTER_SIZE_STANDARD) + posterPath;
+    }
 
     static class Images {
 

@@ -15,6 +15,15 @@ public class TvShow {
     @SerializedName("seasons")
     List<Season> seasons;
 
+    @SerializedName("backdrop_path")
+    String backdropPath;
+
+    @SerializedName("poster_path")
+    String posterPath;
+
+    @SerializedName("overview")
+    String overview;
+
     private Configuration configuration;
 
     public String getName() {
@@ -29,8 +38,8 @@ public class TvShow {
         this.configuration = configuration;
     }
 
-    public String foo() {
-        return configuration.images.baseUrl;
+    public String getPosterPath() {
+        return configuration.getCompletePosterPath(posterPath);
     }
 
     public class Season {
