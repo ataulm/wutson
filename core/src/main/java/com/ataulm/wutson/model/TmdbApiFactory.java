@@ -3,6 +3,7 @@ package com.ataulm.wutson.model;
 import retrofit.Endpoint;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.client.Client;
 
 public class TmdbApiFactory {
 
@@ -12,7 +13,7 @@ public class TmdbApiFactory {
 
     private final RestAdapter restAdapter;
 
-    public static TmdbApiFactory newInstance(final String apiKey) {
+    public static TmdbApiFactory newInstance(final String apiKey, Client client) {
         RequestInterceptor tmdbRequestInterceptor = new RequestInterceptor() {
 
             @Override
@@ -38,6 +39,7 @@ public class TmdbApiFactory {
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(tmdbEndpoint)
+                .setClient(client)
                 .setRequestInterceptor(tmdbRequestInterceptor)
                 .build();
 
