@@ -35,17 +35,23 @@ public class SettingsActivity extends ActionBarActivity {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Toast.makeText(getActivity(), "open OSS", Toast.LENGTH_SHORT).show();
-                    return false;
+                    Toast.makeText(getActivity(), "Open OSS", Toast.LENGTH_SHORT).show();
+                    return true;
                 }
 
             });
 
             Preference versionPreference = category.findPreference(getString(R.string.settings_pref_key_version));
             versionPreference.setSummary(BuildConfig.VERSION_NAME);
+            versionPreference.setOnPreferenceClickListener(new EasterEggPreferenceClickListener(getActivity(), new EasterEggPreferenceClickListener.EasterEgg() {
+
+                @Override
+                public void onClickSpammed() {
+                    Toast.makeText(getActivity(), "VC: " + BuildConfig.VERSION_CODE + "\n" + BuildConfig.BUILD_TIME, Toast.LENGTH_LONG).show();
+                }
+
+            }));
         }
-
-
     }
 
 }
