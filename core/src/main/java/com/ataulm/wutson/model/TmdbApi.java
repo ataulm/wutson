@@ -10,6 +10,6 @@ public interface TmdbApi {
     Observable<PopularShows> getPopularShows();
 
     @GET("/tv/{id}")
-    Observable<TvShow> getShow(@Path("id") String id);
+    Observable<TvShow> getTvShow(@Path("id") String id);
 
 }
