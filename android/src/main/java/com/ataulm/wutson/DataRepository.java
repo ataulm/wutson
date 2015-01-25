@@ -1,5 +1,6 @@
 package com.ataulm.wutson;
 
+import com.ataulm.wutson.model.Configuration;
 import com.ataulm.wutson.model.PopularShows;
 import com.ataulm.wutson.model.TmdbApi;
 import com.ataulm.wutson.model.TvShow;
@@ -47,8 +48,11 @@ public class DataRepository {
     }
 
     public Observable<TvShow> getTvShow(String id) {
-        // TODO: HTTP caching for tv-shows would be good!
         return api.getTvShow(id);
+    }
+
+    public Observable<Configuration> getConfiguration() {
+        return api.getConfiguration();
     }
 
 }

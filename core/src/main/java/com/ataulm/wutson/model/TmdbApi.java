@@ -6,6 +6,9 @@ import rx.Observable;
 
 public interface TmdbApi {
 
+    @GET("/configuration")
+    Observable<Configuration> getConfiguration();
+
     @GET("/tv/popular")
     Observable<PopularShows> getPopularShows();
 
