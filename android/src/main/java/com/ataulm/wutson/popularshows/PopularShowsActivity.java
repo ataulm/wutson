@@ -1,10 +1,15 @@
 package com.ataulm.wutson.popularshows;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.WutsonActivity;
+import com.ataulm.wutson.settings.SettingsActivity;
 import com.ataulm.wutson.tmdb.TmdbPopularShow;
 import com.ataulm.wutson.tmdb.TmdbPopularShows;
 
@@ -20,6 +25,28 @@ public class PopularShowsActivity extends WutsonActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popular_shows);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.popular_shows, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                return super.onOptionsItemSelected(item);
+            case R.id.popular_shows_menu_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            default:
+                throw new IllegalArgumentException("Unknown menu item: " + item);
+        }
     }
 
     @Override
