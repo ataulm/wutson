@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.WutsonActivity;
+import com.ataulm.wutson.WutsonTopLevelActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
 import com.ataulm.wutson.tmdb.TmdbPopularShow;
 import com.ataulm.wutson.tmdb.TmdbPopularShows;
@@ -17,7 +17,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class PopularShowsActivity extends WutsonActivity {
+public class PopularShowsActivity extends WutsonTopLevelActivity {
 
     private Subscription popularShowsSubscription;
 
