@@ -13,10 +13,11 @@
 
     <activity android:name="com.ataulm.wutson.popularshows.PopularShowsActivity" />
     <activity android:name="com.ataulm.wutson.settings.SettingsActivity" />
+    <activity android:name="com.ataulm.wutson.settings.SoftwareLicensesActivity" />
 
     <activity-alias
       android:name="activity.primary_launcher"
-      android:targetActivity="com.ataulm.wutson.settings.SettingsActivity">
+      android:targetActivity="com.ataulm.wutson.settings.SoftwareLicensesActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
