@@ -4,7 +4,7 @@ import android.content.Context;
 import android.preference.Preference;
 import android.widget.Toast;
 
-class EasterEggPreferenceClickListener implements Preference.OnPreferenceClickListener {
+final class EasterEggPreferenceClickListener implements Preference.OnPreferenceClickListener {
 
     private static final int DEFAULT_CLICKS_DISPLAY_THRESHOLD = 3;
     private static final int DEFAULT_CLICKS_TARGET = 7;
@@ -18,8 +18,12 @@ class EasterEggPreferenceClickListener implements Preference.OnPreferenceClickLi
     private Toast toast;
     private int count;
 
-    EasterEggPreferenceClickListener(Context context, EasterEgg easterEgg) {
-        this(context, easterEgg, DEFAULT_CLICKS_DISPLAY_THRESHOLD, DEFAULT_CLICKS_TARGET);
+    public static EasterEggPreferenceClickListener newInstance(Context context, EasterEgg easterEgg) {
+        return new EasterEggPreferenceClickListener(context, easterEgg, DEFAULT_CLICKS_DISPLAY_THRESHOLD, DEFAULT_CLICKS_TARGET);
+    }
+
+    public static EasterEggPreferenceClickListener newInstanceNoHints(Context context, EasterEgg easterEgg) {
+        return new EasterEggPreferenceClickListener(context, easterEgg, DEFAULT_CLICKS_TARGET, DEFAULT_CLICKS_TARGET);
     }
 
     EasterEggPreferenceClickListener(Context context, EasterEgg easterEgg, int clicksDisplayThreshold, int clicksTarget) {

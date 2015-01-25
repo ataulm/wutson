@@ -1,5 +1,6 @@
 package com.ataulm.wutson.settings;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -35,7 +36,7 @@ public class SettingsActivity extends ActionBarActivity {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Toast.makeText(getActivity(), "Open OSS", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getActivity(), SoftwareLicensesActivity.class));
                     return true;
                 }
 
@@ -43,14 +44,16 @@ public class SettingsActivity extends ActionBarActivity {
 
             Preference versionPreference = category.findPreference(getString(R.string.settings_pref_key_version));
             versionPreference.setSummary(BuildConfig.VERSION_NAME);
-            versionPreference.setOnPreferenceClickListener(new EasterEggPreferenceClickListener(getActivity(), new EasterEggPreferenceClickListener.EasterEgg() {
+            versionPreference.setOnPreferenceClickListener(EasterEggPreferenceClickListener.newInstanceNoHints(getActivity(),
+                    new EasterEggPreferenceClickListener.EasterEgg() {
 
-                @Override
-                public void onClickSpammed() {
-                    Toast.makeText(getActivity(), "VC: " + BuildConfig.VERSION_CODE + "\n" + BuildConfig.BUILD_TIME, Toast.LENGTH_LONG).show();
-                }
+                        @Override
+                        public void onClickSpammed() {
+                            String text = "Version code: " + BuildConfig.VERSION_CODE + "\n" + BuildConfig.BUILD_TIME;
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show();
+                        }
 
-            }));
+                    }));
         }
     }
 

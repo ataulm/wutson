@@ -17,7 +17,7 @@
 
     <activity-alias
       android:name="activity.primary_launcher"
-      android:targetActivity="com.ataulm.wutson.settings.SoftwareLicensesActivity">
+      android:targetActivity="com.ataulm.wutson.settings.SettingsActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
