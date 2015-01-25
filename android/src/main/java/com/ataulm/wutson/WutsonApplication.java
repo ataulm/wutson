@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.ataulm.wutson.model.TmdbApi;
 import com.ataulm.wutson.model.TmdbApiFactory;
+import com.ataulm.wutson.repository.DataRepository;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
