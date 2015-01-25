@@ -54,6 +54,7 @@ public class TvShowActivity extends WutsonActivity {
         public void onNext(TvShow tvShow) {
             Log.d("THING", "onCompleted");
             Log.d("THING", tvShow.getName());
+            Log.d("THING", tvShow.foo());
             for (TvShow.Season season : tvShow.getSeasons()) {
                 Log.d("THING", season.toString());
             }

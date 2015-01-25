@@ -15,12 +15,22 @@ public class TvShow {
     @SerializedName("seasons")
     List<Season> seasons;
 
+    private Configuration configuration;
+
     public String getName() {
         return name;
     }
 
     public List<Season> getSeasons() {
         return seasons;
+    }
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    public String foo() {
+        return configuration.images.baseUrl;
     }
 
     public class Season {
