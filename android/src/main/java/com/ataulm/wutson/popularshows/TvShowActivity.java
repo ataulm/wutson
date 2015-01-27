@@ -55,6 +55,7 @@ public class TvShowActivity extends WutsonActivity {
             Log.d("THING", "onCompleted");
             Log.d("THING", tvShow.getName());
             Log.d("THING", tvShow.getPosterPath());
+            Log.d("THING", tvShow.getOverview());
             for (TvShow.Season season : tvShow.getSeasons()) {
                 Log.d("THING", season.toString());
             }

@@ -42,6 +42,10 @@ public class TvShow {
         return configuration.getCompletePosterPath(posterPath);
     }
 
+    public String getOverview() {
+        return overview;
+    }
+
     public class Season {
 
         @SerializedName("season_number")
