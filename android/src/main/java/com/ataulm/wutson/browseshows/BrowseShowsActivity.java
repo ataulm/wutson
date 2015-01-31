@@ -1,4 +1,4 @@
-package com.ataulm.wutson.popularshows;
+package com.ataulm.wutson.browseshows;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.WutsonTopLevelActivity;
 import com.ataulm.wutson.model.DiscoverTvShows;
-import com.ataulm.wutson.model.PopularShows;
 import com.ataulm.wutson.settings.SettingsActivity;
 
 import java.util.List;
@@ -19,14 +18,14 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class PopularShowsActivity extends WutsonTopLevelActivity {
+public class BrowseShowsActivity extends WutsonTopLevelActivity {
 
-    private Subscription popularShowsSubscription;
+    private Subscription browseShowsSubscription;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_popular_shows);
+        setContentView(R.layout.activity_browse_shows);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
@@ -34,7 +33,7 @@ public class PopularShowsActivity extends WutsonTopLevelActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.popular_shows, menu);
+        getMenuInflater().inflate(R.menu.browse_shows, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -43,7 +42,7 @@ public class PopularShowsActivity extends WutsonTopLevelActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 return super.onOptionsItemSelected(item);
-            case R.id.popular_shows_menu_settings:
+            case R.id.browse_shows_menu_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             default:
@@ -54,43 +53,21 @@ public class PopularShowsActivity extends WutsonTopLevelActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        popularShowsSubscription = getDataRepository().getDiscoverTvShows()
+        browseShowsSubscription = getDataRepository().getBrowseShows()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DiscoverTvShowsObserver());
+                .subscribe(new BrowseShowsObserver());
     }
 
     @Override
     protected void onPause() {
-        if (!popularShowsSubscription.isUnsubscribed()) {
-            popularShowsSubscription.unsubscribe();
+        if (!browseShowsSubscription.isUnsubscribed()) {
+            browseShowsSubscription.unsubscribe();
         }
         super.onPause();
     }
 
-    private class Observer implements rx.Observer<PopularShows> {
-
-        @Override
-        public void onCompleted() {
-            Log.d("THING", "onCompleted");
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            throw new Error(e);
-        }
-
-        @Override
-        public void onNext(PopularShows popularShows) {
-            Log.d("THING", "onNext");
-            for (PopularShows.Show popularShow : popularShows) {
-                Log.d("THING", popularShow.toString());
-            }
-        }
-
-    }
-
-    private class DiscoverTvShowsObserver implements rx.Observer<List<DiscoverTvShows>> {
+    private class BrowseShowsObserver implements rx.Observer<List<DiscoverTvShows>> {
 
         @Override
         public void onCompleted() {

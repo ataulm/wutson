@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item
-    android:id="@+id/popular_shows_menu_settings"
+    android:id="@+id/browse_shows_menu_settings"
     android:title="Settings" />
 </menu>

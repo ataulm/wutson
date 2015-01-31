@@ -1,4 +1,4 @@
-package com.ataulm.wutson.popularshows;
+package com.ataulm.wutson.browseshows;
 
 import android.os.Bundle;
 import android.util.Log;
