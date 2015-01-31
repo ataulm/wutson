@@ -9,8 +9,11 @@ import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.WutsonTopLevelActivity;
+import com.ataulm.wutson.model.DiscoverTvShows;
 import com.ataulm.wutson.model.PopularShows;
 import com.ataulm.wutson.settings.SettingsActivity;
+
+import java.util.List;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -51,10 +54,10 @@ public class PopularShowsActivity extends WutsonTopLevelActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        popularShowsSubscription = getDataRepository().getPopularShows()
+        popularShowsSubscription = getDataRepository().getDiscoverTvShows()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer());
+                .subscribe(new DiscoverTvShowsObserver());
     }
 
     @Override
@@ -79,9 +82,34 @@ public class PopularShowsActivity extends WutsonTopLevelActivity {
 
         @Override
         public void onNext(PopularShows popularShows) {
-            Log.d("THING", "onCompleted");
+            Log.d("THING", "onNext");
             for (PopularShows.Show popularShow : popularShows) {
                 Log.d("THING", popularShow.toString());
+            }
+        }
+
+    }
+
+    private class DiscoverTvShowsObserver implements rx.Observer<List<DiscoverTvShows>> {
+
+        @Override
+        public void onCompleted() {
+            Log.d("THING", "onCompleted");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            throw new Error(e);
+        }
+
+        @Override
+        public void onNext(List<DiscoverTvShows> discoverTvShowsList) {
+            Log.d("THING", "onNext");
+            for (DiscoverTvShows discoverTvShows : discoverTvShowsList) {
+                Log.d("THING", "::: GENRE :::");
+                for (DiscoverTvShows.Show show : discoverTvShows) {
+                    Log.d("THING", show.toString());
+                }
             }
         }
 
