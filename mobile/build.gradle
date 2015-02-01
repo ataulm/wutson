@@ -40,7 +40,6 @@ android {
         buildConfigField "String", "TMDB_API_KEY", "\"$tmdbApiKey\""
     }
 
-
     buildTypes {
         debug {
             minifyEnabled false
