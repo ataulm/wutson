@@ -35,6 +35,15 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (viewPager.getCurrentItem() != 0) {
+            viewPager.setCurrentItem(0);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.browse_shows, menu);
         return super.onCreateOptionsMenu(menu);
