@@ -14,32 +14,39 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.4.0'
 }
 
-def androidCompileSdkVersionProp = 21
-def androidBuildToolsVersionProp = '21.1.2'
-def androidMinSdkVersionProp = 16
-def androidTargetSdkVersionProp = 21
-def androidVersionCodeProp = 1
-def androidVersionNameProp = '0.0.1'
 def tmdbApiKey = hasProperty('tmdbApiKey') ? tmdbApiKey : 'provide this in gradle.properties'
+def signingStoreFile = hasProperty('signingStoreFile') ? signingStoreFile : 'provide this in gradle.properties'
+def signingStorePassword = hasProperty('signingStorePassword') ? signingStorePassword : 'provide this in gradle.properties'
+def signingKeyAlias = hasProperty('signingKeyAlias') ? signingKeyAlias : 'provide this in gradle.properties'
+def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword : 'provide this in gradle.properties'
 
 android {
-    compileSdkVersion Integer.valueOf(androidCompileSdkVersionProp)
-    buildToolsVersion androidBuildToolsVersionProp
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         applicationId "com.ataulm.wutson"
-        minSdkVersion androidMinSdkVersionProp
-        targetSdkVersion androidTargetSdkVersionProp
-        versionCode Integer.valueOf(androidVersionCodeProp)
-        versionName androidVersionNameProp
+        minSdkVersion 16
+        targetSdkVersion 21
+        versionCode 1
+        versionName '0.0.1'
 
         Calendar instance = Calendar.getInstance()
         instance.setTimeInMillis(System.currentTimeMillis())
         def buildTime = instance.getTime()
         buildConfigField "String", "BUILD_TIME", "\"$buildTime\""
+
         buildConfigField "String", "TMDB_API_KEY", "\"$tmdbApiKey\""
     }
 
+    signingConfigs {
+        release {
+            storeFile file(signingStoreFile)
+            storePassword signingStorePassword
+            keyAlias signingKeyAlias
+            keyPassword signingKeyPassword
+        }
+    }
 
     buildTypes {
         debug {
@@ -48,6 +55,7 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
