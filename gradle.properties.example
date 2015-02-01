@@ -1,5 +1,12 @@
 # https://www.themoviedb.org/account > API
 tmdbApiKey=1a2b3c4d5e6f7g8h9i0j6f7g8h9i0j
+
 # from base
 bintrayUsername=username
 bintrayPassword=password
+
+# from Ataul
+signingStoreFile=/path/to/the/keystore
+signingStorePassword=password
+signingKeyAlias=keyAlias
+signingKeyPassword=password
