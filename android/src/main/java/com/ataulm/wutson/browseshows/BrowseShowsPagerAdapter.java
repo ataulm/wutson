@@ -40,7 +40,7 @@ class BrowseShowsPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        // Override, do nothing.
+        container.removeView((View) object);
     }
 
 }
