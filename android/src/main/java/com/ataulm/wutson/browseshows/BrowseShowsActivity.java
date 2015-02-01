@@ -88,7 +88,7 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
 
         @Override
         public void onError(Throwable e) {
-            throw new Error(e);
+            Log.e("THING", "Couldn't load data for BrowseShows", e);
         }
 
         @Override
