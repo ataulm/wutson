@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 
-  <ListView
+  <com.ataulm.wutson.NavigationDrawerView
     android:id="@+id/drawer_list"
     android:layout_width="240dp"
     android:layout_height="match_parent"

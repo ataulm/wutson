@@ -19,4 +19,8 @@ public abstract class WutsonActivity extends ActionBarActivity {
         return application.getDataRepository();
     }
 
+    protected ToastDisplayer getToaster() {
+        return application.getToastDisplayer();
+    }
+
 }

@@ -18,6 +18,7 @@ public class WutsonApplication extends Application {
     private static final int MAX_CACHE_SIZE = 1024;
 
     private DataRepository dataRepository;
+    private ToastDisplayer toastDisplayer;
 
     public DataRepository getDataRepository() {
         if (dataRepository == null) {
@@ -26,6 +27,13 @@ public class WutsonApplication extends Application {
             dataRepository = new DataRepository(api);
         }
         return dataRepository;
+    }
+
+    public ToastDisplayer getToastDisplayer() {
+        if (toastDisplayer == null) {
+            toastDisplayer = new ToastDisplayer(this);
+        }
+        return toastDisplayer;
     }
 
     private Client newClient() {
