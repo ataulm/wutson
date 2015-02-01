@@ -27,6 +27,14 @@ public class DiscoverTvShows implements Iterable<DiscoverTvShows.Show> {
         return shows.iterator();
     }
 
+    public int size() {
+        return shows.size();
+    }
+
+    public Show get(int position) {
+        return shows.get(position);
+    }
+
     public class Show {
 
         @SerializedName("name")

@@ -2,6 +2,7 @@ package com.ataulm.wutson.browseshows;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -21,6 +22,7 @@ import rx.schedulers.Schedulers;
 public class BrowseShowsActivity extends WutsonTopLevelActivity {
 
     private Subscription browseShowsSubscription;
+    private ViewPager viewPager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,8 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
+
+        viewPager = (ViewPager) findViewById(R.id.browse_shows_viewpager);
     }
 
     @Override
@@ -88,6 +92,8 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
                     Log.d("THING", show.toString());
                 }
             }
+
+            viewPager.setAdapter(new BrowseShowsPagerAdapter(getLayoutInflater(), discoverTvShowsList));
         }
 
     }

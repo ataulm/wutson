@@ -3,6 +3,12 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+  <android.support.v4.view.ViewPager
+    android:id="@+id/browse_shows_viewpager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_orange_light" />
+
   <android.support.v7.widget.Toolbar
     android:id="@+id/action_bar"
     style="@style/Wutson.Toolbar"
