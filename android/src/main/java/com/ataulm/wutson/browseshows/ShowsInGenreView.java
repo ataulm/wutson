@@ -11,63 +11,62 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.DiscoverTvShows;
 
-public class BrowseShowsByGenreView extends FrameLayout {
+public class ShowsInGenreView extends FrameLayout {
 
     private Adapter adapter;
 
-    public BrowseShowsByGenreView(Context context, AttributeSet attrs) {
+    public ShowsInGenreView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public BrowseShowsByGenreView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ShowsInGenreView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
     protected void onFinishInflate() {
-        View.inflate(getContext(), R.layout.merge_browse_shows_by_genre, this);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.browse_shows_by_genre_list);
+        View.inflate(getContext(), R.layout.merge_shows_in_genre, this);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.shows_in_genre_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adapter = new Adapter(LayoutInflater.from(getContext()));
         recyclerView.setAdapter(adapter);
     }
 
-    void update(DiscoverTvShows discoverTvShows) {
-        adapter.update(discoverTvShows);
+    void update(ShowsInGenre showsInGenre) {
+        adapter.update(showsInGenre);
     }
 
     private static class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         private final LayoutInflater layoutInflater;
-        private DiscoverTvShows discoverTvShows;
+        private ShowsInGenre showsInGenre;
 
         Adapter(LayoutInflater layoutInflater) {
             this.layoutInflater = layoutInflater;
         }
 
-        void update(DiscoverTvShows discoverTvShows) {
-            this.discoverTvShows = discoverTvShows;
+        void update(ShowsInGenre showsInGenre) {
+            this.showsInGenre = showsInGenre;
             notifyDataSetChanged();
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = layoutInflater.inflate(R.layout.view_browse_shows_by_genre_list_item, parent, false);
+            View view = layoutInflater.inflate(R.layout.view_shows_in_genre_list_item, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            DiscoverTvShows.Show show = discoverTvShows.get(position);
+            Show show = showsInGenre.get(position);
             holder.update(show);
         }
 
         @Override
         public int getItemCount() {
-            return discoverTvShows.size();
+            return showsInGenre.size();
         }
 
     }
@@ -78,8 +77,8 @@ public class BrowseShowsByGenreView extends FrameLayout {
             super(itemView);
         }
 
-        void update(DiscoverTvShows.Show show) {
-            ((TextView) itemView).setText(show.toString());
+        void update(Show show) {
+            ((TextView) itemView).setText(show.getName());
         }
 
     }

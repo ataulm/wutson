@@ -1,4 +1,4 @@
-package com.ataulm.wutson.repository;
+package com.ataulm.wutson.browseshows;
 
 import com.ataulm.wutson.model.Genres;
 import com.ataulm.wutson.model.TmdbApi;
@@ -8,7 +8,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
-class GenresRepository {
+public class GenresRepository {
 
     private final TmdbApi api;
     private final BehaviorSubject<Genres> subject;

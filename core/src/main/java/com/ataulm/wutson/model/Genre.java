@@ -14,6 +14,10 @@ public class Genre {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "Genre: " + name + " (" + id + ")";

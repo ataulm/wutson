@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.WutsonTopLevelActivity;
-import com.ataulm.wutson.model.DiscoverTvShows;
 import com.ataulm.wutson.settings.SettingsActivity;
 
 import java.util.List;
@@ -57,7 +56,7 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        browseShowsSubscription = getDataRepository().getBrowseShows()
+        browseShowsSubscription = getDataRepository().getShowsSeparatedByGenre()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BrowseShowsObserver());
@@ -71,7 +70,7 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
         super.onPause();
     }
 
-    private class BrowseShowsObserver implements rx.Observer<List<DiscoverTvShows>> {
+    private class BrowseShowsObserver implements rx.Observer<List<ShowsInGenre>> {
 
         @Override
         public void onCompleted() {
@@ -84,16 +83,15 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
         }
 
         @Override
-        public void onNext(List<DiscoverTvShows> discoverTvShowsList) {
+        public void onNext(List<ShowsInGenre> showsSeparateByGenre) {
             Log.d("THING", "onNext");
-            for (DiscoverTvShows discoverTvShows : discoverTvShowsList) {
-                Log.d("THING", "::: GENRE :::");
-                for (DiscoverTvShows.Show show : discoverTvShows) {
-                    Log.d("THING", show.toString());
+            for (ShowsInGenre shows : showsSeparateByGenre) {
+                Log.d("THING", "::: " + shows.getGenre() + " :::");
+                for (Show show : shows) {
+                    Log.d("THING", show.getName());
                 }
             }
-
-            viewPager.setAdapter(new BrowseShowsPagerAdapter(getLayoutInflater(), discoverTvShowsList));
+            viewPager.setAdapter(new BrowseShowsPagerAdapter(getLayoutInflater(), showsSeparateByGenre));
         }
 
     }

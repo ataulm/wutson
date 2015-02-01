@@ -38,7 +38,11 @@ public class DiscoverTvShows implements Iterable<DiscoverTvShows.Show> {
     public class Show {
 
         @SerializedName("name")
-        String name;
+        public final String name;
+
+        public Show(String name) {
+            this.name = name;
+        }
 
         @Override
         public String toString() {
