@@ -43,20 +43,20 @@ public class ShowsInGenreRepository {
                 return Observable.from(genres);
             }
 
-        }).flatMap(new Func1<Observable<Genre>, Observable<com.ataulm.wutson.discover.ShowsInGenre>>() {
+        }).flatMap(new Func1<Observable<Genre>, Observable<ShowsInGenre>>() {
 
             @Override
-            public Observable<com.ataulm.wutson.discover.ShowsInGenre> call(Observable<Genre> genreObservable) {
-                return genreObservable.flatMap(new Func1<Genre, Observable<com.ataulm.wutson.discover.ShowsInGenre>>() {
+            public Observable<ShowsInGenre> call(Observable<Genre> genreObservable) {
+                return genreObservable.flatMap(new Func1<Genre, Observable<ShowsInGenre>>() {
 
                     @Override
-                    public Observable<com.ataulm.wutson.discover.ShowsInGenre> call(final Genre genre) {
+                    public Observable<ShowsInGenre> call(final Genre genre) {
                         Observable<DiscoverTvShows> showsMatchingGenre = api.getShowsMatchingGenre(genre.getId());
-                        return showsMatchingGenre.map(new Func1<DiscoverTvShows, com.ataulm.wutson.discover.ShowsInGenre>() {
+                        return showsMatchingGenre.map(new Func1<DiscoverTvShows, ShowsInGenre>() {
 
                             @Override
-                            public com.ataulm.wutson.discover.ShowsInGenre call(DiscoverTvShows discoverTvShows) {
-                                return com.ataulm.wutson.discover.ShowsInGenre.from(genre, discoverTvShows);
+                            public ShowsInGenre call(DiscoverTvShows discoverTvShows) {
+                                return ShowsInGenre.from(genre, discoverTvShows);
                             }
 
                         });
