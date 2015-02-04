@@ -3,13 +3,12 @@ package com.ataulm.wutson.browseshows;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.WutsonTopLevelActivity;
+import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
 
 import java.util.List;
@@ -27,9 +26,6 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_shows);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
-        setSupportActionBar(toolbar);
 
         viewPager = (ViewPager) findViewById(R.id.browse_shows_viewpager);
     }

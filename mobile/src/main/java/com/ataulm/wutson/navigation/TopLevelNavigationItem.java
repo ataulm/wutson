@@ -1,9 +1,11 @@
-package com.ataulm.wutson;
+package com.ataulm.wutson.navigation;
 
 enum TopLevelNavigationItem {
 
-    BROWSE_SHOWS("Browse shows"),
-    SETTINGS("Settings");
+    MY_SHOWS("My Shows"),
+    DISCOVER_SHOWS("Discover"),
+    SETTINGS("Settings"),
+    HELP_FEEDBACK("Help & Feedback");
 
     private final String title;
 

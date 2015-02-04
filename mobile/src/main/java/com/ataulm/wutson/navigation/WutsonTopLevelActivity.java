@@ -1,7 +1,9 @@
-package com.ataulm.wutson;
+package com.ataulm.wutson.navigation;
 
 import android.support.v4.widget.DrawerLayout;
 import android.view.ViewGroup;
+
+import com.ataulm.wutson.R;
 
 public abstract class WutsonTopLevelActivity extends WutsonActivity {
 

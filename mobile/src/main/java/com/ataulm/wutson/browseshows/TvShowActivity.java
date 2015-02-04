@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.WutsonActivity;
+import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.model.TvShow;
 
 import rx.Subscription;

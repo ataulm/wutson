@@ -1,4 +1,4 @@
-package com.ataulm.wutson;
+package com.ataulm.wutson.navigation;
 
 import android.content.Context;
 import android.util.AttributeSet;
