@@ -54,7 +54,7 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             default:
-                throw new IllegalArgumentException("Unknown menu item: " + item);
+                return super.onOptionsItemSelected(item);
         }
     }
 

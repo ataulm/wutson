@@ -37,10 +37,6 @@ public abstract class WutsonActivity extends ActionBarActivity {
         super.setSupportActionBar(toolbar);
     }
 
-    protected Toolbar getAppBar() {
-        return toolbar;
-    }
-
     @Override
     public void setActionBar(android.widget.Toolbar toolbar) {
         throw new IllegalStateException("I thought we were using support android.support.v7.widget.Toolbar");
@@ -49,11 +45,6 @@ public abstract class WutsonActivity extends ActionBarActivity {
     @Nullable
     @Override
     public ActionBar getActionBar() {
-        throw new IllegalStateException("I thought we were using support android.support.v7.widget.Toolbar");
-    }
-
-    @Override
-    public android.support.v7.app.ActionBar getSupportActionBar() {
         throw new IllegalStateException("I thought we were using support android.support.v7.widget.Toolbar");
     }
 
