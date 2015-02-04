@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.browseshows.BrowseShowsActivity;
+import com.ataulm.wutson.discover.DiscoverActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
 
 public abstract class WutsonTopLevelActivity extends WutsonActivity {
@@ -40,7 +40,7 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
                 closeDrawer();
                 switch (item) {
                     case DISCOVER_SHOWS:
-                        startActivity(new Intent(WutsonTopLevelActivity.this, BrowseShowsActivity.class));
+                        startActivity(new Intent(WutsonTopLevelActivity.this, DiscoverActivity.class));
                         break;
                     case SETTINGS:
                         startActivity(new Intent(WutsonTopLevelActivity.this, SettingsActivity.class));

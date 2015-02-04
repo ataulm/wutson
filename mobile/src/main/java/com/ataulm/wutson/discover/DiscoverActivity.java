@@ -1,4 +1,4 @@
-package com.ataulm.wutson.browseshows;
+package com.ataulm.wutson.discover;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,17 +17,17 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class BrowseShowsActivity extends WutsonTopLevelActivity {
+public class DiscoverActivity extends WutsonTopLevelActivity {
 
-    private Subscription browseShowsSubscription;
+    private Subscription discoverShowsSubscription;
     private ViewPager viewPager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browse_shows);
+        setContentView(R.layout.activity_discover);
 
-        viewPager = (ViewPager) findViewById(R.id.browse_shows_viewpager);
+        viewPager = (ViewPager) findViewById(R.id.discover_viewpager);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.browse_shows, menu);
+        getMenuInflater().inflate(R.menu.discover, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -50,7 +50,7 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 return super.onOptionsItemSelected(item);
-            case R.id.browse_shows_menu_settings:
+            case R.id.discover_menu_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             default:
@@ -61,21 +61,21 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        browseShowsSubscription = getDataRepository().getShowsSeparatedByGenre()
+        discoverShowsSubscription = getDataRepository().getShowsSeparatedByGenre()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BrowseShowsObserver());
+                .subscribe(new Observer());
     }
 
     @Override
     protected void onPause() {
-        if (!browseShowsSubscription.isUnsubscribed()) {
-            browseShowsSubscription.unsubscribe();
+        if (!discoverShowsSubscription.isUnsubscribed()) {
+            discoverShowsSubscription.unsubscribe();
         }
         super.onPause();
     }
 
-    private class BrowseShowsObserver implements rx.Observer<List<ShowsInGenre>> {
+    private class Observer implements rx.Observer<List<ShowsInGenre>> {
 
         @Override
         public void onCompleted() {
@@ -96,7 +96,7 @@ public class BrowseShowsActivity extends WutsonTopLevelActivity {
                     Log.d("THING", show.getName());
                 }
             }
-            viewPager.setAdapter(new BrowseShowsPagerAdapter(getLayoutInflater(), showsSeparateByGenre));
+            viewPager.setAdapter(new DiscoverPagerAdapter(getLayoutInflater(), showsSeparateByGenre));
         }
 
     }

@@ -1,4 +1,4 @@
-package com.ataulm.wutson.browseshows;
+package com.ataulm.wutson.discover;
 
 public class Show {
 

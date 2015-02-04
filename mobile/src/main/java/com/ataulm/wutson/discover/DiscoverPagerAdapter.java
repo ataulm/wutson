@@ -1,4 +1,4 @@
-package com.ataulm.wutson.browseshows;
+package com.ataulm.wutson.discover;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -9,12 +9,12 @@ import com.ataulm.wutson.R;
 
 import java.util.List;
 
-class BrowseShowsPagerAdapter extends PagerAdapter {
+class DiscoverPagerAdapter extends PagerAdapter {
 
     private final LayoutInflater layoutInflater;
     private final List<ShowsInGenre> showsSeparatedByGenre;
 
-    public BrowseShowsPagerAdapter(LayoutInflater layoutInflater, List<ShowsInGenre> showsSeparatedByGenre) {
+    public DiscoverPagerAdapter(LayoutInflater layoutInflater, List<ShowsInGenre> showsSeparatedByGenre) {
         this.layoutInflater = layoutInflater;
         this.showsSeparatedByGenre = showsSeparatedByGenre;
     }

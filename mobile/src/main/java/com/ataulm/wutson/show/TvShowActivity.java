@@ -1,4 +1,4 @@
-package com.ataulm.wutson.browseshows;
+package com.ataulm.wutson.show;
 
 import android.os.Bundle;
 import android.util.Log;

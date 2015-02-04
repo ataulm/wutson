@@ -1,4 +1,4 @@
-package com.ataulm.wutson.browseshows;
+package com.ataulm.wutson.discover;
 
 import com.ataulm.wutson.model.Genres;
 import com.ataulm.wutson.model.TmdbApi;

@@ -1,4 +1,4 @@
-package com.ataulm.wutson.browseshows;
+package com.ataulm.wutson.discover;
 
 import com.ataulm.wutson.model.DiscoverTvShows;
 import com.ataulm.wutson.model.Genre;
@@ -17,7 +17,7 @@ public class ShowsInGenreRepository {
 
     private final TmdbApi api;
     private final GenresRepository genresRepository;
-    private final BehaviorSubject<List<com.ataulm.wutson.browseshows.ShowsInGenre>> subject;
+    private final BehaviorSubject<List<com.ataulm.wutson.discover.ShowsInGenre>> subject;
 
     private boolean initialised;
 
@@ -28,7 +28,7 @@ public class ShowsInGenreRepository {
         this.subject = BehaviorSubject.create();
     }
 
-    public Observable<List<com.ataulm.wutson.browseshows.ShowsInGenre>> getShowsSeparatedByGenre() {
+    public Observable<List<com.ataulm.wutson.discover.ShowsInGenre>> getShowsSeparatedByGenre() {
         if (!initialised) {
             refreshBrowseShows();
         }
@@ -43,20 +43,20 @@ public class ShowsInGenreRepository {
                 return Observable.from(genres);
             }
 
-        }).flatMap(new Func1<Observable<Genre>, Observable<com.ataulm.wutson.browseshows.ShowsInGenre>>() {
+        }).flatMap(new Func1<Observable<Genre>, Observable<com.ataulm.wutson.discover.ShowsInGenre>>() {
 
             @Override
-            public Observable<com.ataulm.wutson.browseshows.ShowsInGenre> call(Observable<Genre> genreObservable) {
-                return genreObservable.flatMap(new Func1<Genre, Observable<com.ataulm.wutson.browseshows.ShowsInGenre>>() {
+            public Observable<com.ataulm.wutson.discover.ShowsInGenre> call(Observable<Genre> genreObservable) {
+                return genreObservable.flatMap(new Func1<Genre, Observable<com.ataulm.wutson.discover.ShowsInGenre>>() {
 
                     @Override
-                    public Observable<com.ataulm.wutson.browseshows.ShowsInGenre> call(final Genre genre) {
+                    public Observable<com.ataulm.wutson.discover.ShowsInGenre> call(final Genre genre) {
                         Observable<DiscoverTvShows> showsMatchingGenre = api.getShowsMatchingGenre(genre.getId());
-                        return showsMatchingGenre.map(new Func1<DiscoverTvShows, com.ataulm.wutson.browseshows.ShowsInGenre>() {
+                        return showsMatchingGenre.map(new Func1<DiscoverTvShows, com.ataulm.wutson.discover.ShowsInGenre>() {
 
                             @Override
-                            public com.ataulm.wutson.browseshows.ShowsInGenre call(DiscoverTvShows discoverTvShows) {
-                                return com.ataulm.wutson.browseshows.ShowsInGenre.from(genre, discoverTvShows);
+                            public com.ataulm.wutson.discover.ShowsInGenre call(DiscoverTvShows discoverTvShows) {
+                                return com.ataulm.wutson.discover.ShowsInGenre.from(genre, discoverTvShows);
                             }
 
                         });
@@ -72,11 +72,11 @@ public class ShowsInGenreRepository {
                 .subscribe(subject);
     }
 
-    private Action1<List<com.ataulm.wutson.browseshows.ShowsInGenre>> markAsInitialised() {
-        return new Action1<List<com.ataulm.wutson.browseshows.ShowsInGenre>>() {
+    private Action1<List<com.ataulm.wutson.discover.ShowsInGenre>> markAsInitialised() {
+        return new Action1<List<com.ataulm.wutson.discover.ShowsInGenre>>() {
 
             @Override
-            public void call(List<com.ataulm.wutson.browseshows.ShowsInGenre> shows) {
+            public void call(List<com.ataulm.wutson.discover.ShowsInGenre> shows) {
                 initialised = true;
             }
 

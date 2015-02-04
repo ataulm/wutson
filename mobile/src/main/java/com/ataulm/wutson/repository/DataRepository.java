@@ -1,7 +1,7 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.browseshows.ShowsInGenre;
-import com.ataulm.wutson.browseshows.ShowsInGenreRepository;
+import com.ataulm.wutson.discover.ShowsInGenre;
+import com.ataulm.wutson.discover.ShowsInGenreRepository;
 import com.ataulm.wutson.model.Configuration;
 import com.ataulm.wutson.model.TmdbApi;
 import com.ataulm.wutson.model.TvShow;

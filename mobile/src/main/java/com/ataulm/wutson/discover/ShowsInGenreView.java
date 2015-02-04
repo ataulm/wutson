@@ -1,4 +1,4 @@
-package com.ataulm.wutson.browseshows;
+package com.ataulm.wutson.discover;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
