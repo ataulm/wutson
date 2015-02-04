@@ -5,16 +5,16 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 
-public class SettingsActivity extends ActionBarActivity {
+public class SettingsActivity extends WutsonTopLevelActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
     }

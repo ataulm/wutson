@@ -1,9 +1,12 @@
 package com.ataulm.wutson.navigation;
 
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.browseshows.BrowseShowsActivity;
+import com.ataulm.wutson.settings.SettingsActivity;
 
 public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
@@ -27,6 +30,19 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
             @Override
             public void onNavigationClick(TopLevelNavigationItem item) {
+                switch (item) {
+                    case DISCOVER_SHOWS:
+                        startActivity(new Intent(WutsonTopLevelActivity.this, BrowseShowsActivity.class));
+                        break;
+                    case SETTINGS:
+                        startActivity(new Intent(WutsonTopLevelActivity.this, SettingsActivity.class));
+                        break;
+                    default:
+                        onNotImplementedActionFor(item);
+                }
+            }
+
+            private void onNotImplementedActionFor(TopLevelNavigationItem item) {
                 String title = item.getTitle();
                 getToaster().display(title);
                 drawerLayout.closeDrawer(navigationDrawerView);

@@ -7,6 +7,13 @@
     android:id="@+id/settings_fragment"
     android:name="com.ataulm.wutson.settings.SettingsActivity$SettingsFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    android:layout_marginTop="?actionBarSize" />
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/action_bar"
+    style="@style/Wutson.Toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
 
 </merge>
