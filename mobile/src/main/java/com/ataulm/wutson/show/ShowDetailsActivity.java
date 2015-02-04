@@ -11,29 +11,31 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class TvShowActivity extends WutsonActivity {
+public class ShowDetailsActivity extends WutsonActivity {
 
-    private Subscription tvShowSubscription;
+    private Subscription showDetailsSubscription;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tv_show);
+        setContentView(R.layout.activity_show_details);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        tvShowSubscription = getDataRepository().getTvShow("1973-24")
+        showDetailsSubscription = getDataRepository().getTvShow("1973-24")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
+
+        Show arrow = new DummyShowMaker().getDummyShow();
     }
 
     @Override
     protected void onPause() {
-        if (!tvShowSubscription.isUnsubscribed()) {
-            tvShowSubscription.unsubscribe();
+        if (!showDetailsSubscription.isUnsubscribed()) {
+            showDetailsSubscription.unsubscribe();
         }
         super.onPause();
     }
