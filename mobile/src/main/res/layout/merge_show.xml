@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <com.ataulm.wutson.show.WidthBasedCorrectAspectRatioImageView
+    android:id="@+id/show_view_image_poster"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:contentDescription="@null"
+    android:scaleType="fitStart" />
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:paddingTop="160dp">
+
+      <com.ataulm.wutson.show.ShowHeaderView
+        android:id="@+id/show_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_dark"
+        android:orientation="vertical" />
+
+      <TextView
+        android:id="@+id/show_view_text_seasons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#80FFFFFF"
+        android:text="View all seasons" />
+
+      <com.ataulm.wutson.show.CastView
+        android:id="@+id/show_view_cast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#80FFFFFF" />
+    </LinearLayout>
+  </ScrollView>
+</merge>

@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.model.TvShow;
+import com.ataulm.wutson.navigation.WutsonActivity;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,6 +19,10 @@ public class ShowDetailsActivity extends WutsonActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
+
+        Show arrow = new DummyShowMaker().getDummyShow();
+        ShowView showView = (ShowView) findViewById(R.id.show_details_show);
+        showView.present(arrow);
     }
 
     @Override
@@ -28,8 +32,6 @@ public class ShowDetailsActivity extends WutsonActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
-
-        Show arrow = new DummyShowMaker().getDummyShow();
     }
 
     @Override

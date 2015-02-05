@@ -1,8 +1,6 @@
 package com.ataulm.wutson.show;
 
 import java.net.URI;
-import java.util.Iterator;
-import java.util.List;
 
 public class Show {
 
@@ -26,41 +24,12 @@ public class Show {
         return posterUri;
     }
 
-    static class Cast implements Iterable<Character> {
-
-        private final List<Character> characters;
-
-        Cast(List<Character> characters) {
-            this.characters = characters;
-        }
-
-        @Override
-        public Iterator<Character> iterator() {
-            return characters.iterator();
-        }
-
+    public String getOverview() {
+        return overview;
     }
 
-    static class Character {
-
-        private final String name;
-        private final Actor actor;
-
-        Character(String name, Actor actor) {
-            this.name = name;
-            this.actor = actor;
-        }
-
-    }
-
-    static class Actor {
-
-        private final String name;
-
-        Actor(String name) {
-            this.name = name;
-        }
-
+    public Cast getCast() {
+        return cast;
     }
 
 }

@@ -12,20 +12,20 @@ public class DummyShowMaker {
                 " and corruption as a secret vigilante whose weapon of choice is a bow and arrows. Arrow will also feature appearances" +
                 " by other DC Comics characters. To assist in promotion, a preview comic book was released to tie into the television series.";
         URI posterUri = URI.create("https://image.tmdb.org/t/p/w396/adVtiOQ5JoQR5HkyBHWfHiyNlv2.jpg");
-        Show.Cast cast = getArrowCast();
+        Cast cast = getArrowCast();
 
         return new Show(name, overview, posterUri, cast);
     }
 
-    private Show.Cast getArrowCast() {
-        Show.Character oliver = new Show.Character("Oliver Queen / Green Arrow", new Show.Actor("Stephen Amell"));
-        Show.Character laurel = new Show.Character("Laurel Lance / Black Canary", new Show.Actor("Katie Cassidy"));
-        Show.Character roy = new Show.Character("Roy Harper / Arsenal", new Show.Actor("Colton Haynes"));
-        Show.Character diggle = new Show.Character("John Diggle", new Show.Actor("David Ramsey"));
-        Show.Character detective = new Show.Character("Detective Quentin Lance", new Show.Actor("Paul Blackthorne"));
-        Show.Character thea = new Show.Character("Thea Queen", new Show.Actor("Willa Holland"));
+    private Cast getArrowCast() {
+        Character oliver = new Character("Oliver Queen / Green Arrow", new Actor("Stephen Amell"));
+        Character laurel = new Character("Laurel Lance / Black Canary", new Actor("Katie Cassidy"));
+        Character roy = new Character("Roy Harper / Arsenal", new Actor("Colton Haynes"));
+        Character diggle = new Character("John Diggle", new Actor("David Ramsey"));
+        Character detective = new Character("Detective Quentin Lance", new Actor("Paul Blackthorne"));
+        Character thea = new Character("Thea Queen", new Actor("Willa Holland"));
 
-        return new Show.Cast(Arrays.asList(oliver, laurel, roy, diggle, detective, thea));
+        return new Cast(Arrays.asList(oliver, laurel, roy, diggle, detective, thea));
     }
 
 }

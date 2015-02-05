@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.ToastDisplayer;
@@ -34,7 +35,17 @@ public abstract class WutsonActivity extends ActionBarActivity {
     }
 
     protected void setAppBar(Toolbar toolbar) {
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         super.setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            getToaster().display("if (tracked) up to My Shows, else up to Discover?");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

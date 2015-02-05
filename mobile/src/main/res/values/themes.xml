@@ -8,6 +8,6 @@
     <item name="windowActionBar">false</item>
   </style>
 
-  <style name="Wutson.Theme.BrowseShows" />
+  <style name="Wutson.Theme.Discover" />
 
 </resources>

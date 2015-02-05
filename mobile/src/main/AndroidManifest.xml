@@ -1,24 +1,28 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.ataulm.wutson">
+<manifest
+  package="com.ataulm.wutson"
+  xmlns:android="http://schemas.android.com/apk/res/android">
 
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.INTERNET" />
 
   <application
     android:name="com.ataulm.wutson.WutsonApplication"
-    android:label="@string/app_name"
-    android:theme="@style/Wutson.Theme"
+    android:allowBackup="true"
     android:icon="@drawable/ic_launcher"
-    android:allowBackup="true">
+    android:label="@string/app_name"
+    android:theme="@style/Wutson.Theme">
 
     <activity android:name="com.ataulm.wutson.discover.DiscoverActivity" />
-    <activity android:name=".show.ShowDetailsActivity" />
+    <activity
+      android:name="com.ataulm.wutson.show.ShowDetailsActivity"
+      android:parentActivityName="com.ataulm.wutson.discover.DiscoverActivity" />
     <activity android:name="com.ataulm.wutson.settings.SettingsActivity" />
     <activity android:name="com.ataulm.wutson.settings.SoftwareLicensesActivity" />
 
     <activity-alias
       android:name="activity.primary_launcher"
-      android:targetActivity=".show.ShowDetailsActivity">
+      android:targetActivity="com.ataulm.wutson.show.ShowDetailsActivity">
+      <!--android:targetActivity="com.ataulm.wutson.discover.DiscoverActivity">-->
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
