@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="ShowDetails" />
+
+  <style name="ShowDetails.ShowHeader" />
+
+  <style name="ShowDetails.ShowHeader.View">
+    <item name="android:paddingLeft">16dp</item>
+    <item name="android:paddingTop">16dp</item>
+    <item name="android:paddingRight">16dp</item>
+    <item name="android:paddingBottom">16dp</item>
+    <item name="android:background">#CCCCCC</item>
+  </style>
+
+  <style name="ShowDetails.ShowHeader.Name">
+    <item name="android:textAppearance">@style/ShowDetails.ShowHeader.TextAppearance.Name</item>
+  </style>
+
+  <style name="ShowDetails.ShowHeader.Overview">
+    <item name="android:textAppearance">@style/ShowDetails.ShowHeader.TextAppearance.Overview</item>
+  </style>
+
+  <style name="ShowDetails.ShowHeader.TextAppearance">
+    <item name="android:textColor">#666666</item>
+  </style>
+
+  <style name="ShowDetails.ShowHeader.TextAppearance.Name">
+    <item name="android:textSize">24sp</item>
+  </style>
+
+  <style name="ShowDetails.ShowHeader.TextAppearance.Overview">
+    <item name="android:textSize">16sp</item>
+  </style>
+
+</resources>

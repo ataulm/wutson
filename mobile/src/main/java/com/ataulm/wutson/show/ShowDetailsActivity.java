@@ -23,8 +23,8 @@ public class ShowDetailsActivity extends WutsonActivity {
         setContentView(R.layout.activity_show_details);
 
         Show arrow = new DummyShowMaker().getDummyShow();
-        Displayer<Show> showView = Displayers.findById(this, R.id.show_details_show);
-        showView.display(arrow);
+        Displayer<Show> showDisplayer = Displayers.findById(this, R.id.show_details_show);
+        showDisplayer.display(arrow);
     }
 
     @Override

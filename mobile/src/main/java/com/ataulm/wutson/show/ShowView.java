@@ -38,8 +38,6 @@ public class ShowView extends FrameLayout implements Displayer<Show> {
         castDisplayer = Displayers.findById(this, R.id.show_view_cast);
     }
 
-
-
     @Override
     public void display(Show show) {
         Glide.with(getContext())
