@@ -18,12 +18,12 @@ public class DummyShowMaker {
     }
 
     private Cast getArrowCast() {
-        Character oliver = new Character("Oliver Queen / Green Arrow", new Actor("Stephen Amell"));
-        Character laurel = new Character("Laurel Lance / Black Canary", new Actor("Katie Cassidy"));
-        Character roy = new Character("Roy Harper / Arsenal", new Actor("Colton Haynes"));
-        Character diggle = new Character("John Diggle", new Actor("David Ramsey"));
-        Character detective = new Character("Detective Quentin Lance", new Actor("Paul Blackthorne"));
-        Character thea = new Character("Thea Queen", new Actor("Willa Holland"));
+        Character oliver = new Character("Oliver Queen / Green Arrow", new Actor("Stephen Amell", URI.create("https://image.tmdb.org/t/p/w185/kTe4RYfqFze7N6HX1HEnNfHBZ2w.jpg")));
+        Character laurel = new Character("Laurel Lance / Black Canary", new Actor("Katie Cassidy", URI.create("https://image.tmdb.org/t/p/w185/lRhzzdmt29n8PDi63QX5MLPAUFz.jpg")));
+        Character roy = new Character("Roy Harper / Arsenal", new Actor("Colton Haynes", URI.create("https://image.tmdb.org/t/p/w185/c5s8Nbl9SbBILyc8wQINkFzJgro.jpg")));
+        Character diggle = new Character("John Diggle", new Actor("David Ramsey", URI.create("https://image.tmdb.org/t/p/w185/8ZbdY0yrA4GTg0g9LrrhzDHRRy.jpg")));
+        Character detective = new Character("Detective Quentin Lance", new Actor("Paul Blackthorne", URI.create("https://image.tmdb.org/t/p/w185/cr11VQutjQCjPK8sq1ec08c04yw.jpg")));
+        Character thea = new Character("Thea Queen", new Actor("Willa Holland", URI.create("https://image.tmdb.org/t/p/w185/wSn01hjcRFnamCrvhbUJyeMIbxo.jpg")));
 
         return new Cast(Arrays.asList(oliver, laurel, roy, diggle, detective, thea));
     }
