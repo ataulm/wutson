@@ -3,6 +3,8 @@ package com.ataulm.wutson.show;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.ataulm.wutson.Displayer;
+import com.ataulm.wutson.Displayers;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.TvShow;
 import com.ataulm.wutson.navigation.WutsonActivity;
@@ -21,8 +23,8 @@ public class ShowDetailsActivity extends WutsonActivity {
         setContentView(R.layout.activity_show_details);
 
         Show arrow = new DummyShowMaker().getDummyShow();
-        ShowView showView = (ShowView) findViewById(R.id.show_details_show);
-        showView.present(arrow);
+        Displayer<Show> showView = Displayers.findById(this, R.id.show_details_show);
+        showView.display(arrow);
     }
 
     @Override

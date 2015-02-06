@@ -7,19 +7,19 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ataulm.wutson.Presenter;
-import com.ataulm.wutson.Presenters;
+import com.ataulm.wutson.Displayer;
+import com.ataulm.wutson.Displayers;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.WutsonApplication;
 import com.bumptech.glide.Glide;
 
-public class ShowView extends FrameLayout implements Presenter<Show> {
+public class ShowView extends FrameLayout implements Displayer<Show> {
 
     private ImageView posterImageView;
     private TextView seasonsTextView;
-    private Presenter<Show> headerPresenter;
-    private Presenter<Cast> castPresenter;
+    private Displayer<Show> headerDisplayer;
+    private Displayer<Cast> castDisplayer;
 
     public ShowView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,22 +34,29 @@ public class ShowView extends FrameLayout implements Presenter<Show> {
         View.inflate(getContext(), R.layout.merge_show, this);
         posterImageView = (ImageView) findViewById(R.id.show_view_image_poster);
         seasonsTextView = (TextView) findViewById(R.id.show_view_text_seasons);
-        headerPresenter = Presenters.findById(this, R.id.show_header);
-        castPresenter = Presenters.findById(this, R.id.show_view_cast);
+        headerDisplayer = Displayers.findById(this, R.id.show_header);
+        castDisplayer = Displayers.findById(this, R.id.show_view_cast);
     }
 
+
+
     @Override
-    public void present(Show show) {
-        Glide.with(getContext()).load(show.getPosterUri().toString()).into(posterImageView);
-        headerPresenter.present(show);
+    public void display(Show show) {
+        Glide.with(getContext())
+                .load(show.getPosterUri().toString())
+                .into(posterImageView);
+
+        headerDisplayer.display(show);
+        castDisplayer.display(show.getCast());
         seasonsTextView.setOnClickListener(new OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 ToastDisplayer toastDisplayer = ((WutsonApplication) getContext().getApplicationContext()).getToastDisplayer();
                 toastDisplayer.display("show me the seasons!");
             }
+
         });
-        castPresenter.present(show.getCast());
     }
 
 }

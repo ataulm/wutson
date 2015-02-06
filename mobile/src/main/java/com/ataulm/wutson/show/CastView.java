@@ -4,15 +4,16 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.ataulm.wutson.Presenter;
-import com.ataulm.wutson.Presenters;
+import com.ataulm.wutson.Displayer;
 import com.ataulm.wutson.R;
 
-public class CastView extends LinearLayout implements Presenter<Cast> {
+public class CastView extends LinearLayout implements Displayer<Cast> {
 
     private final LayoutInflater layoutInflater;
+    private ViewGroup castContainer;
 
     public CastView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -31,22 +32,23 @@ public class CastView extends LinearLayout implements Presenter<Cast> {
     @Override
     protected void onFinishInflate() {
         super.setOrientation(VERTICAL);
+        View.inflate(getContext(), R.layout.merge_cast, this);
+        castContainer = (ViewGroup) findViewById(R.id.cast_container);
     }
 
     @Override
-    public void present(Cast cast) {
-        removeAllViews();
+    public void display(Cast cast) {
+        castContainer.removeAllViews();
         for (Character character : cast) {
             View characterView = getViewFor(character);
-            addView(characterView);
+            castContainer.addView(characterView);
         }
     }
 
     private View getViewFor(Character character) {
-        Presenter<Character> characterPresenter = Presenters.inflateFromLayout(layoutInflater, this, R.layout.view_character);
-        characterPresenter.present(character);
-
-        return (View) characterPresenter;
+        CharacterView characterView = ((CharacterView) layoutInflater.inflate(R.layout.view_character, this, false));
+        characterView.display(character);
+        return characterView;
     }
 
 }

@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ataulm.wutson.Presenter;
+import com.ataulm.wutson.Displayer;
 import com.ataulm.wutson.R;
 
-public class ShowHeaderView extends LinearLayout implements Presenter<Show> {
+public class ShowHeaderView extends LinearLayout implements Displayer<Show> {
 
     private TextView nameTextView;
     private TextView overviewTextView;
@@ -30,7 +30,7 @@ public class ShowHeaderView extends LinearLayout implements Presenter<Show> {
     }
 
     @Override
-    public void present(Show show) {
+    public void display(Show show) {
         nameTextView.setText(show.getName());
         overviewTextView.setText(show.getOverview());
     }

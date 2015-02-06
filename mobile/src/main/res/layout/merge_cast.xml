@@ -4,13 +4,14 @@
   android:layout_height="match_parent">
 
   <TextView
-    android:id="@+id/show_header_text_name"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="match_parent"
+    android:text="Cast" />
 
-  <TextView
-    android:id="@+id/show_header_text_overview"
+  <LinearLayout
+    android:id="@+id/cast_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="match_parent"
+    android:orientation="vertical" />
 
 </merge>

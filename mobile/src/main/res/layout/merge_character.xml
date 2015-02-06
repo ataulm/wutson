@@ -3,15 +3,23 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+  <ImageView
+    android:id="@+id/character_image_profile"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:contentDescription="@null" />
+
   <TextView
     android:id="@+id/character_text_name"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@id/character_image_profile" />
 
   <TextView
     android:id="@+id/character_text_actor"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/character_text_name"/>
+    android:layout_below="@id/character_text_name"
+    android:layout_toRightOf="@id/character_image_profile" />
 
 </merge>
