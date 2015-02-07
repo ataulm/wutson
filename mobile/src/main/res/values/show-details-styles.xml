@@ -47,4 +47,40 @@
     <item name="android:textAllCaps">true</item>
   </style>
 
+  <style name="ShowDetails.Cast" />
+
+  <style name="ShowDetails.Cast.View">
+    <item name="android:paddingLeft">16dp</item>
+    <item name="android:paddingTop">16dp</item>
+    <item name="android:paddingRight">16dp</item>
+    <item name="android:paddingBottom">16dp</item>
+  </style>
+
+  <style name="ShowDetails.Cast.Title">
+    <item name="android:paddingBottom">16dp</item>
+    <item name="android:textAppearance">@style/ShowDetails.Cast.Title.TextAppearance</item>
+  </style>
+
+  <style name="ShowDetails.Cast.Title.TextAppearance">
+    <item name="android:textSize">16sp</item>
+  </style>
+
+  <style name="ShowDetails.Cast.Character" />
+
+  <style name="ShowDetails.Cast.Character.View" />
+
+  <style name="ShowDetails.Cast.Character.Profile">
+    <item name="android:scaleType">centerCrop</item>
+  </style>
+
+  <style name="ShowDetails.Cast.Character.Name">
+    <item name="android:paddingLeft">16dp</item>
+    <item name="android:gravity">bottom</item>
+  </style>
+
+  <style name="ShowDetails.Cast.Character.Actor">
+    <item name="android:paddingLeft">16dp</item>
+    <item name="android:gravity">top</item>
+  </style>
+
 </resources>
