@@ -11,6 +11,7 @@
     android:scaleType="fitStart" />
 
   <ScrollView
+    android:id="@+id/show_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -19,7 +20,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:paddingTop="160dp">
+      android:paddingTop="@dimen/show_details_padding_top">
 
       <com.ataulm.wutson.show.ShowHeaderView
         android:id="@+id/show_header"

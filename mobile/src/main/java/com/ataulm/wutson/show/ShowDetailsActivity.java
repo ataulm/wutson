@@ -1,10 +1,10 @@
 package com.ataulm.wutson.show;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.ataulm.wutson.Displayer;
-import com.ataulm.wutson.Displayers;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.TvShow;
 import com.ataulm.wutson.navigation.WutsonActivity;
@@ -16,15 +16,25 @@ import rx.schedulers.Schedulers;
 public class ShowDetailsActivity extends WutsonActivity {
 
     private Subscription showDetailsSubscription;
+    private ShowView showView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
+        showView = (ShowView) findViewById(R.id.show_details_show);
+    }
 
-        Show arrow = new DummyShowMaker().getDummyShow();
-        Displayer<Show> showDisplayer = Displayers.findById(this, R.id.show_details_show);
-        showDisplayer.display(arrow);
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        customiseShowDetailsToolbar();
+    }
+
+    private void customiseShowDetailsToolbar() {
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getToolbar().getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        getToolbar().getBackground().setAlpha(0);
     }
 
     @Override
@@ -65,6 +75,10 @@ public class ShowDetailsActivity extends WutsonActivity {
             for (TvShow.Season season : tvShow.getSeasons()) {
                 Log.d("THING", season.toString());
             }
+
+            ShowView.ScrollListener scrollListener = ShowViewScrollListener.newInstance(getResources(), getToolbar().getNavigationIcon(), getToolbar().getBackground());
+            showView.setScrollListener(scrollListener);
+            showView.display(new DummyShowMaker().getDummyShow());
         }
 
     }

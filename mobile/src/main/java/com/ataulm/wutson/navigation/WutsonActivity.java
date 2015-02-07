@@ -39,6 +39,10 @@ public abstract class WutsonActivity extends ActionBarActivity {
         super.setSupportActionBar(toolbar);
     }
 
+    protected Toolbar getToolbar() {
+        return toolbar;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
