@@ -34,6 +34,11 @@
         android:layout_height="wrap_content"
         android:text="View all seasons" />
 
+      <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#999999" />
+
       <com.ataulm.wutson.show.CastView
         android:id="@+id/show_view_cast"
         android:layout_width="match_parent"
