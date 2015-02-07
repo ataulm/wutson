@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.TvShow;
 import com.ataulm.wutson.navigation.WutsonActivity;
 
 import rx.Subscription;
@@ -40,7 +39,7 @@ public class ShowDetailsActivity extends WutsonActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        showDetailsSubscription = getDataRepository().getTvShow("1973-24")
+        showDetailsSubscription = getDataRepository().getShow("1973-24")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
@@ -54,7 +53,7 @@ public class ShowDetailsActivity extends WutsonActivity {
         super.onPause();
     }
 
-    private class Observer implements rx.Observer<TvShow> {
+    private class Observer implements rx.Observer<Show> {
 
         @Override
         public void onCompleted() {
@@ -67,18 +66,12 @@ public class ShowDetailsActivity extends WutsonActivity {
         }
 
         @Override
-        public void onNext(TvShow tvShow) {
+        public void onNext(Show show) {
             Log.d("THING", "onCompleted");
-            Log.d("THING", tvShow.getName());
-            Log.d("THING", tvShow.getPosterPath());
-            Log.d("THING", tvShow.getOverview());
-            for (TvShow.Season season : tvShow.getSeasons()) {
-                Log.d("THING", season.toString());
-            }
 
             ShowView.ScrollListener scrollListener = ShowViewScrollListener.newInstance(getResources(), getToolbar().getNavigationIcon(), getToolbar().getBackground());
             showView.setScrollListener(scrollListener);
-            showView.display(new DummyShowMaker().getDummyShow());
+            showView.display(show);
         }
 
     }

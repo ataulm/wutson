@@ -5,7 +5,11 @@ import com.ataulm.wutson.discover.ShowsInGenreRepository;
 import com.ataulm.wutson.model.Configuration;
 import com.ataulm.wutson.model.TmdbApi;
 import com.ataulm.wutson.model.TvShow;
+import com.ataulm.wutson.show.Cast;
+import com.ataulm.wutson.show.Show;
 
+import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -32,8 +36,17 @@ public class DataRepository {
         return showsInGenreRepository.getShowsSeparatedByGenre();
     }
 
-    public Observable<TvShow> getTvShow(final String showId) {
-        return getConfiguration().flatMap(getTvShowWith(showId));
+    public Observable<Show> getShow(final String showId) {
+        return getConfiguration().flatMap(getTvShowWith(showId)).map(new Func1<TvShow, Show>() {
+            @Override
+            public Show call(TvShow tvShow) {
+                String name = tvShow.getName();
+                String overview = tvShow.getOverview();
+                URI posterUri = URI.create(tvShow.getPosterPath());
+                Cast cast = new Cast(Collections.EMPTY_LIST);
+                return new Show(name, overview, posterUri, cast);
+            }
+        });
     }
 
     private Func1<Configuration, Observable<TvShow>> getTvShowWith(final String id) {

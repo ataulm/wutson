@@ -9,7 +9,7 @@ public class Show {
     private final URI posterUri;
     private final Cast cast;
 
-    Show(String name, String overview, URI posterUri, Cast cast) {
+    public Show(String name, String overview, URI posterUri, Cast cast) {
         this.name = name;
         this.overview = overview;
         this.posterUri = posterUri;
