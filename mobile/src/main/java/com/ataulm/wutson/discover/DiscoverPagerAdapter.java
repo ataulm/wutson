@@ -13,17 +13,19 @@ class DiscoverPagerAdapter extends PagerAdapter {
 
     private final LayoutInflater layoutInflater;
     private final List<ShowsInGenre> showsSeparatedByGenre;
+    private final OnShowClickListener listener;
 
-    public DiscoverPagerAdapter(LayoutInflater layoutInflater, List<ShowsInGenre> showsSeparatedByGenre) {
+    public DiscoverPagerAdapter(LayoutInflater layoutInflater, List<ShowsInGenre> showsSeparatedByGenre, OnShowClickListener listener) {
         this.layoutInflater = layoutInflater;
         this.showsSeparatedByGenre = showsSeparatedByGenre;
+        this.listener = listener;
     }
 
     @Override
     public View instantiateItem(ViewGroup container, int position) {
         ShowsInGenreView view = (ShowsInGenreView) layoutInflater.inflate(R.layout.view_shows_in_genre, container, false);
         ShowsInGenre showsInGenre = showsSeparatedByGenre.get(position);
-        view.update(showsInGenre);
+        view.update(showsInGenre, listener);
         container.addView(view);
         return view;
     }

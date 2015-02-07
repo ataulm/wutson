@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
+import com.ataulm.wutson.show.ShowDetailsActivity;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DiscoverActivity extends WutsonTopLevelActivity {
+public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowClickListener {
 
     private Subscription discoverShowsSubscription;
     private ViewPager viewPager;
@@ -75,6 +76,11 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
         super.onPause();
     }
 
+    @Override
+    public void onClick(Show show) {
+        startActivity(new Intent(this, ShowDetailsActivity.class));
+    }
+
     private class Observer implements rx.Observer<List<ShowsInGenre>> {
 
         @Override
@@ -96,7 +102,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
                     Log.d("THING", show.getName());
                 }
             }
-            viewPager.setAdapter(new DiscoverPagerAdapter(getLayoutInflater(), showsSeparateByGenre));
+            viewPager.setAdapter(new DiscoverPagerAdapter(getLayoutInflater(), showsSeparateByGenre, DiscoverActivity.this));
         }
 
     }

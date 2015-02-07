@@ -17,6 +17,7 @@ public class ShowsInGenreView extends FrameLayout {
     private static final int SPAN_COUNT = 2;
 
     private Adapter adapter;
+    private OnShowClickListener listener;
 
     public ShowsInGenreView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -36,11 +37,12 @@ public class ShowsInGenreView extends FrameLayout {
         recyclerView.setAdapter(adapter);
     }
 
-    void update(ShowsInGenre showsInGenre) {
+    void update(ShowsInGenre showsInGenre, OnShowClickListener listener) {
         adapter.update(showsInGenre);
+        this.listener = listener;
     }
 
-    private static class Adapter extends RecyclerView.Adapter<ViewHolder> {
+    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
         private final LayoutInflater layoutInflater;
         private ShowsInGenre showsInGenre;
@@ -73,14 +75,22 @@ public class ShowsInGenreView extends FrameLayout {
 
     }
 
-    private static class ViewHolder extends RecyclerView.ViewHolder {
+    private class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(View itemView) {
             super(itemView);
         }
 
-        void update(Show show) {
+        void update(final Show show) {
             ((TextView) itemView).setText(show.getName());
+            itemView.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    listener.onClick(show);
+                }
+
+            });
         }
 
     }
