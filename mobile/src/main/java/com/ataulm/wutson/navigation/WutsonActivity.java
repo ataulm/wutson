@@ -46,7 +46,7 @@ public abstract class WutsonActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            getToaster().display("if (tracked) up to My Shows, else up to Discover?");
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

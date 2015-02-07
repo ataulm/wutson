@@ -21,8 +21,8 @@
 
     <activity-alias
       android:name="activity.primary_launcher"
-      android:targetActivity="com.ataulm.wutson.show.ShowDetailsActivity">
-      <!--android:targetActivity="com.ataulm.wutson.discover.DiscoverActivity">-->
+      android:targetActivity="com.ataulm.wutson.discover.DiscoverActivity">
+      <!--android:targetActivity="com.ataulm.wutson.show.ShowDetailsActivity">-->
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
