@@ -12,3 +12,4 @@
 
 # RxJava
 -dontwarn sun.misc.Unsafe
+-keepattributes Signature
