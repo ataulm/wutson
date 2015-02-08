@@ -78,7 +78,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
 
     @Override
     public void onClick(Show show) {
-        startActivity(new Intent(this, ShowDetailsActivity.class));
+        startActivity(new Intent(this, ShowDetailsActivity.class).putExtra(ShowDetailsActivity.TMDB_SHOW_ID, show.getId()));
     }
 
     private class Observer implements rx.Observer<List<ShowsInGenre>> {

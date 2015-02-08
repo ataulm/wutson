@@ -14,6 +14,8 @@ import rx.schedulers.Schedulers;
 
 public class ShowDetailsActivity extends WutsonActivity {
 
+    public static final String TMDB_SHOW_ID = "TMDB_SHOW_ID";
+
     private Subscription showDetailsSubscription;
     private ShowView showView;
 
@@ -39,7 +41,7 @@ public class ShowDetailsActivity extends WutsonActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        showDetailsSubscription = getDataRepository().getShow("1973-24")
+        showDetailsSubscription = getDataRepository().getShow(getIntent().getStringExtra(TMDB_SHOW_ID))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
@@ -67,7 +69,7 @@ public class ShowDetailsActivity extends WutsonActivity {
 
         @Override
         public void onNext(Show show) {
-            Log.d("THING", "onCompleted");
+            Log.d("THING", "onNext: " + show.getName());
 
             ShowView.ScrollListener scrollListener = ShowViewScrollListener.newInstance(getResources(), getToolbar().getNavigationIcon(), getToolbar().getBackground());
             showView.setScrollListener(scrollListener);

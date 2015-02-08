@@ -19,4 +19,7 @@ public interface TmdbApi {
     @GET("/tv/{id}")
     Observable<TvShow> getTvShow(@Path("id") String id);
 
+    @GET("/tv/{id}/credits")
+    Observable<Credits> getTvShowCredits(@Path("id") String id);
+
 }

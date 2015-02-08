@@ -15,7 +15,7 @@ public class ShowsInGenre implements Iterable<Show> {
     public static ShowsInGenre from(Genre genre, DiscoverTvShows discoverTvShows) {
         List<Show> shows = new ArrayList<>();
         for (DiscoverTvShows.Show discoverTvShow : discoverTvShows) {
-            Show show = new Show(discoverTvShow.name);
+            Show show = new Show(discoverTvShow.id, discoverTvShow.name);
             shows.add(show);
         }
         return new ShowsInGenre(genre, shows);

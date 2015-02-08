@@ -37,10 +37,14 @@ public class DiscoverTvShows implements Iterable<DiscoverTvShows.Show> {
 
     public class Show {
 
+        @SerializedName("id")
+        public final String id;
+
         @SerializedName("name")
         public final String name;
 
-        public Show(String name) {
+        public Show(String id, String name) {
+            this.id = id;
             this.name = name;
         }
 
