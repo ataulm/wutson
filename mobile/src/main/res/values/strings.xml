@@ -2,8 +2,11 @@
 <resources>
   <string name="settings_pref_key_version">preference_key_about_version</string>
   <string name="settings_pref_category_key_about">preference_category_about</string>
+  <string name="settings_pref_key_data_sources">preference_key_data_sources</string>
   <string name="settings_pref_key_oss">preference_key_about_oss</string>
   <string name="software_licenses">Software licenses</string>
+  <string name="data_sources">Data sources</string>
+  <string name="tmdb_attribution">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
   <string name="version">Version</string>
   <string name="about">About</string>
   <string name="nav_drawer_open_content_description">Open navigation drawer</string>

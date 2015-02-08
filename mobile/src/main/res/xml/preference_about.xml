@@ -5,6 +5,10 @@
     android:title="@string/about">
 
     <Preference
+      android:key="@string/settings_pref_key_data_sources"
+      android:title="@string/data_sources" />
+
+    <Preference
       android:key="@string/settings_pref_key_oss"
       android:title="@string/software_licenses" />
 
