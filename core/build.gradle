@@ -1,7 +1,7 @@
 apply plugin: 'java'
 
 dependencies {
-    compile 'io.reactivex:rxjava:1.0.4'
+    compile 'io.reactivex:rxjava:1.0.5'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
     testCompile 'junit:junit:4.11'

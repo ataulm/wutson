@@ -4,11 +4,11 @@ import com.ataulm.wutson.model.DiscoverTvShows;
 import com.ataulm.wutson.model.Genre;
 import com.ataulm.wutson.model.Genres;
 import com.ataulm.wutson.model.TmdbApi;
+import com.ataulm.wutson.repository.InfiniteOperator;
 
 import java.util.List;
 
 import rx.Observable;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
@@ -17,9 +17,7 @@ public class ShowsInGenreRepository {
 
     private final TmdbApi api;
     private final GenresRepository genresRepository;
-    private final BehaviorSubject<List<com.ataulm.wutson.discover.ShowsInGenre>> subject;
-
-    private boolean initialised;
+    private final BehaviorSubject<List<ShowsInGenre>> subject;
 
     public ShowsInGenreRepository(TmdbApi api) {
         this.api = api;
@@ -28,8 +26,8 @@ public class ShowsInGenreRepository {
         this.subject = BehaviorSubject.create();
     }
 
-    public Observable<List<com.ataulm.wutson.discover.ShowsInGenre>> getShowsSeparatedByGenre() {
-        if (!initialised) {
+    public Observable<List<ShowsInGenre>> getShowsSeparatedByGenre() {
+        if (!subject.hasValue()) {
             refreshBrowseShows();
         }
         return subject;
@@ -67,20 +65,9 @@ public class ShowsInGenreRepository {
 
         })
                 .toList()
-                .doOnNext(markAsInitialised())
+                .lift(new InfiniteOperator<List<ShowsInGenre>>())
                 .subscribeOn(Schedulers.io())
                 .subscribe(subject);
-    }
-
-    private Action1<List<com.ataulm.wutson.discover.ShowsInGenre>> markAsInitialised() {
-        return new Action1<List<com.ataulm.wutson.discover.ShowsInGenre>>() {
-
-            @Override
-            public void call(List<com.ataulm.wutson.discover.ShowsInGenre> shows) {
-                initialised = true;
-            }
-
-        };
     }
 
 }
