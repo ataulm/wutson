@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-  <style name="Wutson.AppBar" />
-
+  <item name="app_bar" type="id" />
 </resources>

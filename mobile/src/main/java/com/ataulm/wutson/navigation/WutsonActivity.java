@@ -27,7 +27,7 @@ public abstract class WutsonActivity extends ActionBarActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        toolbar = (Toolbar) findViewById(R.id.action_bar);
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
         if (toolbar == null) {
             throw new IllegalStateException("Toolbar expected in layout with id: R.id.action_bar");
         }

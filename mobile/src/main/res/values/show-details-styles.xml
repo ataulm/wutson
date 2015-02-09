@@ -3,7 +3,7 @@
 
   <style name="ShowDetails" />
 
-  <style name="ShowDetails.Toolbar" parent="Wutson.Toolbar">
+  <style name="ShowDetails.Toolbar" parent="Wutson.AppBar">
     <item name="android:background">@color/white</item>
   </style>
 
