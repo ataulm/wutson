@@ -1,6 +1,8 @@
 package com.ataulm.wutson.view;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 
@@ -15,6 +17,7 @@ public class AppBar extends Toolbar {
     public AppBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setId(R.id.app_bar);
+        setBackground(new ColorDrawable(Color.WHITE));
     }
 
     @Override

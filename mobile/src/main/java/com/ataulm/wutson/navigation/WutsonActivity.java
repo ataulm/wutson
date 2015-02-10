@@ -29,7 +29,7 @@ public abstract class WutsonActivity extends ActionBarActivity {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         if (toolbar == null) {
-            throw new IllegalStateException("Toolbar expected in layout with id: R.id.action_bar");
+            throw new IllegalStateException("Toolbar expected in layout with id: R.id.app_bar");
         }
         setAppBar(toolbar);
     }
