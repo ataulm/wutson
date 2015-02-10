@@ -16,7 +16,7 @@ class ShowViewScrollListener implements ShowView.ScrollListener {
     static ShowViewScrollListener newInstance(Resources resources, Drawable navIcon, Drawable appBarBackground) {
         Transitioner navIconTransitioner = new NavigationIconColorTransitioner(navIcon, new ArgbEvaluator());
         Transitioner appBarBackgroundTransitioner = new AppBarBackgroundAlphaTransitioner(appBarBackground);
-        int showPaddingTop = resources.getDimensionPixelSize(R.dimen.show_details_padding_top) - resources.getDimensionPixelSize(R.dimen.toolbar_height);
+        int showPaddingTop = resources.getDimensionPixelSize(R.dimen.show_details_padding_top) - resources.getDimensionPixelSize(R.dimen.app_bar_height);
         return new ShowViewScrollListener(navIconTransitioner, appBarBackgroundTransitioner, showPaddingTop);
     }
 

@@ -8,7 +8,7 @@
     android:name="com.ataulm.wutson.settings.SettingsActivity$SettingsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?actionBarSize" />
+    android:layout_marginTop="@dimen/app_bar_height" />
 
   <com.ataulm.wutson.view.AppBar
     style="@style/Wutson.AppBar"

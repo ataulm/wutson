@@ -7,11 +7,11 @@
     android:id="@+id/discover_viewpager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?actionBarSize" />
+    android:layout_marginTop="@dimen/app_bar_height" />
 
   <com.ataulm.wutson.view.AppBar
     style="@style/Wutson.AppBar"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/toolbar_height" />
+    android:layout_height="wrap_content" />
 
 </merge>

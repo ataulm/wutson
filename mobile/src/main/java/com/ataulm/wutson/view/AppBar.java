@@ -19,7 +19,7 @@ public class AppBar extends Toolbar {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int desiredHeight = getResources().getDimensionPixelSize(R.dimen.toolbar_height);
+        int desiredHeight = getResources().getDimensionPixelSize(R.dimen.app_bar_height);
         int desiredHeightSpec = MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, desiredHeightSpec);
     }
