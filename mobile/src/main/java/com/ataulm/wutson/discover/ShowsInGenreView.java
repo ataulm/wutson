@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.ataulm.wutson.R;
 
@@ -82,7 +81,7 @@ public class ShowsInGenreView extends FrameLayout {
         }
 
         void update(final Show show) {
-            ((TextView) itemView).setText(show.getName());
+            ((ShowsInGenreItemView) itemView).display(show);
             itemView.setOnClickListener(new OnClickListener() {
 
                 @Override
