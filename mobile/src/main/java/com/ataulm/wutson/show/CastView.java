@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.ataulm.wutson.Displayer;
+import com.ataulm.wutson.view.Displayer;
 import com.ataulm.wutson.R;
 
 public class CastView extends LinearLayout implements Displayer<Cast> {

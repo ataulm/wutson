@@ -1,4 +1,4 @@
-package com.ataulm.wutson;
+package com.ataulm.wutson.view;
 
 import android.app.Activity;
 import android.support.annotation.IdRes;

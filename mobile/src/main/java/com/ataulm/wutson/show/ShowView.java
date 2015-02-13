@@ -8,8 +8,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ataulm.wutson.Displayer;
-import com.ataulm.wutson.Displayers;
+import com.ataulm.wutson.view.Displayer;
+import com.ataulm.wutson.view.Displayers;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.WutsonApplication;

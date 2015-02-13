@@ -7,7 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ataulm.wutson.Displayer;
+import com.ataulm.wutson.view.Displayer;
 import com.ataulm.wutson.R;
 import com.bumptech.glide.Glide;
 
