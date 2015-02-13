@@ -2,12 +2,13 @@ package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.model.Configuration;
 import com.ataulm.wutson.model.TmdbApi;
+import com.ataulm.wutson.rx.InfiniteOperator;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
-class ConfigurationRepository {
+public class ConfigurationRepository {
 
     private final TmdbApi api;
     private final BehaviorSubject<Configuration> subject;
@@ -17,7 +18,7 @@ class ConfigurationRepository {
         this.subject = BehaviorSubject.create();
     }
 
-    Observable<Configuration> getConfiguration() {
+    public Observable<Configuration> getConfiguration() {
         if (!subject.hasValue()) {
             refreshConfiguration();
         }

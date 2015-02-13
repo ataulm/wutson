@@ -1,4 +1,4 @@
-package com.ataulm.wutson.repository;
+package com.ataulm.wutson.rx;
 
 import rx.Observable;
 import rx.Subscriber;

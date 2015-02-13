@@ -1,9 +1,7 @@
 package com.ataulm.wutson.discover;
 
-import com.ataulm.wutson.model.DiscoverTvShows;
 import com.ataulm.wutson.model.Genre;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,16 +10,7 @@ public class ShowsInGenre implements Iterable<Show> {
     private final Genre genre;
     private final List<Show> shows;
 
-    public static ShowsInGenre from(Genre genre, DiscoverTvShows discoverTvShows) {
-        List<Show> shows = new ArrayList<>();
-        for (DiscoverTvShows.Show discoverTvShow : discoverTvShows) {
-            Show show = new Show(discoverTvShow.id, discoverTvShow.name);
-            shows.add(show);
-        }
-        return new ShowsInGenre(genre, shows);
-    }
-
-    ShowsInGenre(Genre genre, List<Show> shows) {
+    public ShowsInGenre(Genre genre, List<Show> shows) {
         this.genre = genre;
         this.shows = shows;
     }

@@ -29,7 +29,7 @@ public class DataRepository {
         this.api = api;
 
         this.configurationRepository = new ConfigurationRepository(api);
-        this.showsInGenreRepository = new ShowsInGenreRepository(api);
+        this.showsInGenreRepository = new ShowsInGenreRepository(api, configurationRepository);
     }
 
     public Observable<List<ShowsInGenre>> getShowsSeparatedByGenre() {

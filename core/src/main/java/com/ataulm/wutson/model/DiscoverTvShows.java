@@ -31,10 +31,6 @@ public class DiscoverTvShows implements Iterable<DiscoverTvShows.Show> {
         return shows.size();
     }
 
-    public Show get(int position) {
-        return shows.get(position);
-    }
-
     public class Show {
 
         @SerializedName("id")
@@ -43,9 +39,13 @@ public class DiscoverTvShows implements Iterable<DiscoverTvShows.Show> {
         @SerializedName("name")
         public final String name;
 
-        public Show(String id, String name) {
+        @SerializedName("poster_path")
+        public final String posterPath;
+
+        public Show(String id, String name, String posterPath) {
             this.id = id;
             this.name = name;
+            this.posterPath = posterPath;
         }
 
         @Override

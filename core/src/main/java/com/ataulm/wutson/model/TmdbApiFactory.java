@@ -38,6 +38,7 @@ public class TmdbApiFactory {
         };
 
         RestAdapter restAdapter = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.BASIC)      // TODO: disable for release
                 .setEndpoint(tmdbEndpoint)
                 .setClient(client)
                 .setRequestInterceptor(tmdbRequestInterceptor)

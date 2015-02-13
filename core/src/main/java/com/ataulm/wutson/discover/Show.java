@@ -1,13 +1,17 @@
 package com.ataulm.wutson.discover;
 
+import java.net.URI;
+
 public class Show {
 
     private final String id;
     private final String name;
+    private final URI posterUri;
 
-    Show(String id, String name) {
+    Show(String id, String name, URI posterUri) {
         this.id = id;
         this.name = name;
+        this.posterUri = posterUri;
     }
 
     public String getId() {
@@ -16,6 +20,10 @@ public class Show {
 
     public String getName() {
         return name;
+    }
+
+    public URI getPosterUri() {
+        return posterUri;
     }
 
 }
