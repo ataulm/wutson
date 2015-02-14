@@ -15,6 +15,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
+import java.util.Arrays;
+import java.util.List;
+
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -89,7 +92,7 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
 
             @Override
             public void call(Subscriber<? super Palette> subscriber) {
-                Palette palette = Palette.generate(resource);
+                Palette palette = Palette.generate(resource, 32);
                 subscriber.onNext(palette);
                 subscriber.onCompleted();
             }
@@ -117,11 +120,26 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
 
         @Override
         public void onNext(Palette palette) {
-            Palette.Swatch swatch = palette.getVibrantSwatch();
+            Palette.Swatch swatch = getAvailableSwatch(palette);
             if (posterShouldStillDisplay(show)) {
                 nameTextView.setBackgroundColor(swatch.getRgb());
                 nameTextView.setTextColor(swatch.getTitleTextColor());
             }
+        }
+
+        private Palette.Swatch getAvailableSwatch(Palette palette) {
+            List<Palette.Swatch> orderedSwatches = Arrays.asList(
+                    palette.getMutedSwatch(),
+                    palette.getDarkMutedSwatch(),
+                    palette.getDarkVibrantSwatch(),
+                    palette.getVibrantSwatch()
+            );
+            for (Palette.Swatch swatch : orderedSwatches) {
+                if (swatch != null) {
+                    return swatch;
+                }
+            }
+            return null;
         }
 
     }
