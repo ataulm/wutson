@@ -1,15 +1,25 @@
 package com.ataulm.wutson.discover;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.support.v7.graphics.Palette;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ataulm.wutson.view.Displayer;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.view.Displayer;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show> {
 
@@ -32,7 +42,6 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int desiredHeight = (int) (width * HEIGHT_BY_WIDTH_RATIO + HALF_PIXEL);
 
-
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY));
     }
 
@@ -45,9 +54,80 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
     }
 
     @Override
-    public void display(Show show) {
-        Glide.with(getContext()).load(show.getPosterUri().toString()).into(posterImageView);
+    public void display(final Show show) {
+        posterImageView.setTag(R.id.view_tag_show_poster_uri, show.getPosterUri());
+        Glide.with(getContext())
+                .load(show.getPosterUri().toString())
+                .asBitmap()
+                .into(bitmapTarget(show));
         nameTextView.setText(show.getName());
+    }
+
+    private BitmapImageViewTarget bitmapTarget(final Show show) {
+        return new BitmapImageViewTarget(posterImageView) {
+
+            @Override
+            public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                if (resource.isRecycled()) {
+                    return;
+                }
+                if (posterShouldStillDisplay(show)) {
+                    posterImageView.setImageBitmap(resource);
+                }
+
+                Observable.create(generatePaletteFrom(resource))
+                        .subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new PaletteGenerationObserver(show));
+            }
+
+        };
+    }
+
+    private Observable.OnSubscribe<Palette> generatePaletteFrom(final Bitmap resource) {
+        return new Observable.OnSubscribe<Palette>() {
+
+            @Override
+            public void call(Subscriber<? super Palette> subscriber) {
+                Palette palette = Palette.generate(resource);
+                subscriber.onNext(palette);
+                subscriber.onCompleted();
+            }
+
+        };
+    }
+
+    private class PaletteGenerationObserver implements Observer<Palette> {
+
+        private final Show show;
+
+        public PaletteGenerationObserver(Show show) {
+            this.show = show;
+        }
+
+        @Override
+        public void onCompleted() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onNext(Palette palette) {
+            Palette.Swatch swatch = palette.getVibrantSwatch();
+            if (posterShouldStillDisplay(show)) {
+                nameTextView.setBackgroundColor(swatch.getRgb());
+                nameTextView.setTextColor(swatch.getTitleTextColor());
+            }
+        }
+
+    }
+
+    private boolean posterShouldStillDisplay(Show show) {
+        return show.getPosterUri().equals(posterImageView.getTag(R.id.view_tag_show_poster_uri));
     }
 
 }
