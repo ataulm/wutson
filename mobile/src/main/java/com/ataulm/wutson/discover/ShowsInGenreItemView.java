@@ -15,8 +15,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
+import java.net.URI;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import rx.Observable;
 import rx.Observer;
@@ -26,8 +29,9 @@ import rx.schedulers.Schedulers;
 
 public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show> {
 
-    private final static float HEIGHT_BY_WIDTH_RATIO = 272f / 185;
-    private final static float HALF_PIXEL = 0.5f;
+    private static final float HEIGHT_BY_WIDTH_RATIO = 272f / 185;
+    private static final float HALF_PIXEL = 0.5f;
+    private static final Map<URI, Palette> PALETTES_CACHE = new HashMap<>();
 
     private ImageView posterImageView;
     private TextView nameTextView;
@@ -58,12 +62,16 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
 
     @Override
     public void display(final Show show) {
+        posterImageView.setImageBitmap(null);
+        nameTextView.setVisibility(INVISIBLE);
+
         posterImageView.setTag(R.id.view_tag_show_poster_uri, show.getPosterUri());
         Glide.with(getContext())
                 .load(show.getPosterUri().toString())
                 .asBitmap()
                 .into(bitmapTarget(show));
         nameTextView.setText(show.getName());
+        nameTextView.setVisibility(VISIBLE);
     }
 
     private BitmapImageViewTarget bitmapTarget(final Show show) {
@@ -78,10 +86,15 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
                     posterImageView.setImageBitmap(resource);
                 }
 
-                Observable.create(generatePaletteFrom(resource))
-                        .subscribeOn(Schedulers.computation())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new PaletteGenerationObserver(show));
+                if (!PALETTES_CACHE.containsKey(show.getPosterUri())) {
+                    Observable.create(generatePaletteFrom(resource))
+                            .subscribeOn(Schedulers.computation())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new PaletteGenerationObserver(show));
+                } else {
+                    Palette palette = PALETTES_CACHE.get(show.getPosterUri());
+                    apply(palette, show);
+                }
             }
 
         };
@@ -120,28 +133,33 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
 
         @Override
         public void onNext(Palette palette) {
+            PALETTES_CACHE.put(show.getPosterUri(), palette);
+            apply(palette, show);
+        }
+
+    }
+
+    private void apply(Palette palette, Show show) {
+        if (posterShouldStillDisplay(show)) {
             Palette.Swatch swatch = getAvailableSwatch(palette);
-            if (posterShouldStillDisplay(show)) {
-                nameTextView.setBackgroundColor(swatch.getRgb());
-                nameTextView.setTextColor(swatch.getTitleTextColor());
+            nameTextView.setBackgroundColor(swatch.getRgb());
+            nameTextView.setTextColor(swatch.getTitleTextColor());
+        }
+    }
+
+    private Palette.Swatch getAvailableSwatch(Palette palette) {
+        List<Palette.Swatch> orderedSwatches = Arrays.asList(
+                palette.getMutedSwatch(),
+                palette.getDarkMutedSwatch(),
+                palette.getDarkVibrantSwatch(),
+                palette.getVibrantSwatch()
+        );
+        for (Palette.Swatch swatch : orderedSwatches) {
+            if (swatch != null) {
+                return swatch;
             }
         }
-
-        private Palette.Swatch getAvailableSwatch(Palette palette) {
-            List<Palette.Swatch> orderedSwatches = Arrays.asList(
-                    palette.getMutedSwatch(),
-                    palette.getDarkMutedSwatch(),
-                    palette.getDarkVibrantSwatch(),
-                    palette.getVibrantSwatch()
-            );
-            for (Palette.Swatch swatch : orderedSwatches) {
-                if (swatch != null) {
-                    return swatch;
-                }
-            }
-            return null;
-        }
-
+        return null;
     }
 
     private boolean posterShouldStillDisplay(Show show) {
