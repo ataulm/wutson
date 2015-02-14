@@ -46,8 +46,7 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
 
     @Override
     public void display(Show show) {
-        // TODO: uri
-        Glide.with(getContext()).load(show.getName()).into(posterImageView);
+        Glide.with(getContext()).load(show.getPosterUri().toString()).into(posterImageView);
         nameTextView.setText(show.getName());
     }
 
