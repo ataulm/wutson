@@ -148,9 +148,9 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
 
     private Palette.Swatch getAvailableSwatch(Palette palette) {
         List<Palette.Swatch> orderedSwatches = Arrays.asList(
+                palette.getDarkVibrantSwatch(),
                 palette.getDarkMutedSwatch(),
                 palette.getMutedSwatch(),
-                palette.getDarkVibrantSwatch(),
                 palette.getVibrantSwatch()
         );
         for (Palette.Swatch swatch : orderedSwatches) {
