@@ -143,7 +143,6 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
         if (posterShouldStillDisplay(show)) {
             Palette.Swatch swatch = getAvailableSwatch(palette);
             nameTextView.setBackgroundColor(swatch.getRgb());
-            nameTextView.setTextColor(swatch.getBodyTextColor());
         }
     }
 
