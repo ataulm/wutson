@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
@@ -103,6 +104,8 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
                 }
             }
             viewPager.setAdapter(new DiscoverByGenrePagerAdapter(getLayoutInflater(), showsSeparateByGenre, DiscoverActivity.this));
+            PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+            tabs.setViewPager(viewPager);
         }
 
     }

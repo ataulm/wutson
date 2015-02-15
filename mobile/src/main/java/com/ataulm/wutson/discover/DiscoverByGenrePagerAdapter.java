@@ -45,4 +45,9 @@ class DiscoverByGenrePagerAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return showsSeparatedByGenre.get(position).getGenre();
+    }
+
 }

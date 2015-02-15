@@ -7,6 +7,12 @@
     android:id="@+id/discover_viewpager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="112dp" />
+
+  <com.astuetz.PagerSlidingTabStrip
+    android:id="@+id/tabs"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/app_bar_height"
     android:layout_marginTop="@dimen/app_bar_height" />
 
   <com.ataulm.wutson.view.AppBar
