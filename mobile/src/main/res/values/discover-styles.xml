@@ -3,6 +3,10 @@
 
   <style name="Discover" />
 
+  <style name="Discover.AppBar">
+    <item name="android:background">@color/black</item>
+  </style>
+
   <style name="Discover.Show" />
 
   <style name="Discover.Show.Poster">
