@@ -9,13 +9,13 @@ import com.ataulm.wutson.R;
 
 import java.util.List;
 
-class DiscoverPagerAdapter extends PagerAdapter {
+class DiscoverByGenrePagerAdapter extends PagerAdapter {
 
     private final LayoutInflater layoutInflater;
     private final List<ShowsInGenre> showsSeparatedByGenre;
     private final OnShowClickListener listener;
 
-    public DiscoverPagerAdapter(LayoutInflater layoutInflater, List<ShowsInGenre> showsSeparatedByGenre, OnShowClickListener listener) {
+    public DiscoverByGenrePagerAdapter(LayoutInflater layoutInflater, List<ShowsInGenre> showsSeparatedByGenre, OnShowClickListener listener) {
         this.layoutInflater = layoutInflater;
         this.showsSeparatedByGenre = showsSeparatedByGenre;
         this.listener = listener;
@@ -23,7 +23,7 @@ class DiscoverPagerAdapter extends PagerAdapter {
 
     @Override
     public View instantiateItem(ViewGroup container, int position) {
-        ShowsInGenreView view = (ShowsInGenreView) layoutInflater.inflate(R.layout.view_shows_in_genre, container, false);
+        DiscoverByGenreView view = (DiscoverByGenreView) layoutInflater.inflate(R.layout.view_discover_by_genre, container, false);
         ShowsInGenre showsInGenre = showsSeparatedByGenre.get(position);
         view.update(showsInGenre, listener);
         container.addView(view);

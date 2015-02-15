@@ -4,18 +4,18 @@
   android:layout_height="match_parent">
 
   <ImageView
-    android:id="@+id/shows_in_genre_image_poster"
+    android:id="@+id/discover_by_genre_image_poster"
     style="@style/Discover.Show.Poster"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:contentDescription="@null" />
 
   <TextView
-    android:id="@+id/shows_in_genre_text_name"
+    android:id="@+id/discover_by_genre_text_name"
     style="@style/Discover.Show.Name"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:minHeight="60dp" />
+    android:minHeight="@dimen/discover_by_genre_name_min_height" />
 
 </merge>

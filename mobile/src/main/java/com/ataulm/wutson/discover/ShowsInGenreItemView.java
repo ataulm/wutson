@@ -54,10 +54,10 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
 
     @Override
     protected void onFinishInflate() {
-        View.inflate(getContext(), R.layout.merge_shows_in_genre_item, this);
+        View.inflate(getContext(), R.layout.merge_discover_by_genre_item, this);
 
-        posterImageView = (ImageView) findViewById(R.id.shows_in_genre_image_poster);
-        nameTextView = (TextView) findViewById(R.id.shows_in_genre_text_name);
+        posterImageView = (ImageView) findViewById(R.id.discover_by_genre_image_poster);
+        nameTextView = (TextView) findViewById(R.id.discover_by_genre_text_name);
     }
 
     @Override

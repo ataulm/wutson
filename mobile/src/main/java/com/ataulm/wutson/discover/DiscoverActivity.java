@@ -102,7 +102,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
                     Log.d("THING", show.getName());
                 }
             }
-            viewPager.setAdapter(new DiscoverPagerAdapter(getLayoutInflater(), showsSeparateByGenre, DiscoverActivity.this));
+            viewPager.setAdapter(new DiscoverByGenrePagerAdapter(getLayoutInflater(), showsSeparateByGenre, DiscoverActivity.this));
         }
 
     }

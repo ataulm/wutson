@@ -11,27 +11,26 @@ import android.widget.FrameLayout;
 
 import com.ataulm.wutson.R;
 
-public class ShowsInGenreView extends FrameLayout {
+public class DiscoverByGenreView extends FrameLayout {
 
     private static final int SPAN_COUNT = 2;
 
     private Adapter adapter;
     private OnShowClickListener listener;
 
-    public ShowsInGenreView(Context context, AttributeSet attrs) {
+    public DiscoverByGenreView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ShowsInGenreView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DiscoverByGenreView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
     protected void onFinishInflate() {
-        View.inflate(getContext(), R.layout.merge_shows_in_genre, this);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.shows_in_genre_list);
+        View.inflate(getContext(), R.layout.merge_discover_by_genre, this);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.discover_by_genre_list);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT));
-
         adapter = new Adapter(LayoutInflater.from(getContext()));
         recyclerView.setAdapter(adapter);
     }
@@ -57,7 +56,7 @@ public class ShowsInGenreView extends FrameLayout {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = layoutInflater.inflate(R.layout.item_shows_in_genre, parent, false);
+            View view = layoutInflater.inflate(R.layout.view_discover_by_genre_item, parent, false);
             return new ViewHolder(view);
         }
 
