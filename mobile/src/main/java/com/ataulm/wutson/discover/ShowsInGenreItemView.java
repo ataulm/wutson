@@ -29,7 +29,7 @@ import rx.schedulers.Schedulers;
 
 public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show> {
 
-    private static final float HEIGHT_BY_WIDTH_RATIO = 272f / 185;
+    private static final float HEIGHT_BY_WIDTH_RATIO = 214f / 178;
     private static final float HALF_PIXEL = 0.5f;
     private static final Map<URI, Palette> PALETTES_CACHE = new HashMap<>();
 
