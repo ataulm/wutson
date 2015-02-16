@@ -3,9 +3,7 @@
 
   <style name="Discover" />
 
-  <style name="Discover.AppBar">
-    <item name="android:background">@color/black</item>
-  </style>
+  <style name="Discover.AppBar" />
 
   <style name="Discover.Show" />
 
