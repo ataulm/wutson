@@ -12,9 +12,9 @@ import android.widget.Toast;
 
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
+import com.ataulm.wutson.navigation.WutsonActivity;
 
-public class SettingsActivity extends WutsonTopLevelActivity {
+public class SettingsActivity extends WutsonActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
