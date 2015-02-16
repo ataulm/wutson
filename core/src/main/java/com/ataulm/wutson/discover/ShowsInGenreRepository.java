@@ -9,6 +9,7 @@ import com.ataulm.wutson.rx.Functions;
 import com.ataulm.wutson.rx.InfiniteOperator;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -41,9 +42,26 @@ public class ShowsInGenreRepository {
 
     private void refreshBrowseShows() {
         Observable<Genre> genreObservable = genresRepository.getGenres().flatMap(Functions.<Genre>iterate());
-        Observable<DiscoverTvShows> discoverTvShowsObservable = genreObservable.flatMap(fetchDiscoverTvShows());
-        Observable<List<Show>> showsListObservable = Observable.combineLatest(infiniteConfigurationObservable(), discoverTvShowsObservable, combineAsShowsList());
-        Observable<ShowsInGenre> showsInGenreObservable = Observable.zip(genreObservable, showsListObservable, combineAsShowsInGenre());
+        Observable<DiscoverTvShowsInGenre> discoverTvShowsObservable = genreObservable.flatMap(fetchDiscoverTvShows());
+
+        Observable<ShowsInGenre> showsInGenreObservable = Observable.combineLatest(configurationObservable(), discoverTvShowsObservable, new Func2<Configuration, DiscoverTvShowsInGenre, ShowsInGenre>() {
+
+            @Override
+            public ShowsInGenre call(Configuration configuration, DiscoverTvShowsInGenre discoverTvShows) {
+                Genre genre = discoverTvShows.genre;
+                List<Show> shows = new ArrayList<>(discoverTvShows.shows.size());
+                for (DiscoverTvShows.Show discoverTvShow : discoverTvShows.shows) {
+                    String id = discoverTvShow.id;
+                    String name = discoverTvShow.name;
+                    URI posterUri = URI.create(configuration.getCompletePosterPath(discoverTvShow.posterPath));
+
+                    shows.add(new Show(id, name, posterUri));
+                }
+                ShowsInGenre showsInGenre = new ShowsInGenre(genre, shows);
+                return showsInGenre;
+            }
+
+        });
 
         showsInGenreObservable.toList()
                 .lift(new InfiniteOperator<List<ShowsInGenre>>())
@@ -51,53 +69,40 @@ public class ShowsInGenreRepository {
                 .subscribe(subject);
     }
 
-    private Func2<Configuration, DiscoverTvShows, List<Show>> combineAsShowsList() {
-        return new Func2<Configuration, DiscoverTvShows, List<Show>>() {
+    private Func1<Genre, Observable<DiscoverTvShowsInGenre>> fetchDiscoverTvShows() {
+        return new Func1<Genre, Observable<DiscoverTvShowsInGenre>>() {
 
             @Override
-            public List<Show> call(final Configuration configuration, DiscoverTvShows discoverTvShows) {
-                return Observable.from(discoverTvShows).map(convertToShow(configuration)).toList().toBlocking().single();
+            public Observable<DiscoverTvShowsInGenre> call(final Genre genre) {
+                return api.getShowsMatchingGenre(genre.getId()).flatMap(new Func1<DiscoverTvShows, Observable<DiscoverTvShowsInGenre>>() {
+
+                    @Override
+                    public Observable<DiscoverTvShowsInGenre> call(DiscoverTvShows discoverTvShows) {
+                        return Observable.just(new DiscoverTvShowsInGenre(genre, discoverTvShows));
+                    }
+
+                });
             }
 
         };
     }
 
-    private Func1<DiscoverTvShows.Show, Show> convertToShow(final Configuration configuration) {
-        return new Func1<DiscoverTvShows.Show, Show>() {
-
-            @Override
-            public Show call(DiscoverTvShows.Show discoverTvShow) {
-                String id = discoverTvShow.id;
-                String name = discoverTvShow.name;
-                URI posterUri = URI.create(configuration.getCompletePosterPath(discoverTvShow.posterPath));
-                return new Show(id, name, posterUri);
-            }
-
-        };
+    private Observable<Configuration> configurationObservable() {
+        // although getConfiguration is infinite, first() explicitly gives the onComplete
+        // TODO: maybe I want first inside `getConfiguration`
+        return configurationRepository.getConfiguration().first();
     }
 
-    private Func2<Genre, List<Show>, ShowsInGenre> combineAsShowsInGenre() {
-        return new Func2<Genre, List<Show>, ShowsInGenre>() {
-            @Override
-            public ShowsInGenre call(Genre genre, List<Show> shows) {
-                return new ShowsInGenre(genre, shows);
-            }
-        };
-    }
+    private static class DiscoverTvShowsInGenre {
 
-    private Func1<Genre, Observable<DiscoverTvShows>> fetchDiscoverTvShows() {
-        return new Func1<Genre, Observable<DiscoverTvShows>>() {
+        final Genre genre;
+        final DiscoverTvShows shows;
 
-            @Override
-            public Observable<DiscoverTvShows> call(Genre genre) {
-                return api.getShowsMatchingGenre(genre.getId());
-            }
+        DiscoverTvShowsInGenre(Genre genre, DiscoverTvShows shows) {
+            this.genre = genre;
+            this.shows = shows;
+        }
 
-        };
-    }
-
-    private Observable<Configuration> infiniteConfigurationObservable() {
-        return configurationRepository.getConfiguration().first().lift(new InfiniteOperator<Configuration>());
     }
 
 }
