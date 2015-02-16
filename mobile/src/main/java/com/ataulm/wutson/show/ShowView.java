@@ -8,11 +8,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ataulm.wutson.view.Displayer;
-import com.ataulm.wutson.view.Displayers;
+import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.ToastDisplayer;
-import com.ataulm.wutson.WutsonApplication;
+import com.ataulm.wutson.view.Displayer;
+import com.ataulm.wutson.view.Displayers;
 import com.bumptech.glide.Glide;
 
 public class ShowView extends FrameLayout implements Displayer<Show> {
@@ -69,7 +69,7 @@ public class ShowView extends FrameLayout implements Displayer<Show> {
 
             @Override
             public void onClick(View v) {
-                ToastDisplayer toastDisplayer = ((WutsonApplication) getContext().getApplicationContext()).getToastDisplayer();
+                ToastDisplayer toastDisplayer = Jabber.toastDisplayer();
                 toastDisplayer.display("show me the seasons!");
             }
 
