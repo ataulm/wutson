@@ -27,6 +27,7 @@ public class ConfigurationRepository {
 
     private void refreshConfiguration() {
         api.getConfiguration()
+                .lift(new InfiniteOperator<Configuration>())
                 .subscribeOn(Schedulers.io())
                 .subscribe(subject);
     }

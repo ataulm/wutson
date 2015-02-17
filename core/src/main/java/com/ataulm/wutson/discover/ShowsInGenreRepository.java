@@ -88,7 +88,7 @@ public class ShowsInGenreRepository {
     }
 
     private Observable<Configuration> configurationObservable() {
-        return configurationRepository.getConfiguration();
+        return configurationRepository.getConfiguration().first();
     }
 
     private static class DiscoverTvShowsInGenre {
