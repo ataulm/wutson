@@ -35,7 +35,7 @@ public class ShowDetailsActivity extends WutsonActivity {
     private void customiseShowDetailsToolbar() {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getToolbar().getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-        getToolbar().getBackground().setAlpha(0);
+        getToolbar().getBackground().mutate().setAlpha(0);
     }
 
     @Override
