@@ -88,9 +88,7 @@ public class ShowsInGenreRepository {
     }
 
     private Observable<Configuration> configurationObservable() {
-        // although getConfiguration is infinite, first() explicitly gives the onComplete
-        // TODO: maybe I want first inside `getConfiguration`
-        return configurationRepository.getConfiguration().first();
+        return configurationRepository.getConfiguration();
     }
 
     private static class DiscoverTvShowsInGenre {
