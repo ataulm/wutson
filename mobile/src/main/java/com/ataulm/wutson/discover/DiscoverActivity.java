@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
@@ -63,7 +64,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
     @Override
     protected void onResume() {
         super.onResume();
-        discoverShowsSubscription = getDataRepository().getShowsSeparatedByGenre()
+        discoverShowsSubscription = Jabber.dataRepository().getShowsSeparatedByGenre()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());

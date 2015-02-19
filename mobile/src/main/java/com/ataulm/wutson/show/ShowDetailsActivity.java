@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonActivity;
 
@@ -41,7 +42,7 @@ public class ShowDetailsActivity extends WutsonActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        showDetailsSubscription = getDataRepository().getShow(getIntent().getStringExtra(TMDB_SHOW_ID))
+        showDetailsSubscription = Jabber.dataRepository().getShow(getIntent().getStringExtra(TMDB_SHOW_ID))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());

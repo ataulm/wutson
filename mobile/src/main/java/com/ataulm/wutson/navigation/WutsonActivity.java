@@ -8,9 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.WutsonApplication;
-import com.ataulm.wutson.repository.DataRepository;
 
 public abstract class WutsonActivity extends ActionBarActivity {
 
@@ -61,14 +59,6 @@ public abstract class WutsonActivity extends ActionBarActivity {
     @Override
     public ActionBar getActionBar() {
         throw new IllegalStateException("I thought we were using support android.support.v7.widget.Toolbar");
-    }
-
-    protected DataRepository getDataRepository() {
-        return application.getDataRepository();
-    }
-
-    protected ToastDisplayer getToaster() {
-        return application.getToastDisplayer();
     }
 
 }

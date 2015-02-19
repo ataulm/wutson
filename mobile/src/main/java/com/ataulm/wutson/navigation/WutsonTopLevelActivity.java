@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
+import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.DiscoverActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
@@ -52,7 +53,7 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
             private void onNotImplementedActionFor(TopLevelNavigationItem item) {
                 String title = item.getTitle();
-                getToaster().display(title);
+                Jabber.toastDisplayer().display(title);
             }
 
         });
