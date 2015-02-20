@@ -13,8 +13,6 @@ import com.ataulm.wutson.R;
 
 public class DiscoverByGenreView extends FrameLayout {
 
-    private static final int SPAN_COUNT = 2;
-
     private Adapter adapter;
     private OnShowClickListener listener;
 
@@ -30,7 +28,9 @@ public class DiscoverByGenreView extends FrameLayout {
     protected void onFinishInflate() {
         View.inflate(getContext(), R.layout.merge_discover_by_genre, this);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.discover_by_genre_list);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT));
+
+        int spanCount = getResources().getInteger(R.integer.discover_by_genre_span_count);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
         adapter = new Adapter(LayoutInflater.from(getContext()));
         recyclerView.setAdapter(adapter);
     }
