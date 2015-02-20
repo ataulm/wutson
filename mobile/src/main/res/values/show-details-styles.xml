@@ -4,7 +4,7 @@
   <style name="ShowDetails" />
 
   <style name="ShowDetails.AppBar">
-    <item name="android:background">@color/white</item>
+    <item name="android:background">@drawable/show_details_app_bar_background</item>
   </style>
 
   <style name="ShowDetails.ShowHeader" />

@@ -36,7 +36,6 @@ public class ShowDetailsActivity extends WutsonActivity {
     private void customiseShowDetailsToolbar() {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getToolbar().getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-        getToolbar().getBackground().mutate().setAlpha(0);
     }
 
     @Override
@@ -71,9 +70,6 @@ public class ShowDetailsActivity extends WutsonActivity {
         @Override
         public void onNext(Show show) {
             Log.d("THING", "onNext: " + show.getName());
-
-            ShowView.ScrollListener scrollListener = ShowViewScrollListener.newInstance(getResources(), getToolbar().getNavigationIcon(), getToolbar().getBackground());
-            showView.setScrollListener(scrollListener);
             showView.display(show);
         }
 
