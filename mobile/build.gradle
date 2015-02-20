@@ -9,7 +9,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.3'
     compile 'com.android.support:palette-v7:21.0.3'
     compile 'io.reactivex:rxandroid:0.24.0'
-    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.jpardogo.materialtabstrip:library:1.0.8'
 
     // ImageLoading! Keeping image-loader here to help beta test
     compile 'com.novoda:image-loader:2.0-BETA'
