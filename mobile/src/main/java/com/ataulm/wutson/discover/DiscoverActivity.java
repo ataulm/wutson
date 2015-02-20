@@ -25,12 +25,18 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
     private Subscription discoverShowsSubscription;
     private ViewPager viewPager;
 
+    private DiscoverByGenrePagerAdapter adapter;
+    private PagerSlidingTabStrip tabs;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
 
         viewPager = (ViewPager) findViewById(R.id.discover_viewpager);
+        viewPager.setAdapter(adapter = new DiscoverByGenrePagerAdapter(getLayoutInflater(), this));
+
+        ((PagerSlidingTabStrip) findViewById(R.id.tabs)).setViewPager(viewPager);
     }
 
     @Override
@@ -104,9 +110,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
                     Log.d("THING", show.getName());
                 }
             }
-            viewPager.setAdapter(new DiscoverByGenrePagerAdapter(getLayoutInflater(), showsSeparateByGenre, DiscoverActivity.this));
-            PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-            tabs.setViewPager(viewPager);
+            adapter.update(showsSeparateByGenre);
         }
 
     }

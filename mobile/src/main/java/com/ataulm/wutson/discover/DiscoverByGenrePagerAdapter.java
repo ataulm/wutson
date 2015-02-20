@@ -7,24 +7,31 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
 
+import java.util.Collections;
 import java.util.List;
 
 class DiscoverByGenrePagerAdapter extends PagerAdapter {
 
     private final LayoutInflater layoutInflater;
-    private final List<ShowsInGenre> showsSeparatedByGenre;
     private final OnShowClickListener listener;
 
-    public DiscoverByGenrePagerAdapter(LayoutInflater layoutInflater, List<ShowsInGenre> showsSeparatedByGenre, OnShowClickListener listener) {
+    private List<ShowsInGenre> showsInGenres;
+
+    public DiscoverByGenrePagerAdapter(LayoutInflater layoutInflater, OnShowClickListener listener) {
         this.layoutInflater = layoutInflater;
-        this.showsSeparatedByGenre = showsSeparatedByGenre;
         this.listener = listener;
+        this.showsInGenres = Collections.emptyList();
+    }
+
+    void update(List<ShowsInGenre> showsInGenres) {
+        this.showsInGenres = showsInGenres;
+        notifyDataSetChanged();
     }
 
     @Override
     public View instantiateItem(ViewGroup container, int position) {
         DiscoverByGenreView view = (DiscoverByGenreView) layoutInflater.inflate(R.layout.view_discover_by_genre, container, false);
-        ShowsInGenre showsInGenre = showsSeparatedByGenre.get(position);
+        ShowsInGenre showsInGenre = showsInGenres.get(position);
         view.update(showsInGenre, listener);
         container.addView(view);
         return view;
@@ -32,7 +39,7 @@ class DiscoverByGenrePagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return showsSeparatedByGenre.size();
+        return showsInGenres.size();
     }
 
     @Override
@@ -47,7 +54,7 @@ class DiscoverByGenrePagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return showsSeparatedByGenre.get(position).getGenre();
+        return showsInGenres.get(position).getGenre();
     }
 
 }
