@@ -28,6 +28,8 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.discover_label);
+
         setContentView(R.layout.activity_discover);
 
         viewPager = (ViewPager) findViewById(R.id.discover_viewpager);
