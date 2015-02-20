@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
@@ -13,7 +14,8 @@
     android:id="@+id/tabs"
     android:layout_width="match_parent"
     android:layout_height="@dimen/app_bar_height"
-    android:layout_marginTop="@dimen/app_bar_height" />
+    android:layout_marginTop="@dimen/app_bar_height"
+    app:pstsPaddingMiddle="true" />
 
   <com.ataulm.wutson.view.AppBar
     style="@style/Wutson.AppBar"
