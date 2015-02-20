@@ -11,8 +11,6 @@ dependencies {
     compile 'io.reactivex:rxandroid:0.24.0'
     compile 'com.jpardogo.materialtabstrip:library:1.0.8'
 
-    // ImageLoading! Keeping image-loader here to help beta test
-    compile 'com.novoda:image-loader:2.0-BETA'
     compile 'com.github.bumptech.glide:glide:3.4.0'
 }
 
