@@ -23,7 +23,6 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
     private ViewPager viewPager;
 
     private DiscoverByGenrePagerAdapter adapter;
-    private PagerSlidingTabStrip tabs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
