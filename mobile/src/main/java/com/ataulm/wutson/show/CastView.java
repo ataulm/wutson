@@ -33,7 +33,11 @@ public class CastView extends LinearLayout {
     }
 
     public void display(Cast cast) {
-        castContainer.removeAllViews();
+        if (cast.size() == 0) {
+            return;
+        }
+
+        setVisibility(VISIBLE);
         for (Character character : cast) {
             View characterView = getViewFor(character);
             castContainer.addView(characterView);
