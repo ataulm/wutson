@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 
 public class ShowView extends FrameLayout implements Displayer<Show> {
 
+    private View contentView;
     private ImageView posterImageView;
     private TextView seasonsTextView;
     private Displayer<Show> headerDisplayer;
@@ -30,15 +31,15 @@ public class ShowView extends FrameLayout implements Displayer<Show> {
     @Override
     protected void onFinishInflate() {
         View.inflate(getContext(), R.layout.merge_show, this);
-        final View scrollView = findViewById(R.id.show_scroll);
-        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+        contentView = findViewById(R.id.show_view_scroll_content);
+        contentView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
 
             @Override
             public void onScrollChanged() {
                 if (listener == null) {
                     return;
                 }
-                listener.onShowViewScrolled(scrollView.getScrollY());
+                listener.onShowViewScrolled(contentView.getScrollY());
             }
 
         });
@@ -70,6 +71,8 @@ public class ShowView extends FrameLayout implements Displayer<Show> {
             }
 
         });
+
+        contentView.setVisibility(VISIBLE);
     }
 
     interface ScrollListener {
