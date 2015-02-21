@@ -41,7 +41,8 @@ public class ShowDetailsActivity extends WutsonActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        showDetailsSubscription = Jabber.dataRepository().getShow(getIntent().getStringExtra(TMDB_SHOW_ID))
+        String showId = getIntent().getStringExtra(TMDB_SHOW_ID);
+        showDetailsSubscription = Jabber.dataRepository().getShow(showId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
