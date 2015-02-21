@@ -27,10 +27,6 @@ public class ShowView extends FrameLayout implements Displayer<Show> {
         super(context, attrs);
     }
 
-    public ShowView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
     @Override
     protected void onFinishInflate() {
         View.inflate(getContext(), R.layout.merge_show, this);
