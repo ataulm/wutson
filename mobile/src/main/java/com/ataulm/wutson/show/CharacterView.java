@@ -7,11 +7,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ataulm.wutson.view.Displayer;
 import com.ataulm.wutson.R;
 import com.bumptech.glide.Glide;
 
-public class CharacterView extends RelativeLayout implements Displayer<Character> {
+public class CharacterView extends RelativeLayout {
 
     private ImageView actorImageView;
     private TextView characterTextView;
@@ -29,7 +28,6 @@ public class CharacterView extends RelativeLayout implements Displayer<Character
         actorTextView = (TextView) findViewById(R.id.character_text_actor);
     }
 
-    @Override
     public void display(Character character) {
         Glide.with(getContext()).load(character.getActor().getProfileUri().toString()).into(actorImageView);
         characterTextView.setText(character.getName());

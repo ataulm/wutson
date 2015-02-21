@@ -6,10 +6,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ataulm.wutson.view.Displayer;
 import com.ataulm.wutson.R;
 
-public class ShowHeaderView extends LinearLayout implements Displayer<Show> {
+public class ShowHeaderView extends LinearLayout {
 
     private TextView nameTextView;
     private TextView overviewTextView;
@@ -31,7 +30,6 @@ public class ShowHeaderView extends LinearLayout implements Displayer<Show> {
         throw new RuntimeException("ShowHeaderView should be a fixed orientation");
     }
 
-    @Override
     public void display(Show show) {
         nameTextView.setText(show.getName());
         overviewTextView.setText(show.getOverview());

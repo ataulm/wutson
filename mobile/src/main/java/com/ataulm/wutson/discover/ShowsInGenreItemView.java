@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.view.Displayer;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -27,7 +26,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show> {
+public class ShowsInGenreItemView extends FrameLayout {
 
     private static final float HEIGHT_BY_WIDTH_RATIO = 214f / 178;
     private static final float HALF_PIXEL = 0.5f;
@@ -56,7 +55,6 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
         nameTextView = (TextView) findViewById(R.id.discover_by_genre_text_name);
     }
 
-    @Override
     public void display(final Show show) {
         posterImageView.setImageBitmap(null);
         nameTextView.setVisibility(INVISIBLE);

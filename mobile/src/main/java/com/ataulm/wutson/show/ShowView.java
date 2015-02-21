@@ -11,17 +11,15 @@ import android.widget.TextView;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.ToastDisplayer;
-import com.ataulm.wutson.view.Displayer;
-import com.ataulm.wutson.view.Displayers;
 import com.bumptech.glide.Glide;
 
-public class ShowView extends FrameLayout implements Displayer<Show> {
+public class ShowView extends FrameLayout {
 
     private View contentView;
     private ImageView posterImageView;
     private TextView seasonsTextView;
-    private Displayer<Show> headerDisplayer;
-    private Displayer<Cast> castDisplayer;
+    private ShowHeaderView showHeaderView;
+    private CastView castView;
     private ScrollListener listener;
 
     public ShowView(Context context, AttributeSet attrs) {
@@ -46,22 +44,21 @@ public class ShowView extends FrameLayout implements Displayer<Show> {
 
         posterImageView = (ImageView) findViewById(R.id.show_view_image_poster);
         seasonsTextView = (TextView) findViewById(R.id.show_view_text_seasons);
-        headerDisplayer = Displayers.findById(this, R.id.show_header);
-        castDisplayer = Displayers.findById(this, R.id.show_view_cast);
+        showHeaderView = (ShowHeaderView) findViewById(R.id.show_header);
+        castView = (CastView) findViewById(R.id.show_view_cast);
     }
 
     void setScrollListener(ScrollListener listener) {
         this.listener = listener;
     }
 
-    @Override
     public void display(Show show) {
         Glide.with(getContext())
                 .load(show.getPosterUri().toString())
                 .into(posterImageView);
 
-        headerDisplayer.display(show);
-        castDisplayer.display(show.getCast());
+        showHeaderView.display(show);
+        castView.display(show.getCast());
         seasonsTextView.setOnClickListener(new OnClickListener() {
 
             @Override

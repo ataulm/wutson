@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.ataulm.wutson.view.Displayer;
 import com.ataulm.wutson.R;
 
-public class CastView extends LinearLayout implements Displayer<Cast> {
+public class CastView extends LinearLayout {
 
     private final LayoutInflater layoutInflater;
+
     private ViewGroup castContainer;
 
     public CastView(Context context, AttributeSet attrs) {
@@ -32,7 +32,6 @@ public class CastView extends LinearLayout implements Displayer<Cast> {
         castContainer = (ViewGroup) findViewById(R.id.cast_container);
     }
 
-    @Override
     public void display(Cast cast) {
         castContainer.removeAllViews();
         for (Character character : cast) {
