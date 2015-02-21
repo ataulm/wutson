@@ -16,11 +16,7 @@ public class CastView extends LinearLayout implements Displayer<Cast> {
     private ViewGroup castContainer;
 
     public CastView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public CastView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs);
         layoutInflater = LayoutInflater.from(context);
     }
 

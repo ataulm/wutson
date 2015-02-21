@@ -37,11 +37,7 @@ public class ShowsInGenreItemView extends FrameLayout implements Displayer<Show>
     private TextView nameTextView;
 
     public ShowsInGenreItemView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public ShowsInGenreItemView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs);
     }
 
     @Override

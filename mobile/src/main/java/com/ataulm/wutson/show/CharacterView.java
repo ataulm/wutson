@@ -21,10 +21,6 @@ public class CharacterView extends RelativeLayout implements Displayer<Character
         super(context, attrs);
     }
 
-    public CharacterView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
     @Override
     protected void onFinishInflate() {
         View.inflate(getContext(), R.layout.merge_character, this);

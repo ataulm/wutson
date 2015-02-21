@@ -18,10 +18,6 @@ public class ShowHeaderView extends LinearLayout implements Displayer<Show> {
         super(context, attrs);
     }
 
-    public ShowHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
     @Override
     protected void onFinishInflate() {
         super.setOrientation(VERTICAL);
