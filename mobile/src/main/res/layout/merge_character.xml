@@ -3,7 +3,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <ImageView
+  <com.ataulm.wutson.view.RoundImageView
     android:id="@+id/character_image_profile"
     style="@style/ShowDetails.Cast.Character.Profile"
     android:layout_width="48dp"
@@ -29,7 +29,5 @@
       android:layout_height="wrap_content" />
 
   </LinearLayout>
-
-
 
 </merge>
