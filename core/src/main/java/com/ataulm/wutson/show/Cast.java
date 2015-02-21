@@ -16,4 +16,8 @@ public class Cast implements Iterable<Character> {
         return characters.iterator();
     }
 
+    public int size() {
+        return characters.size();
+    }
+
 }
