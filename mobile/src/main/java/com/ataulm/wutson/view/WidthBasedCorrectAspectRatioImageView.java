@@ -1,4 +1,4 @@
-package com.ataulm.wutson.show;
+package com.ataulm.wutson.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

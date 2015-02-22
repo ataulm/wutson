@@ -3,7 +3,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <com.ataulm.wutson.show.WidthBasedCorrectAspectRatioImageView
+  <com.ataulm.wutson.view.WidthBasedCorrectAspectRatioImageView
     android:id="@+id/show_view_image_poster"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
