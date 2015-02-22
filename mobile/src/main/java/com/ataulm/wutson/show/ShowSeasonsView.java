@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.ataulm.wutson.R;
 
@@ -52,8 +51,7 @@ public class ShowSeasonsView extends RecyclerView {
         @Override
         public void onBindViewHolder(SeasonViewHolder holder, int position) {
             Show.Season season = seasons.get(position);
-            String text = "Season " + season.getSeasonNumber() + ": " + season.getEpisodeCount() + " episodes";
-            ((TextView) holder.itemView).setText(text);
+            ((ShowSeasonsItemView) holder.itemView).display(season);
         }
 
         @Override

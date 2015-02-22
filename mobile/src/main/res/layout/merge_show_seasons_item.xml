@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <ImageView
+    android:id="@+id/show_seasons_item_image_poster"
+    android:layout_width="130dp"
+    android:layout_height="96dp"
+    android:scaleType="centerCrop"
+    android:contentDescription="@null" />
+
+  <TextView
+    android:id="@+id/show_seasons_item_text_season_number"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@id/show_seasons_item_image_poster" />
+
+  <TextView
+    android:id="@+id/show_seasons_item_text_episode_count"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/show_seasons_item_text_season_number"
+    android:layout_alignLeft="@id/show_seasons_item_text_season_number" />
+
+</merge>
