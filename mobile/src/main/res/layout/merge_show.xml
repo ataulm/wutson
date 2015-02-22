@@ -15,6 +15,6 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/app_bar_height"
     app:pstsShouldExpand="true"
-    app:pstsIndicatorHeight="2dp" />
+    app:pstsIndicatorHeight="4dp" />
 
 </merge>
