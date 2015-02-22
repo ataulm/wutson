@@ -15,7 +15,7 @@
     android:layout_height="@dimen/app_bar_height"
     android:visibility="gone" />
 
-  <com.ataulm.wutson.show.ShowView
+  <com.ataulm.wutson.show.ShowOverviewView
     android:id="@+id/show_details_show"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />

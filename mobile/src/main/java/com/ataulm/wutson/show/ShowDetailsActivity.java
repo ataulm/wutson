@@ -22,14 +22,14 @@ public class ShowDetailsActivity extends WutsonActivity {
     public static final String TMDB_SHOW_ID = "TMDB_SHOW_ID";
 
     private Subscription showDetailsSubscription;
-    private ShowView showView;
+    private ShowOverviewView showOverviewView;
     private PagerSlidingTabStrip tabStrip;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
-        showView = (ShowView) findViewById(R.id.show_details_show);
+        showOverviewView = (ShowOverviewView) findViewById(R.id.show_details_show);
         tabStrip = (PagerSlidingTabStrip) findViewById(R.id.show_details_tabs);
     }
 
@@ -80,7 +80,7 @@ public class ShowDetailsActivity extends WutsonActivity {
         @Override
         public void onNext(Show show) {
             Log.d("THING", "onNext: " + show.getName());
-            showView.display(show);
+            showOverviewView.display(show);
             Palette.Swatch swatch = Jabber.swatches().get(show.getPosterUri());
 
             // TODO: title bg is back and text is black

@@ -13,7 +13,7 @@ import com.ataulm.wutson.R;
 import com.ataulm.wutson.shots.ToastDisplayer;
 import com.bumptech.glide.Glide;
 
-public class ShowView extends FrameLayout {
+public class ShowOverviewView extends FrameLayout {
 
     private View contentView;
     private ImageView posterImageView;
@@ -22,7 +22,7 @@ public class ShowView extends FrameLayout {
     private CastView castView;
     private ScrollListener listener;
 
-    public ShowView(Context context, AttributeSet attrs) {
+    public ShowOverviewView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
