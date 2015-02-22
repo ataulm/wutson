@@ -1,7 +1,7 @@
 package com.ataulm.wutson.discover;
 
-import com.ataulm.wutson.model.Genres;
-import com.ataulm.wutson.model.TmdbApi;
+import com.ataulm.wutson.tmdb.Genres;
+import com.ataulm.wutson.tmdb.TmdbApi;
 
 import rx.Observable;
 import rx.functions.Action1;

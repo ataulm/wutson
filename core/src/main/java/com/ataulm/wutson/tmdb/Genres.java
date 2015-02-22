@@ -1,4 +1,4 @@
-package com.ataulm.wutson.model;
+package com.ataulm.wutson.tmdb;
 
 import com.google.gson.annotations.SerializedName;
 

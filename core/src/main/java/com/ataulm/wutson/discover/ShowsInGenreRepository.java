@@ -1,9 +1,9 @@
 package com.ataulm.wutson.discover;
 
-import com.ataulm.wutson.model.Configuration;
-import com.ataulm.wutson.model.DiscoverTvShows;
-import com.ataulm.wutson.model.Genre;
-import com.ataulm.wutson.model.TmdbApi;
+import com.ataulm.wutson.tmdb.Configuration;
+import com.ataulm.wutson.tmdb.DiscoverTvShows;
+import com.ataulm.wutson.tmdb.Genre;
+import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.rx.Functions;
 import com.ataulm.wutson.rx.InfiniteOperator;

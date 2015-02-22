@@ -1,6 +1,6 @@
 package com.ataulm.wutson.show;
 
-import com.ataulm.wutson.model.Season;
+import com.ataulm.wutson.tmdb.Season;
 
 import java.net.URI;
 import java.util.List;

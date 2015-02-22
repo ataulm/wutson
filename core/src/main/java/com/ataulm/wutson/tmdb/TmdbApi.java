@@ -1,4 +1,4 @@
-package com.ataulm.wutson.model;
+package com.ataulm.wutson.tmdb;
 
 import retrofit.http.GET;
 import retrofit.http.Path;

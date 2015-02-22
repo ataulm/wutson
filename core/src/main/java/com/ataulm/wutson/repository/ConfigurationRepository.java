@@ -1,7 +1,7 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.model.Configuration;
-import com.ataulm.wutson.model.TmdbApi;
+import com.ataulm.wutson.tmdb.Configuration;
+import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.rx.InfiniteOperator;
 
 import rx.Observable;

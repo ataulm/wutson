@@ -1,6 +1,6 @@
 package com.ataulm.wutson.discover;
 
-import com.ataulm.wutson.model.Genre;
+import com.ataulm.wutson.tmdb.Genre;
 
 import java.util.Iterator;
 import java.util.List;
