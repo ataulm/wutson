@@ -45,7 +45,7 @@ public class ShowSeasonsView extends RecyclerView {
 
         @Override
         public SeasonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = inflater.inflate(R.layout.view_character, parent, false);
+            View view = inflater.inflate(R.layout.view_show_seasons_item, parent, false);
             return new SeasonViewHolder(view);
         }
 

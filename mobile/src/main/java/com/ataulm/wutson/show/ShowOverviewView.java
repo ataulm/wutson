@@ -28,7 +28,7 @@ public class ShowOverviewView extends FrameLayout {
 
     @Override
     protected void onFinishInflate() {
-        View.inflate(getContext(), R.layout.merge_show, this);
+        View.inflate(getContext(), R.layout.merge_show_overview, this);
         contentView = findViewById(R.id.show_view_scroll_content);
         contentView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
 
