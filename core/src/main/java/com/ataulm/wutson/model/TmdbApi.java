@@ -16,10 +16,7 @@ public interface TmdbApi {
     @GET("/discover/tv")
     Observable<DiscoverTvShows> getShowsMatchingGenre(@Query("with_genres") String genreId);
 
-    @GET("/tv/{id}")
+    @GET("/tv/{id}?append_to_response=credits")
     Observable<TvShow> getTvShow(@Path("id") String id);
-
-    @GET("/tv/{id}/credits")
-    Observable<Credits> getTvShowCredits(@Path("id") String id);
 
 }

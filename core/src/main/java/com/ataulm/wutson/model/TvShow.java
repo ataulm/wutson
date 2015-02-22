@@ -2,6 +2,8 @@ package com.ataulm.wutson.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class TvShow {
 
     @SerializedName("id")
@@ -15,6 +17,12 @@ public class TvShow {
 
     @SerializedName("overview")
     String overview;
+
+    @SerializedName("seasons")
+    List<Season> seasons;
+
+    @SerializedName("credits")
+    Credits credits;
 
     private Configuration configuration;
 
@@ -32,6 +40,14 @@ public class TvShow {
 
     public String getOverview() {
         return overview;
+    }
+
+    public List<Season> getSeasons() {
+        return seasons;
+    }
+
+    public Credits getCredits() {
+        return credits;
     }
 
 }

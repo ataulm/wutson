@@ -1,7 +1,10 @@
 package com.ataulm.wutson.show;
 
+import com.ataulm.wutson.model.Season;
+
 import java.net.URI;
 import java.util.Arrays;
+import java.util.List;
 
 public class DummyShowMaker {
 
@@ -13,8 +16,9 @@ public class DummyShowMaker {
                 " by other DC Comics characters. To assist in promotion, a preview comic book was released to tie into the television series.";
         URI posterUri = URI.create("https://image.tmdb.org/t/p/w396/adVtiOQ5JoQR5HkyBHWfHiyNlv2.jpg");
         Cast cast = getArrowCast();
+        List<Season> seasons = getArrowSeasons();
 
-        return new Show(name, overview, posterUri, cast);
+        return new Show(name, overview, posterUri, cast, seasons);
     }
 
     private Cast getArrowCast() {
@@ -26,6 +30,10 @@ public class DummyShowMaker {
         Character thea = new Character("Thea Queen", new Actor("Willa Holland", URI.create("https://image.tmdb.org/t/p/w185/wSn01hjcRFnamCrvhbUJyeMIbxo.jpg")));
 
         return new Cast(Arrays.asList(oliver, laurel, roy, diggle, detective, thea));
+    }
+
+    public List<Season> getArrowSeasons() {
+        return Arrays.asList(new Season(), new Season(), new Season());
     }
 
 }

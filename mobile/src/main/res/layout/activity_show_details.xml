@@ -9,6 +9,12 @@
     android:layout_height="wrap_content"
     android:theme="?attr/theme" />
 
+  <com.astuetz.PagerSlidingTabStrip
+    android:id="@+id/show_details_tabs"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/app_bar_height"
+    android:visibility="gone" />
+
   <com.ataulm.wutson.show.ShowView
     android:id="@+id/show_details_show"
     android:layout_width="match_parent"

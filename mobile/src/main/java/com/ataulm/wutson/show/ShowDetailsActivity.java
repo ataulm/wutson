@@ -2,10 +2,13 @@ package com.ataulm.wutson.show;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
+import android.view.View;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonActivity;
@@ -20,12 +23,14 @@ public class ShowDetailsActivity extends WutsonActivity {
 
     private Subscription showDetailsSubscription;
     private ShowView showView;
+    private PagerSlidingTabStrip tabStrip;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
         showView = (ShowView) findViewById(R.id.show_details_show);
+        tabStrip = (PagerSlidingTabStrip) findViewById(R.id.show_details_tabs);
     }
 
     @Override
@@ -36,7 +41,10 @@ public class ShowDetailsActivity extends WutsonActivity {
 
     private void customiseShowDetailsToolbar() {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getToolbar().getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        Drawable navigationIcon = getToolbar().getNavigationIcon();
+        if (navigationIcon != null) {
+            navigationIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        }
     }
 
     @Override
@@ -73,10 +81,21 @@ public class ShowDetailsActivity extends WutsonActivity {
         public void onNext(Show show) {
             Log.d("THING", "onNext: " + show.getName());
             showView.display(show);
+            Palette.Swatch swatch = Jabber.swatches().get(show.getPosterUri());
+
+            // TODO: title bg is back and text is black
+//            setTitle(show.getName());
+//            getSupportActionBar().setDisplayShowTitleEnabled(true);
+
             if (Jabber.swatches().hasSwatchFor(show.getPosterUri())) {
-                Palette.Swatch swatch = Jabber.swatches().get(show.getPosterUri());
                 getToolbar().setBackgroundColor(swatch.getRgb());
             }
+
+            if (!show.getSeasons().isEmpty()) {
+                tabStrip.setVisibility(View.VISIBLE);
+                tabStrip.setBackgroundColor(swatch.getRgb());
+            }
+
         }
 
     }

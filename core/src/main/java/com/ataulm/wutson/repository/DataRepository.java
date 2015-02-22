@@ -4,7 +4,7 @@ import com.ataulm.wutson.discover.ShowsInGenre;
 import com.ataulm.wutson.discover.ShowsInGenreRepository;
 import com.ataulm.wutson.model.Character;
 import com.ataulm.wutson.model.Configuration;
-import com.ataulm.wutson.model.Credits;
+import com.ataulm.wutson.model.Season;
 import com.ataulm.wutson.model.TmdbApi;
 import com.ataulm.wutson.model.TvShow;
 import com.ataulm.wutson.show.Actor;
@@ -13,11 +13,13 @@ import com.ataulm.wutson.show.Show;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import rx.Observable;
 import rx.functions.Func1;
-import rx.functions.Func3;
+import rx.functions.Func2;
 
 public class DataRepository {
 
@@ -38,15 +40,14 @@ public class DataRepository {
 
     public Observable<Show> getShow(final String showId) {
         Observable<Configuration> configurationObservable = configurationRepository.getConfiguration();
-        Observable<Credits> tvShowCreditsObservable = api.getTvShowCredits(showId);
         Observable<TvShow> tvShowObservable = configurationObservable.flatMap(getTvShowWith(showId));
 
-        return Observable.zip(configurationObservable, tvShowCreditsObservable, tvShowObservable, new Func3<Configuration, Credits, TvShow, Show>() {
+        return Observable.zip(configurationObservable, tvShowObservable, new Func2<Configuration, TvShow, Show>() {
 
             @Override
-            public Show call(Configuration configuration, Credits credits, TvShow tvShow) {
+            public Show call(Configuration configuration, TvShow tvShow) {
                 List<com.ataulm.wutson.show.Character> characters = new ArrayList<>();
-                for (Character character : credits) {
+                for (Character character : tvShow.getCredits()) {
                     Actor actor = new Actor(character.actorName, URI.create(configuration.getCompleteProfilePath(character.profilePath)));
                     characters.add(new com.ataulm.wutson.show.Character(character.name, actor));
                 }
@@ -55,7 +56,8 @@ public class DataRepository {
                 String overview = tvShow.getOverview();
                 URI posterUri = URI.create(tvShow.getPosterPath());
                 Cast cast = new Cast(characters);
-                return new Show(name, overview, posterUri, cast);
+                List<Season> seasons = tvShow.getSeasons();
+                return new Show(name, overview, posterUri, cast, seasons);
             }
 
         });
@@ -66,6 +68,8 @@ public class DataRepository {
 
             @Override
             public Observable<TvShow> call(final Configuration configuration) {
+                Map<String, String> params = new HashMap<>();
+                params.put("append_to_response", "credits");
                 return api.getTvShow(id).map(updateTvShowWith(configuration));
             }
 

@@ -13,7 +13,7 @@ public class TmdbApiFactory {
 
     private final RestAdapter restAdapter;
 
-    public static TmdbApiFactory newInstance(final String apiKey, Client client) {
+    public static TmdbApiFactory newInstance(final String apiKey, Client client, boolean enableLogs) {
         RequestInterceptor tmdbRequestInterceptor = new RequestInterceptor() {
 
             @Override
@@ -38,11 +38,14 @@ public class TmdbApiFactory {
         };
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.BASIC)      // TODO: disable for release
                 .setEndpoint(tmdbEndpoint)
                 .setClient(client)
                 .setRequestInterceptor(tmdbRequestInterceptor)
                 .build();
+
+        if (enableLogs) {
+            restAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
+        }
 
         return new TmdbApiFactory(restAdapter);
     }

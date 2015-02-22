@@ -1,6 +1,9 @@
 package com.ataulm.wutson.show;
 
+import com.ataulm.wutson.model.Season;
+
 import java.net.URI;
+import java.util.List;
 
 public class Show {
 
@@ -8,12 +11,14 @@ public class Show {
     private final String overview;
     private final URI posterUri;
     private final Cast cast;
+    private final List<Season> seasons;
 
-    public Show(String name, String overview, URI posterUri, Cast cast) {
+    public Show(String name, String overview, URI posterUri, Cast cast, List<Season> seasons) {
         this.name = name;
         this.overview = overview;
         this.posterUri = posterUri;
         this.cast = cast;
+        this.seasons = seasons;
     }
 
     public String getName() {
@@ -30,6 +35,10 @@ public class Show {
 
     public Cast getCast() {
         return cast;
+    }
+
+    public List<Season> getSeasons() {
+        return seasons;
     }
 
 }

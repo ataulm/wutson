@@ -45,7 +45,8 @@ public final class Jabber {
 
     public static DataRepository dataRepository() {
         if (instance.dataRepository == null) {
-            TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(BuildConfig.TMDB_API_KEY, newClient());
+            boolean enableLogs = BuildConfig.DEBUG;
+            TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(BuildConfig.TMDB_API_KEY, newClient(), enableLogs);
             TmdbApi api = tmdbApiFactory.createApi();
             instance.dataRepository = new DataRepository(api);
         }
