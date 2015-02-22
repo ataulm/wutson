@@ -11,6 +11,8 @@
   <color name="white_10">#1AFFFFFF</color>
   <color name="white">#FFFFFF</color>
 
+  <color name="grey">#EEEEEE</color>
+
   <color name="transparent">#00000000</color>
 
 </resources>
