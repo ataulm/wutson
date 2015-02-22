@@ -3,6 +3,7 @@ package com.ataulm.wutson.show;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.graphics.Palette;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 
 public class ShowView extends FrameLayout {
@@ -29,6 +31,14 @@ public class ShowView extends FrameLayout {
     }
 
     void display(Show show) {
+        // TODO: this might be null - kick off a task to calculate and cache
+        Palette.Swatch swatch = Jabber.swatches().get(show.getPosterUri());
+        if (swatch != null) {
+            tabs.setBackgroundColor(swatch.getRgb());
+            tabs.setTextColor(swatch.getTitleTextColor());
+            tabs.setIndicatorColor(swatch.getTitleTextColor());
+        }
+
         pager.setAdapter(new ShowPagerAdapter(show));
         tabs.setViewPager(pager);
     }

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.util.Log;
 
 import com.ataulm.wutson.Jabber;
@@ -74,7 +75,8 @@ public class ShowDetailsActivity extends WutsonActivity {
 
         @Override
         public void onNext(Show show) {
-            Log.d("THING", "onNext: " + show.getName());
+            Palette.Swatch swatch = Jabber.swatches().get(show.getPosterUri());
+            getToolbar().setBackgroundColor(swatch.getRgb());
             showView.display(show);
 
             // TODO: title bg is black and text is black
