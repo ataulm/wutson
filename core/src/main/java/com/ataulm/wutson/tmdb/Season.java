@@ -5,15 +5,22 @@ import com.google.gson.annotations.SerializedName;
 public class Season {
 
     @SerializedName("id")
-    String id;
+    public final String id;
 
     @SerializedName("episode_count")
-    int size;
+    public final int episodeCount;
 
     @SerializedName("poster_path")
-    String posterPath;
+    public final String posterPath;
 
     @SerializedName("season_number")
-    int seasonNumber;
+    public final int seasonNumber;
+
+    public Season(String id, int episodeCount, String posterPath, int seasonNumber) {
+        this.id = id;
+        this.episodeCount = episodeCount;
+        this.posterPath = posterPath;
+        this.seasonNumber = seasonNumber;
+    }
 
 }

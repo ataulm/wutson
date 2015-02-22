@@ -2,14 +2,14 @@ package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.discover.ShowsInGenre;
 import com.ataulm.wutson.discover.ShowsInGenreRepository;
+import com.ataulm.wutson.show.Actor;
+import com.ataulm.wutson.show.Cast;
+import com.ataulm.wutson.show.Show;
 import com.ataulm.wutson.tmdb.Character;
 import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.tmdb.Season;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.TvShow;
-import com.ataulm.wutson.show.Actor;
-import com.ataulm.wutson.show.Cast;
-import com.ataulm.wutson.show.Show;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -56,7 +56,15 @@ public class DataRepository {
                 String overview = tvShow.getOverview();
                 URI posterUri = URI.create(tvShow.getPosterPath());
                 Cast cast = new Cast(characters);
-                List<Season> seasons = tvShow.getSeasons();
+
+                List<Show.Season> seasons = new ArrayList<>();
+                for (Season season : tvShow.getSeasons()) {
+                    String id = season.id;
+                    int seasonNumber = season.seasonNumber;
+                    int episodeCount = season.episodeCount;
+                    URI posterPath = URI.create(configuration.getCompletePosterPath(season.posterPath));
+                    seasons.add(new Show.Season(id, seasonNumber, episodeCount, posterPath));
+                }
                 return new Show(name, overview, posterUri, cast, seasons);
             }
 

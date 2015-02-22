@@ -1,7 +1,5 @@
 package com.ataulm.wutson.show;
 
-import com.ataulm.wutson.tmdb.Season;
-
 import java.net.URI;
 import java.util.List;
 
@@ -39,6 +37,38 @@ public class Show {
 
     public List<Season> getSeasons() {
         return seasons;
+    }
+
+    public static class Season {
+
+        private final String id;
+        private final int seasonNumber;
+        private final int episodeCount;
+        private final URI posterPath;
+
+        public Season(String id, int seasonNumber, int episodeCount, URI posterPath) {
+            this.id = id;
+            this.seasonNumber = seasonNumber;
+            this.episodeCount = episodeCount;
+            this.posterPath = posterPath;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public int getSeasonNumber() {
+            return seasonNumber;
+        }
+
+        public int getEpisodeCount() {
+            return episodeCount;
+        }
+
+        public URI getPosterPath() {
+            return posterPath;
+        }
+
     }
 
 }
