@@ -2,16 +2,11 @@ package com.ataulm.wutson.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
-public class WidthBasedCorrectAspectRatioImageView extends ImageView {
+public class WidthBasedCorrectAspectRatioImageView extends CrossfadeImageView {
 
     public WidthBasedCorrectAspectRatioImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public WidthBasedCorrectAspectRatioImageView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
     }
 
     @Override
