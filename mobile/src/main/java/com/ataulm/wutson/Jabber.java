@@ -18,7 +18,7 @@ import retrofit.client.OkClient;
 
 public final class Jabber {
 
-    private static final int MAX_CACHE_SIZE = 10 * 1024 * 1024;
+    private static final int MAX_CACHE_SIZE_BYTES = 10 * 1024 * 1024;
 
     private static Jabber instance;
 
@@ -56,7 +56,7 @@ public final class Jabber {
     private static Client newClient() {
         OkHttpClient client = new OkHttpClient();
         try {
-            Cache cache = new Cache(instance.context.getCacheDir(), MAX_CACHE_SIZE);
+            Cache cache = new Cache(instance.context.getCacheDir(), MAX_CACHE_SIZE_BYTES);
             return new OkClient(client.setCache(cache));
         } catch (IOException e) {
             return new OkClient(client);
