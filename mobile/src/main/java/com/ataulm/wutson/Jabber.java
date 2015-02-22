@@ -18,7 +18,7 @@ import retrofit.client.OkClient;
 
 public final class Jabber {
 
-    private static final int MAX_CACHE_SIZE = 1024;
+    private static final int MAX_CACHE_SIZE = 10 * 1024 * 1024;
 
     private static Jabber instance;
 
