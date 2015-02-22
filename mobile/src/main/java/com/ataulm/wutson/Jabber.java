@@ -6,6 +6,8 @@ import android.content.Context;
 import com.ataulm.wutson.model.TmdbApi;
 import com.ataulm.wutson.model.TmdbApiFactory;
 import com.ataulm.wutson.repository.DataRepository;
+import com.ataulm.wutson.shots.Swatches;
+import com.ataulm.wutson.shots.ToastDisplayer;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -24,6 +26,7 @@ public final class Jabber {
 
     private DataRepository dataRepository;
     private ToastDisplayer toastDisplayer;
+    private Swatches swatches;
 
     public static void init(Application application) {
         instance = new Jabber(application.getApplicationContext());
@@ -31,6 +34,13 @@ public final class Jabber {
 
     private Jabber(Context context) {
         this.context = context;
+    }
+
+    public static Swatches swatches() {
+        if (instance.swatches == null) {
+            instance.swatches = new Swatches();
+        }
+        return instance.swatches;
     }
 
     public static DataRepository dataRepository() {

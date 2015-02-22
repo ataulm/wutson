@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.ToastDisplayer;
+import com.ataulm.wutson.shots.ToastDisplayer;
 import com.bumptech.glide.Glide;
 
 public class ShowView extends FrameLayout {

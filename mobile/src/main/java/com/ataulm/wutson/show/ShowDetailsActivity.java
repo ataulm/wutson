@@ -3,6 +3,7 @@ package com.ataulm.wutson.show;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.util.Log;
 
 import com.ataulm.wutson.Jabber;
@@ -72,6 +73,10 @@ public class ShowDetailsActivity extends WutsonActivity {
         public void onNext(Show show) {
             Log.d("THING", "onNext: " + show.getName());
             showView.display(show);
+            if (Jabber.swatches().hasSwatchFor(show.getPosterUri())) {
+                Palette.Swatch swatch = Jabber.swatches().get(show.getPosterUri());
+                getToolbar().setBackgroundColor(swatch.getRgb());
+            }
         }
 
     }

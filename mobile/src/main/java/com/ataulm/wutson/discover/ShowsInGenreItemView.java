@@ -9,16 +9,15 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.shots.Swatches;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
-import java.net.URI;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import rx.Observable;
 import rx.Observer;
@@ -30,10 +29,10 @@ public class ShowsInGenreItemView extends FrameLayout {
 
     private static final float HEIGHT_BY_WIDTH_RATIO = 214f / 178;
     private static final float HALF_PIXEL = 0.5f;
-    private static final Map<URI, Palette> PALETTES_CACHE = new HashMap<>();
 
     private ImageView posterImageView;
     private TextView nameTextView;
+    private Swatches swatches = Jabber.swatches();
 
     public ShowsInGenreItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -80,14 +79,14 @@ public class ShowsInGenreItemView extends FrameLayout {
                     posterImageView.setImageBitmap(resource);
                 }
 
-                if (!PALETTES_CACHE.containsKey(show.getPosterUri())) {
+                if (swatches.hasSwatchFor(show.getPosterUri())) {
+                    Palette.Swatch swatch = swatches.get(show.getPosterUri());
+                    apply(swatch, show);
+                } else {
                     Observable.create(generatePaletteFrom(resource))
                             .subscribeOn(Schedulers.computation())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new PaletteGenerationObserver(show));
-                } else {
-                    Palette palette = PALETTES_CACHE.get(show.getPosterUri());
-                    apply(palette, show);
                 }
             }
 
@@ -127,15 +126,15 @@ public class ShowsInGenreItemView extends FrameLayout {
 
         @Override
         public void onNext(Palette palette) {
-            PALETTES_CACHE.put(show.getPosterUri(), palette);
-            apply(palette, show);
+            Palette.Swatch swatch = getAvailableSwatch(palette);
+            Jabber.swatches().put(show.getPosterUri(), swatch);
+            apply(swatch, show);
         }
 
     }
 
-    private void apply(Palette palette, Show show) {
+    private void apply(Palette.Swatch swatch, Show show) {
         if (posterShouldStillDisplay(show)) {
-            Palette.Swatch swatch = getAvailableSwatch(palette);
             nameTextView.setBackgroundColor(swatch.getRgb());
         }
     }

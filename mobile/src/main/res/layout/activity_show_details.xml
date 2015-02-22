@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <com.ataulm.wutson.view.AppBar
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="?attr/theme" />
 
   <com.ataulm.wutson.show.ShowView
     android:id="@+id/show_details_show"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 
-  <com.ataulm.wutson.view.AppBar
-    style="@style/Wutson.AppBar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-
-</merge>
+</LinearLayout>

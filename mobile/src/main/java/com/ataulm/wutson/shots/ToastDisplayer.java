@@ -1,4 +1,4 @@
-package com.ataulm.wutson;
+package com.ataulm.wutson.shots;
 
 import android.content.Context;
 import android.widget.Toast;
