@@ -1,6 +1,7 @@
 package com.ataulm.wutson.show;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,10 +38,18 @@ public class CastView extends LinearLayout {
             return;
         }
 
+        CastView.LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        Resources resources = getResources();
+        layoutParams.setMargins(
+                resources.getDimensionPixelSize(R.dimen.character_margin_left),
+                resources.getDimensionPixelSize(R.dimen.character_margin_top),
+                resources.getDimensionPixelSize(R.dimen.character_margin_right),
+                resources.getDimensionPixelSize(R.dimen.character_margin_bottom));
+
         setVisibility(VISIBLE);
         for (Character character : cast) {
             View characterView = getViewFor(character);
-            castContainer.addView(characterView);
+            castContainer.addView(characterView, layoutParams);
         }
     }
 

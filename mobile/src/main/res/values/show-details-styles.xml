@@ -54,14 +54,13 @@
   <style name="ShowDetails.Cast" />
 
   <style name="ShowDetails.Cast.View">
-    <item name="android:paddingLeft">16dp</item>
-    <item name="android:paddingTop">16dp</item>
-    <item name="android:paddingRight">16dp</item>
-    <item name="android:paddingBottom">16dp</item>
+    <item name="android:paddingLeft">@dimen/cast_padding_left</item>
+    <item name="android:paddingTop">@dimen/cast_padding_top</item>
+    <item name="android:paddingRight">@dimen/cast_padding_right</item>
+    <item name="android:paddingBottom">@dimen/cast_padding_bottom</item>
   </style>
 
   <style name="ShowDetails.Cast.Title">
-    <item name="android:paddingBottom">16dp</item>
     <item name="android:textAppearance">@style/ShowDetails.Cast.Title.TextAppearance</item>
   </style>
 
@@ -78,12 +77,10 @@
   </style>
 
   <style name="ShowDetails.Cast.Character.Name">
-    <item name="android:paddingLeft">16dp</item>
     <item name="android:gravity">bottom</item>
   </style>
 
   <style name="ShowDetails.Cast.Character.Actor">
-    <item name="android:paddingLeft">16dp</item>
     <item name="android:gravity">top</item>
   </style>
 

@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="wrap_content">
 
   <com.ataulm.wutson.view.RoundImageView
     android:id="@+id/character_image_profile"
     style="@style/ShowDetails.Cast.Character.Profile"
-    android:layout_width="48dp"
-    android:layout_height="48dp"
+    android:layout_width="@dimen/character_image_profile"
+    android:layout_height="@dimen/character_image_profile"
+    android:layout_centerVertical="true"
     android:contentDescription="@null" />
 
   <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_toRightOf="@id/character_image_profile"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="@dimen/character_names_margin_left"
     android:orientation="vertical">
 
     <TextView
       android:id="@+id/character_text_name"
       style="@style/ShowDetails.Cast.Character.Name"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="0dp"
+      android:layout_weight="50" />
 
     <TextView
       android:id="@+id/character_text_actor"
       style="@style/ShowDetails.Cast.Character.Actor"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="0dp"
+      android:layout_weight="50" />
 
   </LinearLayout>
 
