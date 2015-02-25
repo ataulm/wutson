@@ -79,9 +79,8 @@ public class ShowDetailsActivity extends WutsonActivity {
             getToolbar().setBackgroundColor(swatch.getRgb());
             showView.display(show);
 
-            // TODO: title bg is black and text is black
-//            setTitle(show.getName());
-//            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            setTitle(show.getName());
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
 
     }
