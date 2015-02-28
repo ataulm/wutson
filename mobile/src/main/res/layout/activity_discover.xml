@@ -16,6 +16,7 @@
     android:layout_height="@dimen/app_bar_height"
     android:layout_marginTop="@dimen/app_bar_height"
     android:paddingLeft="46dp"
+    app:pstsTextColorSelected="@color/white"
     app:pstsIndicatorHeight="4dp" />
 
   <com.ataulm.wutson.view.AppBar
