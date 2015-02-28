@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
-
-  <android.support.v4.view.ViewPager
-    android:id="@+id/discover_viewpager"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="112dp" />
-
-  <com.astuetz.PagerSlidingTabStrip
-    android:id="@+id/tabs"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/app_bar_height"
-    android:layout_marginTop="@dimen/app_bar_height"
-    android:paddingLeft="46dp"
-    app:pstsTextColorSelected="@color/white"
-    app:pstsIndicatorHeight="4dp" />
+  android:layout_height="match_parent"
+  android:orientation="vertical">
 
   <com.ataulm.wutson.view.AppBar
     style="@style/Wutson.AppBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 
-</merge>
+  <com.astuetz.PagerSlidingTabStrip
+    android:id="@+id/tabs"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/app_bar_height"
+    android:paddingLeft="46dp"
+    app:pstsTextColorSelected="@color/white"
+    app:pstsIndicatorHeight="4dp" />
+
+  <android.support.v4.view.ViewPager
+    android:id="@+id/discover_viewpager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+</LinearLayout>

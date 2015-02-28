@@ -8,13 +8,14 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.ataulm.wutson.ClassContractBrokenException;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 
-public class ShowView extends FrameLayout {
+public class ShowView extends LinearLayout {
 
     private ViewPager pager;
     private PagerSlidingTabStrip tabs;
@@ -25,9 +26,15 @@ public class ShowView extends FrameLayout {
 
     @Override
     protected void onFinishInflate() {
+        super.setOrientation(VERTICAL);
         View.inflate(getContext(), R.layout.merge_show, this);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.show_view_tabs);
         pager = (ViewPager) findViewById(R.id.show_view_pager);
+    }
+
+    @Override
+    public final void setOrientation(int orientation) {
+        throw new ClassContractBrokenException();
     }
 
     void display(Show show) {
