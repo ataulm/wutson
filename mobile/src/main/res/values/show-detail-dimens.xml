@@ -7,7 +7,7 @@
   <dimen name="cast_padding_top">16dp</dimen>
   <dimen name="cast_padding_right">16dp</dimen>
   <dimen name="cast_padding_bottom">16dp</dimen>
-
+  
   <dimen name="character_margin_left">0dp</dimen>
   <dimen name="character_margin_top">16dp</dimen>
   <dimen name="character_margin_right">0dp</dimen>
@@ -15,5 +15,20 @@
 
   <dimen name="character_image_profile">40dp</dimen>
   <dimen name="character_names_margin_left">16dp</dimen>
+
+  <dimen name="show_details_season_item_poster_width">130dp</dimen>
+  <dimen name="show_details_season_item_poster_height">96dp</dimen>
+
+  <dimen name="show_details_season_number_text">16sp</dimen>
+  <dimen name="show_details_season_number_padding_left">16dp</dimen>
+  <dimen name="show_details_season_number_padding_top">12dp</dimen>
+  <dimen name="show_details_season_number_padding_right">16dp</dimen>
+  <dimen name="show_details_season_number_padding_bottom">0dp</dimen>
+
+  <dimen name="show_details_episode_count_text">14sp</dimen>
+  <dimen name="show_details_episode_count_padding_left">16dp</dimen>
+  <dimen name="show_details_episode_count_padding_top">0dp</dimen>
+  <dimen name="show_details_episode_count_padding_right">16dp</dimen>
+  <dimen name="show_details_episode_count_padding_bottom">16dp</dimen>
 
 </resources>

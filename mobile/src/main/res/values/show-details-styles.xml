@@ -70,4 +70,26 @@
     <item name="android:gravity">top</item>
   </style>
 
+  <style name="ShowDetails.Season" />
+
+  <style name="ShowDetails.Season.Poster">
+    <item name="android:scaleType">centerCrop</item>
+  </style>
+
+  <style name="ShowDetails.Season.Number">
+    <item name="android:paddingLeft">@dimen/show_details_season_number_padding_left</item>
+    <item name="android:paddingTop">@dimen/show_details_season_number_padding_top</item>
+    <item name="android:paddingRight">@dimen/show_details_season_number_padding_right</item>
+    <item name="android:paddingBottom">@dimen/show_details_season_number_padding_bottom</item>
+    <item name="android:textSize">@dimen/show_details_season_number_text</item>
+  </style>
+
+  <style name="ShowDetails.Season.EpisodeCount">
+    <item name="android:paddingLeft">@dimen/show_details_episode_count_padding_left</item>
+    <item name="android:paddingTop">@dimen/show_details_episode_count_padding_top</item>
+    <item name="android:paddingRight">@dimen/show_details_episode_count_padding_right</item>
+    <item name="android:paddingBottom">@dimen/show_details_episode_count_padding_bottom</item>
+    <item name="android:textSize">@dimen/show_details_episode_count_text</item>
+  </style>
+  
 </resources>
