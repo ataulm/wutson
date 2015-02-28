@@ -1,8 +1,10 @@
 package com.ataulm.wutson.show;
 
+import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
@@ -76,11 +78,29 @@ public class ShowDetailsActivity extends WutsonActivity {
         @Override
         public void onNext(Show show) {
             Palette.Swatch swatch = Jabber.swatches().get(show.getPosterUri());
-            getToolbar().setBackgroundColor(swatch.getRgb());
+            int rgb = swatch.getRgb();
+            getToolbar().setBackgroundColor(rgb);
+            setStatusBarColorToSlightlyDarkerThan(rgb);
+
             showView.display(show);
 
             setTitle(show.getName());
             getSupportActionBar().setDisplayShowTitleEnabled(true);
+        }
+
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+        private void setStatusBarColorToSlightlyDarkerThan(int rgb) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                return;
+            }
+
+            final int darkenByOffset = 20;
+            int statusBarColor = Color.rgb(
+                    Color.red(rgb) - darkenByOffset >= 0 ? Color.red(rgb) - darkenByOffset : 0,
+                    Color.green(rgb) - darkenByOffset >= 0 ? Color.green(rgb) - darkenByOffset : 0,
+                    Color.blue(rgb) - darkenByOffset >= 0 ? Color.blue(rgb) - darkenByOffset : 0
+            );
+            getWindow().setStatusBarColor(statusBarColor);
         }
 
     }
