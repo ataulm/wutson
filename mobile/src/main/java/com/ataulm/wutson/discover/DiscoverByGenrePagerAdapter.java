@@ -25,6 +25,7 @@ class DiscoverByGenrePagerAdapter extends PagerAdapter {
 
     void update(List<ShowsInGenre> showsInGenres) {
         this.showsInGenres = showsInGenres;
+        Collections.sort(showsInGenres);
         notifyDataSetChanged();
     }
 

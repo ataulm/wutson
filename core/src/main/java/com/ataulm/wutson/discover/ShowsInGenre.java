@@ -5,7 +5,7 @@ import com.ataulm.wutson.tmdb.Genre;
 import java.util.Iterator;
 import java.util.List;
 
-public class ShowsInGenre implements Iterable<Show> {
+public class ShowsInGenre implements Iterable<Show>, Comparable<ShowsInGenre> {
 
     private final Genre genre;
     private final List<Show> shows;
@@ -30,6 +30,11 @@ public class ShowsInGenre implements Iterable<Show> {
 
     public Show get(int position) {
         return shows.get(position);
+    }
+
+    @Override
+    public int compareTo(ShowsInGenre other) {
+        return getGenre().compareTo(other.getGenre());
     }
 
 }
