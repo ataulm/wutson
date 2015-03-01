@@ -5,21 +5,21 @@
 
   <com.ataulm.wutson.view.CrossfadeImageView
     android:id="@+id/show_seasons_item_image_poster"
-    style="@style/ShowDetails.Season.Poster"
-    android:layout_width="@dimen/show_details_season_item_poster_width"
-    android:layout_height="@dimen/show_details_season_item_poster_height"
+    style="@style/ShowDetails.SeasonsItem.Poster"
+    android:layout_width="@dimen/show_seasons_item_poster_width"
+    android:layout_height="@dimen/show_seasons_item_poster_height"
     android:contentDescription="@null" />
 
   <TextView
     android:id="@+id/show_seasons_item_text_season_number"
-    style="@style/ShowDetails.Season.Number"
+    style="@style/ShowDetails.SeasonsItem.SeasonNumber"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_toRightOf="@id/show_seasons_item_image_poster" />
 
   <TextView
     android:id="@+id/show_seasons_item_text_episode_count"
-    style="@style/ShowDetails.Season.EpisodeCount"
+    style="@style/ShowDetails.SeasonsItem.EpisodeCount"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignLeft="@id/show_seasons_item_text_season_number"

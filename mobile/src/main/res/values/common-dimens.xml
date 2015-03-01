@@ -2,5 +2,6 @@
 <resources>
 
   <dimen name="app_bar_height">56dp</dimen>
+  <dimen name="card_corner_radius">2dp</dimen>
 
 </resources>
