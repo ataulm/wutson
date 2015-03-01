@@ -21,9 +21,9 @@ public class CrossfadeImageView extends ImageView {
     @Override
     public void setImageBitmap(Bitmap bitmap) {
         TransitionDrawable transitionDrawable = new TransitionDrawable(new Drawable[]{
-                        new ColorDrawable(Color.TRANSPARENT),
-                        new BitmapDrawable(getResources(), bitmap)
-                });
+                new ColorDrawable(Color.TRANSPARENT),
+                new BitmapDrawable(getResources(), bitmap)
+        });
 
         super.setImageDrawable(transitionDrawable);
         transitionDrawable.startTransition(CROSSFADE_DURATION_MS);
