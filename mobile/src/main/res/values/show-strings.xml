@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="show_seasons_item_season_number_0">@string/specials</string>
+  <string name="show_seasons_item_season_number_format">@string/season_x_format</string>
+  <string name="show_seasons_item_episode_count_format">@string/x_episodes_format</string>
+
+</resources>
