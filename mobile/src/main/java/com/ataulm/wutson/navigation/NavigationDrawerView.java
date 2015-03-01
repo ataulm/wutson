@@ -12,10 +12,6 @@ public class NavigationDrawerView extends ListView {
         super(context, attrs);
     }
 
-    public NavigationDrawerView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
     public void setupWithListener(OnNavigationClickListener listener) {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         ListAdapter adapter = new TopLevelNavigationAdapter(layoutInflater, listener);

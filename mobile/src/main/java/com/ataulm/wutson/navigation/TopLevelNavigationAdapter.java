@@ -40,13 +40,43 @@ class TopLevelNavigationAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        final TopLevelNavigationItem item = getItem(position);
         View view = convertView;
         if (view == null) {
-            view = inflater.inflate(R.layout.view_top_level_navigation_item, parent, false);
+            view = createNewViewFor(item, parent);
         }
+        bindViewTo(item, view);
+        return view;
+    }
 
-        final TopLevelNavigationItem item = getItem(position);
+    private View createNewViewFor(TopLevelNavigationItem item, ViewGroup parent) {
+        switch (item.getViewType()) {
+            case HEADER:
+                return createPrimaryView(parent);
+            case PRIMARY:
+                return createPrimaryView(parent);
+            case SECONDARY:
+                return createPrimaryView(parent);
+            default:
+                throw new IllegalArgumentException("not sure of viewtype to bind: " + item);
+        }
+    }
+
+    private View createHeaderView(ViewGroup parent) {
+        return inflater.inflate(R.layout.view_top_level_navigation_item_header, parent, false);
+    }
+
+    private View createPrimaryView(ViewGroup parent) {
+        return inflater.inflate(R.layout.view_top_level_navigation_item_primary, parent, false);
+    }
+
+    private View createSecondaryView(ViewGroup parent) {
+        return inflater.inflate(R.layout.view_top_level_navigation_item_secondary, parent, false);
+    }
+
+    private void bindViewTo(final TopLevelNavigationItem item, View view) {
         ((TextView) view).setText(item.getTitle());
+
         view.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -55,7 +85,6 @@ class TopLevelNavigationAdapter extends BaseAdapter {
             }
 
         });
-        return view;
     }
 
 }
