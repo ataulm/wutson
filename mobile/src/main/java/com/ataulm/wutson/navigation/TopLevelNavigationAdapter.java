@@ -52,29 +52,30 @@ class TopLevelNavigationAdapter extends BaseAdapter {
     private View createNewViewFor(TopLevelNavigationItem item, ViewGroup parent) {
         switch (item.getViewType()) {
             case HEADER:
-                return createPrimaryView(parent);
+                return inflater.inflate(R.layout.view_top_level_navigation_item_header, parent, false);
             case PRIMARY:
-                return createPrimaryView(parent);
+                return inflater.inflate(R.layout.view_top_level_navigation_item_primary, parent, false);
             case SECONDARY:
-                return createPrimaryView(parent);
+                return inflater.inflate(R.layout.view_top_level_navigation_item_secondary, parent, false);
             default:
                 throw new IllegalArgumentException("not sure of viewtype to bind: " + item);
         }
     }
 
-    private View createHeaderView(ViewGroup parent) {
-        return inflater.inflate(R.layout.view_top_level_navigation_item_header, parent, false);
+    private void bindViewTo(TopLevelNavigationItem item, View view) {
+        switch (item.getViewType()) {
+            case HEADER:
+                return;
+            case PRIMARY:
+            case SECONDARY:
+                bindInteractiveViewTo(item, view);
+                return;
+            default:
+                throw new IllegalArgumentException("not sure of viewtype to bind: " + item);
+        }
     }
 
-    private View createPrimaryView(ViewGroup parent) {
-        return inflater.inflate(R.layout.view_top_level_navigation_item_primary, parent, false);
-    }
-
-    private View createSecondaryView(ViewGroup parent) {
-        return inflater.inflate(R.layout.view_top_level_navigation_item_secondary, parent, false);
-    }
-
-    private void bindViewTo(final TopLevelNavigationItem item, View view) {
+    private void bindInteractiveViewTo(final TopLevelNavigationItem item, View view) {
         ((TextView) view).setText(item.getTitle());
 
         view.setOnClickListener(new View.OnClickListener() {
