@@ -3,34 +3,50 @@ package com.ataulm.wutson.navigation;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public class NavigationDrawerView extends ListView {
+import com.ataulm.wutson.ClassContractBrokenException;
+import com.ataulm.wutson.R;
+
+public class NavigationDrawerView extends LinearLayout {
 
     public NavigationDrawerView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void setupWithListener(OnNavigationClickListener listener) {
-        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-        ListAdapter adapter = new TopLevelNavigationAdapter(layoutInflater, listener);
-        super.setAdapter(adapter);
+    @Override
+    protected void onFinishInflate() {
+        super.setOrientation(VERTICAL);
+        View.inflate(getContext(), R.layout.merge_navigation_drawer, this);
     }
 
     @Override
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        throw new IllegalAccessError("You should use setupWithListener instead");
+    public void setOrientation(int orientation) {
+        throw new ClassContractBrokenException();
     }
 
-    @Override
-    public void setAdapter(ListAdapter adapter) {
-        throw new IllegalAccessError("The NavDrawerView handles it's own content no need to set an adapter");
+    public void setupDrawerWith(final OnNavigationClickListener onNavigationClickListener) {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        for (final NavigationDrawerItem item : NavigationDrawerItem.values()) {
+            TextView itemView = (TextView) inflater.inflate(item.getLayoutResId(), this, false);
+            itemView.setText(item.getTitle());
+            itemView.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    onNavigationClickListener.onNavigationClick(item);
+                }
+
+            });
+            addView(itemView);
+        }
     }
 
     public interface OnNavigationClickListener {
 
-        void onNavigationClick(TopLevelNavigationItem item);
+        void onNavigationClick(NavigationDrawerItem item);
 
     }
 

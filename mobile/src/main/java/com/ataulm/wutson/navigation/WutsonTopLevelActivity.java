@@ -34,10 +34,10 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
         final NavigationDrawerView navigationDrawerView = (NavigationDrawerView) drawerLayout.findViewById(R.id.drawer_list);
-        navigationDrawerView.setupWithListener(new NavigationDrawerView.OnNavigationClickListener() {
+        navigationDrawerView.setupDrawerWith(new NavigationDrawerView.OnNavigationClickListener() {
 
             @Override
-            public void onNavigationClick(TopLevelNavigationItem item) {
+            public void onNavigationClick(NavigationDrawerItem item) {
                 closeDrawer();
                 switch (item) {
                     case DISCOVER_SHOWS:
@@ -51,7 +51,7 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
                 }
             }
 
-            private void onNotImplementedActionFor(TopLevelNavigationItem item) {
+            private void onNotImplementedActionFor(NavigationDrawerItem item) {
                 String title = item.getTitle();
                 Jabber.toastDisplayer().display(title);
             }
