@@ -15,8 +15,12 @@ import com.ataulm.wutson.settings.SettingsActivity;
 
 public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
+    private static final int DRAWER_GRAVITY = Gravity.START;
+
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+
+    protected abstract NavigationDrawerItem getNavigationDrawerItem();
 
     @Override
     public void setContentView(int layoutResID) {
@@ -56,7 +60,7 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
                 Jabber.toastDisplayer().display(title);
             }
 
-        });
+        }, getNavigationDrawerItem());
     }
 
     @Override
@@ -73,8 +77,17 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
         throw new IllegalArgumentException("Item id not implemented");
     }
 
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(DRAWER_GRAVITY)) {
+            closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void closeDrawer() {
-        drawerLayout.closeDrawer(Gravity.START);
+        drawerLayout.closeDrawer(DRAWER_GRAVITY);
     }
 
 }

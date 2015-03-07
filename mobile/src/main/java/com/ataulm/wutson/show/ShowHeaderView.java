@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ataulm.wutson.ClassContractBrokenException;
+import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
 
 public class ShowHeaderView extends LinearLayout {
@@ -26,7 +26,7 @@ public class ShowHeaderView extends LinearLayout {
 
     @Override
     public void setOrientation(int orientation) {
-        throw new ClassContractBrokenException();
+        throw DeveloperError.methodCannotBeCalledOutsideThisClass();
     }
 
     public void display(Show show) {

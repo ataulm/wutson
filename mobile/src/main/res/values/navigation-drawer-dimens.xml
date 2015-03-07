@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <dimen name="navigation_drawer_width">304dp</dimen>
+
+  <dimen name="navigation_drawer_item_text">14sp</dimen>
+  <dimen name="navigation_drawer_item_height">48dp</dimen>
+  <dimen name="navigation_drawer_item_padding_left">16dp</dimen>
+  <dimen name="navigation_drawer_item_padding_top">12dp</dimen>
+  <dimen name="navigation_drawer_item_padding_right">16dp</dimen>
+  <dimen name="navigation_drawer_item_padding_bottom">12dp</dimen>
+
+  <dimen name="navigation_drawer_item_title_margin_left">32dp</dimen>
+  <dimen name="navigation_drawer_item_icon_size">24dp</dimen>
+</resources>

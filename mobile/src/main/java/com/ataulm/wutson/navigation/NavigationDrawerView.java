@@ -5,9 +5,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.ataulm.wutson.ClassContractBrokenException;
+import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
 
 public class NavigationDrawerView extends LinearLayout {
@@ -23,15 +22,15 @@ public class NavigationDrawerView extends LinearLayout {
     }
 
     @Override
-    public void setOrientation(int orientation) {
-        throw new ClassContractBrokenException();
+    public final void setOrientation(int orientation) {
+        throw DeveloperError.methodCannotBeCalledOutsideThisClass();
     }
 
-    public void setupDrawerWith(final OnNavigationClickListener onNavigationClickListener) {
+    public void setupDrawerWith(final OnNavigationClickListener onNavigationClickListener, NavigationDrawerItem selectedItem) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         for (final NavigationDrawerItem item : NavigationDrawerItem.values()) {
-            TextView itemView = (TextView) inflater.inflate(item.getLayoutResId(), this, false);
-            itemView.setText(item.getTitle());
+            NavigationDrawerItemView itemView = (NavigationDrawerItemView) inflater.inflate(R.layout.view_navigation_drawer_item, this, false);
+            itemView.display(item);
             itemView.setOnClickListener(new OnClickListener() {
 
                 @Override
@@ -40,6 +39,7 @@ public class NavigationDrawerView extends LinearLayout {
                 }
 
             });
+            itemView.setSelected(item == selectedItem);
             addView(itemView);
         }
     }

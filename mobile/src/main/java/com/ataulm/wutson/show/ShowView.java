@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.ataulm.wutson.ClassContractBrokenException;
+import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 
@@ -34,7 +34,7 @@ public class ShowView extends LinearLayout {
 
     @Override
     public final void setOrientation(int orientation) {
-        throw new ClassContractBrokenException();
+        throw DeveloperError.methodCannotBeCalledOutsideThisClass();
     }
 
     void display(Show show) {

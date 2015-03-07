@@ -8,6 +8,7 @@ import android.util.Log;
 import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.show.ShowDetailsActivity;
 
@@ -23,6 +24,11 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
     private ViewPager viewPager;
 
     private DiscoverByGenrePagerAdapter adapter;
+
+    @Override
+    protected NavigationDrawerItem getNavigationDrawerItem() {
+        return NavigationDrawerItem.DISCOVER_SHOWS;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -11,10 +11,9 @@
 
   <com.ataulm.wutson.navigation.NavigationDrawerView
     android:id="@+id/drawer_list"
-    android:layout_width="304dp"
+    style="@style/NavigationDrawer.View"
+    android:layout_width="@dimen/navigation_drawer_width"
     android:layout_height="match_parent"
-    android:layout_gravity="start"
-    android:background="#FFFFFF"
-    android:clickable="true" />
+    android:layout_gravity="start" />
 
 </android.support.v4.widget.DrawerLayout>

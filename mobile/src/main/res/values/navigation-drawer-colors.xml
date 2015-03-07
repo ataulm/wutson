@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <color name="navigation_drawer_background">@color/alabaster</color>
+  <!--DESIGNTODO: set correct background pressed color-->
+  <color name="navigation_drawer_item_background_pressed">@color/black_25pc</color>
+  <!--DESIGNTODO: set correct background focused color-->
+  <color name="navigation_drawer_item_background_focused">@color/black_10pc</color>
+  <color name="navigation_drawer_item_background_default">@color/transparent</color>
+
+  <color name="navigation_drawer_item_icon_color_filter_selected">@color/cornflower_blue</color>
+  <color name="navigation_drawer_item_icon_color_filter_default">@color/black</color>
+
+  <color name="navigation_drawer_item_title_text_selected">@color/cornflower_blue</color>
+  <color name="navigation_drawer_item_title_text_default">@color/black_87pc</color>
+
+</resources>
