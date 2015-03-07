@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <dimen name="navigation_drawer_width">304dp</dimen>
+  <dimen name="navigation_drawer_width">264dp</dimen>
   <dimen name="navigation_drawer_item_separator_height">1dp</dimen>
 
   <dimen name="navigation_drawer_item_text">14sp</dimen>
@@ -13,4 +13,5 @@
 
   <dimen name="navigation_drawer_item_title_margin_left">32dp</dimen>
   <dimen name="navigation_drawer_item_icon_size">24dp</dimen>
+
 </resources>
