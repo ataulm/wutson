@@ -5,8 +5,8 @@ import com.ataulm.wutson.discover.ShowsInGenreRepository;
 import com.ataulm.wutson.show.Actor;
 import com.ataulm.wutson.show.Cast;
 import com.ataulm.wutson.show.Show;
-import com.ataulm.wutson.tmdb.Character;
 import com.ataulm.wutson.tmdb.Configuration;
+import com.ataulm.wutson.tmdb.GsonCredits;
 import com.ataulm.wutson.tmdb.Season;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.TvShow;
@@ -47,9 +47,9 @@ public class DataRepository {
             @Override
             public Show call(Configuration configuration, TvShow tvShow) {
                 List<com.ataulm.wutson.show.Character> characters = new ArrayList<>();
-                for (Character character : tvShow.getCredits()) {
-                    Actor actor = new Actor(character.actorName, URI.create(configuration.getCompleteProfilePath(character.profilePath)));
-                    characters.add(new com.ataulm.wutson.show.Character(character.name, actor));
+                for (GsonCredits.GsonCastElement gsonCastElement : tvShow.getGsonCredits().gsonCastElements) {
+                    Actor actor = new Actor(gsonCastElement.actorName, URI.create(configuration.getCompleteProfilePath(gsonCastElement.profilePath)));
+                    characters.add(new com.ataulm.wutson.show.Character(gsonCastElement.name, actor));
                 }
 
                 String name = tvShow.getName();

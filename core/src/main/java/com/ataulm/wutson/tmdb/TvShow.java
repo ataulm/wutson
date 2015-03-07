@@ -22,7 +22,7 @@ public class TvShow {
     List<Season> seasons;
 
     @SerializedName("credits")
-    Credits credits;
+    GsonCredits gsonCredits;
 
     private Configuration configuration;
 
@@ -46,8 +46,8 @@ public class TvShow {
         return seasons;
     }
 
-    public Credits getCredits() {
-        return credits;
+    public GsonCredits getGsonCredits() {
+        return gsonCredits;
     }
 
 }
