@@ -2,6 +2,7 @@
 <resources>
 
   <dimen name="navigation_drawer_width">304dp</dimen>
+  <dimen name="navigation_drawer_item_separator_height">1dp</dimen>
 
   <dimen name="navigation_drawer_item_text">14sp</dimen>
   <dimen name="navigation_drawer_item_height">48dp</dimen>

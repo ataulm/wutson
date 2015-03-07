@@ -2,6 +2,7 @@
 <resources>
 
   <color name="navigation_drawer_background">@color/alabaster</color>
+  <color name="navigation_drawer_item_separator">@color/black_10pc</color>
   <!--DESIGNTODO: set correct background pressed color-->
   <color name="navigation_drawer_item_background_pressed">@color/black_25pc</color>
   <!--DESIGNTODO: set correct background focused color-->

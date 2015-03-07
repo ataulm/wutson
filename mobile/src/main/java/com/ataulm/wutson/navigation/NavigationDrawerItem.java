@@ -8,6 +8,7 @@ public enum NavigationDrawerItem {
 
     MY_SHOWS("My Shows", R.drawable.temp_icon_24),
     DISCOVER_SHOWS("Discover", R.drawable.temp_icon_24),
+    SEPARATOR(null, 0),
     SETTINGS("Settings", R.drawable.temp_icon_24),
     HELP_FEEDBACK("Help & Feedback", R.drawable.temp_icon_24);
 

@@ -8,6 +8,10 @@
     <item name="android:background">@color/navigation_drawer_background</item>
   </style>
 
+  <style name="NavigationDrawer.Item.Separator">
+    <item name="android:background">@color/navigation_drawer_item_separator</item>
+  </style>
+
   <style name="NavigationDrawer.Item" />
 
   <style name="NavigationDrawer.Item.View">
