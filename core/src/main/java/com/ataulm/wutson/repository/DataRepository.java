@@ -7,9 +7,9 @@ import com.ataulm.wutson.show.Cast;
 import com.ataulm.wutson.show.Show;
 import com.ataulm.wutson.tmdb.GsonConfiguration;
 import com.ataulm.wutson.tmdb.GsonCredits;
+import com.ataulm.wutson.tmdb.GsonTvShow;
 import com.ataulm.wutson.tmdb.Season;
 import com.ataulm.wutson.tmdb.TmdbApi;
-import com.ataulm.wutson.tmdb.TvShow;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -40,25 +40,25 @@ public class DataRepository {
 
     public Observable<Show> getShow(final String showId) {
         Observable<GsonConfiguration> configurationObservable = configurationRepository.getConfiguration();
-        Observable<TvShow> tvShowObservable = configurationObservable.flatMap(getTvShowWith(showId));
+        Observable<GsonTvShowAndGsonConfiguration> tvShowObservable = configurationObservable.flatMap(getTvShowWith(showId));
 
-        return Observable.zip(configurationObservable, tvShowObservable, new Func2<GsonConfiguration, TvShow, Show>() {
+        return Observable.zip(configurationObservable, tvShowObservable, new Func2<GsonConfiguration, GsonTvShowAndGsonConfiguration, Show>() {
 
             @Override
-            public Show call(GsonConfiguration gsonConfiguration, TvShow tvShow) {
+            public Show call(GsonConfiguration gsonConfiguration, GsonTvShowAndGsonConfiguration gsonTvShowAndGsonConfiguration) {
                 List<com.ataulm.wutson.show.Character> characters = new ArrayList<>();
-                for (GsonCredits.GsonCastElement gsonCastElement : tvShow.getGsonCredits().gsonCastElements) {
+                for (GsonCredits.GsonCastElement gsonCastElement : gsonTvShowAndGsonConfiguration.gsonTvShow.gsonCredits.gsonCastElements) {
                     Actor actor = new Actor(gsonCastElement.actorName, URI.create(gsonConfiguration.getCompleteProfilePath(gsonCastElement.profilePath)));
                     characters.add(new com.ataulm.wutson.show.Character(gsonCastElement.name, actor));
                 }
 
-                String name = tvShow.getName();
-                String overview = tvShow.getOverview();
-                URI posterUri = URI.create(tvShow.getPosterPath());
+                String name = gsonTvShowAndGsonConfiguration.gsonTvShow.name;
+                String overview = gsonTvShowAndGsonConfiguration.gsonTvShow.overview;
+                URI posterUri = gsonTvShowAndGsonConfiguration.createTvPosterPath();
                 Cast cast = new Cast(characters);
 
                 List<Show.Season> seasons = new ArrayList<>();
-                for (Season season : tvShow.getSeasons()) {
+                for (Season season : gsonTvShowAndGsonConfiguration.gsonTvShow.seasons) {
                     String id = season.id;
                     int seasonNumber = season.seasonNumber;
                     int episodeCount = season.episodeCount;
@@ -71,11 +71,11 @@ public class DataRepository {
         });
     }
 
-    private Func1<GsonConfiguration, Observable<TvShow>> getTvShowWith(final String id) {
-        return new Func1<GsonConfiguration, Observable<TvShow>>() {
+    private Func1<GsonConfiguration, Observable<GsonTvShowAndGsonConfiguration>> getTvShowWith(final String id) {
+        return new Func1<GsonConfiguration, Observable<GsonTvShowAndGsonConfiguration>>() {
 
             @Override
-            public Observable<TvShow> call(final GsonConfiguration gsonConfiguration) {
+            public Observable<GsonTvShowAndGsonConfiguration> call(final GsonConfiguration gsonConfiguration) {
                 Map<String, String> params = new HashMap<>();
                 params.put("append_to_response", "credits");
                 return api.getTvShow(id).map(updateTvShowWith(gsonConfiguration));
@@ -84,16 +84,31 @@ public class DataRepository {
         };
     }
 
-    private Func1<TvShow, TvShow> updateTvShowWith(final GsonConfiguration gsonConfiguration) {
-        return new Func1<TvShow, TvShow>() {
+    private Func1<GsonTvShow, GsonTvShowAndGsonConfiguration> updateTvShowWith(final GsonConfiguration gsonConfiguration) {
+        return new Func1<GsonTvShow, GsonTvShowAndGsonConfiguration>() {
 
             @Override
-            public TvShow call(TvShow tvShow) {
-                tvShow.setGsonConfiguration(gsonConfiguration);
-                return tvShow;
+            public GsonTvShowAndGsonConfiguration call(com.ataulm.wutson.tmdb.GsonTvShow gsonTvShow) {
+                return new GsonTvShowAndGsonConfiguration(gsonTvShow, gsonConfiguration);
             }
 
         };
+    }
+
+    private static class GsonTvShowAndGsonConfiguration {
+
+        final GsonTvShow gsonTvShow;
+        final GsonConfiguration gsonConfiguration;
+
+        GsonTvShowAndGsonConfiguration(GsonTvShow gsonTvShow, GsonConfiguration gsonConfiguration) {
+            this.gsonTvShow = gsonTvShow;
+            this.gsonConfiguration = gsonConfiguration;
+        }
+
+        URI createTvPosterPath() {
+            return URI.create(gsonConfiguration.getCompletePosterPath(gsonTvShow.posterPath));
+        }
+
     }
 
 }

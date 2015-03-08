@@ -42,15 +42,15 @@ public class ShowsInGenreRepository {
 
     private void refreshBrowseShows() {
         Observable<GsonGenre> genreObservable = genresRepository.getGenres().flatMap(Functions.<GsonGenre>iterate());
-        Observable<DiscoverTvShowsInGenre> discoverTvShowsObservable = genreObservable.flatMap(fetchDiscoverTvShows());
+        Observable<GsonGenreAndGsonDiscoverTvShows> discoverTvShowsObservable = genreObservable.flatMap(fetchDiscoverTvShows());
 
-        Observable<ShowsInGenre> showsInGenreObservable = Observable.combineLatest(configurationObservable(), discoverTvShowsObservable, new Func2<GsonConfiguration, DiscoverTvShowsInGenre, ShowsInGenre>() {
+        Observable<ShowsInGenre> showsInGenreObservable = Observable.combineLatest(configurationObservable(), discoverTvShowsObservable, new Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre>() {
 
             @Override
-            public ShowsInGenre call(GsonConfiguration configuration, DiscoverTvShowsInGenre discoverTvShows) {
+            public ShowsInGenre call(GsonConfiguration configuration, GsonGenreAndGsonDiscoverTvShows discoverTvShows) {
                 GsonGenre gsonGenre = discoverTvShows.gsonGenre;
                 List<Show> shows = new ArrayList<>(discoverTvShows.size());
-                for (GsonDiscoverTvShows.Show discoverTvShow : discoverTvShows.shows) {
+                for (GsonDiscoverTvShows.Show discoverTvShow : discoverTvShows.gsonDiscoverTvShows) {
                     String id = discoverTvShow.id;
                     String name = discoverTvShow.name;
                     URI posterUri = URI.create(configuration.getCompletePosterPath(discoverTvShow.posterPath));
@@ -69,16 +69,16 @@ public class ShowsInGenreRepository {
                 .subscribe(subject);
     }
 
-    private Func1<GsonGenre, Observable<DiscoverTvShowsInGenre>> fetchDiscoverTvShows() {
-        return new Func1<GsonGenre, Observable<DiscoverTvShowsInGenre>>() {
+    private Func1<GsonGenre, Observable<GsonGenreAndGsonDiscoverTvShows>> fetchDiscoverTvShows() {
+        return new Func1<GsonGenre, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
 
             @Override
-            public Observable<DiscoverTvShowsInGenre> call(final GsonGenre gsonGenre) {
-                return api.getShowsMatchingGenre(gsonGenre.id).flatMap(new Func1<GsonDiscoverTvShows, Observable<DiscoverTvShowsInGenre>>() {
+            public Observable<GsonGenreAndGsonDiscoverTvShows> call(final GsonGenre gsonGenre) {
+                return api.getShowsMatchingGenre(gsonGenre.id).flatMap(new Func1<GsonDiscoverTvShows, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
 
                     @Override
-                    public Observable<DiscoverTvShowsInGenre> call(GsonDiscoverTvShows gsonDiscoverTvShows) {
-                        return Observable.just(new DiscoverTvShowsInGenre(gsonGenre, gsonDiscoverTvShows));
+                    public Observable<GsonGenreAndGsonDiscoverTvShows> call(GsonDiscoverTvShows gsonDiscoverTvShows) {
+                        return Observable.just(new GsonGenreAndGsonDiscoverTvShows(gsonGenre, gsonDiscoverTvShows));
                     }
 
                 });
@@ -91,18 +91,18 @@ public class ShowsInGenreRepository {
         return configurationRepository.getConfiguration().first();
     }
 
-    private static class DiscoverTvShowsInGenre {
+    private static class GsonGenreAndGsonDiscoverTvShows {
 
         final GsonGenre gsonGenre;
-        final GsonDiscoverTvShows shows;
+        final GsonDiscoverTvShows gsonDiscoverTvShows;
 
-        DiscoverTvShowsInGenre(GsonGenre gsonGenre, GsonDiscoverTvShows shows) {
+        GsonGenreAndGsonDiscoverTvShows(GsonGenre gsonGenre, GsonDiscoverTvShows gsonDiscoverTvShows) {
             this.gsonGenre = gsonGenre;
-            this.shows = shows;
+            this.gsonDiscoverTvShows = gsonDiscoverTvShows;
         }
 
         int size() {
-            return shows.shows.size();
+            return gsonDiscoverTvShows.shows.size();
         }
 
     }
