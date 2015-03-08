@@ -1,8 +1,8 @@
 package com.ataulm.wutson.repository;
 
+import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
 import com.ataulm.wutson.tmdb.TmdbApi;
-import com.ataulm.wutson.rx.InfiniteOperator;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -27,7 +27,7 @@ public class ConfigurationRepository {
 
     private void refreshConfiguration() {
         api.getConfiguration()
-                .lift(new InfiniteOperator<GsonConfiguration>())
+                .lift(Function.<GsonConfiguration>swallowOnCompleteEvents())
                 .subscribeOn(Schedulers.io())
                 .subscribe(subject);
     }

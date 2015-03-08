@@ -1,12 +1,11 @@
 package com.ataulm.wutson.discover;
 
+import com.ataulm.wutson.repository.ConfigurationRepository;
+import com.ataulm.wutson.rx.Function;
+import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
 import com.ataulm.wutson.tmdb.gson.GsonDiscoverTvShows;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
-import com.ataulm.wutson.tmdb.TmdbApi;
-import com.ataulm.wutson.repository.ConfigurationRepository;
-import com.ataulm.wutson.rx.Functions;
-import com.ataulm.wutson.rx.InfiniteOperator;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class ShowsInGenreRepository {
     }
 
     private void refreshBrowseShows() {
-        Observable<GsonGenres.GsonGenre> genreObservable = genresRepository.getGenres().flatMap(Functions.<GsonGenres.GsonGenre>emitEachElement());
+        Observable<GsonGenres.GsonGenre> genreObservable = genresRepository.getGenres().flatMap(Function.<GsonGenres.GsonGenre>emitEachElement());
         Observable<GsonGenreAndGsonDiscoverTvShows> discoverTvShowsObservable = genreObservable.flatMap(fetchDiscoverTvShows());
 
         Observable<ShowsInGenre> showsInGenreObservable = Observable.combineLatest(configurationObservable(), discoverTvShowsObservable, new Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre>() {
@@ -64,7 +63,7 @@ public class ShowsInGenreRepository {
         });
 
         showsInGenreObservable.toList()
-                .lift(new InfiniteOperator<List<ShowsInGenre>>())
+                .lift(Function.<List<ShowsInGenre>>swallowOnCompleteEvents())
                 .subscribeOn(Schedulers.io())
                 .subscribe(subject);
     }
