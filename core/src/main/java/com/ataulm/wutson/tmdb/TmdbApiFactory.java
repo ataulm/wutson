@@ -13,6 +13,10 @@ public class TmdbApiFactory {
 
     private final RestAdapter restAdapter;
 
+    private TmdbApiFactory(RestAdapter restAdapter) {
+        this.restAdapter = restAdapter;
+    }
+
     public static TmdbApiFactory newInstance(final String apiKey, Client client, boolean enableLogs) {
         RequestInterceptor tmdbRequestInterceptor = new RequestInterceptor() {
 
@@ -48,10 +52,6 @@ public class TmdbApiFactory {
         }
 
         return new TmdbApiFactory(restAdapter);
-    }
-
-    TmdbApiFactory(RestAdapter restAdapter) {
-        this.restAdapter = restAdapter;
     }
 
     public TmdbApi createApi() {
