@@ -19,6 +19,7 @@ public class SeasonsActivity extends WutsonActivity {
     private Subscription seasonSubscription;
     private String showId;
     private int seasonNumber;
+    private SeasonsView seasonsView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class SeasonsActivity extends WutsonActivity {
         Uri data = getIntent().getData();
         showId = data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID);
         seasonNumber = Integer.parseInt(data.getLastPathSegment());
+        seasonsView = (SeasonsView) findViewById(R.id.seasons);
     }
 
     @Override
@@ -61,10 +63,7 @@ public class SeasonsActivity extends WutsonActivity {
 
         @Override
         public void onNext(Seasons seasons) {
-            Log.d("THING", "onNext");
-            for (Season season : seasons) {
-                Log.d("THING", season.toString());
-            }
+            seasonsView.display(seasons);
         }
 
     }

@@ -16,4 +16,12 @@ public class Seasons implements Iterable<Season> {
         return seasons.iterator();
     }
 
+    public Season get(int position) {
+        return seasons.get(position);
+    }
+
+    public int size() {
+        return seasons.size();
+    }
+
 }

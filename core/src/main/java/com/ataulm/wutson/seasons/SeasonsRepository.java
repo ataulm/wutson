@@ -67,7 +67,7 @@ public class SeasonsRepository {
                             gsonEpisode.episodeNumber,
                             gsonEpisode.name,
                             gsonEpisode.overview,
-                            URI.create(gsonEpisode.stillPath) // TODO: this needs Configuration
+                            gsonEpisode.stillPath != null ? URI.create(gsonEpisode.stillPath) : URI.create("") // TODO: this needs Configuration
                     ));
                 }
 
@@ -75,7 +75,7 @@ public class SeasonsRepository {
                         gsonSeason.airDate,
                         gsonSeason.seasonNumber,
                         gsonSeason.overview,
-                        URI.create(gsonSeason.posterPath), // TODO: this needs Configuration
+                        gsonSeason.posterPath != null ? URI.create(gsonSeason.posterPath) : URI.create(""), // TODO: this needs Configuration
                         episodes));
             }
 

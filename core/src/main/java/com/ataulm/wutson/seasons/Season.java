@@ -25,6 +25,18 @@ class Season implements Iterable<Season.Episode> {
         return episodes.iterator();
     }
 
+    public int size() {
+        return episodes.size();
+    }
+
+    public Episode get(int position) {
+        return episodes.get(position);
+    }
+
+    public int getSeasonNumber() {
+        return seasonNumber;
+    }
+
     static class Episode {
 
         private final String airDate; // TODO: should be typed
@@ -39,6 +51,18 @@ class Season implements Iterable<Season.Episode> {
             this.name = name;
             this.overview = overview;
             this.stillPath = stillPath;
+        }
+
+        public int getEpisodeNumber() {
+            return episodeNumber;
+        }
+
+        public URI getStillPath() {
+            return stillPath;
+        }
+
+        public String getName() {
+            return name;
         }
 
     }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <!--TODO: season episode item styles-->
+
+  <com.ataulm.wutson.view.CrossfadeImageView
+    android:id="@+id/season_episode_item_image_poster"
+    style="@style/ShowDetails.SeasonsItem.Poster"
+    android:layout_width="@dimen/show_seasons_item_poster_width"
+    android:layout_height="@dimen/show_seasons_item_poster_height"
+    android:contentDescription="@null" />
+
+  <TextView
+    android:id="@+id/season_episode_item_text_episode_number"
+    style="@style/ShowDetails.SeasonsItem.SeasonNumber"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@id/season_episode_item_image_poster" />
+
+  <TextView
+    android:id="@+id/season_episode_item_text_episode_name"
+    style="@style/ShowDetails.SeasonsItem.EpisodeCount"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@id/season_episode_item_text_episode_number"
+    android:layout_below="@id/season_episode_item_text_episode_number" />
+
+</merge>
