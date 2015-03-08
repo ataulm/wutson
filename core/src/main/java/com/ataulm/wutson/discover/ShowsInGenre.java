@@ -10,26 +10,26 @@ public class ShowsInGenre implements Iterable<Show>, Comparable<ShowsInGenre> {
     private final GsonGenres.GsonGenre gsonGenre;
     private final List<Show> shows;
 
-    public ShowsInGenre(GsonGenres.GsonGenre gsonGenre, List<Show> shows) {
+    ShowsInGenre(GsonGenres.GsonGenre gsonGenre, List<Show> shows) {
         this.gsonGenre = gsonGenre;
         this.shows = shows;
     }
 
-    public String getGsonGenre() {
+    String getGsonGenre() {
         return gsonGenre.name;
+    }
+
+    int size() {
+        return shows.size();
+    }
+
+    Show get(int position) {
+        return shows.get(position);
     }
 
     @Override
     public Iterator<Show> iterator() {
         return shows.iterator();
-    }
-
-    public int size() {
-        return shows.size();
-    }
-
-    public Show get(int position) {
-        return shows.get(position);
     }
 
     @Override

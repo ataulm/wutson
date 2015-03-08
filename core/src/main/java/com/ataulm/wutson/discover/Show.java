@@ -14,15 +14,15 @@ public class Show {
         this.posterUri = posterUri;
     }
 
-    public String getId() {
+    String getId() {
         return id;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public URI getPosterUri() {
+    URI getPosterUri() {
         return posterUri;
     }
 
