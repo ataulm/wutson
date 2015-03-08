@@ -11,7 +11,7 @@ public class Show {
     private final Cast cast;
     private final List<Season> seasons;
 
-    public Show(String name, String overview, URI posterUri, Cast cast, List<Season> seasons) {
+    Show(String name, String overview, URI posterUri, Cast cast, List<Season> seasons) {
         this.name = name;
         this.overview = overview;
         this.posterUri = posterUri;
@@ -46,7 +46,7 @@ public class Show {
         private final int episodeCount;
         private final URI posterPath;
 
-        public Season(String id, int seasonNumber, int episodeCount, URI posterPath) {
+        Season(String id, int seasonNumber, int episodeCount, URI posterPath) {
             this.id = id;
             this.seasonNumber = seasonNumber;
             this.episodeCount = episodeCount;

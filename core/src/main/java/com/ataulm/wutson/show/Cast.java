@@ -7,7 +7,7 @@ public class Cast implements Iterable<Character> {
 
     private final List<Character> characters;
 
-    public Cast(List<Character> characters) {
+    Cast(List<Character> characters) {
         this.characters = characters;
     }
 

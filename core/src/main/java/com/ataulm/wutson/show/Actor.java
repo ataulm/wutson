@@ -7,7 +7,7 @@ public class Actor {
     private final String name;
     private final URI profileUri;
 
-    public Actor(String name, URI profileUri) {
+    Actor(String name, URI profileUri) {
         this.name = name;
         this.profileUri = profileUri;
     }
