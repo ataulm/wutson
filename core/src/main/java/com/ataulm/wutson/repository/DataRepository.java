@@ -8,7 +8,6 @@ import com.ataulm.wutson.show.Show;
 import com.ataulm.wutson.tmdb.GsonConfiguration;
 import com.ataulm.wutson.tmdb.GsonCredits;
 import com.ataulm.wutson.tmdb.GsonTvShow;
-import com.ataulm.wutson.tmdb.Season;
 import com.ataulm.wutson.tmdb.TmdbApi;
 
 import java.net.URI;
@@ -58,11 +57,11 @@ public class DataRepository {
                 Cast cast = new Cast(characters);
 
                 List<Show.Season> seasons = new ArrayList<>();
-                for (Season season : gsonTvShowAndGsonConfiguration.gsonTvShow.seasons) {
-                    String id = season.id;
-                    int seasonNumber = season.seasonNumber;
-                    int episodeCount = season.episodeCount;
-                    URI posterPath = URI.create(gsonConfiguration.getCompletePosterPath(season.posterPath));
+                for (GsonTvShow.GsonSeason gsonSeason : gsonTvShowAndGsonConfiguration.gsonTvShow.gsonSeasons) {
+                    String id = gsonSeason.id;
+                    int seasonNumber = gsonSeason.seasonNumber;
+                    int episodeCount = gsonSeason.episodeCount;
+                    URI posterPath = URI.create(gsonConfiguration.getCompletePosterPath(gsonSeason.posterPath));
                     seasons.add(new Show.Season(id, seasonNumber, episodeCount, posterPath));
                 }
                 return new Show(name, overview, posterUri, cast, seasons);

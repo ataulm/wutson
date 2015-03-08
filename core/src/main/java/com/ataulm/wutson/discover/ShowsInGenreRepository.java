@@ -2,7 +2,7 @@ package com.ataulm.wutson.discover;
 
 import com.ataulm.wutson.tmdb.GsonConfiguration;
 import com.ataulm.wutson.tmdb.GsonDiscoverTvShows;
-import com.ataulm.wutson.tmdb.GsonGenre;
+import com.ataulm.wutson.tmdb.GsonGenres;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.rx.Functions;
@@ -41,14 +41,14 @@ public class ShowsInGenreRepository {
     }
 
     private void refreshBrowseShows() {
-        Observable<GsonGenre> genreObservable = genresRepository.getGenres().flatMap(Functions.<GsonGenre>iterate());
+        Observable<GsonGenres.GsonGenre> genreObservable = genresRepository.getGenres().flatMap(Functions.<GsonGenres.GsonGenre>iterate());
         Observable<GsonGenreAndGsonDiscoverTvShows> discoverTvShowsObservable = genreObservable.flatMap(fetchDiscoverTvShows());
 
         Observable<ShowsInGenre> showsInGenreObservable = Observable.combineLatest(configurationObservable(), discoverTvShowsObservable, new Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre>() {
 
             @Override
             public ShowsInGenre call(GsonConfiguration configuration, GsonGenreAndGsonDiscoverTvShows discoverTvShows) {
-                GsonGenre gsonGenre = discoverTvShows.gsonGenre;
+                GsonGenres.GsonGenre gsonGenre = discoverTvShows.gsonGenre;
                 List<Show> shows = new ArrayList<>(discoverTvShows.size());
                 for (GsonDiscoverTvShows.Show discoverTvShow : discoverTvShows.gsonDiscoverTvShows) {
                     String id = discoverTvShow.id;
@@ -69,11 +69,11 @@ public class ShowsInGenreRepository {
                 .subscribe(subject);
     }
 
-    private Func1<GsonGenre, Observable<GsonGenreAndGsonDiscoverTvShows>> fetchDiscoverTvShows() {
-        return new Func1<GsonGenre, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
+    private Func1<GsonGenres.GsonGenre, Observable<GsonGenreAndGsonDiscoverTvShows>> fetchDiscoverTvShows() {
+        return new Func1<GsonGenres.GsonGenre, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
 
             @Override
-            public Observable<GsonGenreAndGsonDiscoverTvShows> call(final GsonGenre gsonGenre) {
+            public Observable<GsonGenreAndGsonDiscoverTvShows> call(final GsonGenres.GsonGenre gsonGenre) {
                 return api.getShowsMatchingGenre(gsonGenre.id).flatMap(new Func1<GsonDiscoverTvShows, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
 
                     @Override
@@ -93,10 +93,10 @@ public class ShowsInGenreRepository {
 
     private static class GsonGenreAndGsonDiscoverTvShows {
 
-        final GsonGenre gsonGenre;
+        final GsonGenres.GsonGenre gsonGenre;
         final GsonDiscoverTvShows gsonDiscoverTvShows;
 
-        GsonGenreAndGsonDiscoverTvShows(GsonGenre gsonGenre, GsonDiscoverTvShows gsonDiscoverTvShows) {
+        GsonGenreAndGsonDiscoverTvShows(GsonGenres.GsonGenre gsonGenre, GsonDiscoverTvShows gsonDiscoverTvShows) {
             this.gsonGenre = gsonGenre;
             this.gsonDiscoverTvShows = gsonDiscoverTvShows;
         }

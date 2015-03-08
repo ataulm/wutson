@@ -1,16 +1,16 @@
 package com.ataulm.wutson.discover;
 
-import com.ataulm.wutson.tmdb.GsonGenre;
+import com.ataulm.wutson.tmdb.GsonGenres;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class ShowsInGenre implements Iterable<Show>, Comparable<ShowsInGenre> {
 
-    private final GsonGenre gsonGenre;
+    private final GsonGenres.GsonGenre gsonGenre;
     private final List<Show> shows;
 
-    public ShowsInGenre(GsonGenre gsonGenre, List<Show> shows) {
+    public ShowsInGenre(GsonGenres.GsonGenre gsonGenre, List<Show> shows) {
         this.gsonGenre = gsonGenre;
         this.shows = shows;
     }
