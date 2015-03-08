@@ -56,8 +56,7 @@ public class ShowsInGenreRepository {
 
                     shows.add(new Show(id, name, posterUri));
                 }
-                ShowsInGenre showsInGenre = new ShowsInGenre(gsonGenre, shows);
-                return showsInGenre;
+                return new ShowsInGenre(gsonGenre, shows);
             }
 
         });
