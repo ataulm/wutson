@@ -1,5 +1,6 @@
 package com.ataulm.wutson.tmdb;
 
+import com.ataulm.wutson.tmdb.gson.GsonSeason;
 import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
 import com.ataulm.wutson.tmdb.gson.GsonDiscoverTv;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
@@ -23,5 +24,8 @@ public interface TmdbApi {
 
     @GET("/tv/{id}?append_to_response=credits")
     Observable<GsonTvShow> getTvShow(@Path("id") String id);
+
+    @GET("/tv/{id}/season/{season_number}")
+    Observable<GsonSeason> getSeason(@Path("id") String showId, @Path("season_number") int seasonNumber);
 
 }

@@ -37,7 +37,7 @@ public class ShowView extends LinearLayout {
         throw DeveloperError.methodCannotBeCalledOutsideThisClass();
     }
 
-    void display(Show show) {
+    void display(Show show, OnClickSeasonListener onSeasonClickListener) {
         // TODO: this might be null - kick off a task to calculate and cache
         Palette.Swatch swatch = Jabber.swatches().get(show.getPosterUri());
         if (swatch != null) {
@@ -46,16 +46,18 @@ public class ShowView extends LinearLayout {
             tabs.setIndicatorColor(swatch.getTitleTextColor());
         }
 
-        pager.setAdapter(new ShowPagerAdapter(show));
+        pager.setAdapter(new ShowPagerAdapter(show, onSeasonClickListener));
         tabs.setViewPager(pager);
     }
 
     private class ShowPagerAdapter extends PagerAdapter {
 
         private final Show show;
+        private final OnClickSeasonListener onSeasonClickListener;
 
-        private ShowPagerAdapter(Show show) {
+        ShowPagerAdapter(Show show, OnClickSeasonListener onSeasonClickListener) {
             this.show = show;
+            this.onSeasonClickListener = onSeasonClickListener;
         }
 
         @Override
@@ -67,7 +69,7 @@ public class ShowView extends LinearLayout {
                 ((ShowOverviewView) view).display(show);
             } else {
                 view = layoutInflater.inflate(R.layout.view_show_seasons, container, false);
-                ((ShowSeasonsView) view).display(show.getSeasons());
+                ((ShowSeasonsView) view).display(show.getSeasons(), onSeasonClickListener);
             }
             container.addView(view);
             return view;

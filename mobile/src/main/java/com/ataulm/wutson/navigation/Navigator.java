@@ -4,12 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.ataulm.wutson.discover.Show;
-
 public class Navigator {
 
-    private static final Uri URI_SHOW = Uri.parse("content://com.ataulm.wutson2/show");
+    private static final Uri BASE_URI = Uri.parse("content://com.ataulm.wutson2");
     private static final String MIME_TYPE_SHOW_ITEM = "vnd.android.cursor.item/vnd.com.ataulm.wutson.show";
+    private static final String MIME_TYPE_SEASON_DIR = "vnd.android.cursor.item/vnd.com.ataulm.wutson.season";
 
     private final Activity activity;
 
@@ -17,10 +16,26 @@ public class Navigator {
         this.activity = activity;
     }
 
-    public void to(Show show) {
-        Uri uri = Uri.withAppendedPath(URI_SHOW, show.getId());
+    public void toShow(String showId) {
+        Uri uri = BASE_URI.buildUpon()
+                .appendPath("show").appendPath(showId)
+                .build();
+
+        view(uri, MIME_TYPE_SHOW_ITEM);
+    }
+
+    public void toSeason(String showId, int seasonNumber) {
+        Uri uri = BASE_URI.buildUpon()
+                .appendPath("show").appendPath(showId)
+                .appendPath("season").appendPath(String.valueOf(seasonNumber))
+                .build();
+
+        view(uri, MIME_TYPE_SEASON_DIR);
+    }
+
+    private void view(Uri uri, String mimeType) {
         Intent intent = new Intent(Intent.ACTION_VIEW)
-                .setDataAndType(uri, MIME_TYPE_SHOW_ITEM);
+                .setDataAndType(uri, mimeType);
 
         activity.startActivity(intent);
     }

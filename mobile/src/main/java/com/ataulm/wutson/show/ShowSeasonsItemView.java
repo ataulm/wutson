@@ -28,7 +28,7 @@ public class ShowSeasonsItemView extends RelativeLayout {
         episodeCountTextView = (TextView) findViewById(R.id.show_seasons_item_text_episode_count);
     }
 
-    void display(Show.Season season) {
+    void display(final Show.Season season, final OnClickSeasonListener listener) {
         Glide.with(getContext()).load(season.getPosterPath().toString()).into(posterImageView);
 
         if (season.getSeasonNumber() == 0) {
@@ -40,6 +40,15 @@ public class ShowSeasonsItemView extends RelativeLayout {
 
         String episodeCountText = getResources().getString(R.string.show_seasons_item_episode_count_format, season.getEpisodeCount());
         episodeCountTextView.setText(episodeCountText);
+
+        setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                listener.onClick(season);
+            }
+
+        });
     }
 
 }

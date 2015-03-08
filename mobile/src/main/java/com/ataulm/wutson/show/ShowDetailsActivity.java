@@ -17,10 +17,11 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class ShowDetailsActivity extends WutsonActivity {
+public class ShowDetailsActivity extends WutsonActivity implements OnClickSeasonListener {
 
     private Subscription showDetailsSubscription;
     private ShowView showView;
+    private String showId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class ShowDetailsActivity extends WutsonActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String showId = getIntent().getData().getLastPathSegment();
+        showId = getIntent().getData().getLastPathSegment();
         showDetailsSubscription = Jabber.dataRepository().getShow(showId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -59,6 +60,11 @@ public class ShowDetailsActivity extends WutsonActivity {
             showDetailsSubscription.unsubscribe();
         }
         super.onPause();
+    }
+
+    @Override
+    public void onClick(Show.Season season) {
+        navigate().toSeason(showId, season.getSeasonNumber());
     }
 
     private class Observer implements rx.Observer<Show> {
@@ -80,7 +86,7 @@ public class ShowDetailsActivity extends WutsonActivity {
             getToolbar().setBackgroundColor(rgb);
             setStatusBarColorToSlightlyDarkerThan(rgb);
 
-            showView.display(show);
+            showView.display(show, ShowDetailsActivity.this);
 
             setTitle(show.getName());
             getSupportActionBar().setDisplayShowTitleEnabled(true);

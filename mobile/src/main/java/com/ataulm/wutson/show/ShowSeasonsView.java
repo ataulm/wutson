@@ -23,12 +23,12 @@ public class ShowSeasonsView extends RecyclerView {
         setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    public void display(List<Show.Season> seasons) {
+    public void display(List<Show.Season> seasons, OnClickSeasonListener listener) {
         if (seasons.isEmpty()) {
             return;
         }
 
-        RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(LayoutInflater.from(getContext()), seasons);
+        RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(LayoutInflater.from(getContext()), seasons, listener);
         setAdapter(seasonsAdapter);
     }
 
@@ -36,10 +36,12 @@ public class ShowSeasonsView extends RecyclerView {
 
         private final LayoutInflater inflater;
         private final List<Show.Season> seasons;
+        private final OnClickSeasonListener listener;
 
-        SeasonsAdapter(LayoutInflater inflater, List<Show.Season> seasons) {
+        SeasonsAdapter(LayoutInflater inflater, List<Show.Season> seasons, OnClickSeasonListener listener) {
             this.inflater = inflater;
             this.seasons = seasons;
+            this.listener = listener;
         }
 
         @Override
@@ -51,7 +53,7 @@ public class ShowSeasonsView extends RecyclerView {
         @Override
         public void onBindViewHolder(SeasonViewHolder holder, int position) {
             Show.Season season = seasons.get(position);
-            ((ShowSeasonsItemView) holder.itemView).display(season);
+            ((ShowSeasonsItemView) holder.itemView).display(season, listener);
         }
 
         @Override

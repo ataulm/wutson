@@ -35,11 +35,11 @@ public class Show {
         return cast;
     }
 
-    List<Season> getSeasons() {
+    public List<Season> getSeasons() {
         return seasons;
     }
 
-    static class Season {
+    public static class Season {
 
         private final String id;
         private final int seasonNumber;
@@ -57,7 +57,7 @@ public class Show {
             return id;
         }
 
-        int getSeasonNumber() {
+        public int getSeasonNumber() {
             return seasonNumber;
         }
 
