@@ -1,6 +1,5 @@
 package com.ataulm.wutson.discover;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -10,7 +9,6 @@ import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
-import com.ataulm.wutson.show.ShowDetailsActivity;
 
 import java.util.List;
 
@@ -71,7 +69,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
 
     @Override
     public void onClick(Show show) {
-        startActivity(new Intent(this, ShowDetailsActivity.class).putExtra(ShowDetailsActivity.TMDB_SHOW_ID, show.getId()));
+        navigate().to(show);
     }
 
     private class Observer implements rx.Observer<List<ShowsInGenre>> {

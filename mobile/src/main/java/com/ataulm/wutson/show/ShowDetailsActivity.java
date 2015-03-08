@@ -19,8 +19,6 @@ import rx.schedulers.Schedulers;
 
 public class ShowDetailsActivity extends WutsonActivity {
 
-    public static final String TMDB_SHOW_ID = "TMDB_SHOW_ID";
-
     private Subscription showDetailsSubscription;
     private ShowView showView;
 
@@ -48,7 +46,7 @@ public class ShowDetailsActivity extends WutsonActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String showId = getIntent().getStringExtra(TMDB_SHOW_ID);
+        String showId = getIntent().getData().getLastPathSegment();
         showDetailsSubscription = Jabber.dataRepository().getShow(showId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

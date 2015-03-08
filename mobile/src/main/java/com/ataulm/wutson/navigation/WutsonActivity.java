@@ -8,17 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.WutsonApplication;
 
 public abstract class WutsonActivity extends ActionBarActivity {
 
-    private WutsonApplication application;
+    private Navigator navigator;
     private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        application = (WutsonApplication) getApplication();
+        navigator = new Navigator(this);
     }
 
     @Override
@@ -30,6 +29,10 @@ public abstract class WutsonActivity extends ActionBarActivity {
             throw new IllegalStateException("Toolbar expected in layout with id: R.id.app_bar");
         }
         setAppBar(toolbar);
+    }
+
+    protected Navigator navigate() {
+        return navigator;
     }
 
     protected void setAppBar(Toolbar toolbar) {
