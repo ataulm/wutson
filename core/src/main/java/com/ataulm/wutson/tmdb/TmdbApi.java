@@ -11,7 +11,7 @@ public interface TmdbApi {
     Observable<Configuration> getConfiguration();
 
     @GET("/genre/tv/list")
-    Observable<Genres> getGenres();
+    Observable<GsonGenres> getGenres();
 
     @GET("/discover/tv")
     Observable<DiscoverTvShows> getShowsMatchingGenre(@Query("with_genres") String genreId);

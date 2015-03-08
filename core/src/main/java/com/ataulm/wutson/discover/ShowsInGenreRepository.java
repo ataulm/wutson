@@ -2,7 +2,7 @@ package com.ataulm.wutson.discover;
 
 import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.tmdb.DiscoverTvShows;
-import com.ataulm.wutson.tmdb.Genre;
+import com.ataulm.wutson.tmdb.GsonGenre;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.rx.Functions;
@@ -41,14 +41,14 @@ public class ShowsInGenreRepository {
     }
 
     private void refreshBrowseShows() {
-        Observable<Genre> genreObservable = genresRepository.getGenres().flatMap(Functions.<Genre>iterate());
+        Observable<GsonGenre> genreObservable = genresRepository.getGenres().flatMap(Functions.<GsonGenre>iterate());
         Observable<DiscoverTvShowsInGenre> discoverTvShowsObservable = genreObservable.flatMap(fetchDiscoverTvShows());
 
         Observable<ShowsInGenre> showsInGenreObservable = Observable.combineLatest(configurationObservable(), discoverTvShowsObservable, new Func2<Configuration, DiscoverTvShowsInGenre, ShowsInGenre>() {
 
             @Override
             public ShowsInGenre call(Configuration configuration, DiscoverTvShowsInGenre discoverTvShows) {
-                Genre genre = discoverTvShows.genre;
+                GsonGenre gsonGenre = discoverTvShows.gsonGenre;
                 List<Show> shows = new ArrayList<>(discoverTvShows.shows.size());
                 for (DiscoverTvShows.Show discoverTvShow : discoverTvShows.shows) {
                     String id = discoverTvShow.id;
@@ -57,7 +57,7 @@ public class ShowsInGenreRepository {
 
                     shows.add(new Show(id, name, posterUri));
                 }
-                ShowsInGenre showsInGenre = new ShowsInGenre(genre, shows);
+                ShowsInGenre showsInGenre = new ShowsInGenre(gsonGenre, shows);
                 return showsInGenre;
             }
 
@@ -69,16 +69,16 @@ public class ShowsInGenreRepository {
                 .subscribe(subject);
     }
 
-    private Func1<Genre, Observable<DiscoverTvShowsInGenre>> fetchDiscoverTvShows() {
-        return new Func1<Genre, Observable<DiscoverTvShowsInGenre>>() {
+    private Func1<GsonGenre, Observable<DiscoverTvShowsInGenre>> fetchDiscoverTvShows() {
+        return new Func1<GsonGenre, Observable<DiscoverTvShowsInGenre>>() {
 
             @Override
-            public Observable<DiscoverTvShowsInGenre> call(final Genre genre) {
-                return api.getShowsMatchingGenre(genre.getId()).flatMap(new Func1<DiscoverTvShows, Observable<DiscoverTvShowsInGenre>>() {
+            public Observable<DiscoverTvShowsInGenre> call(final GsonGenre gsonGenre) {
+                return api.getShowsMatchingGenre(gsonGenre.getId()).flatMap(new Func1<DiscoverTvShows, Observable<DiscoverTvShowsInGenre>>() {
 
                     @Override
                     public Observable<DiscoverTvShowsInGenre> call(DiscoverTvShows discoverTvShows) {
-                        return Observable.just(new DiscoverTvShowsInGenre(genre, discoverTvShows));
+                        return Observable.just(new DiscoverTvShowsInGenre(gsonGenre, discoverTvShows));
                     }
 
                 });
@@ -93,11 +93,11 @@ public class ShowsInGenreRepository {
 
     private static class DiscoverTvShowsInGenre {
 
-        final Genre genre;
+        final GsonGenre gsonGenre;
         final DiscoverTvShows shows;
 
-        DiscoverTvShowsInGenre(Genre genre, DiscoverTvShows shows) {
-            this.genre = genre;
+        DiscoverTvShowsInGenre(GsonGenre gsonGenre, DiscoverTvShows shows) {
+            this.gsonGenre = gsonGenre;
             this.shows = shows;
         }
 

@@ -2,7 +2,7 @@ package com.ataulm.wutson.tmdb;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Genre {
+public class GsonGenre {
 
     @SerializedName("id")
     String id;

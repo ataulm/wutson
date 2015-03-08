@@ -1,6 +1,6 @@
 package com.ataulm.wutson.discover;
 
-import com.ataulm.wutson.tmdb.Genres;
+import com.ataulm.wutson.tmdb.GsonGenres;
 import com.ataulm.wutson.tmdb.TmdbApi;
 
 import rx.Observable;
@@ -11,7 +11,7 @@ import rx.subjects.BehaviorSubject;
 public class GenresRepository {
 
     private final TmdbApi api;
-    private final BehaviorSubject<Genres> subject;
+    private final BehaviorSubject<GsonGenres> subject;
 
     private boolean initialised;
 
@@ -20,7 +20,7 @@ public class GenresRepository {
         this.subject = BehaviorSubject.create();
     }
 
-    Observable<Genres> getGenres() {
+    Observable<GsonGenres> getGenres() {
         if (!initialised) {
             refreshGenres();
         }
@@ -34,11 +34,11 @@ public class GenresRepository {
                 .subscribe(subject);
     }
 
-    private Action1<Genres> markAsInitialised() {
-        return new Action1<Genres>() {
+    private Action1<GsonGenres> markAsInitialised() {
+        return new Action1<GsonGenres>() {
 
             @Override
-            public void call(Genres genres) {
+            public void call(GsonGenres gsonGenres) {
                 initialised = true;
             }
 

@@ -90,7 +90,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         public void onNext(List<ShowsInGenre> showsSeparateByGenre) {
             Log.d("THING", "onNext");
             for (ShowsInGenre shows : showsSeparateByGenre) {
-                Log.d("THING", "::: " + shows.getGenre() + " :::");
+                Log.d("THING", "::: " + shows.getGsonGenre() + " :::");
                 for (Show show : shows) {
                     Log.d("THING", show.getName());
                 }

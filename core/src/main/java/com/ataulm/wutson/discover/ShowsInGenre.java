@@ -1,22 +1,22 @@
 package com.ataulm.wutson.discover;
 
-import com.ataulm.wutson.tmdb.Genre;
+import com.ataulm.wutson.tmdb.GsonGenre;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class ShowsInGenre implements Iterable<Show>, Comparable<ShowsInGenre> {
 
-    private final Genre genre;
+    private final GsonGenre gsonGenre;
     private final List<Show> shows;
 
-    public ShowsInGenre(Genre genre, List<Show> shows) {
-        this.genre = genre;
+    public ShowsInGenre(GsonGenre gsonGenre, List<Show> shows) {
+        this.gsonGenre = gsonGenre;
         this.shows = shows;
     }
 
-    public String getGenre() {
-        return genre.getName();
+    public String getGsonGenre() {
+        return gsonGenre.getName();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ShowsInGenre implements Iterable<Show>, Comparable<ShowsInGenre> {
 
     @Override
     public int compareTo(ShowsInGenre other) {
-        return getGenre().compareTo(other.getGenre());
+        return getGsonGenre().compareTo(other.getGsonGenre());
     }
 
 }
