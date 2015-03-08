@@ -55,7 +55,7 @@ class DiscoverByGenrePagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return showsInGenres.get(position).getGsonGenre();
+        return showsInGenres.get(position).getGenre();
     }
 
 }

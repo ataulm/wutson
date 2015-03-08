@@ -4,7 +4,7 @@ import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
-import com.ataulm.wutson.tmdb.gson.GsonDiscoverTvShows;
+import com.ataulm.wutson.tmdb.gson.GsonDiscoverTv;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
 
 import java.net.URI;
@@ -40,23 +40,23 @@ public class ShowsInGenreRepository {
     }
 
     private void refreshBrowseShows() {
-        Observable<GsonGenres.GsonGenre> genreObservable = genresRepository.getGenres().flatMap(Function.<GsonGenres.GsonGenre>emitEachElement());
+        Observable<GsonGenres.Genre> genreObservable = genresRepository.getGenres().flatMap(Function.<GsonGenres.Genre>emitEachElement());
         Observable<GsonGenreAndGsonDiscoverTvShows> discoverTvShowsObservable = genreObservable.flatMap(fetchDiscoverTvShows());
 
         Observable<ShowsInGenre> showsInGenreObservable = Observable.combineLatest(configurationObservable(), discoverTvShowsObservable, new Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre>() {
 
             @Override
             public ShowsInGenre call(GsonConfiguration configuration, GsonGenreAndGsonDiscoverTvShows discoverTvShows) {
-                GsonGenres.GsonGenre gsonGenre = discoverTvShows.gsonGenre;
+                GsonGenres.Genre genre = discoverTvShows.genre;
                 List<Show> shows = new ArrayList<>(discoverTvShows.size());
-                for (GsonDiscoverTvShows.Show discoverTvShow : discoverTvShows.gsonDiscoverTvShows) {
+                for (GsonDiscoverTv.Shows.Show discoverTvShow : discoverTvShows.gsonDiscoverTv) {
                     String id = discoverTvShow.id;
                     String name = discoverTvShow.name;
                     URI posterUri = URI.create(configuration.getCompletePosterPath(discoverTvShow.posterPath));
 
                     shows.add(new Show(id, name, posterUri));
                 }
-                return new ShowsInGenre(gsonGenre, shows);
+                return new ShowsInGenre(genre, shows);
             }
 
         });
@@ -67,16 +67,16 @@ public class ShowsInGenreRepository {
                 .subscribe(subject);
     }
 
-    private Func1<GsonGenres.GsonGenre, Observable<GsonGenreAndGsonDiscoverTvShows>> fetchDiscoverTvShows() {
-        return new Func1<GsonGenres.GsonGenre, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
+    private Func1<GsonGenres.Genre, Observable<GsonGenreAndGsonDiscoverTvShows>> fetchDiscoverTvShows() {
+        return new Func1<GsonGenres.Genre, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
 
             @Override
-            public Observable<GsonGenreAndGsonDiscoverTvShows> call(final GsonGenres.GsonGenre gsonGenre) {
-                return api.getShowsMatchingGenre(gsonGenre.id).flatMap(new Func1<GsonDiscoverTvShows, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
+            public Observable<GsonGenreAndGsonDiscoverTvShows> call(final GsonGenres.Genre genre) {
+                return api.getShowsMatchingGenre(genre.id).flatMap(new Func1<GsonDiscoverTv, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
 
                     @Override
-                    public Observable<GsonGenreAndGsonDiscoverTvShows> call(GsonDiscoverTvShows gsonDiscoverTvShows) {
-                        return Observable.just(new GsonGenreAndGsonDiscoverTvShows(gsonGenre, gsonDiscoverTvShows));
+                    public Observable<GsonGenreAndGsonDiscoverTvShows> call(GsonDiscoverTv gsonDiscoverTv) {
+                        return Observable.just(new GsonGenreAndGsonDiscoverTvShows(genre, gsonDiscoverTv));
                     }
 
                 });
@@ -91,16 +91,16 @@ public class ShowsInGenreRepository {
 
     private static class GsonGenreAndGsonDiscoverTvShows {
 
-        final GsonGenres.GsonGenre gsonGenre;
-        final GsonDiscoverTvShows gsonDiscoverTvShows;
+        final GsonGenres.Genre genre;
+        final GsonDiscoverTv gsonDiscoverTv;
 
-        GsonGenreAndGsonDiscoverTvShows(GsonGenres.GsonGenre gsonGenre, GsonDiscoverTvShows gsonDiscoverTvShows) {
-            this.gsonGenre = gsonGenre;
-            this.gsonDiscoverTvShows = gsonDiscoverTvShows;
+        GsonGenreAndGsonDiscoverTvShows(GsonGenres.Genre genre, GsonDiscoverTv gsonDiscoverTv) {
+            this.genre = genre;
+            this.gsonDiscoverTv = gsonDiscoverTv;
         }
 
         int size() {
-            return gsonDiscoverTvShows.shows.size();
+            return gsonDiscoverTv.shows.size();
         }
 
     }

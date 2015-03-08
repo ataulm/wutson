@@ -5,21 +5,21 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Iterator;
 import java.util.List;
 
-public final class GsonGenres implements Iterable<GsonGenres.GsonGenre> {
+public final class GsonGenres implements Iterable<GsonGenres.Genre> {
 
     @SerializedName("genres")
-    public final List<GsonGenre> gsonGenres;
+    final List<Genre> genres;
 
-    private GsonGenres(List<GsonGenre> gsonGenres) {
-        this.gsonGenres = gsonGenres;
+    private GsonGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 
     @Override
-    public Iterator<GsonGenre> iterator() {
-        return gsonGenres.iterator();
+    public Iterator<Genre> iterator() {
+        return genres.iterator();
     }
 
-    public static final class GsonGenre {
+    public static final class Genre {
 
         @SerializedName("id")
         public final String id;
@@ -27,7 +27,7 @@ public final class GsonGenres implements Iterable<GsonGenres.GsonGenre> {
         @SerializedName("name")
         public final String name;
 
-        private GsonGenre(String id, String name) {
+        private Genre(String id, String name) {
             this.id = id;
             this.name = name;
         }

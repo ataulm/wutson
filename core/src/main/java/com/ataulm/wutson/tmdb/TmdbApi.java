@@ -1,7 +1,7 @@
 package com.ataulm.wutson.tmdb;
 
 import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
-import com.ataulm.wutson.tmdb.gson.GsonDiscoverTvShows;
+import com.ataulm.wutson.tmdb.gson.GsonDiscoverTv;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
 import com.ataulm.wutson.tmdb.gson.GsonTvShow;
 
@@ -19,7 +19,7 @@ public interface TmdbApi {
     Observable<GsonGenres> getGenres();
 
     @GET("/discover/tv")
-    Observable<GsonDiscoverTvShows> getShowsMatchingGenre(@Query("with_genres") String genreId);
+    Observable<GsonDiscoverTv> getShowsMatchingGenre(@Query("with_genres") String genreId);
 
     @GET("/tv/{id}?append_to_response=credits")
     Observable<GsonTvShow> getTvShow(@Path("id") String id);

@@ -32,9 +32,9 @@ public class ShowRepository {
             @Override
             public Show call(GsonConfiguration gsonConfiguration, GsonTvShow gsonTvShow) {
                 List<Character> characters = new ArrayList<>();
-                for (GsonCredits.GsonCast.GsonCastElement gsonCastElement : gsonTvShow.gsonCredits.gsonCast) {
-                    Actor actor = new Actor(gsonCastElement.actorName, URI.create(gsonConfiguration.getCompleteProfilePath(gsonCastElement.profilePath)));
-                    characters.add(new com.ataulm.wutson.show.Character(gsonCastElement.name, actor));
+                for (GsonCredits.Cast.Entry entry : gsonTvShow.gsonCredits.cast) {
+                    Actor actor = new Actor(entry.actorName, URI.create(gsonConfiguration.getCompleteProfilePath(entry.profilePath)));
+                    characters.add(new com.ataulm.wutson.show.Character(entry.name, actor));
                 }
 
                 String name = gsonTvShow.name;
@@ -43,11 +43,11 @@ public class ShowRepository {
                 Cast cast = new Cast(characters);
 
                 List<Show.Season> seasons = new ArrayList<>();
-                for (GsonTvShow.GsonSeason gsonSeason : gsonTvShow.gsonSeasons) {
-                    String id = gsonSeason.id;
-                    int seasonNumber = gsonSeason.seasonNumber;
-                    int episodeCount = gsonSeason.episodeCount;
-                    URI posterPath = URI.create(gsonConfiguration.getCompletePosterPath(gsonSeason.posterPath));
+                for (GsonTvShow.Season season : gsonTvShow.seasons) {
+                    String id = season.id;
+                    int seasonNumber = season.seasonNumber;
+                    int episodeCount = season.episodeCount;
+                    URI posterPath = URI.create(gsonConfiguration.getCompletePosterPath(season.posterPath));
                     seasons.add(new Show.Season(id, seasonNumber, episodeCount, posterPath));
                 }
                 return new Show(name, overview, posterUri, cast, seasons);

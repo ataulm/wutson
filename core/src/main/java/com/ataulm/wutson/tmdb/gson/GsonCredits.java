@@ -7,15 +7,15 @@ import java.util.ArrayList;
 public final class GsonCredits {
 
     @SerializedName("cast")
-    public final GsonCast gsonCast;
+    public final Cast cast;
 
-    private GsonCredits(GsonCast gsonCast) {
-        this.gsonCast = gsonCast;
+    private GsonCredits(Cast cast) {
+        this.cast = cast;
     }
 
-    public static final class GsonCast extends ArrayList<GsonCast.GsonCastElement> {
+    public static final class Cast extends ArrayList<Cast.Entry> {
 
-        public static final class GsonCastElement {
+        public static final class Entry {
 
             @SerializedName("character")
             public final String name;
@@ -26,7 +26,7 @@ public final class GsonCredits {
             @SerializedName("profile_path")
             public final String profilePath;
 
-            private GsonCastElement(String name, String actorName, String profilePath) {
+            private Entry(String name, String actorName, String profilePath) {
                 this.name = name;
                 this.actorName = actorName;
                 this.profilePath = profilePath;

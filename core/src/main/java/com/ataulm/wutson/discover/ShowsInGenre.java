@@ -7,16 +7,17 @@ import java.util.List;
 
 public class ShowsInGenre implements Iterable<Show>, Comparable<ShowsInGenre> {
 
-    private final GsonGenres.GsonGenre gsonGenre;
+    // TODO: should not be using Gson model here
+    private final GsonGenres.Genre genre;
     private final List<Show> shows;
 
-    ShowsInGenre(GsonGenres.GsonGenre gsonGenre, List<Show> shows) {
-        this.gsonGenre = gsonGenre;
+    ShowsInGenre(GsonGenres.Genre genre, List<Show> shows) {
+        this.genre = genre;
         this.shows = shows;
     }
 
-    String getGsonGenre() {
-        return gsonGenre.name;
+    String getGenre() {
+        return genre.name;
     }
 
     int size() {
@@ -34,7 +35,7 @@ public class ShowsInGenre implements Iterable<Show>, Comparable<ShowsInGenre> {
 
     @Override
     public int compareTo(ShowsInGenre other) {
-        return getGsonGenre().compareTo(other.getGsonGenre());
+        return getGenre().compareTo(other.getGenre());
     }
 
 }
