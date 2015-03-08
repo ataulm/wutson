@@ -1,8 +1,8 @@
 package com.ataulm.wutson.discover;
 
-import com.ataulm.wutson.tmdb.GsonConfiguration;
-import com.ataulm.wutson.tmdb.GsonDiscoverTvShows;
-import com.ataulm.wutson.tmdb.GsonGenres;
+import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
+import com.ataulm.wutson.tmdb.gson.GsonDiscoverTvShows;
+import com.ataulm.wutson.tmdb.gson.GsonGenres;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.rx.Functions;

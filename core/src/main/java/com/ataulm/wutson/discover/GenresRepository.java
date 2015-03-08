@@ -1,6 +1,6 @@
 package com.ataulm.wutson.discover;
 
-import com.ataulm.wutson.tmdb.GsonGenres;
+import com.ataulm.wutson.tmdb.gson.GsonGenres;
 import com.ataulm.wutson.tmdb.TmdbApi;
 
 import rx.Observable;

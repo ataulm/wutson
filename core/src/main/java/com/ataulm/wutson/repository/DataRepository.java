@@ -5,9 +5,9 @@ import com.ataulm.wutson.discover.ShowsInGenreRepository;
 import com.ataulm.wutson.show.Actor;
 import com.ataulm.wutson.show.Cast;
 import com.ataulm.wutson.show.Show;
-import com.ataulm.wutson.tmdb.GsonConfiguration;
-import com.ataulm.wutson.tmdb.GsonCredits;
-import com.ataulm.wutson.tmdb.GsonTvShow;
+import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
+import com.ataulm.wutson.tmdb.gson.GsonCredits;
+import com.ataulm.wutson.tmdb.gson.GsonTvShow;
 import com.ataulm.wutson.tmdb.TmdbApi;
 
 import java.net.URI;
@@ -87,7 +87,7 @@ public class DataRepository {
         return new Func1<GsonTvShow, GsonTvShowAndGsonConfiguration>() {
 
             @Override
-            public GsonTvShowAndGsonConfiguration call(com.ataulm.wutson.tmdb.GsonTvShow gsonTvShow) {
+            public GsonTvShowAndGsonConfiguration call(GsonTvShow gsonTvShow) {
                 return new GsonTvShowAndGsonConfiguration(gsonTvShow, gsonConfiguration);
             }
 

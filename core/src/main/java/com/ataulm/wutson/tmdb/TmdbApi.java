@@ -1,5 +1,10 @@
 package com.ataulm.wutson.tmdb;
 
+import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
+import com.ataulm.wutson.tmdb.gson.GsonDiscoverTvShows;
+import com.ataulm.wutson.tmdb.gson.GsonGenres;
+import com.ataulm.wutson.tmdb.gson.GsonTvShow;
+
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;

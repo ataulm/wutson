@@ -1,6 +1,6 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.tmdb.GsonConfiguration;
+import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.rx.InfiniteOperator;
 
