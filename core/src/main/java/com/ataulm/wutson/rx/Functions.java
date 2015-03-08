@@ -1,12 +1,14 @@
 package com.ataulm.wutson.rx;
 
+import com.ataulm.wutson.DeveloperError;
+
 import rx.Observable;
 import rx.functions.Func1;
 
 public final class Functions {
 
     private Functions() {
-        // static rx function class
+        throw DeveloperError.nonInstantiableClass();
     }
 
     public static <T> Func1<Iterable<T>, Observable<T>> iterate() {

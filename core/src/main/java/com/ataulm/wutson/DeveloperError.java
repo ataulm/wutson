@@ -1,9 +1,13 @@
 package com.ataulm.wutson;
 
-public class DeveloperError extends RuntimeException {
+public final class DeveloperError extends RuntimeException {
 
     private DeveloperError(String reason) {
         super(reason);
+    }
+
+    public static DeveloperError nonInstantiableClass() {
+        return new DeveloperError("This class is not meant to be instantiated at all.");
     }
 
     public static DeveloperError methodCannotBeCalledOutsideThisClass() {
