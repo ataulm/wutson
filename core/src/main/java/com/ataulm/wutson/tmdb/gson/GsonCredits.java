@@ -2,32 +2,36 @@ package com.ataulm.wutson.tmdb.gson;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public final class GsonCredits {
 
     @SerializedName("cast")
-    public final List<GsonCastElement> gsonCastElements;
+    public final GsonCast gsonCast;
 
-    private GsonCredits(List<GsonCastElement> gsonCastElements) {
-        this.gsonCastElements = gsonCastElements;
+    private GsonCredits(GsonCast gsonCast) {
+        this.gsonCast = gsonCast;
     }
 
-    public static final class GsonCastElement {
+    public static final class GsonCast extends ArrayList<GsonCast.GsonCastElement> {
 
-        @SerializedName("character")
-        public final String name;
+        public static final class GsonCastElement {
 
-        @SerializedName("name")
-        public final String actorName;
+            @SerializedName("character")
+            public final String name;
 
-        @SerializedName("profile_path")
-        public final String profilePath;
+            @SerializedName("name")
+            public final String actorName;
 
-        private GsonCastElement(String name, String actorName, String profilePath) {
-            this.name = name;
-            this.actorName = actorName;
-            this.profilePath = profilePath;
+            @SerializedName("profile_path")
+            public final String profilePath;
+
+            private GsonCastElement(String name, String actorName, String profilePath) {
+                this.name = name;
+                this.actorName = actorName;
+                this.profilePath = profilePath;
+            }
+
         }
 
     }

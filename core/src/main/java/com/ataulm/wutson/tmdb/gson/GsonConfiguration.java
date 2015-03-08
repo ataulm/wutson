@@ -10,21 +10,21 @@ public class GsonConfiguration {
     private static final int POSTER_SIZE_STANDARD = 2;
 
     @SerializedName("images")
-    final Images images;
+    final GsonImages gsonImages;
 
-    private GsonConfiguration(Images images) {
-        this.images = images;
+    private GsonConfiguration(GsonImages gsonImages) {
+        this.gsonImages = gsonImages;
     }
 
     public String getCompletePosterPath(String posterPath) {
-        return images.baseUrl + images.posterSizes.get(POSTER_SIZE_STANDARD) + posterPath;
+        return gsonImages.baseUrl + gsonImages.posterSizes.get(POSTER_SIZE_STANDARD) + posterPath;
     }
 
     public String getCompleteProfilePath(String profilePath) {
-        return images.baseUrl + images.profileSizes.get(PROFILE_SIZE_STANDARD) + profilePath;
+        return gsonImages.baseUrl + gsonImages.profileSizes.get(PROFILE_SIZE_STANDARD) + profilePath;
     }
 
-    static class Images {
+    static class GsonImages {
 
         @SerializedName("base_url")
         String baseUrl;

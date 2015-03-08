@@ -35,7 +35,7 @@ public class ShowRepository {
             @Override
             public Show call(GsonConfiguration gsonConfiguration, GsonTvShowAndGsonConfiguration gsonTvShowAndGsonConfiguration) {
                 List<Character> characters = new ArrayList<>();
-                for (GsonCredits.GsonCastElement gsonCastElement : gsonTvShowAndGsonConfiguration.gsonTvShow.gsonCredits.gsonCastElements) {
+                for (GsonCredits.GsonCast.GsonCastElement gsonCastElement : gsonTvShowAndGsonConfiguration.gsonTvShow.gsonCredits.gsonCast) {
                     Actor actor = new Actor(gsonCastElement.actorName, URI.create(gsonConfiguration.getCompleteProfilePath(gsonCastElement.profilePath)));
                     characters.add(new com.ataulm.wutson.show.Character(gsonCastElement.name, actor));
                 }
