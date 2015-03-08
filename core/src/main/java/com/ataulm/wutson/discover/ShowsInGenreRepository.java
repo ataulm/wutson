@@ -41,7 +41,7 @@ public class ShowsInGenreRepository {
     }
 
     private void refreshBrowseShows() {
-        Observable<GsonGenres.GsonGenre> genreObservable = genresRepository.getGenres().flatMap(Functions.<GsonGenres.GsonGenre>iterate());
+        Observable<GsonGenres.GsonGenre> genreObservable = genresRepository.getGenres().flatMap(Functions.<GsonGenres.GsonGenre>emitEachElement());
         Observable<GsonGenreAndGsonDiscoverTvShows> discoverTvShowsObservable = genreObservable.flatMap(fetchDiscoverTvShows());
 
         Observable<ShowsInGenre> showsInGenreObservable = Observable.combineLatest(configurationObservable(), discoverTvShowsObservable, new Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre>() {

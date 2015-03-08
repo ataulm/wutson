@@ -11,7 +11,7 @@ public final class Functions {
         throw DeveloperError.nonInstantiableClass();
     }
 
-    public static <T> Func1<Iterable<T>, Observable<T>> iterate() {
+    public static <T> Func1<Iterable<T>, Observable<T>> emitEachElement() {
         return new Func1<Iterable<T>, Observable<T>>() {
 
             @Override
