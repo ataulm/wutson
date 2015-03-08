@@ -24,16 +24,22 @@ public class GsonConfiguration {
         return gsonImages.baseUrl + gsonImages.profileSizes.get(PROFILE_SIZE_STANDARD) + profilePath;
     }
 
-    static class GsonImages {
+    private static class GsonImages {
 
         @SerializedName("base_url")
-        String baseUrl;
+        final String baseUrl;
 
         @SerializedName("profile_sizes")
-        List<String> profileSizes;
+        final List<String> profileSizes;
 
         @SerializedName("poster_sizes")
-        List<String> posterSizes;
+        final List<String> posterSizes;
+
+        private GsonImages(String baseUrl, List<String> profileSizes, List<String> posterSizes) {
+            this.baseUrl = baseUrl;
+            this.profileSizes = profileSizes;
+            this.posterSizes = posterSizes;
+        }
 
     }
 
