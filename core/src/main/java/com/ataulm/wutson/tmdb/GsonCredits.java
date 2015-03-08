@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GsonCredits {
+public final class GsonCredits {
 
     @SerializedName("cast")
     public final List<GsonCastElement> gsonCastElements;
 
-    GsonCredits(List<GsonCastElement> gsonCastElements) {
+    private GsonCredits(List<GsonCastElement> gsonCastElements) {
         this.gsonCastElements = gsonCastElements;
     }
 
-    public static class GsonCastElement {
+    public static final class GsonCastElement {
 
         @SerializedName("character")
         public final String name;
@@ -24,7 +24,7 @@ public class GsonCredits {
         @SerializedName("profile_path")
         public final String profilePath;
 
-        GsonCastElement(String name, String actorName, String profilePath) {
+        private GsonCastElement(String name, String actorName, String profilePath) {
             this.name = name;
             this.actorName = actorName;
             this.profilePath = profilePath;
