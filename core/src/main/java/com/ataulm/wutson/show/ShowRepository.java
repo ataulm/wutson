@@ -8,12 +8,9 @@ import com.ataulm.wutson.tmdb.gson.GsonTvShow;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import rx.Observable;
-import rx.functions.Func1;
 import rx.functions.Func2;
 
 public class ShowRepository {
@@ -28,25 +25,25 @@ public class ShowRepository {
 
     public Observable<Show> getShow(final String showId) {
         Observable<GsonConfiguration> configurationObservable = configurationRepository.getConfiguration();
-        Observable<GsonTvShowAndGsonConfiguration> tvShowObservable = configurationObservable.flatMap(getTvShowWith(showId));
+        Observable<GsonTvShow> tvShowObservable = api.getTvShow(showId);
 
-        return Observable.zip(configurationObservable, tvShowObservable, new Func2<GsonConfiguration, GsonTvShowAndGsonConfiguration, Show>() {
+        return Observable.zip(configurationObservable, tvShowObservable, new Func2<GsonConfiguration, GsonTvShow, Show>() {
 
             @Override
-            public Show call(GsonConfiguration gsonConfiguration, GsonTvShowAndGsonConfiguration gsonTvShowAndGsonConfiguration) {
+            public Show call(GsonConfiguration gsonConfiguration, GsonTvShow gsonTvShow) {
                 List<Character> characters = new ArrayList<>();
-                for (GsonCredits.GsonCast.GsonCastElement gsonCastElement : gsonTvShowAndGsonConfiguration.gsonTvShow.gsonCredits.gsonCast) {
+                for (GsonCredits.GsonCast.GsonCastElement gsonCastElement : gsonTvShow.gsonCredits.gsonCast) {
                     Actor actor = new Actor(gsonCastElement.actorName, URI.create(gsonConfiguration.getCompleteProfilePath(gsonCastElement.profilePath)));
                     characters.add(new com.ataulm.wutson.show.Character(gsonCastElement.name, actor));
                 }
 
-                String name = gsonTvShowAndGsonConfiguration.gsonTvShow.name;
-                String overview = gsonTvShowAndGsonConfiguration.gsonTvShow.overview;
-                URI posterUri = gsonTvShowAndGsonConfiguration.createTvPosterPath();
+                String name = gsonTvShow.name;
+                String overview = gsonTvShow.overview;
+                URI posterUri = URI.create(gsonConfiguration.getCompletePosterPath(gsonTvShow.posterPath));
                 Cast cast = new Cast(characters);
 
                 List<Show.Season> seasons = new ArrayList<>();
-                for (GsonTvShow.GsonSeason gsonSeason : gsonTvShowAndGsonConfiguration.gsonTvShow.gsonSeasons) {
+                for (GsonTvShow.GsonSeason gsonSeason : gsonTvShow.gsonSeasons) {
                     String id = gsonSeason.id;
                     int seasonNumber = gsonSeason.seasonNumber;
                     int episodeCount = gsonSeason.episodeCount;
@@ -57,46 +54,6 @@ public class ShowRepository {
             }
 
         });
-    }
-
-    private Func1<GsonConfiguration, Observable<GsonTvShowAndGsonConfiguration>> getTvShowWith(final String id) {
-        return new Func1<GsonConfiguration, Observable<GsonTvShowAndGsonConfiguration>>() {
-
-            @Override
-            public Observable<GsonTvShowAndGsonConfiguration> call(final GsonConfiguration gsonConfiguration) {
-                Map<String, String> params = new HashMap<>();
-                params.put("append_to_response", "credits");
-                return api.getTvShow(id).map(updateTvShowWith(gsonConfiguration));
-            }
-
-        };
-    }
-
-    private Func1<GsonTvShow, GsonTvShowAndGsonConfiguration> updateTvShowWith(final GsonConfiguration gsonConfiguration) {
-        return new Func1<GsonTvShow, GsonTvShowAndGsonConfiguration>() {
-
-            @Override
-            public GsonTvShowAndGsonConfiguration call(GsonTvShow gsonTvShow) {
-                return new GsonTvShowAndGsonConfiguration(gsonTvShow, gsonConfiguration);
-            }
-
-        };
-    }
-
-    private static class GsonTvShowAndGsonConfiguration {
-
-        final GsonTvShow gsonTvShow;
-        final GsonConfiguration gsonConfiguration;
-
-        GsonTvShowAndGsonConfiguration(GsonTvShow gsonTvShow, GsonConfiguration gsonConfiguration) {
-            this.gsonTvShow = gsonTvShow;
-            this.gsonConfiguration = gsonConfiguration;
-        }
-
-        URI createTvPosterPath() {
-            return URI.create(gsonConfiguration.getCompletePosterPath(gsonTvShow.posterPath));
-        }
-
     }
 
 }
