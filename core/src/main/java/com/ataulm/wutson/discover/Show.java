@@ -2,7 +2,7 @@ package com.ataulm.wutson.discover;
 
 import java.net.URI;
 
-public class Show {
+class Show {
 
     private final String id;
     private final String name;

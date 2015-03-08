@@ -1,6 +1,6 @@
 package com.ataulm.wutson.show;
 
-public class Character {
+class Character {
 
     private final String name;
     private final Actor actor;

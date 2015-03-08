@@ -39,7 +39,7 @@ public class Show {
         return seasons;
     }
 
-    public static class Season {
+    static class Season {
 
         private final String id;
         private final int seasonNumber;

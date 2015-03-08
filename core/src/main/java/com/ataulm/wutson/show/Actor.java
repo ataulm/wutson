@@ -2,7 +2,7 @@ package com.ataulm.wutson.show;
 
 import java.net.URI;
 
-public class Actor {
+class Actor {
 
     private final String name;
     private final URI profileUri;

@@ -3,7 +3,7 @@ package com.ataulm.wutson.show;
 import java.util.Iterator;
 import java.util.List;
 
-public class Cast implements Iterable<Character> {
+class Cast implements Iterable<Character> {
 
     private final List<Character> characters;
 
