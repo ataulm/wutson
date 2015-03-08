@@ -5,33 +5,21 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Iterator;
 import java.util.List;
 
-public class DiscoverTvShows implements Iterable<DiscoverTvShows.Show> {
-
-    @SerializedName("id")
-    String id;
-
-    @SerializedName("page")
-    String page;
+public class GsonDiscoverTvShows implements Iterable<GsonDiscoverTvShows.Show> {
 
     @SerializedName("results")
-    List<Show> shows;
+    public final List<Show> shows;
 
-    @SerializedName("total_pages")
-    int totalPages;
-
-    @SerializedName("total_results")
-    int totalResults;
+    private GsonDiscoverTvShows(List<Show> shows) {
+        this.shows = shows;
+    }
 
     @Override
     public Iterator<Show> iterator() {
         return shows.iterator();
     }
 
-    public int size() {
-        return shows.size();
-    }
-
-    public class Show {
+    public static class Show {
 
         @SerializedName("id")
         public final String id;

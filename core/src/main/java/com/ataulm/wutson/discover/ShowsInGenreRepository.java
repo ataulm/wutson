@@ -1,7 +1,7 @@
 package com.ataulm.wutson.discover;
 
 import com.ataulm.wutson.tmdb.Configuration;
-import com.ataulm.wutson.tmdb.DiscoverTvShows;
+import com.ataulm.wutson.tmdb.GsonDiscoverTvShows;
 import com.ataulm.wutson.tmdb.GsonGenre;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.repository.ConfigurationRepository;
@@ -49,8 +49,8 @@ public class ShowsInGenreRepository {
             @Override
             public ShowsInGenre call(Configuration configuration, DiscoverTvShowsInGenre discoverTvShows) {
                 GsonGenre gsonGenre = discoverTvShows.gsonGenre;
-                List<Show> shows = new ArrayList<>(discoverTvShows.shows.size());
-                for (DiscoverTvShows.Show discoverTvShow : discoverTvShows.shows) {
+                List<Show> shows = new ArrayList<>(discoverTvShows.size());
+                for (GsonDiscoverTvShows.Show discoverTvShow : discoverTvShows.shows) {
                     String id = discoverTvShow.id;
                     String name = discoverTvShow.name;
                     URI posterUri = URI.create(configuration.getCompletePosterPath(discoverTvShow.posterPath));
@@ -74,11 +74,11 @@ public class ShowsInGenreRepository {
 
             @Override
             public Observable<DiscoverTvShowsInGenre> call(final GsonGenre gsonGenre) {
-                return api.getShowsMatchingGenre(gsonGenre.getId()).flatMap(new Func1<DiscoverTvShows, Observable<DiscoverTvShowsInGenre>>() {
+                return api.getShowsMatchingGenre(gsonGenre.getId()).flatMap(new Func1<GsonDiscoverTvShows, Observable<DiscoverTvShowsInGenre>>() {
 
                     @Override
-                    public Observable<DiscoverTvShowsInGenre> call(DiscoverTvShows discoverTvShows) {
-                        return Observable.just(new DiscoverTvShowsInGenre(gsonGenre, discoverTvShows));
+                    public Observable<DiscoverTvShowsInGenre> call(GsonDiscoverTvShows gsonDiscoverTvShows) {
+                        return Observable.just(new DiscoverTvShowsInGenre(gsonGenre, gsonDiscoverTvShows));
                     }
 
                 });
@@ -94,11 +94,15 @@ public class ShowsInGenreRepository {
     private static class DiscoverTvShowsInGenre {
 
         final GsonGenre gsonGenre;
-        final DiscoverTvShows shows;
+        final GsonDiscoverTvShows shows;
 
-        DiscoverTvShowsInGenre(GsonGenre gsonGenre, DiscoverTvShows shows) {
+        DiscoverTvShowsInGenre(GsonGenre gsonGenre, GsonDiscoverTvShows shows) {
             this.gsonGenre = gsonGenre;
             this.shows = shows;
+        }
+
+        int size() {
+            return shows.shows.size();
         }
 
     }
