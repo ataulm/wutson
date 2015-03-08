@@ -19,23 +19,23 @@ public class Show {
         this.seasons = seasons;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public URI getPosterUri() {
+    URI getPosterUri() {
         return posterUri;
     }
 
-    public String getOverview() {
+    String getOverview() {
         return overview;
     }
 
-    public Cast getCast() {
+    Cast getCast() {
         return cast;
     }
 
-    public List<Season> getSeasons() {
+    List<Season> getSeasons() {
         return seasons;
     }
 
@@ -53,19 +53,19 @@ public class Show {
             this.posterPath = posterPath;
         }
 
-        public String getId() {
+        String getId() {
             return id;
         }
 
-        public int getSeasonNumber() {
+        int getSeasonNumber() {
             return seasonNumber;
         }
 
-        public int getEpisodeCount() {
+        int getEpisodeCount() {
             return episodeCount;
         }
 
-        public URI getPosterPath() {
+        URI getPosterPath() {
             return posterPath;
         }
 

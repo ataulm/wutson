@@ -12,11 +12,11 @@ public class Actor {
         this.profileUri = profileUri;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public URI getProfileUri() {
+    URI getProfileUri() {
         return profileUri;
     }
 

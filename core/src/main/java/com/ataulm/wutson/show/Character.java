@@ -10,11 +10,11 @@ public class Character {
         this.actor = actor;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public Actor getActor() {
+    Actor getActor() {
         return actor;
     }
 

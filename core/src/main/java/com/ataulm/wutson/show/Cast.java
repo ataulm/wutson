@@ -11,13 +11,13 @@ public class Cast implements Iterable<Character> {
         this.characters = characters;
     }
 
+    int size() {
+        return characters.size();
+    }
+
     @Override
     public Iterator<Character> iterator() {
         return characters.iterator();
-    }
-
-    public int size() {
-        return characters.size();
     }
 
 }
