@@ -5,22 +5,14 @@ import com.google.gson.annotations.SerializedName;
 public class GsonGenre {
 
     @SerializedName("id")
-    String id;
+    public final String id;
 
     @SerializedName("name")
-    String name;
+    public final String name;
 
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String toString() {
-        return "Genre: " + name + " (" + id + ")";
+    private GsonGenre(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
 }

@@ -74,7 +74,7 @@ public class ShowsInGenreRepository {
 
             @Override
             public Observable<DiscoverTvShowsInGenre> call(final GsonGenre gsonGenre) {
-                return api.getShowsMatchingGenre(gsonGenre.getId()).flatMap(new Func1<GsonDiscoverTvShows, Observable<DiscoverTvShowsInGenre>>() {
+                return api.getShowsMatchingGenre(gsonGenre.id).flatMap(new Func1<GsonDiscoverTvShows, Observable<DiscoverTvShowsInGenre>>() {
 
                     @Override
                     public Observable<DiscoverTvShowsInGenre> call(GsonDiscoverTvShows gsonDiscoverTvShows) {

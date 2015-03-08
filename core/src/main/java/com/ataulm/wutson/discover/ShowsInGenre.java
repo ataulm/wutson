@@ -16,7 +16,7 @@ public class ShowsInGenre implements Iterable<Show>, Comparable<ShowsInGenre> {
     }
 
     public String getGsonGenre() {
-        return gsonGenre.getName();
+        return gsonGenre.name;
     }
 
     @Override
