@@ -4,13 +4,17 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Configuration {
+public class GsonConfiguration {
 
     private static final int PROFILE_SIZE_STANDARD = 1;
     private static final int POSTER_SIZE_STANDARD = 2;
 
     @SerializedName("images")
-    Images images;
+    final Images images;
+
+    private GsonConfiguration(Images images) {
+        this.images = images;
+    }
 
     public String getCompletePosterPath(String posterPath) {
         return images.baseUrl + images.posterSizes.get(POSTER_SIZE_STANDARD) + posterPath;

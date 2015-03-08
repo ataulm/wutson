@@ -24,10 +24,10 @@ public class TvShow {
     @SerializedName("credits")
     GsonCredits gsonCredits;
 
-    private Configuration configuration;
+    private GsonConfiguration gsonConfiguration;
 
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
+    public void setGsonConfiguration(GsonConfiguration gsonConfiguration) {
+        this.gsonConfiguration = gsonConfiguration;
     }
 
     public String getName() {
@@ -35,7 +35,7 @@ public class TvShow {
     }
 
     public String getPosterPath() {
-        return configuration.getCompletePosterPath(posterPath);
+        return gsonConfiguration.getCompletePosterPath(posterPath);
     }
 
     public String getOverview() {

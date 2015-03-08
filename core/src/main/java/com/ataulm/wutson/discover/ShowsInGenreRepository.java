@@ -1,6 +1,6 @@
 package com.ataulm.wutson.discover;
 
-import com.ataulm.wutson.tmdb.Configuration;
+import com.ataulm.wutson.tmdb.GsonConfiguration;
 import com.ataulm.wutson.tmdb.GsonDiscoverTvShows;
 import com.ataulm.wutson.tmdb.GsonGenre;
 import com.ataulm.wutson.tmdb.TmdbApi;
@@ -44,10 +44,10 @@ public class ShowsInGenreRepository {
         Observable<GsonGenre> genreObservable = genresRepository.getGenres().flatMap(Functions.<GsonGenre>iterate());
         Observable<DiscoverTvShowsInGenre> discoverTvShowsObservable = genreObservable.flatMap(fetchDiscoverTvShows());
 
-        Observable<ShowsInGenre> showsInGenreObservable = Observable.combineLatest(configurationObservable(), discoverTvShowsObservable, new Func2<Configuration, DiscoverTvShowsInGenre, ShowsInGenre>() {
+        Observable<ShowsInGenre> showsInGenreObservable = Observable.combineLatest(configurationObservable(), discoverTvShowsObservable, new Func2<GsonConfiguration, DiscoverTvShowsInGenre, ShowsInGenre>() {
 
             @Override
-            public ShowsInGenre call(Configuration configuration, DiscoverTvShowsInGenre discoverTvShows) {
+            public ShowsInGenre call(GsonConfiguration configuration, DiscoverTvShowsInGenre discoverTvShows) {
                 GsonGenre gsonGenre = discoverTvShows.gsonGenre;
                 List<Show> shows = new ArrayList<>(discoverTvShows.size());
                 for (GsonDiscoverTvShows.Show discoverTvShow : discoverTvShows.shows) {
@@ -87,7 +87,7 @@ public class ShowsInGenreRepository {
         };
     }
 
-    private Observable<Configuration> configurationObservable() {
+    private Observable<GsonConfiguration> configurationObservable() {
         return configurationRepository.getConfiguration().first();
     }
 

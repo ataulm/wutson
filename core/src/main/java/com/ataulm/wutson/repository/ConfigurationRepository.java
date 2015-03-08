@@ -1,6 +1,6 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.tmdb.Configuration;
+import com.ataulm.wutson.tmdb.GsonConfiguration;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.rx.InfiniteOperator;
 
@@ -11,14 +11,14 @@ import rx.subjects.BehaviorSubject;
 public class ConfigurationRepository {
 
     private final TmdbApi api;
-    private final BehaviorSubject<Configuration> subject;
+    private final BehaviorSubject<GsonConfiguration> subject;
 
     ConfigurationRepository(TmdbApi api) {
         this.api = api;
         this.subject = BehaviorSubject.create();
     }
 
-    public Observable<Configuration> getConfiguration() {
+    public Observable<GsonConfiguration> getConfiguration() {
         if (!subject.hasValue()) {
             refreshConfiguration();
         }
@@ -27,7 +27,7 @@ public class ConfigurationRepository {
 
     private void refreshConfiguration() {
         api.getConfiguration()
-                .lift(new InfiniteOperator<Configuration>())
+                .lift(new InfiniteOperator<GsonConfiguration>())
                 .subscribeOn(Schedulers.io())
                 .subscribe(subject);
     }

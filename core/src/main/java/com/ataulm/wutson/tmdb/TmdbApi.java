@@ -8,7 +8,7 @@ import rx.Observable;
 public interface TmdbApi {
 
     @GET("/configuration")
-    Observable<Configuration> getConfiguration();
+    Observable<GsonConfiguration> getConfiguration();
 
     @GET("/genre/tv/list")
     Observable<GsonGenres> getGenres();

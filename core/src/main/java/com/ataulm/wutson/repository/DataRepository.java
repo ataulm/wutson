@@ -5,7 +5,7 @@ import com.ataulm.wutson.discover.ShowsInGenreRepository;
 import com.ataulm.wutson.show.Actor;
 import com.ataulm.wutson.show.Cast;
 import com.ataulm.wutson.show.Show;
-import com.ataulm.wutson.tmdb.Configuration;
+import com.ataulm.wutson.tmdb.GsonConfiguration;
 import com.ataulm.wutson.tmdb.GsonCredits;
 import com.ataulm.wutson.tmdb.Season;
 import com.ataulm.wutson.tmdb.TmdbApi;
@@ -39,16 +39,16 @@ public class DataRepository {
     }
 
     public Observable<Show> getShow(final String showId) {
-        Observable<Configuration> configurationObservable = configurationRepository.getConfiguration();
+        Observable<GsonConfiguration> configurationObservable = configurationRepository.getConfiguration();
         Observable<TvShow> tvShowObservable = configurationObservable.flatMap(getTvShowWith(showId));
 
-        return Observable.zip(configurationObservable, tvShowObservable, new Func2<Configuration, TvShow, Show>() {
+        return Observable.zip(configurationObservable, tvShowObservable, new Func2<GsonConfiguration, TvShow, Show>() {
 
             @Override
-            public Show call(Configuration configuration, TvShow tvShow) {
+            public Show call(GsonConfiguration gsonConfiguration, TvShow tvShow) {
                 List<com.ataulm.wutson.show.Character> characters = new ArrayList<>();
                 for (GsonCredits.GsonCastElement gsonCastElement : tvShow.getGsonCredits().gsonCastElements) {
-                    Actor actor = new Actor(gsonCastElement.actorName, URI.create(configuration.getCompleteProfilePath(gsonCastElement.profilePath)));
+                    Actor actor = new Actor(gsonCastElement.actorName, URI.create(gsonConfiguration.getCompleteProfilePath(gsonCastElement.profilePath)));
                     characters.add(new com.ataulm.wutson.show.Character(gsonCastElement.name, actor));
                 }
 
@@ -62,7 +62,7 @@ public class DataRepository {
                     String id = season.id;
                     int seasonNumber = season.seasonNumber;
                     int episodeCount = season.episodeCount;
-                    URI posterPath = URI.create(configuration.getCompletePosterPath(season.posterPath));
+                    URI posterPath = URI.create(gsonConfiguration.getCompletePosterPath(season.posterPath));
                     seasons.add(new Show.Season(id, seasonNumber, episodeCount, posterPath));
                 }
                 return new Show(name, overview, posterUri, cast, seasons);
@@ -71,25 +71,25 @@ public class DataRepository {
         });
     }
 
-    private Func1<Configuration, Observable<TvShow>> getTvShowWith(final String id) {
-        return new Func1<Configuration, Observable<TvShow>>() {
+    private Func1<GsonConfiguration, Observable<TvShow>> getTvShowWith(final String id) {
+        return new Func1<GsonConfiguration, Observable<TvShow>>() {
 
             @Override
-            public Observable<TvShow> call(final Configuration configuration) {
+            public Observable<TvShow> call(final GsonConfiguration gsonConfiguration) {
                 Map<String, String> params = new HashMap<>();
                 params.put("append_to_response", "credits");
-                return api.getTvShow(id).map(updateTvShowWith(configuration));
+                return api.getTvShow(id).map(updateTvShowWith(gsonConfiguration));
             }
 
         };
     }
 
-    private Func1<TvShow, TvShow> updateTvShowWith(final Configuration configuration) {
+    private Func1<TvShow, TvShow> updateTvShowWith(final GsonConfiguration gsonConfiguration) {
         return new Func1<TvShow, TvShow>() {
 
             @Override
             public TvShow call(TvShow tvShow) {
-                tvShow.setConfiguration(configuration);
+                tvShow.setGsonConfiguration(gsonConfiguration);
                 return tvShow;
             }
 
