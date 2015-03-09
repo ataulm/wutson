@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <dimen name="seasons_episode_item_poster_width">130dp</dimen>
+  <dimen name="seasons_episode_item_poster_height">96dp</dimen>
+
+</resources>

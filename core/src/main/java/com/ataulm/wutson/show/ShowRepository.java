@@ -48,9 +48,9 @@ public class ShowRepository {
                     int seasonNumber = season.seasonNumber;
                     int episodeCount = season.episodeCount;
                     URI posterPath = URI.create(gsonConfiguration.getCompletePosterPath(season.posterPath));
-                    seasons.add(new Show.Season(id, seasonNumber, episodeCount, posterPath));
+                    seasons.add(new Show.Season(id, showId, seasonNumber, episodeCount, posterPath));
                 }
-                return new Show(name, overview, posterUri, cast, seasons);
+                return new Show(gsonTvShow.id, name, overview, posterUri, cast, seasons);
             }
 
         });

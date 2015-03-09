@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.Iterator;
 import java.util.List;
 
-class Season implements Iterable<Season.Episode> {
+class Season implements Iterable<Season.Episode>, Comparable<Season> {
 
     private final String airDate; // TODO: this should be typed
     private final int seasonNumber;
@@ -37,6 +37,11 @@ class Season implements Iterable<Season.Episode> {
         return seasonNumber;
     }
 
+    @Override
+    public int compareTo(Season o) {
+        return getSeasonNumber() - o.getSeasonNumber();
+    }
+
     static class Episode {
 
         private final String airDate; // TODO: should be typed
@@ -65,6 +70,9 @@ class Season implements Iterable<Season.Episode> {
             return name;
         }
 
+        public String getAirDate() {
+            return airDate;
+        }
     }
 
 }

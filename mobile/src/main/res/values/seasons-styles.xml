@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Seasons" />
+
+  <style name="Seasons.AppBar">
+    <item name="android:background">@color/black</item>
+  </style>
+
+  <style name="Seasons.EpisodeItem" />
+
+  <style name="Seasons.EpisodeItem.View" />
+
+  <style name="Seasons.EpisodeItem.Poster" />
+
+  <style name="Seasons.EpisodeItem.Name" />
+
+  <style name="Seasons.EpisodeItem.AirDate" />
+
+</resources>

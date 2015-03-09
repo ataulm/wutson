@@ -30,7 +30,8 @@
 
     <activity
       android:name="com.ataulm.wutson.seasons.SeasonsActivity"
-      android:parentActivityName="com.ataulm.wutson.show.ShowDetailsActivity">
+      android:parentActivityName="com.ataulm.wutson.show.ShowDetailsActivity"
+      android:theme="@style/Wutson.Theme.Seasons">
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
         <data android:mimeType="vnd.android.cursor.item/vnd.com.ataulm.wutson.season" />

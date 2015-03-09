@@ -4,6 +4,7 @@ import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.show.Show;
 import com.ataulm.wutson.show.ShowRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
+import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
 import com.ataulm.wutson.tmdb.gson.GsonSeason;
 
 import java.net.URI;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import rx.Observable;
 import rx.functions.Func1;
+import rx.functions.Func2;
 
 public class SeasonsRepository {
 
@@ -26,14 +28,56 @@ public class SeasonsRepository {
     }
 
     public Observable<Seasons> getSeasons(final String showId) {
-        return showRepository.getShow(showId).flatMap(getSeasonSummaries())
-                .flatMap(fetchGsonSeasons(showId))
-                .flatMap(toSeason())
-                .toList()
-                .map(asSeasons());
+        Observable<Show> showObservable = showRepository.getShow(showId);
+        Observable<GsonConfiguration> gsonConfigurationObservable = configurationRepository.getConfiguration().first();
+        Observable<GsonSeason> listObservable = showObservable
+                .flatMap(forEachSeasonInShow())
+                .flatMap(fetchGsonSeason());
+
+        Observable<List<Season>> seasonObservable = Observable.combineLatest(listObservable, gsonConfigurationObservable, toSeason()).toSortedList();
+
+        return Observable.combineLatest(showObservable, seasonObservable, asSeasons());
     }
 
-    private Func1<Show, Observable<Show.Season>> getSeasonSummaries() {
+    private Func2<Show, List<Season>, Seasons> asSeasons() {
+        return new Func2<Show, List<Season>, Seasons>() {
+
+            @Override
+            public Seasons call(Show show, List<Season> seasons) {
+                return new Seasons(show, seasons);
+            }
+
+        };
+    }
+
+    private Func2<GsonSeason, GsonConfiguration, Season> toSeason() {
+        return new Func2<GsonSeason, GsonConfiguration, Season>() {
+
+            @Override
+            public Season call(GsonSeason gsonSeason, GsonConfiguration gsonConfiguration) {
+                List<Season.Episode> episodes = new ArrayList<>(gsonSeason.episodes.size());
+                for (GsonSeason.Episodes.Episode gsonEpisode : gsonSeason.episodes) {
+                    episodes.add(new Season.Episode(
+                            gsonEpisode.airDate,
+                            gsonEpisode.episodeNumber,
+                            gsonEpisode.name,
+                            gsonEpisode.overview,
+                            URI.create(gsonConfiguration.getCompleteStillPath(gsonEpisode.stillPath))
+                    ));
+                }
+
+                return new Season(
+                        gsonSeason.airDate,
+                        gsonSeason.seasonNumber,
+                        gsonSeason.overview,
+                        URI.create(gsonConfiguration.getCompletePosterPath(gsonSeason.posterPath)),
+                        episodes);
+            }
+
+        };
+    }
+
+    private Func1<Show, Observable<Show.Season>> forEachSeasonInShow() {
         return new Func1<Show, Observable<Show.Season>>() {
 
             @Override
@@ -44,50 +88,12 @@ public class SeasonsRepository {
         };
     }
 
-    private Func1<Show.Season, Observable<GsonSeason>> fetchGsonSeasons(final String showId) {
+    private Func1<Show.Season, Observable<GsonSeason>> fetchGsonSeason() {
         return new Func1<Show.Season, Observable<GsonSeason>>() {
 
             @Override
             public Observable<GsonSeason> call(Show.Season season) {
-                return api.getSeason(showId, season.getSeasonNumber());
-            }
-
-        };
-    }
-
-    private Func1<GsonSeason, Observable<Season>> toSeason() {
-        return new Func1<GsonSeason, Observable<Season>>() {
-
-            @Override
-            public Observable<Season> call(GsonSeason gsonSeason) {
-                List<Season.Episode> episodes = new ArrayList<>(gsonSeason.episodes.size());
-                for (GsonSeason.Episodes.Episode gsonEpisode : gsonSeason.episodes) {
-                    episodes.add(new Season.Episode(
-                            gsonEpisode.airDate,
-                            gsonEpisode.episodeNumber,
-                            gsonEpisode.name,
-                            gsonEpisode.overview,
-                            gsonEpisode.stillPath != null ? URI.create(gsonEpisode.stillPath) : URI.create("") // TODO: this needs Configuration
-                    ));
-                }
-
-                return Observable.just(new Season(
-                        gsonSeason.airDate,
-                        gsonSeason.seasonNumber,
-                        gsonSeason.overview,
-                        gsonSeason.posterPath != null ? URI.create(gsonSeason.posterPath) : URI.create(""), // TODO: this needs Configuration
-                        episodes));
-            }
-
-        };
-    }
-
-    private Func1<List<Season>, Seasons> asSeasons() {
-        return new Func1<List<Season>, Seasons>() {
-
-            @Override
-            public Seasons call(List<Season> seasons) {
-                return new Seasons(seasons);
+                return api.getSeason(season.getShowId(), season.getSeasonNumber());
             }
 
         };

@@ -19,4 +19,8 @@
     <item name="theme">@style/ShowDetails.AppBar</item>
   </style>
 
+  <style name="Wutson.Theme.Seasons">
+    <item name="theme">@style/Seasons.AppBar</item>
+  </style>
+
 </resources>

@@ -39,7 +39,7 @@ public class ShowView extends LinearLayout {
 
     void display(Show show, OnClickSeasonListener onSeasonClickListener) {
         // TODO: this might be null - kick off a task to calculate and cache
-        Palette.Swatch swatch = Jabber.swatches().get(show.getPosterUri());
+        Palette.Swatch swatch = Jabber.swatches().get(show.getId());
         if (swatch != null) {
             tabs.setBackgroundColor(swatch.getRgb());
             tabs.setTextColor(swatch.getTitleTextColor());

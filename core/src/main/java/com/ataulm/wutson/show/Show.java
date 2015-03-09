@@ -5,13 +5,15 @@ import java.util.List;
 
 public class Show {
 
+    private final String id;
     private final String name;
     private final String overview;
     private final URI posterUri;
     private final Cast cast;
     private final List<Season> seasons;
 
-    Show(String name, String overview, URI posterUri, Cast cast, List<Season> seasons) {
+    Show(String id, String name, String overview, URI posterUri, Cast cast, List<Season> seasons) {
+        this.id = id;
         this.name = name;
         this.overview = overview;
         this.posterUri = posterUri;
@@ -19,7 +21,11 @@ public class Show {
         this.seasons = seasons;
     }
 
-    String getName() {
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
         return name;
     }
 
@@ -42,12 +48,14 @@ public class Show {
     public static class Season {
 
         private final String id;
+        private final String showId;
         private final int seasonNumber;
         private final int episodeCount;
         private final URI posterPath;
 
-        Season(String id, int seasonNumber, int episodeCount, URI posterPath) {
+        Season(String id, String showId, int seasonNumber, int episodeCount, URI posterPath) {
             this.id = id;
+            this.showId = showId;
             this.seasonNumber = seasonNumber;
             this.episodeCount = episodeCount;
             this.posterPath = posterPath;
@@ -55,6 +63,10 @@ public class Show {
 
         String getId() {
             return id;
+        }
+
+        public String getShowId() {
+            return showId;
         }
 
         public int getSeasonNumber() {

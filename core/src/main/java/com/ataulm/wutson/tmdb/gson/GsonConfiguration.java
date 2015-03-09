@@ -8,6 +8,7 @@ public class GsonConfiguration {
 
     private static final int PROFILE_SIZE_STANDARD = 1;
     private static final int POSTER_SIZE_STANDARD = 2;
+    private static final int STILL_SIZE_STANDARD = 2;
 
     @SerializedName("images")
     final Images images;
@@ -24,6 +25,10 @@ public class GsonConfiguration {
         return images.baseUrl + images.profileSizes.get(PROFILE_SIZE_STANDARD) + profilePath;
     }
 
+    public String getCompleteStillPath(String stillPath) {
+        return images.baseUrl + images.stillSizes.get(STILL_SIZE_STANDARD) + stillPath;
+    }
+
     private static class Images {
 
         @SerializedName("base_url")
@@ -35,10 +40,14 @@ public class GsonConfiguration {
         @SerializedName("poster_sizes")
         final List<String> posterSizes;
 
-        private Images(String baseUrl, List<String> profileSizes, List<String> posterSizes) {
+        @SerializedName("still_sizes")
+        final List<String> stillSizes;
+
+        private Images(String baseUrl, List<String> profileSizes, List<String> posterSizes, List<String> stillSizes) {
             this.baseUrl = baseUrl;
             this.profileSizes = profileSizes;
             this.posterSizes = posterSizes;
+            this.stillSizes = stillSizes;
         }
 
     }

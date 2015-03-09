@@ -81,7 +81,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
         @Override
         public void onNext(Show show) {
-            Palette.Swatch swatch = Jabber.swatches().get(show.getPosterUri());
+            Palette.Swatch swatch = Jabber.swatches().get(show.getId());
             int rgb = swatch.getRgb();
             getToolbar().setBackgroundColor(rgb);
             setStatusBarColorToSlightlyDarkerThan(rgb);

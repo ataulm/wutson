@@ -6,6 +6,9 @@ import java.util.List;
 
 public final class GsonTvShow {
 
+    @SerializedName("id")
+    public final String id;
+
     @SerializedName("name")
     public final String name;
 
@@ -21,7 +24,8 @@ public final class GsonTvShow {
     @SerializedName("credits")
     public final GsonCredits gsonCredits;
 
-    private GsonTvShow(String name, String posterPath, String overview, List<Season> seasons, GsonCredits gsonCredits) {
+    private GsonTvShow(String id, String name, String posterPath, String overview, List<Season> seasons, GsonCredits gsonCredits) {
+        this.id = id;
         this.name = name;
         this.posterPath = posterPath;
         this.overview = overview;

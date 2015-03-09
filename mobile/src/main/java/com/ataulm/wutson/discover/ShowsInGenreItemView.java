@@ -79,8 +79,8 @@ public class ShowsInGenreItemView extends FrameLayout {
                     posterImageView.setImageBitmap(resource);
                 }
 
-                if (swatches.hasSwatchFor(show.getPosterUri())) {
-                    Palette.Swatch swatch = swatches.get(show.getPosterUri());
+                if (swatches.hasSwatchFor(show.getId())) {
+                    Palette.Swatch swatch = swatches.get(show.getId());
                     apply(swatch, show);
                 } else {
                     Observable.create(generatePaletteFrom(resource))
@@ -127,7 +127,7 @@ public class ShowsInGenreItemView extends FrameLayout {
         @Override
         public void onNext(Palette palette) {
             Palette.Swatch swatch = getAvailableSwatch(palette);
-            Jabber.swatches().put(show.getPosterUri(), swatch);
+            Jabber.swatches().put(show.getId(), swatch);
             apply(swatch, show);
         }
 
