@@ -7,11 +7,25 @@
     <item name="android:background">@color/black</item>
   </style>
 
+  <style name="Seasons.View">
+    <item name="android:background">@color/seasons_background</item>
+    <item name="android:paddingLeft">@dimen/seasons_padding_left</item>
+    <item name="android:paddingTop">@dimen/seasons_padding_top</item>
+    <item name="android:paddingRight">@dimen/seasons_padding_right</item>
+    <item name="android:paddingBottom">@dimen/seasons_padding_bottom</item>
+    <item name="android:clipToPadding">false</item>
+  </style>
+
   <style name="Seasons.EpisodeItem" />
 
-  <style name="Seasons.EpisodeItem.View" />
+  <style name="Seasons.EpisodeItem.View">
+    <item name="android:background">@drawable/show_seasons_item_background</item>
+    <item name="android:focusable">true</item>
+  </style>
 
-  <style name="Seasons.EpisodeItem.Poster" />
+  <style name="Seasons.EpisodeItem.Poster">
+    <item name="android:scaleType">centerCrop</item>
+  </style>
 
   <style name="Seasons.EpisodeItem.Name" />
 

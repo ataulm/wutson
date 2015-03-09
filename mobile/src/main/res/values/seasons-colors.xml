@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <color name="seasons_background">@color/grey</color>
+  <color name="seasons_episodes_item_background">@color/white</color>
+
+</resources>

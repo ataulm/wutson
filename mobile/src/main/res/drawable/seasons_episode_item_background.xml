@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+  <solid android:color="@color/seasons_episodes_item_background" />
+  <corners
+    android:topRightRadius="@dimen/seasons_episode_item_background_top_right_radius"
+    android:bottomRightRadius="@dimen/seasons_episode_item_background_bottom_right_radius" />
+</shape>

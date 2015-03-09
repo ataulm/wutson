@@ -1,26 +1,38 @@
 package com.ataulm.wutson.seasons;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 
+import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
 
-public class SeasonView extends ListView {
+public class SeasonView extends RecyclerView {
 
     public SeasonView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        super.setLayoutManager(new LinearLayoutManager(context));
     }
 
     void display(Season season) {
-        setAdapter(new SeasonPagerAdapter(season, LayoutInflater.from(getContext())));
+        super.setAdapter(new SeasonPagerAdapter(season, LayoutInflater.from(getContext())));
     }
 
-    private static class SeasonPagerAdapter extends BaseAdapter {
+    @Override
+    public final void setLayoutManager(LayoutManager layout) {
+        throw DeveloperError.methodCannotBeCalledOutsideThisClass();
+    }
+
+    @Override
+    public final void setAdapter(Adapter adapter) {
+        throw DeveloperError.methodCannotBeCalledOutsideThisClass();
+    }
+
+    private static class SeasonPagerAdapter extends Adapter<SeasonPagerAdapter.ViewHolder> {
 
         private final Season season;
         private final LayoutInflater inflater;
@@ -31,18 +43,14 @@ public class SeasonView extends ListView {
         }
 
         @Override
-        public boolean hasStableIds() {
-            return true;
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ViewHolder(inflater.inflate(R.layout.view_seasons_episode_item, parent, false));
         }
 
         @Override
-        public int getCount() {
-            return season.size();
-        }
-
-        @Override
-        public Season.Episode getItem(int position) {
-            return season.get(position);
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            Season.Episode item = season.get(position);
+            ((SeasonsEpisodeItemView) holder.itemView).display(item);
         }
 
         @Override
@@ -51,13 +59,16 @@ public class SeasonView extends ListView {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-            if (view == null) {
-                view = inflater.inflate(R.layout.view_seasons_episode_item, parent, false);
+        public int getItemCount() {
+            return season.size();
+        }
+
+        static class ViewHolder extends RecyclerView.ViewHolder {
+
+            ViewHolder(View itemView) {
+                super(itemView);
             }
-            ((SeasonsEpisodeItemView) view).display(getItem(position));
-            return view;
+
         }
 
     }
