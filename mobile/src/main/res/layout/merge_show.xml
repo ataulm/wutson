@@ -8,8 +8,6 @@
     android:id="@+id/show_view_tabs"
     android:layout_width="match_parent"
     android:layout_height="@dimen/app_bar_height"
-    android:textColor="@color/white"
-    app:pstsTextColorSelected="@color/white"
     app:pstsShouldExpand="true"
     app:pstsIndicatorHeight="4dp" />
 

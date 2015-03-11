@@ -9,7 +9,6 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/app_bar_height"
     android:paddingLeft="46dp"
-    app:pstsTextColorSelected="@color/white"
     app:pstsIndicatorHeight="2dp" />
 
   <android.support.v4.view.ViewPager
