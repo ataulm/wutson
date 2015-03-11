@@ -6,7 +6,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.graphics.Palette;
 import android.util.Log;
 
 import com.ataulm.wutson.Jabber;
@@ -81,11 +80,6 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
         @Override
         public void onNext(Show show) {
-            Palette.Swatch swatch = Jabber.swatches().get(show.getId());
-            int rgb = swatch.getRgb();
-            getToolbar().setBackgroundColor(rgb);
-            setStatusBarColorToSlightlyDarkerThan(rgb);
-
             showView.display(show, ShowDetailsActivity.this);
 
             setTitle(show.getName());

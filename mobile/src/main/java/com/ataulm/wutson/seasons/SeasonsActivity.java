@@ -1,13 +1,10 @@
 package com.ataulm.wutson.seasons;
 
-import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.graphics.Palette;
 import android.util.Log;
 
 import com.ataulm.wutson.Jabber;
@@ -85,28 +82,8 @@ public class SeasonsActivity extends WutsonActivity {
         public void onNext(Seasons seasons) {
             seasonsView.display(seasons);
 
-            Palette.Swatch swatch = Jabber.swatches().get(showId);
-            int rgb = swatch.getRgb();
-            getToolbar().setBackgroundColor(rgb);
-            setStatusBarColorToSlightlyDarkerThan(rgb);
-
             setTitle(seasons.getShowName());
             getSupportActionBar().setDisplayShowTitleEnabled(true);
-        }
-
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        private void setStatusBarColorToSlightlyDarkerThan(int rgb) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                return;
-            }
-
-            final int darkenByOffset = 20;
-            int statusBarColor = Color.rgb(
-                    Color.red(rgb) - darkenByOffset >= 0 ? Color.red(rgb) - darkenByOffset : 0,
-                    Color.green(rgb) - darkenByOffset >= 0 ? Color.green(rgb) - darkenByOffset : 0,
-                    Color.blue(rgb) - darkenByOffset >= 0 ? Color.blue(rgb) - darkenByOffset : 0
-            );
-            getWindow().setStatusBarColor(statusBarColor);
         }
 
     }

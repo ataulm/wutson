@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <item name="app_bar" type="id" />
-  <item name="view_tag_show_poster_uri" type="id" />
 </resources>
