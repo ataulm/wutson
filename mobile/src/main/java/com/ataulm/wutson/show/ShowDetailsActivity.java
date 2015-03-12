@@ -1,16 +1,14 @@
 package com.ataulm.wutson.show;
 
-import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonActivity;
+import com.ataulm.wutson.rx.LoggingObserver;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,17 +64,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         navigate().toSeason(showId, season.getSeasonNumber());
     }
 
-    private class Observer implements rx.Observer<Show> {
-
-        @Override
-        public void onCompleted() {
-            Log.d("THING", "onCompleted");
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            throw new Error(e);
-        }
+    private class Observer extends LoggingObserver<Show> {
 
         @Override
         public void onNext(Show show) {
@@ -84,21 +72,6 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
             setTitle(show.getName());
             getSupportActionBar().setDisplayShowTitleEnabled(true);
-        }
-
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        private void setStatusBarColorToSlightlyDarkerThan(int rgb) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                return;
-            }
-
-            final int darkenByOffset = 20;
-            int statusBarColor = Color.rgb(
-                    Color.red(rgb) - darkenByOffset >= 0 ? Color.red(rgb) - darkenByOffset : 0,
-                    Color.green(rgb) - darkenByOffset >= 0 ? Color.green(rgb) - darkenByOffset : 0,
-                    Color.blue(rgb) - darkenByOffset >= 0 ? Color.blue(rgb) - darkenByOffset : 0
-            );
-            getWindow().setStatusBarColor(statusBarColor);
         }
 
     }

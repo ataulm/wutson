@@ -5,11 +5,11 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonActivity;
+import com.ataulm.wutson.rx.LoggingObserver;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,17 +66,7 @@ public class SeasonsActivity extends WutsonActivity {
         super.onPause();
     }
 
-    private class Observer implements rx.Observer<Seasons> {
-
-        @Override
-        public void onCompleted() {
-            Log.d("THING", "onCompleted");
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Log.e("THING", "Couldn't load data for Seasons", e);
-        }
+    private class Observer extends LoggingObserver<Seasons> {
 
         @Override
         public void onNext(Seasons seasons) {

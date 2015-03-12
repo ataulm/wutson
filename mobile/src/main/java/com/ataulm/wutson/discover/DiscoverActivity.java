@@ -2,13 +2,13 @@ package com.ataulm.wutson.discover;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
+import com.ataulm.wutson.rx.LoggingObserver;
 
 import java.util.List;
 
@@ -72,27 +72,11 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         navigate().toShow(show.getId());
     }
 
-    private class Observer implements rx.Observer<List<ShowsInGenre>> {
-
-        @Override
-        public void onCompleted() {
-            Log.d("THING", "onCompleted");
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Log.e("THING", "Couldn't load data for BrowseShows", e);
-        }
+    private class Observer extends LoggingObserver<List<ShowsInGenre>> {
 
         @Override
         public void onNext(List<ShowsInGenre> showsSeparateByGenre) {
-            Log.d("THING", "onNext");
-            for (ShowsInGenre shows : showsSeparateByGenre) {
-                Log.d("THING", "::: " + shows.getGenre() + " :::");
-                for (Show show : shows) {
-                    Log.d("THING", show.getName());
-                }
-            }
+            super.onNext(showsSeparateByGenre);
             adapter.update(showsSeparateByGenre);
         }
 
