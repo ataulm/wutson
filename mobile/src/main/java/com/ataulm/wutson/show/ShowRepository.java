@@ -34,7 +34,7 @@ public class ShowRepository {
                 List<Character> characters = new ArrayList<>();
                 for (GsonCredits.Cast.Entry entry : gsonTvShow.gsonCredits.cast) {
                     Actor actor = new Actor(entry.actorName, URI.create(gsonConfiguration.getCompleteProfilePath(entry.profilePath)));
-                    characters.add(new com.ataulm.wutson.show.Character(entry.name, actor));
+                    characters.add(new Character(entry.name, actor));
                 }
 
                 String name = gsonTvShow.name;
