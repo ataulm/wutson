@@ -69,7 +69,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
 
     @Override
     public void onClick(Show show) {
-        navigate().toShow(show.getId());
+        navigate().toShow(show.getId(), show.getName());
     }
 
     private class Observer extends LoggingObserver<List<ShowsInGenre>> {

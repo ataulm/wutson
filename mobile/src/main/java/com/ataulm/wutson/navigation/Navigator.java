@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.ataulm.wutson.show.ShowDetailsActivity;
+
 public class Navigator {
 
     private static final Uri BASE_URI = Uri.parse("content://com.ataulm.wutson2");
@@ -16,12 +18,13 @@ public class Navigator {
         this.activity = activity;
     }
 
-    public void toShow(String showId) {
+    public void toShow(String showId, String showTitle) {
         Uri uri = BASE_URI.buildUpon()
                 .appendPath("show").appendPath(showId)
                 .build();
 
-        view(uri, MIME_TYPE_SHOW_ITEM);
+        start(view(uri, MIME_TYPE_SHOW_ITEM)
+                .putExtra(ShowDetailsActivity.EXTRA_SHOW_TITLE, showTitle));
     }
 
     public void toSeason(String showId, int seasonNumber) {
@@ -30,13 +33,15 @@ public class Navigator {
                 .appendPath("season").appendPath(String.valueOf(seasonNumber))
                 .build();
 
-        view(uri, MIME_TYPE_SEASON_DIR);
+        start(view(uri, MIME_TYPE_SEASON_DIR));
     }
 
-    private void view(Uri uri, String mimeType) {
-        Intent intent = new Intent(Intent.ACTION_VIEW)
+    private Intent view(Uri uri, String mimeType) {
+        return new Intent(Intent.ACTION_VIEW)
                 .setDataAndType(uri, mimeType);
+    }
 
+    private void start(Intent intent) {
         activity.startActivity(intent);
     }
 

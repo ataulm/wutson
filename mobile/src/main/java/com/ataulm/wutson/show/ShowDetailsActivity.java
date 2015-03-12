@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonActivity;
@@ -15,6 +16,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class ShowDetailsActivity extends WutsonActivity implements OnClickSeasonListener {
+
+    public static final String EXTRA_SHOW_TITLE = BuildConfig.APPLICATION_ID + ".show_title";
 
     private Subscription showDetailsSubscription;
     private ShowView showView;
@@ -34,11 +37,21 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     }
 
     private void customiseShowDetailsToolbar() {
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        applyTitleFromIntentExtras();
+
         Drawable navigationIcon = getToolbar().getNavigationIcon();
         if (navigationIcon != null) {
             navigationIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         }
+    }
+
+    private void applyTitleFromIntentExtras() {
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            return;
+        }
+        String showTitle = extras.getString(EXTRA_SHOW_TITLE, "");
+        setTitle(showTitle);
     }
 
     @Override
@@ -69,9 +82,6 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         @Override
         public void onNext(Show show) {
             showView.display(show, ShowDetailsActivity.this);
-
-            setTitle(show.getName());
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
 
     }
