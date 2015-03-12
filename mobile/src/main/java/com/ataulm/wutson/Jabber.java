@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.ataulm.wutson.repository.DataRepository;
-import com.ataulm.wutson.shots.ToastDisplayer;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.TmdbApiFactory;
 import com.squareup.okhttp.Cache;
