@@ -4,6 +4,6 @@
   <dimen name="discover_by_genre_list_margin_offset">-2.5dp</dimen>
   <dimen name="discover_by_genre_item_margin">2dp</dimen>
 
-  <dimen name="discover_by_genre_name_min_height">60dp</dimen>
+  <dimen name="discover_show_summary_title_min_height">60dp</dimen>
 
 </resources>

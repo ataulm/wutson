@@ -4,18 +4,18 @@
   android:layout_height="match_parent">
 
   <com.ataulm.wutson.view.CrossfadeImageView
-    android:id="@+id/discover_by_genre_image_poster"
-    style="@style/Discover.Show.Poster"
+    android:id="@+id/discover_show_summary_image_poster"
+    style="@style/Discover.ShowSummary.Poster"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:contentDescription="@null" />
 
   <TextView
-    android:id="@+id/discover_by_genre_text_name"
-    style="@style/Discover.Show.Name"
+    android:id="@+id/discover_show_summary_text_title"
+    style="@style/Discover.ShowSummary.Title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:minHeight="@dimen/discover_by_genre_name_min_height" />
+    android:minHeight="@dimen/discover_show_summary_title_min_height" />
 
 </merge>

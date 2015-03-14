@@ -40,7 +40,7 @@ public class DiscoverByGenreView extends FrameLayout {
         this.listener = listener;
     }
 
-    private class Adapter extends RecyclerView.Adapter<ViewHolder> {
+    private class Adapter extends RecyclerView.Adapter<ShowSummaryViewHolder> {
 
         private final LayoutInflater layoutInflater;
         private ShowsInGenre showsInGenre;
@@ -55,13 +55,13 @@ public class DiscoverByGenreView extends FrameLayout {
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = layoutInflater.inflate(R.layout.view_discover_by_genre_item, parent, false);
-            return new ViewHolder(view);
+        public ShowSummaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            ShowSummaryView view = (ShowSummaryView) layoutInflater.inflate(R.layout.view_discover_by_genre_item, parent, false);
+            return new ShowSummaryViewHolder(view, listener);
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(ShowSummaryViewHolder holder, int position) {
             Show show = showsInGenre.get(position);
             holder.update(show);
         }
@@ -73,15 +73,21 @@ public class DiscoverByGenreView extends FrameLayout {
 
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder {
+    private static class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(View itemView) {
+        private final ShowSummaryView showSummaryView;
+        private final OnShowClickListener listener;
+
+        ShowSummaryViewHolder(ShowSummaryView itemView, OnShowClickListener listener) {
             super(itemView);
+            this.showSummaryView = itemView;
+            this.listener = listener;
         }
 
         void update(final Show show) {
-            ((ShowsInGenreItemView) itemView).display(show);
-            itemView.setOnClickListener(new OnClickListener() {
+            showSummaryView.setPoster(show.getPosterUri().toString());
+            showSummaryView.setTitle(show.getName());
+            showSummaryView.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {

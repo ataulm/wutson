@@ -5,13 +5,13 @@
 
   <style name="Discover.AppBar" />
 
-  <style name="Discover.Show" />
+  <style name="Discover.ShowSummary" />
 
-  <style name="Discover.Show.Poster">
+  <style name="Discover.ShowSummary.Poster">
     <item name="android:scaleType">centerCrop</item>
   </style>
 
-  <style name="Discover.Show.Name">
+  <style name="Discover.ShowSummary.Title">
     <item name="android:textColor">@color/white</item>
     <item name="android:gravity">center_vertical</item>
     <item name="android:paddingLeft">8dp</item>
