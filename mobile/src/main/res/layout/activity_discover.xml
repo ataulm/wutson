@@ -11,14 +11,14 @@
     android:layout_height="wrap_content" />
 
   <com.astuetz.PagerSlidingTabStrip
-    android:id="@+id/tabs"
+    android:id="@+id/discover_tabs_genres"
     android:layout_width="match_parent"
     android:layout_height="@dimen/app_bar_height"
     android:paddingLeft="46dp"
     app:pstsIndicatorHeight="4dp" />
 
   <android.support.v4.view.ViewPager
-    android:id="@+id/discover_viewpager"
+    android:id="@+id/discover_pager_genres"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 

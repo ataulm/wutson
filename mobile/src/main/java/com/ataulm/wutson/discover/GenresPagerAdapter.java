@@ -1,6 +1,8 @@
 package com.ataulm.wutson.discover;
 
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +12,14 @@ import com.ataulm.wutson.R;
 import java.util.Collections;
 import java.util.List;
 
-class DiscoverByGenrePagerAdapter extends PagerAdapter {
+class GenresPagerAdapter extends PagerAdapter {
 
     private final LayoutInflater layoutInflater;
     private final OnShowClickListener listener;
 
     private List<ShowsInGenre> showsInGenres;
 
-    public DiscoverByGenrePagerAdapter(LayoutInflater layoutInflater, OnShowClickListener listener) {
+    GenresPagerAdapter(LayoutInflater layoutInflater, OnShowClickListener listener) {
         this.layoutInflater = layoutInflater;
         this.listener = listener;
         this.showsInGenres = Collections.emptyList();
@@ -31,11 +33,24 @@ class DiscoverByGenrePagerAdapter extends PagerAdapter {
 
     @Override
     public View instantiateItem(ViewGroup container, int position) {
-        DiscoverByGenreView view = (DiscoverByGenreView) layoutInflater.inflate(R.layout.view_discover_by_genre, container, false);
-        ShowsInGenre showsInGenre = showsInGenres.get(position);
-        view.update(showsInGenre, listener);
+        RecyclerView view = createView(container);
+        bind(view, showsInGenres.get(position));
         container.addView(view);
         return view;
+    }
+
+    private RecyclerView createView(ViewGroup parent) {
+        RecyclerView showSummaryRecyclerView = (RecyclerView) layoutInflater.inflate(R.layout.view_discover_genres_page, parent, false);
+        int spanCount = parent.getResources().getInteger(R.integer.discover_genres_page_span_count);
+        showSummaryRecyclerView.setLayoutManager(new GridLayoutManager(parent.getContext(), spanCount));
+
+        return showSummaryRecyclerView;
+    }
+
+    private void bind(RecyclerView view, ShowsInGenre showsInGenre) {
+        ShowsInGenreAdapter adapter = new ShowsInGenreAdapter(layoutInflater, listener);
+        adapter.update(showsInGenre);
+        view.setAdapter(adapter);
     }
 
     @Override
