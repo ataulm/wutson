@@ -33,7 +33,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         setContentView(R.layout.activity_show_details);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.show_details_pager_show);
-        viewPager.setAdapter(adapter = new ShowPagerAdapter(this, getLayoutInflater(), getShowBackdropUri()));
+        viewPager.setAdapter(adapter = new ShowPagerAdapter(getResources(), this, getLayoutInflater(), getShowBackdropUri()));
         ((PagerSlidingTabStrip) findViewById(R.id.show_details_tabs_show)).setViewPager(viewPager);
     }
 

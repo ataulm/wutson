@@ -5,4 +5,7 @@
   <string name="show_season_summary_season_number_format">@string/season_x_format</string>
   <string name="show_season_summary_episode_count_format">@string/x_episodes_format</string>
 
+  <string name="show_details_pager_title_overview">@string/overview</string>
+  <string name="show_details_pager_title_seasons">@string/seasons</string>
+
 </resources>

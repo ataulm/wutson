@@ -15,4 +15,6 @@
   <string name="specials">Specials</string>
   <string name="season_x_format">Season %1$d</string>
   <string name="x_episodes_format">%1$d episodes</string>
+  <string name="overview">Overview</string>
+  <string name="seasons">Seasons</string>
 </resources>
