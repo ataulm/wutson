@@ -61,7 +61,6 @@ class ShowPagerAdapter extends PagerAdapter {
 
         if (views.containsKey(Page.OVERVIEW)) {
             ShowOverviewView view = (ShowOverviewView) views.get(Page.OVERVIEW);
-            view.setBackdrop(show.getBackdropUri());
             view.setOverview(show.getOverview());
             view.setCast(show.getCast());
         }
@@ -75,12 +74,10 @@ class ShowPagerAdapter extends PagerAdapter {
     }
 
     private void updatePageOverview(ShowOverviewView view) {
+        view.setBackdrop(showBackdropUri);
         if (show == null) {
-            view.setBackdrop(showBackdropUri);
             return;
         }
-
-        view.setBackdrop(show.getBackdropUri());
         view.setOverview(show.getOverview());
         view.setCast(show.getCast());
     }
