@@ -10,15 +10,15 @@ import android.widget.TextView;
 import com.ataulm.wutson.R;
 import com.bumptech.glide.Glide;
 
-public class ShowsInGenreItemView extends FrameLayout {
+class ShowSummaryView extends FrameLayout {
 
     private static final float HEIGHT_BY_WIDTH_RATIO = 214f / 178;
     private static final float HALF_PIXEL = 0.5f;
 
     private ImageView posterImageView;
-    private TextView nameTextView;
+    private TextView titleTextView;
 
-    public ShowsInGenreItemView(Context context, AttributeSet attrs) {
+    public ShowSummaryView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -32,22 +32,23 @@ public class ShowsInGenreItemView extends FrameLayout {
 
     @Override
     protected void onFinishInflate() {
-        View.inflate(getContext(), R.layout.merge_discover_by_genre_item, this);
+        View.inflate(getContext(), R.layout.merge_discover_show_summary, this);
 
-        posterImageView = (ImageView) findViewById(R.id.discover_by_genre_image_poster);
-        nameTextView = (TextView) findViewById(R.id.discover_by_genre_text_name);
+        posterImageView = (ImageView) findViewById(R.id.discover_show_summary_image_poster);
+        titleTextView = (TextView) findViewById(R.id.discover_show_summary_text_title);
     }
 
-    public void display(final Show show) {
+    void setPoster(String uri) {
         posterImageView.setImageBitmap(null);
-        nameTextView.setVisibility(INVISIBLE);
 
         Glide.with(getContext())
-                .load(show.getPosterUri().toString())
+                .load(uri)
                 .asBitmap()
                 .into(posterImageView);
-        nameTextView.setText(show.getName());
-        nameTextView.setVisibility(VISIBLE);
+    }
+
+    void setTitle(String title) {
+        titleTextView.setText(title);
     }
 
 }

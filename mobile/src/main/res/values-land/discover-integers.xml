@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <integer name="discover_by_genre_span_count">4</integer>
+  <integer name="discover_genres_page_span_count">4</integer>
 </resources>

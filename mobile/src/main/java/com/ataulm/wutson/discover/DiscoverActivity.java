@@ -21,7 +21,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
     private Subscription discoverShowsSubscription;
     private ViewPager viewPager;
 
-    private DiscoverByGenrePagerAdapter adapter;
+    private GenresPagerAdapter adapter;
 
     @Override
     protected NavigationDrawerItem getNavigationDrawerItem() {
@@ -35,10 +35,10 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
 
         setContentView(R.layout.activity_discover);
 
-        viewPager = (ViewPager) findViewById(R.id.discover_viewpager);
-        viewPager.setAdapter(adapter = new DiscoverByGenrePagerAdapter(getLayoutInflater(), this));
+        viewPager = (ViewPager) findViewById(R.id.discover_pager_genres);
+        viewPager.setAdapter(adapter = new GenresPagerAdapter(getLayoutInflater(), this));
 
-        ((PagerSlidingTabStrip) findViewById(R.id.tabs)).setViewPager(viewPager);
+        ((PagerSlidingTabStrip) findViewById(R.id.discover_tabs_genres)).setViewPager(viewPager);
     }
 
     @Override

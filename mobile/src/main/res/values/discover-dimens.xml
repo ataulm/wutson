@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <dimen name="discover_by_genre_list_margin_offset">-2.5dp</dimen>
-  <dimen name="discover_by_genre_item_margin">2dp</dimen>
+  <dimen name="discover_shows_in_genre_item_margin">2dp</dimen>
 
-  <dimen name="discover_by_genre_name_min_height">60dp</dimen>
+  <dimen name="discover_tabs_genres_padding_left">46dp</dimen>
+  <dimen name="discover_tabs_genres_indicator_height">4dp</dimen>
+
+  <dimen name="discover_show_summary_title_min_height">60dp</dimen>
+  <dimen name="discover_show_summary_title_padding_left">8dp</dimen>
+  <dimen name="discover_show_summary_title_padding_top">8dp</dimen>
+  <dimen name="discover_show_summary_title_padding_right">8dp</dimen>
+  <dimen name="discover_show_summary_title_padding_bottom">8dp</dimen>
 
 </resources>
