@@ -40,6 +40,7 @@ public class ShowRepository {
                 String name = gsonTvShow.name;
                 String overview = gsonTvShow.overview;
                 URI posterUri = URI.create(gsonConfiguration.getCompletePosterPath(gsonTvShow.posterPath));
+                URI backdropUri = URI.create(gsonConfiguration.getCompletePosterPath(gsonTvShow.backdropPath));
                 Cast cast = new Cast(characters);
 
                 List<Show.Season> seasons = new ArrayList<>();
@@ -50,7 +51,7 @@ public class ShowRepository {
                     URI posterPath = URI.create(gsonConfiguration.getCompletePosterPath(season.posterPath));
                     seasons.add(new Show.Season(id, showId, seasonNumber, episodeCount, posterPath));
                 }
-                return new Show(gsonTvShow.id, name, overview, posterUri, cast, seasons);
+                return new Show(gsonTvShow.id, name, overview, posterUri, backdropUri, cast, seasons);
             }
 
         });

@@ -9,14 +9,16 @@ public class Show {
     private final String name;
     private final String overview;
     private final URI posterUri;
+    private final URI backdropUri;
     private final Cast cast;
     private final List<Season> seasons;
 
-    Show(String id, String name, String overview, URI posterUri, Cast cast, List<Season> seasons) {
+    Show(String id, String name, String overview, URI posterUri, URI backdropUri, Cast cast, List<Season> seasons) {
         this.id = id;
         this.name = name;
         this.overview = overview;
         this.posterUri = posterUri;
+        this.backdropUri = backdropUri;
         this.cast = cast;
         this.seasons = seasons;
     }
@@ -31,6 +33,10 @@ public class Show {
 
     URI getPosterUri() {
         return posterUri;
+    }
+
+    URI getBackdropUri() {
+        return backdropUri;
     }
 
     String getOverview() {

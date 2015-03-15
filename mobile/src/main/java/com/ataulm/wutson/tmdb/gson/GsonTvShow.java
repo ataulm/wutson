@@ -15,6 +15,9 @@ public final class GsonTvShow {
     @SerializedName("poster_path")
     public final String posterPath;
 
+    @SerializedName("backdrop_path")
+    public final String backdropPath;
+
     @SerializedName("overview")
     public final String overview;
 
@@ -24,10 +27,11 @@ public final class GsonTvShow {
     @SerializedName("credits")
     public final GsonCredits gsonCredits;
 
-    private GsonTvShow(String id, String name, String posterPath, String overview, List<Season> seasons, GsonCredits gsonCredits) {
+    private GsonTvShow(String id, String name, String posterPath, String backdropPath, String overview, List<Season> seasons, GsonCredits gsonCredits) {
         this.id = id;
         this.name = name;
         this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
         this.overview = overview;
         this.seasons = seasons;
         this.gsonCredits = gsonCredits;

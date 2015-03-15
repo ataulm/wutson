@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 
 public class ShowOverviewView extends FrameLayout {
 
-    private ImageView posterImageView;
+    private ImageView backdropImageView;
     private ShowHeaderView showHeaderView;
     private CastView castView;
 
@@ -22,15 +22,15 @@ public class ShowOverviewView extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         View.inflate(getContext(), R.layout.merge_show_overview, this);
-        posterImageView = (ImageView) findViewById(R.id.show_view_image_poster);
+        backdropImageView = (ImageView) findViewById(R.id.show_view_image_backdrop);
         showHeaderView = (ShowHeaderView) findViewById(R.id.show_header);
         castView = (CastView) findViewById(R.id.show_view_cast);
     }
 
     public void display(Show show) {
         Glide.with(getContext())
-                .load(show.getPosterUri().toString())
-                .into(posterImageView);
+                .load(show.getBackdropUri().toString())
+                .into(backdropImageView);
 
         showHeaderView.display(show);
         castView.display(show.getCast());
