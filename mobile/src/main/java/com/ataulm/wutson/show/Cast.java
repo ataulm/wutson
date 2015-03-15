@@ -11,8 +11,8 @@ class Cast implements Iterable<Character> {
         this.characters = characters;
     }
 
-    int size() {
-        return characters.size();
+    boolean isEmpty() {
+        return characters.isEmpty();
     }
 
     @Override

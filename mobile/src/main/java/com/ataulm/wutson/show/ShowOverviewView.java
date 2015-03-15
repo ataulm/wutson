@@ -58,7 +58,7 @@ class ShowOverviewView extends FrameLayout {
     void setCast(Cast cast) {
         castMembersContainer.removeAllViews();
 
-        if (cast.size() == 0) {
+        if (cast.isEmpty()) {
             castView.setVisibility(GONE);
             return;
         }
