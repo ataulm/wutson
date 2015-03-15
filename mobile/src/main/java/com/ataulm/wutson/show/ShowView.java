@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,8 +76,10 @@ class ShowView extends LinearLayout {
         }
 
         private View instantiateShowSeasonsPage(ViewGroup container) {
-            View view = layoutInflater.inflate(R.layout.view_show_seasons, container, false);
-            ((ShowSeasonsView) view).display(show.getSeasons(), onSeasonClickListener);
+            RecyclerView view = (RecyclerView) layoutInflater.inflate(R.layout.view_show_seasons, container, false);
+            view.setLayoutManager(new LinearLayoutManager(getContext()));
+            RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(LayoutInflater.from(getContext()), show.getSeasons(), onSeasonClickListener);
+            view.setAdapter(seasonsAdapter);
             container.addView(view);
             return view;
         }
