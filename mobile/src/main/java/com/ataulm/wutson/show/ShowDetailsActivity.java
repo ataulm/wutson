@@ -18,6 +18,7 @@ import rx.schedulers.Schedulers;
 public class ShowDetailsActivity extends WutsonActivity implements OnClickSeasonListener {
 
     public static final String EXTRA_SHOW_TITLE = BuildConfig.APPLICATION_ID + ".show_title";
+    public static final String EXTRA_SHOW_BACKDROP = BuildConfig.APPLICATION_ID + ".show_backdrop";
 
     private Subscription showDetailsSubscription;
     private ShowView showView;

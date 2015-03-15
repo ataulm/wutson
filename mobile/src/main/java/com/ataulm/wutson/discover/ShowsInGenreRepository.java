@@ -53,8 +53,9 @@ public class ShowsInGenreRepository {
                     String id = discoverTvShow.id;
                     String name = discoverTvShow.name;
                     URI posterUri = URI.create(configuration.getCompletePosterPath(discoverTvShow.posterPath));
+                    URI backdropUri = URI.create(configuration.getCompleteBackdropPath(discoverTvShow.backdropPath));
 
-                    shows.add(new Show(id, name, posterUri));
+                    shows.add(new Show(id, name, posterUri, backdropUri));
                 }
                 return new ShowsInGenre(genre, shows);
             }

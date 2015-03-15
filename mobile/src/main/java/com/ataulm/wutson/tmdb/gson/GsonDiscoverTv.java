@@ -32,10 +32,14 @@ public class GsonDiscoverTv implements Iterable<GsonDiscoverTv.Shows.Show> {
             @SerializedName("poster_path")
             public final String posterPath;
 
-            private Show(String id, String name, String posterPath) {
+            @SerializedName("backdrop_path")
+            public final String backdropPath;
+
+            private Show(String id, String name, String posterPath, String backdropPath) {
                 this.id = id;
                 this.name = name;
                 this.posterPath = posterPath;
+                this.backdropPath = backdropPath;
             }
 
         }

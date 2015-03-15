@@ -18,13 +18,14 @@ public class Navigator {
         this.activity = activity;
     }
 
-    public void toShow(String showId, String showTitle) {
+    public void toShow(String showId, String showTitle, String showBackdropUri) {
         Uri uri = BASE_URI.buildUpon()
                 .appendPath("show").appendPath(showId)
                 .build();
 
         start(view(uri, MIME_TYPE_SHOW_ITEM)
-                .putExtra(ShowDetailsActivity.EXTRA_SHOW_TITLE, showTitle));
+                .putExtra(ShowDetailsActivity.EXTRA_SHOW_TITLE, showTitle)
+                .putExtra(ShowDetailsActivity.EXTRA_SHOW_BACKDROP, showBackdropUri));
     }
 
     public void toSeason(String showId, int seasonNumber) {

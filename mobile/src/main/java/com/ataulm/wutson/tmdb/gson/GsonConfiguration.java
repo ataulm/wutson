@@ -8,6 +8,7 @@ public class GsonConfiguration {
 
     private static final int PROFILE_SIZE_STANDARD = 1;
     private static final int POSTER_SIZE_STANDARD = 2;
+    private static final int BACKDROP_SIZE_STANDARD = 2;
     private static final int STILL_SIZE_STANDARD = 2;
 
     @SerializedName("images")
@@ -19,6 +20,10 @@ public class GsonConfiguration {
 
     public String getCompletePosterPath(String posterPath) {
         return images.baseUrl + images.posterSizes.get(POSTER_SIZE_STANDARD) + posterPath;
+    }
+
+    public String getCompleteBackdropPath(String backdropPath) {
+        return images.baseUrl + images.backdropSizes.get(BACKDROP_SIZE_STANDARD) + backdropPath;
     }
 
     public String getCompleteProfilePath(String profilePath) {
@@ -40,13 +45,17 @@ public class GsonConfiguration {
         @SerializedName("poster_sizes")
         final List<String> posterSizes;
 
+        @SerializedName("backdrop_sizes")
+        final List<String> backdropSizes;
+
         @SerializedName("still_sizes")
         final List<String> stillSizes;
 
-        private Images(String baseUrl, List<String> profileSizes, List<String> posterSizes, List<String> stillSizes) {
+        private Images(String baseUrl, List<String> profileSizes, List<String> posterSizes, List<String> backdropSizes, List<String> stillSizes) {
             this.baseUrl = baseUrl;
             this.profileSizes = profileSizes;
             this.posterSizes = posterSizes;
+            this.backdropSizes = backdropSizes;
             this.stillSizes = stillSizes;
         }
 
