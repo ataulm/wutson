@@ -24,7 +24,7 @@ class ShowPagerAdapter extends PagerAdapter {
     private final LayoutInflater layoutInflater;
     private final URI showBackdropUri;
 
-    private final Map<Page, View> views;
+    private final Map<Page, View> pageViews;
 
     private Show show;
 
@@ -34,21 +34,27 @@ class ShowPagerAdapter extends PagerAdapter {
         this.layoutInflater = layoutInflater;
         this.showBackdropUri = showBackdropUri;
 
-        this.views = new HashMap<>(Page.values().length);
+        this.pageViews = new HashMap<>(Page.values().length);
     }
 
     @Override
     public View instantiateItem(ViewGroup container, int position) {
         Page page = Page.from(position);
         View pageView = layoutInflater.inflate(page.getLayoutResId(), container, false);
-        views.put(page, pageView);
+        pageViews.put(page, pageView);
 
         switch (page) {
             case OVERVIEW:
-                updatePageOverview((ShowOverviewView) pageView);
+                ((ShowOverviewView) pageView).setBackdrop(showBackdropUri);
+                if (show != null) {
+                    updateShowOverview();
+                }
                 break;
             case SEASONS:
-                updatePageSeasons((RecyclerView) pageView);
+                ((RecyclerView) pageView).setLayoutManager(new LinearLayoutManager(pageView.getContext()));
+                if (show != null) {
+                    updateShowSeasons();
+                }
                 break;
         }
 
@@ -56,40 +62,28 @@ class ShowPagerAdapter extends PagerAdapter {
         return pageView;
     }
 
-    void update(Show show) {
-        this.show = show;
-
-        if (views.containsKey(Page.OVERVIEW)) {
-            ShowOverviewView view = (ShowOverviewView) views.get(Page.OVERVIEW);
-            view.setOverview(show.getOverview());
-            view.setCast(show.getCast());
-        }
-
-        if (views.containsKey(Page.SEASONS)) {
-            RecyclerView seasonsView = (RecyclerView) views.get(Page.SEASONS);
-            RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, show.getSeasons(), onSeasonClickListener);
-            seasonsView.setAdapter(seasonsAdapter);
-        }
-
+    private void updateShowSeasons() {
+        RecyclerView seasonsView = (RecyclerView) pageViews.get(Page.SEASONS);
+        RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, show.getSeasons(), onSeasonClickListener);
+        seasonsView.setAdapter(seasonsAdapter);
     }
 
-    private void updatePageOverview(ShowOverviewView view) {
-        view.setBackdrop(showBackdropUri);
-        if (show == null) {
-            return;
-        }
+    private void updateShowOverview() {
+        ShowOverviewView view = (ShowOverviewView) pageViews.get(Page.OVERVIEW);
         view.setOverview(show.getOverview());
         view.setCast(show.getCast());
     }
 
-    private void updatePageSeasons(RecyclerView view) {
-        view.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        if (show == null) {
-            return;
+    void update(Show show) {
+        this.show = show;
+
+        if (pageViews.containsKey(Page.OVERVIEW)) {
+            updateShowOverview();
         }
 
-        RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, show.getSeasons(), onSeasonClickListener);
-        view.setAdapter(seasonsAdapter);
+        if (pageViews.containsKey(Page.SEASONS)) {
+            updateShowSeasons();
+        }
     }
 
     @Override
@@ -105,7 +99,7 @@ class ShowPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
-        views.remove(Page.from(position));
+        pageViews.remove(Page.from(position));
     }
 
     @Override
