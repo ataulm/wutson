@@ -14,7 +14,8 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
 
-@SuppressLint("Instantiatable") // not a problem - https://code.google.com/p/android/issues/detail?id=67434
+// not a problem - https://code.google.com/p/android/issues/detail?id=67434
+@SuppressLint("Instantiatable")
 class ShowView extends LinearLayout {
 
     private ViewPager pager;
@@ -38,7 +39,7 @@ class ShowView extends LinearLayout {
     }
 
     void display(Show show, OnClickSeasonListener onSeasonClickListener) {
-        pager.setAdapter(new ShowPagerAdapter(show, onSeasonClickListener));
+        pager.setAdapter(new ShowPagerAdapter(show, onSeasonClickListener, LayoutInflater.from(getContext())));
         tabs.setViewPager(pager);
     }
 
@@ -46,23 +47,35 @@ class ShowView extends LinearLayout {
 
         private final Show show;
         private final OnClickSeasonListener onSeasonClickListener;
+        private final LayoutInflater layoutInflater;
 
-        ShowPagerAdapter(Show show, OnClickSeasonListener onSeasonClickListener) {
+        ShowPagerAdapter(Show show, OnClickSeasonListener onSeasonClickListener, LayoutInflater layoutInflater) {
             this.show = show;
             this.onSeasonClickListener = onSeasonClickListener;
+            this.layoutInflater = layoutInflater;
         }
 
         @Override
         public View instantiateItem(ViewGroup container, int position) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-            View view;
             if (position == 0) {
-                view = layoutInflater.inflate(R.layout.view_show_overview, container, false);
-                ((ShowOverviewView) view).display(show);
-            } else {
-                view = layoutInflater.inflate(R.layout.view_show_seasons, container, false);
-                ((ShowSeasonsView) view).display(show.getSeasons(), onSeasonClickListener);
+                return instantiateShowOverviewPage(container);
             }
+            if (position == 1) {
+                return instantiateShowSeasonsPage(container);
+            }
+            throw DeveloperError.because("ShowView should only have two pages");
+        }
+
+        private View instantiateShowOverviewPage(ViewGroup container) {
+            ShowOverviewView view = (ShowOverviewView) layoutInflater.inflate(R.layout.view_show_overview, container, false);
+            view.display(show);
+            container.addView(view);
+            return view;
+        }
+
+        private View instantiateShowSeasonsPage(ViewGroup container) {
+            View view = layoutInflater.inflate(R.layout.view_show_seasons, container, false);
+            ((ShowSeasonsView) view).display(show.getSeasons(), onSeasonClickListener);
             container.addView(view);
             return view;
         }

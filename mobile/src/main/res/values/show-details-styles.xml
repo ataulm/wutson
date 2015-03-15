@@ -7,22 +7,17 @@
     <item name="android:background">@color/black</item>
   </style>
 
-  <style name="ShowDetails.ShowHeader" />
-
-  <style name="ShowDetails.ShowHeader.View">
+  <style name="ShowDetails.ShowHeader">
     <item name="android:paddingLeft">16dp</item>
     <item name="android:paddingTop">16dp</item>
     <item name="android:paddingRight">16dp</item>
     <item name="android:paddingBottom">16dp</item>
     <item name="android:background">@color/white</item>
+    <item name="android:textAppearance">@style/ShowDetails.ShowHeader.TextAppearance.Overview</item>
   </style>
 
   <style name="ShowDetails.ShowHeader.Name">
     <item name="android:textAppearance">@style/ShowDetails.ShowHeader.TextAppearance.Name</item>
-  </style>
-
-  <style name="ShowDetails.ShowHeader.Overview">
-    <item name="android:textAppearance">@style/ShowDetails.ShowHeader.TextAppearance.Overview</item>
   </style>
 
   <style name="ShowDetails.ShowHeader.TextAppearance">

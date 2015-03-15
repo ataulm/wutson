@@ -14,4 +14,8 @@ public final class DeveloperError extends RuntimeException {
         return new DeveloperError("Calling this method will potentially one of this class's intrinsic properties.");
     }
 
+    public static DeveloperError because(String reason) {
+        return new DeveloperError(reason);
+    }
+
 }
