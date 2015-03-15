@@ -27,13 +27,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-      <com.ataulm.wutson.show.CastView
+
+      <LinearLayout
         android:id="@+id/show_view_cast"
         style="@style/ShowDetails.Cast.View"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:visibility="gone"
-        android:background="@android:color/white" />
+        android:background="@android:color/white">
+
+        <TextView
+          style="@style/ShowDetails.Cast.Title"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:text="Cast" />
+
+        <LinearLayout
+          android:id="@+id/cast_container"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical" />
+
+      </LinearLayout>
     </LinearLayout>
   </ScrollView>
 </merge>
