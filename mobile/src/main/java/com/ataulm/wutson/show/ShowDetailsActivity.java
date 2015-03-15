@@ -13,6 +13,8 @@ import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 
+import java.net.URI;
+
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -31,8 +33,16 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         setContentView(R.layout.activity_show_details);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.show_details_pager_show);
-        viewPager.setAdapter(adapter = new ShowPagerAdapter(this, getLayoutInflater()));
+        viewPager.setAdapter(adapter = new ShowPagerAdapter(this, getLayoutInflater(), getShowBackdropUri()));
         ((PagerSlidingTabStrip) findViewById(R.id.show_details_tabs_show)).setViewPager(viewPager);
+    }
+
+    private URI getShowBackdropUri() {
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            return URI.create("");
+        }
+        return URI.create(extras.getString(EXTRA_SHOW_BACKDROP, ""));
     }
 
     @Override

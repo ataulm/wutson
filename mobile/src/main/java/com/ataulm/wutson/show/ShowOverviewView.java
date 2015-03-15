@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.ataulm.wutson.R;
 import com.bumptech.glide.Glide;
 
+import java.net.URI;
+
 // not a problem - https://code.google.com/p/android/issues/detail?id=67434
 @SuppressLint("Instantiatable")
 class ShowOverviewView extends FrameLayout {
@@ -31,13 +33,18 @@ class ShowOverviewView extends FrameLayout {
         castView = (CastView) findViewById(R.id.show_view_cast);
     }
 
-    public void display(Show show) {
+    void setBackdrop(URI backdropUri) {
         Glide.with(getContext())
-                .load(show.getBackdropUri().toString())
+                .load(backdropUri.toString())
                 .into(backdropImageView);
+    }
 
-        showHeaderView.setText(show.getOverview());
-        castView.display(show.getCast());
+    void setOverview(String overview) {
+        showHeaderView.setText(overview);
+    }
+
+    void setCast(Cast cast) {
+        castView.display(cast);
     }
 
 }

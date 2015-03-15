@@ -10,20 +10,30 @@ import android.view.ViewGroup;
 import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
 
+import java.net.URI;
+
 class ShowPagerAdapter extends PagerAdapter {
 
     private final OnClickSeasonListener onSeasonClickListener;
     private final LayoutInflater layoutInflater;
+    private final URI backdropUri;
+
     private Show show;
 
-    ShowPagerAdapter(OnClickSeasonListener onSeasonClickListener, LayoutInflater layoutInflater) {
+    ShowPagerAdapter(OnClickSeasonListener onSeasonClickListener, LayoutInflater layoutInflater, URI backdropUri) {
         this.onSeasonClickListener = onSeasonClickListener;
         this.layoutInflater = layoutInflater;
+        this.backdropUri = backdropUri;
     }
 
     void update(Show show) {
         this.show = show;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 
     @Override
@@ -38,32 +48,41 @@ class ShowPagerAdapter extends PagerAdapter {
     }
 
     private View instantiateShowOverviewPage(ViewGroup container) {
-        ShowOverviewView view = (ShowOverviewView) layoutInflater.inflate(R.layout.view_show_overview, container, false);
-        view.display(show);
+        ShowOverviewView view = (ShowOverviewView) layoutInflater.inflate(R.layout.view_show_details_about_page, container, false);
+
+        if (show == null) {
+            view.setBackdrop(backdropUri);
+            container.addView(view);
+            return view;
+        }
+
+        view.setBackdrop(show.getBackdropUri());
+        view.setOverview(show.getOverview());
+        view.setCast(show.getCast());
+
         container.addView(view);
         return view;
     }
 
     private View instantiateShowSeasonsPage(ViewGroup container) {
-        RecyclerView view = (RecyclerView) layoutInflater.inflate(R.layout.view_show_seasons, container, false);
+        if (show == null || show.getSeasons().isEmpty()) {
+            View view = layoutInflater.inflate(R.layout.view_show_details_seasons_page_empty, container, false);
+            container.addView(view);
+            return view;
+        }
+
+        RecyclerView view = (RecyclerView) layoutInflater.inflate(R.layout.view_show_details_seasons_page, container, false);
         view.setLayoutManager(new LinearLayoutManager(container.getContext()));
         RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, show.getSeasons(), onSeasonClickListener);
         view.setAdapter(seasonsAdapter);
+
         container.addView(view);
         return view;
     }
 
     @Override
     public int getCount() {
-        if (show == null) {
-            return 0;
-        }
-
-        if (show.getSeasons().isEmpty()) {
-            return 1;
-        } else {
-            return 2;
-        }
+        return 2;
     }
 
     @Override
