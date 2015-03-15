@@ -23,7 +23,6 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     public static final String EXTRA_SHOW_BACKDROP = BuildConfig.APPLICATION_ID + ".show_backdrop";
 
     private Subscription showDetailsSubscription;
-    private ViewPager viewPager;
     private ShowPagerAdapter adapter;
 
     @Override
@@ -31,7 +30,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
 
-        viewPager = (ViewPager) findViewById(R.id.show_details_pager_show);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.show_details_pager_show);
         viewPager.setAdapter(adapter = new ShowPagerAdapter(this, getLayoutInflater()));
         ((PagerSlidingTabStrip) findViewById(R.id.show_details_tabs_show)).setViewPager(viewPager);
     }
@@ -39,16 +38,8 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        customiseShowDetailsToolbar();
-    }
-
-    private void customiseShowDetailsToolbar() {
         applyTitleFromIntentExtras();
-
-        Drawable navigationIcon = getToolbar().getNavigationIcon();
-        if (navigationIcon != null) {
-            navigationIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-        }
+        applyColorFilterToAppBarIcons();
     }
 
     private void applyTitleFromIntentExtras() {
@@ -58,6 +49,13 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         }
         String showTitle = extras.getString(EXTRA_SHOW_TITLE, "");
         setTitle(showTitle);
+    }
+
+    private void applyColorFilterToAppBarIcons() {
+        Drawable navigationIcon = getToolbar().getNavigationIcon();
+        if (navigationIcon != null) {
+            navigationIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        }
     }
 
     @Override
@@ -90,6 +88,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
         @Override
         public void onNext(Show show) {
+            super.onNext(show);
             adapter.update(show);
         }
 
