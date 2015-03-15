@@ -1,5 +1,6 @@
 package com.ataulm.wutson.show;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,7 +14,8 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
 
-public class ShowView extends LinearLayout {
+@SuppressLint("Instantiatable") // not a problem - https://code.google.com/p/android/issues/detail?id=67434
+class ShowView extends LinearLayout {
 
     private ViewPager pager;
     private PagerSlidingTabStrip tabs;

@@ -1,5 +1,6 @@
 package com.ataulm.wutson.discover;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.ataulm.wutson.R;
 import com.bumptech.glide.Glide;
 
+@SuppressLint("Instantiatable") // not a problem - https://code.google.com/p/android/issues/detail?id=67434
 class ShowSummaryView extends FrameLayout {
 
     private static final float HEIGHT_BY_WIDTH_RATIO = 214f / 178;
