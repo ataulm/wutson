@@ -8,7 +8,6 @@
   </style>
 
   <style name="ShowDetails.Tabs">
-    <!--TODO: needs to use showdetails dimens-->
     <item name="pstsIndicatorHeight">@dimen/show_details_tabs_show_indicator_height</item>
     <item name="pstsShouldExpand">true</item>
   </style>

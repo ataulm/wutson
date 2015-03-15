@@ -10,11 +10,11 @@
     <item name="pstsIndicatorHeight">@dimen/discover_tabs_genres_indicator_height</item>
   </style>
 
-  <style name="Discover.ShowSummary" />
-
-  <style name="Discover.ShowSummary.View">
+  <style name="Discover.ShowsInGenreItem">
     <item name="android:foreground">@drawable/discover_shows_in_genre_item_foreground</item>
   </style>
+
+  <style name="Discover.ShowSummary" />
 
   <style name="Discover.ShowSummary.Poster">
     <item name="android:scaleType">centerCrop</item>

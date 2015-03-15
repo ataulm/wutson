@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.ataulm.wutson.discover.ShowSummaryView xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/Discover.ShowSummary.View"
+  style="@style/Discover.ShowsInGenreItem"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
   android:layout_margin="@dimen/discover_shows_in_genre_item_margin"
