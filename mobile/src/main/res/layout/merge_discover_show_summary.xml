@@ -15,7 +15,6 @@
     style="@style/Discover.ShowSummary.Title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:minHeight="@dimen/discover_show_summary_title_min_height" />
+    android:layout_gravity="bottom" />
 
 </merge>
