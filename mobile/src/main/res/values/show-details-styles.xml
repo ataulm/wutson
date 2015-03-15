@@ -7,6 +7,12 @@
     <item name="android:background">@color/black</item>
   </style>
 
+  <style name="ShowDetails.Tabs">
+    <!--TODO: needs to use showdetails dimens-->
+    <item name="pstsIndicatorHeight">@dimen/show_details_tabs_show_indicator_height</item>
+    <item name="pstsShouldExpand">true</item>
+  </style>
+
   <style name="ShowDetails.ShowHeader">
     <item name="android:paddingLeft">16dp</item>
     <item name="android:paddingTop">16dp</item>

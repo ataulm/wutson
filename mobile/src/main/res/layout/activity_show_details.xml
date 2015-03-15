@@ -9,8 +9,14 @@
     android:layout_height="wrap_content"
     android:theme="?attr/theme" />
 
-  <com.ataulm.wutson.show.ShowView
-    android:id="@+id/show_detail_show"
+  <com.astuetz.PagerSlidingTabStrip
+    android:id="@+id/show_details_tabs_show"
+    style="@style/ShowDetails.Tabs"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/app_bar_height" />
+
+  <android.support.v4.view.ViewPager
+    android:id="@+id/show_details_pager_show"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
 

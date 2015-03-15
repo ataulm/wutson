@@ -4,7 +4,9 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
@@ -21,14 +23,17 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     public static final String EXTRA_SHOW_BACKDROP = BuildConfig.APPLICATION_ID + ".show_backdrop";
 
     private Subscription showDetailsSubscription;
-    private ShowView showView;
-    private String showId;
+    private ViewPager viewPager;
+    private ShowPagerAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
-        showView = (ShowView) findViewById(R.id.show_detail_show);
+
+        viewPager = (ViewPager) findViewById(R.id.show_details_pager_show);
+        viewPager.setAdapter(adapter = new ShowPagerAdapter(this, getLayoutInflater()));
+        ((PagerSlidingTabStrip) findViewById(R.id.show_details_tabs_show)).setViewPager(viewPager);
     }
 
     @Override
@@ -58,11 +63,14 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     @Override
     protected void onResume() {
         super.onResume();
-        showId = getIntent().getData().getLastPathSegment();
-        showDetailsSubscription = Jabber.dataRepository().getShow(showId)
+        showDetailsSubscription = Jabber.dataRepository().getShow(getShowId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
+    }
+
+    private String getShowId() {
+        return getIntent().getData().getLastPathSegment();
     }
 
     @Override
@@ -75,14 +83,14 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
     @Override
     public void onClick(Show.Season season) {
-        navigate().toSeason(showId, season.getSeasonNumber());
+        navigate().toSeason(getShowId(), season.getSeasonNumber());
     }
 
     private class Observer extends LoggingObserver<Show> {
 
         @Override
         public void onNext(Show show) {
-            showView.display(show, ShowDetailsActivity.this);
+            adapter.update(show);
         }
 
     }
