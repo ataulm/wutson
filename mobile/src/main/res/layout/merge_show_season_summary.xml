@@ -4,25 +4,25 @@
   android:layout_height="wrap_content">
 
   <com.ataulm.wutson.view.CrossfadeImageView
-    android:id="@+id/show_seasons_item_image_poster"
+    android:id="@+id/show_season_summary_image_poster"
     style="@style/ShowDetails.SeasonsItem.Poster"
     android:layout_width="@dimen/show_seasons_item_poster_width"
     android:layout_height="@dimen/show_seasons_item_poster_height"
     android:contentDescription="@null" />
 
   <TextView
-    android:id="@+id/show_seasons_item_text_season_number"
+    android:id="@+id/show_season_summary_text_season_number"
     style="@style/ShowDetails.SeasonsItem.SeasonNumber"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_toRightOf="@id/show_seasons_item_image_poster" />
+    android:layout_toRightOf="@id/show_season_summary_image_poster" />
 
   <TextView
-    android:id="@+id/show_seasons_item_text_episode_count"
+    android:id="@+id/show_season_summary_text_episode_count"
     style="@style/ShowDetails.SeasonsItem.EpisodeCount"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignLeft="@id/show_seasons_item_text_season_number"
-    android:layout_below="@id/show_seasons_item_text_season_number" />
+    android:layout_alignLeft="@id/show_season_summary_text_season_number"
+    android:layout_below="@id/show_season_summary_text_season_number" />
 
 </merge>
