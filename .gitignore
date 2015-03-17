@@ -39,3 +39,7 @@ proguard/
 
 # IntelliJ
 out/
+
+# Crashlytics (generated during build)
+com_crashlytics_export_strings.xml
+crashlytics.properties

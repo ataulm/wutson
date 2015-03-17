@@ -33,14 +33,6 @@ dependencies {
     compile 'com.crashlytics.android:crashlytics:1.+'
 }
 
-def tmdbApiKey = hasProperty('tmdbApiKey') ? tmdbApiKey : 'provide this in gradle.properties'
-def signingStoreFile = hasProperty('signingStoreFile') ? signingStoreFile : 'provide this in gradle.properties'
-def signingStorePassword = hasProperty('signingStorePassword') ? signingStorePassword : 'provide this in gradle.properties'
-def signingKeyAlias = hasProperty('signingKeyAlias') ? signingKeyAlias : 'provide this in gradle.properties'
-def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword : 'provide this in gradle.properties'
-def crashlyticsApiKey = hasProperty('crashlyticsApiKey') ? crashlyticsApiKey : 'provide this in gradle.properties'
-def crashlyticsApiSecret = hasProperty('crashlyticsApiSecret') ? crashlyticsApiSecret : 'provide this in gradle.properties'
-
 android {
     compileSdkVersion 21
     buildToolsVersion '21.1.2'
@@ -57,10 +49,16 @@ android {
         def buildTime = instance.getTime()
         buildConfigField "String", "BUILD_TIME", "\"$buildTime\""
 
+        def tmdbApiKey = hasProperty('tmdbApiKey') ? tmdbApiKey : 'provide this in gradle.properties'
         buildConfigField "String", "TMDB_API_KEY", "\"$tmdbApiKey\""
     }
 
     signingConfigs {
+        def signingStoreFile = hasProperty('signingStoreFile') ? signingStoreFile : 'provide this in gradle.properties'
+        def signingStorePassword = hasProperty('signingStorePassword') ? signingStorePassword : 'provide this in gradle.properties'
+        def signingKeyAlias = hasProperty('signingKeyAlias') ? signingKeyAlias : 'provide this in gradle.properties'
+        def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword : 'provide this in gradle.properties'
+
         release {
             storeFile file(signingStoreFile)
             storePassword signingStorePassword
@@ -83,6 +81,9 @@ android {
     lintOptions {
         lintConfig file("lint-config.xml")
     }
+
+    def crashlyticsApiKey = project.hasProperty('crashlyticsApiKey') ? crashlyticsApiKey : System.env.crashlyticsApiKey
+    def crashlyticsApiSecret = project.hasProperty('crashlyticsApiSecret') ? crashlyticsApiSecret : System.env.crashlyticsApiSecret
 
     File crashlyticsProperties = new File("${project.projectDir.absolutePath}/crashlytics.properties")
     applicationVariants.all { variant ->
