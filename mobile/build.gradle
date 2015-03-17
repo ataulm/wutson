@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'http://download.crashlytics.com/maven' }
+    }
+
+    dependencies {
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'crashlytics'
+
+repositories {
+    maven { url 'http://download.crashlytics.com/maven' }
+}
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -15,6 +30,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.0.8'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
+    compile 'com.crashlytics.android:crashlytics:1.+'
 }
 
 def tmdbApiKey = hasProperty('tmdbApiKey') ? tmdbApiKey : 'provide this in gradle.properties'
@@ -22,6 +38,8 @@ def signingStoreFile = hasProperty('signingStoreFile') ? signingStoreFile : 'pro
 def signingStorePassword = hasProperty('signingStorePassword') ? signingStorePassword : 'provide this in gradle.properties'
 def signingKeyAlias = hasProperty('signingKeyAlias') ? signingKeyAlias : 'provide this in gradle.properties'
 def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword : 'provide this in gradle.properties'
+def crashlyticsApiKey = hasProperty('crashlyticsApiKey') ? crashlyticsApiKey : 'provide this in gradle.properties'
+def crashlyticsApiSecret = hasProperty('crashlyticsApiSecret') ? crashlyticsApiSecret : 'provide this in gradle.properties'
 
 android {
     compileSdkVersion 21
@@ -64,6 +82,25 @@ android {
 
     lintOptions {
         lintConfig file("lint-config.xml")
+    }
+
+    File crashlyticsProperties = new File("${project.projectDir.absolutePath}/crashlytics.properties")
+    applicationVariants.all { variant ->
+        def variantName = variant.name.capitalize()
+        def crashlyticsGenerateResourcesTask = project.tasks.getByName("crashlyticsGenerateResources${variantName}")
+        def myGenerateCrashlyticsPropertiesFileTask = task("crashlyticsGenerateProperties${variantName}") << {
+            Properties properties = new Properties()
+            println "...copying apiKey for $variantName"
+            properties.put("apiKey", crashlyticsApiKey)
+            println "...copying apiSecret for $variantName"
+            properties.put("apiSecret", crashlyticsApiSecret)
+            properties.store(new FileWriter(crashlyticsProperties), "")
+        }
+        crashlyticsGenerateResourcesTask.dependsOn myGenerateCrashlyticsPropertiesFileTask
+        crashlyticsGenerateResourcesTask.doLast {
+            println "...removing crashlytics.properties"
+            crashlyticsProperties.delete()
+        }
     }
 
 }
