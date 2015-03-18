@@ -50,6 +50,9 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
                     case SETTINGS:
                         startActivity(new Intent(WutsonTopLevelActivity.this, SettingsActivity.class));
                         break;
+                    case HELP_FEEDBACK:
+                        navigate().toWutsonGooglePlusCommunity();
+                        break;
                     default:
                         onNotImplementedActionFor(item);
                 }
