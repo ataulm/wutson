@@ -6,11 +6,11 @@ import com.ataulm.wutson.R;
 
 public enum NavigationDrawerItem {
 
-    MY_SHOWS("My Shows", R.drawable.temp_icon_24),
-    DISCOVER_SHOWS("Discover", R.drawable.temp_icon_24),
+    MY_SHOWS("My Shows", R.drawable.ic_my_shows),
+    DISCOVER_SHOWS("Discover", R.drawable.ic_discover),
     SEPARATOR(null, 0),
-    SETTINGS("Settings", R.drawable.temp_icon_24),
-    HELP_FEEDBACK("Help & Feedback", R.drawable.temp_icon_24);
+    SETTINGS("Settings", R.drawable.ic_settings),
+    HELP_FEEDBACK("Help & Feedback", R.drawable.ic_help);
 
     private final String title;
     private final int iconResId;
