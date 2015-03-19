@@ -18,10 +18,10 @@
   <dimen name="character_image_profile">40dp</dimen>
   <dimen name="character_names_margin_left">16dp</dimen>
 
-  <dimen name="show_seasons_padding_left">0dp</dimen>
-  <dimen name="show_seasons_padding_top">4dp</dimen>
-  <dimen name="show_seasons_padding_right">0dp</dimen>
-  <dimen name="show_seasons_padding_bottom">4dp</dimen>
+  <dimen name="show_details_seasons_list_padding_left">0dp</dimen>
+  <dimen name="show_details_seasons_list_padding_top">6dp</dimen>
+  <dimen name="show_details_seasons_list_padding_right">0dp</dimen>
+  <dimen name="show_details_seasons_list_padding_bottom">6dp</dimen>
   
   <dimen name="show_seasons_item_background_top_right_radius">@dimen/card_corner_radius</dimen>
   <dimen name="show_seasons_item_background_bottom_right_radius">@dimen/card_corner_radius</dimen>
@@ -30,9 +30,14 @@
   <dimen name="show_seasons_item_margin_right">8dp</dimen>
   <dimen name="show_seasons_item_margin_bottom">4dp</dimen>
 
-  <dimen name="show_seasons_item_padding_left">@dimen/card_min_padding_left</dimen>
-  <dimen name="show_seasons_item_padding_top">@dimen/card_min_padding_top</dimen>
-  <dimen name="show_seasons_item_padding_right">@dimen/card_min_padding_right</dimen>
-  <dimen name="show_seasons_item_padding_bottom">@dimen/card_min_padding_bottom</dimen>
+  <dimen name="show_details_seasons_list_item_padding_left">@dimen/card_min_padding_left</dimen>
+  <dimen name="show_details_seasons_list_item_padding_top">@dimen/card_min_padding_top</dimen>
+  <dimen name="show_details_seasons_list_item_padding_right">@dimen/card_min_padding_right</dimen>
+  <dimen name="show_details_seasons_list_item_padding_bottom">@dimen/card_min_padding_bottom</dimen>
+
+  <dimen name="show_details_seasons_list_item_margin_left">6dp</dimen>
+  <dimen name="show_details_seasons_list_item_margin_top">2dp</dimen>
+  <dimen name="show_details_seasons_list_item_margin_right">6dp</dimen>
+  <dimen name="show_details_seasons_list_item_margin_bottom">2dp</dimen>
 
 </resources>

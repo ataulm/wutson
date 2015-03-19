@@ -70,30 +70,22 @@
     <item name="android:gravity">top</item>
   </style>
 
-  <style name="ShowDetails.Seasons" />
-
-  <style name="ShowDetails.Seasons.View">
-    <item name="android:background">@color/show_seasons_background</item>
-    <item name="android:paddingLeft">@dimen/show_seasons_padding_left</item>
-    <item name="android:paddingTop">@dimen/show_seasons_padding_top</item>
-    <item name="android:paddingRight">@dimen/show_seasons_padding_right</item>
-    <item name="android:paddingBottom">@dimen/show_seasons_padding_bottom</item>
+  <style name="ShowDetails.SeasonsList">
+    <item name="android:paddingLeft">@dimen/show_details_seasons_list_padding_left</item>
+    <item name="android:paddingTop">@dimen/show_details_seasons_list_padding_top</item>
+    <item name="android:paddingRight">@dimen/show_details_seasons_list_padding_right</item>
+    <item name="android:paddingBottom">@dimen/show_details_seasons_list_padding_bottom</item>
+    <item name="android:background">@color/show_details_seasons_list_background</item>
     <item name="android:clipToPadding">false</item>
   </style>
 
-  <style name="ShowDetails.SeasonsItem" />
-
-  <style name="ShowDetails.SeasonsItem.View">
+  <style name="ShowDetails.SeasonsListItem">
+    <item name="android:paddingLeft">@dimen/show_details_seasons_list_item_padding_left</item>
+    <item name="android:paddingTop">@dimen/show_details_seasons_list_item_padding_top</item>
+    <item name="android:paddingRight">@dimen/show_details_seasons_list_item_padding_right</item>
+    <item name="android:paddingBottom">@dimen/show_details_seasons_list_item_padding_bottom</item>
+    <item name="android:background">@drawable/show_details_seasons_list_item_background</item>
     <item name="android:focusable">true</item>
-    <item name="android:paddingLeft">@dimen/show_seasons_item_padding_left</item>
-    <item name="android:paddingTop">@dimen/show_seasons_item_padding_top</item>
-    <item name="android:paddingRight">@dimen/show_seasons_item_padding_right</item>
-    <item name="android:paddingBottom">@dimen/show_seasons_item_padding_bottom</item>
-    <item name="android:background">@drawable/show_seasons_item_background</item>
   </style>
 
-
-
-
-  
 </resources>

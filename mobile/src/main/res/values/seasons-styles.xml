@@ -19,7 +19,7 @@
   <style name="Seasons.EpisodeItem" />
 
   <style name="Seasons.EpisodeItem.View">
-    <item name="android:background">@drawable/show_seasons_item_background</item>
+    <item name="android:background">@drawable/show_details_seasons_list_item_background</item>
     <item name="android:focusable">true</item>
   </style>
 

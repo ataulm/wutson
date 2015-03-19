@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.ataulm.wutson.show.SeasonSummaryView xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/ShowDetails.SeasonsItem.View"
+  xmlns:tools="http://schemas.android.com/tools"
+  style="@style/ShowDetails.SeasonsListItem"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_marginLeft="6dp"
-  android:layout_marginTop="2dp"
-  android:layout_marginRight="6dp"
-  android:layout_marginBottom="2dp" />
+  android:layout_marginLeft="@dimen/show_details_seasons_list_item_margin_left"
+  android:layout_marginTop="@dimen/show_details_seasons_list_item_margin_top"
+  android:layout_marginRight="@dimen/show_details_seasons_list_item_margin_right"
+  android:layout_marginBottom="@dimen/show_details_seasons_list_item_margin_bottom"
+  tools:ignore="RtlHardcoded" />
