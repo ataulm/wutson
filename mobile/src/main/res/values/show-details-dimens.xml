@@ -30,6 +30,11 @@
   <dimen name="show_seasons_item_margin_right">8dp</dimen>
   <dimen name="show_seasons_item_margin_bottom">4dp</dimen>
 
+  <dimen name="show_seasons_item_padding_left">@dimen/card_min_padding_left</dimen>
+  <dimen name="show_seasons_item_padding_top">@dimen/card_min_padding_top</dimen>
+  <dimen name="show_seasons_item_padding_right">@dimen/card_min_padding_right</dimen>
+  <dimen name="show_seasons_item_padding_bottom">@dimen/card_min_padding_bottom</dimen>
+
   <dimen name="show_seasons_item_poster_width">130dp</dimen>
   <dimen name="show_seasons_item_poster_height">96dp</dimen>
 

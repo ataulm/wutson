@@ -37,6 +37,7 @@ class SeasonSummaryView extends RelativeLayout {
         Glide.with(getContext())
                 .load(uri)
                 .asBitmap()
+                .centerCrop()
                 .into(posterImageView);
     }
 

@@ -3,5 +3,9 @@
 
   <dimen name="app_bar_height">56dp</dimen>
   <dimen name="card_corner_radius">2dp</dimen>
+  <dimen name="card_min_padding_left">2dp</dimen>
+  <dimen name="card_min_padding_top">1dp</dimen>
+  <dimen name="card_min_padding_right">2dp</dimen>
+  <dimen name="card_min_padding_bottom">5dp</dimen>
 
 </resources>

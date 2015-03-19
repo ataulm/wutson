@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-  <solid android:color="@color/show_seasons_item_background" />
-  <corners
-    android:topRightRadius="@dimen/show_seasons_item_background_top_right_radius"
-    android:bottomRightRadius="@dimen/show_seasons_item_background_bottom_right_radius" />
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:state_pressed="true" android:drawable="@drawable/card_background_pressed" />
+  <item android:state_focused="true" android:drawable="@drawable/card_background_focused" />
+  <item android:drawable="@drawable/card_background_default" />
+</selector>

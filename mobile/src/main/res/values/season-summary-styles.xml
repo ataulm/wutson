@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="SeasonSummary" />
+
+  <style name="SeasonSummary.Poster" />
+
+  <style name="SeasonSummary.SeasonNumber">
+    <item name="android:paddingLeft">@dimen/show_seasons_item_season_number_padding_left</item>
+    <item name="android:paddingTop">@dimen/show_seasons_item_season_number_padding_top</item>
+    <item name="android:paddingRight">@dimen/show_seasons_item_season_number_padding_right</item>
+    <item name="android:paddingBottom">@dimen/show_seasons_item_season_number_padding_bottom</item>
+    <item name="android:textSize">@dimen/show_seasons_item_season_number_text</item>
+  </style>
+
+  <style name="SeasonSummary.EpisodeCount">
+    <item name="android:paddingLeft">@dimen/show_seasons_item_episode_count_padding_left</item>
+    <item name="android:paddingTop">@dimen/show_seasons_item_episode_count_padding_top</item>
+    <item name="android:paddingRight">@dimen/show_seasons_item_episode_count_padding_right</item>
+    <item name="android:paddingBottom">@dimen/show_seasons_item_episode_count_padding_bottom</item>
+    <item name="android:textSize">@dimen/show_seasons_item_episode_count_text</item>
+  </style>
+
+</resources>
