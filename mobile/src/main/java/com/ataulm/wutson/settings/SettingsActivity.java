@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -20,6 +23,19 @@ public class SettingsActivity extends WutsonActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        applyColorFilterToAppBarIcons();
+    }
+
+    private void applyColorFilterToAppBarIcons() {
+        Drawable navigationIcon = getToolbar().getNavigationIcon();
+        if (navigationIcon != null) {
+            navigationIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        }
     }
 
     public static class SettingsFragment extends PreferenceFragment {

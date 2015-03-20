@@ -39,7 +39,10 @@
       </intent-filter>
     </activity>
 
-    <activity android:name="com.ataulm.wutson.settings.SettingsActivity" />
+    <activity
+      android:name="com.ataulm.wutson.settings.SettingsActivity"
+      android:theme="@style/Wutson.Theme.Settings"
+      android:label="@string/settings_label" />
 
     <activity android:name="com.ataulm.wutson.settings.SoftwareLicensesActivity" />
 

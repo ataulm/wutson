@@ -23,4 +23,8 @@
     <item name="theme">@style/Seasons.AppBar</item>
   </style>
 
+  <style name="Wutson.Theme.Settings">
+    <item name="theme">@style/Settings.AppBar</item>
+  </style>
+
 </resources>

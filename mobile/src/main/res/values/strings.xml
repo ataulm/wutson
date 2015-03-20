@@ -17,4 +17,5 @@
   <string name="x_episodes_format">%1$d episodes</string>
   <string name="overview">Overview</string>
   <string name="seasons">Seasons</string>
+  <string name="settings">Settings</string>
 </resources>

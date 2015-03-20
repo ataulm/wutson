@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Settings" />
+
+  <style name="Settings.AppBar">
+    <item name="android:background">@color/black</item>
+  </style>
+
+</resources>
