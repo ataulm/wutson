@@ -28,15 +28,15 @@ def signingKeyAlias = hasProperty('signingKeyAlias') ? signingKeyAlias : 'provid
 def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword : 'provide this in gradle.properties'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion '21.1.2'
+    compileSdkVersion 22
+    buildToolsVersion '22.0.0'
 
     defaultConfig {
         applicationId "com.ataulm.wutson2"
         minSdkVersion 16
-        targetSdkVersion 21
         versionCode 7
         versionName 'dog-fooding'
+        targetSdkVersion 22
 
         Calendar instance = Calendar.getInstance()
         instance.setTimeInMillis(System.currentTimeMillis())
