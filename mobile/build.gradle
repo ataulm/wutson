@@ -34,9 +34,9 @@ android {
     defaultConfig {
         applicationId "com.ataulm.wutson2"
         minSdkVersion 16
-        versionCode 7
-        versionName 'dog-fooding'
         targetSdkVersion 22
+        versionCode 9
+        versionName '_dog-food'
 
         Calendar instance = Calendar.getInstance()
         instance.setTimeInMillis(System.currentTimeMillis())
