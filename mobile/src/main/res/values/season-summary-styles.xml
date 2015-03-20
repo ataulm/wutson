@@ -11,6 +11,8 @@
     <item name="android:paddingRight">@dimen/season_summary_season_number_padding_right</item>
     <item name="android:paddingBottom">@dimen/season_summary_season_number_padding_bottom</item>
     <item name="android:textSize">@dimen/season_summary_season_number_text</item>
+    <item name="android:textColor">@color/season_summary_season_number_text</item>
+    <item name="textFont">robotoMedium</item>
   </style>
 
   <style name="SeasonSummary.EpisodeCount">
@@ -19,6 +21,8 @@
     <item name="android:paddingRight">@dimen/season_summary_episode_count_padding_right</item>
     <item name="android:paddingBottom">@dimen/season_summary_episode_count_padding_bottom</item>
     <item name="android:textSize">@dimen/season_summary_episode_count_text</item>
+    <item name="android:textColor">@color/season_summary_episode_count_text</item>
+    <item name="textFont">robotoRegular</item>
   </style>
 
 </resources>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  tools:ignore="RtlHardcoded">
 
   <com.ataulm.wutson.view.CrossfadeRoundedLeftImageView
     android:id="@+id/season_summary_image_poster"
@@ -10,18 +12,26 @@
     android:layout_height="@dimen/season_summary_poster_height"
     android:contentDescription="@null" />
 
-  <TextView
+  <com.ataulm.wutson.view.WutsonTextView
     android:id="@+id/season_summary_text_season_number"
     style="@style/SeasonSummary.SeasonNumber"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/season_summary_season_number_margin_left"
+    android:layout_marginTop="@dimen/season_summary_season_number_margin_top"
+    android:layout_marginRight="@dimen/season_summary_season_number_margin_right"
+    android:layout_marginBottom="@dimen/season_summary_season_number_margin_bottom"
     android:layout_toRightOf="@id/season_summary_image_poster" />
 
-  <TextView
+  <com.ataulm.wutson.view.WutsonTextView
     android:id="@+id/season_summary_text_episode_count"
     style="@style/SeasonSummary.EpisodeCount"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/season_summary_episode_count_margin_left"
+    android:layout_marginTop="@dimen/season_summary_episode_count_margin_top"
+    android:layout_marginRight="@dimen/season_summary_episode_count_margin_right"
+    android:layout_marginBottom="@dimen/season_summary_episode_count_margin_bottom"
     android:layout_alignLeft="@id/season_summary_text_season_number"
     android:layout_below="@id/season_summary_text_season_number" />
 
