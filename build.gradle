@@ -1,10 +1,12 @@
 buildscript {
     repositories {
         jcenter()
+        maven { url 'http://download.crashlytics.com/maven' }
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.16.0'
     }
 }
 
@@ -19,5 +21,7 @@ allprojects {
             }
             url 'http://dl.bintray.com/novoda/maven-private'
         }
+
+        maven { url 'http://download.crashlytics.com/maven' }
     }
 }
