@@ -19,7 +19,7 @@ public class Navigator {
         this.activity = activity;
     }
 
-    public void toShow(String showId, String showTitle, String showBackdropUri) {
+    public void toShowDetails(String showId, String showTitle, String showBackdropUri) {
         Uri uri = BASE_URI.buildUpon()
                 .appendPath("show").appendPath(showId)
                 .build();
