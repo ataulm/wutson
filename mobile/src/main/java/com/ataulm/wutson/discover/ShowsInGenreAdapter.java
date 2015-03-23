@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.model.ShowSummary;
 
 class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowSummaryViewHolder> {
 
@@ -31,8 +32,8 @@ class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowS
 
     @Override
     public void onBindViewHolder(ShowSummaryViewHolder holder, int position) {
-        Show show = showsInGenre.get(position);
-        holder.update(show);
+        ShowSummary showSummary = showsInGenre.get(position);
+        holder.update(showSummary);
     }
 
     @Override
@@ -51,14 +52,14 @@ class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowS
             this.listener = listener;
         }
 
-        void update(final Show show) {
-            showSummaryView.setPoster(show.getPosterUri().toString());
-            showSummaryView.setTitle(show.getName());
+        void update(final ShowSummary showSummary) {
+            showSummaryView.setPoster(showSummary.getPosterUri().toString());
+            showSummaryView.setTitle(showSummary.getName());
             showSummaryView.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    listener.onClick(show);
+                    listener.onClick(showSummary);
                 }
 
             });

@@ -1,5 +1,6 @@
 package com.ataulm.wutson.discover;
 
+import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.TmdbApi;
@@ -78,16 +79,16 @@ public class ShowsInGenreRepository {
             @Override
             public ShowsInGenre call(GsonConfiguration configuration, GsonGenreAndGsonDiscoverTvShows discoverTvShows) {
                 GsonGenres.Genre genre = discoverTvShows.genre;
-                List<Show> shows = new ArrayList<>(discoverTvShows.size());
+                List<ShowSummary> showSummaries = new ArrayList<>(discoverTvShows.size());
                 for (GsonDiscoverTv.Shows.Show discoverTvShow : discoverTvShows.gsonDiscoverTv) {
                     String id = discoverTvShow.id;
                     String name = discoverTvShow.name;
                     URI posterUri = URI.create(configuration.getCompletePosterPath(discoverTvShow.posterPath));
                     URI backdropUri = URI.create(configuration.getCompleteBackdropPath(discoverTvShow.backdropPath));
 
-                    shows.add(new Show(id, name, posterUri, backdropUri));
+                    showSummaries.add(new ShowSummary(id, name, posterUri, backdropUri));
                 }
-                return new ShowsInGenre(genre, shows);
+                return new ShowsInGenre(genre, showSummaries);
             }
 
         };

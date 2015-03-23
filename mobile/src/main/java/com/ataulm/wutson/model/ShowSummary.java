@@ -1,15 +1,15 @@
-package com.ataulm.wutson.discover;
+package com.ataulm.wutson.model;
 
 import java.net.URI;
 
-public class Show {
+public class ShowSummary {
 
     private final String id;
     private final String name;
     private final URI posterUri;
     private final URI backdropUri;
 
-    Show(String id, String name, URI posterUri, URI backdropUri) {
+    public ShowSummary(String id, String name, URI posterUri, URI backdropUri) {
         this.id = id;
         this.name = name;
         this.posterUri = posterUri;
@@ -20,15 +20,15 @@ public class Show {
         return id;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    URI getPosterUri() {
+    public URI getPosterUri() {
         return posterUri;
     }
 
-    URI getBackdropUri() {
+    public URI getBackdropUri() {
         return backdropUri;
     }
 

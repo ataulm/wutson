@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
@@ -68,8 +69,8 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
     }
 
     @Override
-    public void onClick(Show show) {
-        navigate().toShowDetails(show.getId(), show.getName(), show.getBackdropUri().toString());
+    public void onClick(ShowSummary showSummary) {
+        navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
     }
 
     private class Observer extends LoggingObserver<List<ShowsInGenre>> {
