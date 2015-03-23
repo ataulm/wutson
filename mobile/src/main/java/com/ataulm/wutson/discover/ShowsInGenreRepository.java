@@ -42,25 +42,7 @@ public class ShowsInGenreRepository {
     private void refreshBrowseShows() {
         Observable<GsonGenres.Genre> genreObservable = genresRepository.getGenres().flatMap(Function.<GsonGenres.Genre>emitEachElement());
         Observable<GsonGenreAndGsonDiscoverTvShows> discoverTvShowsObservable = genreObservable.flatMap(fetchDiscoverTvShows());
-
-        Observable<ShowsInGenre> showsInGenreObservable = Observable.combineLatest(configurationObservable(), discoverTvShowsObservable, new Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre>() {
-
-            @Override
-            public ShowsInGenre call(GsonConfiguration configuration, GsonGenreAndGsonDiscoverTvShows discoverTvShows) {
-                GsonGenres.Genre genre = discoverTvShows.genre;
-                List<Show> shows = new ArrayList<>(discoverTvShows.size());
-                for (GsonDiscoverTv.Shows.Show discoverTvShow : discoverTvShows.gsonDiscoverTv) {
-                    String id = discoverTvShow.id;
-                    String name = discoverTvShow.name;
-                    URI posterUri = URI.create(configuration.getCompletePosterPath(discoverTvShow.posterPath));
-                    URI backdropUri = URI.create(configuration.getCompleteBackdropPath(discoverTvShow.backdropPath));
-
-                    shows.add(new Show(id, name, posterUri, backdropUri));
-                }
-                return new ShowsInGenre(genre, shows);
-            }
-
-        });
+        Observable<ShowsInGenre> showsInGenreObservable = Observable.zip(repeatingConfigurationObservable(), discoverTvShowsObservable, combineAsShowsInGenre());
 
         showsInGenreObservable.toList()
                 .lift(Function.<List<ShowsInGenre>>swallowOnCompleteEvents())
@@ -86,8 +68,29 @@ public class ShowsInGenreRepository {
         };
     }
 
-    private Observable<GsonConfiguration> configurationObservable() {
-        return configurationRepository.getConfiguration().first();
+    private Observable<GsonConfiguration> repeatingConfigurationObservable() {
+        return configurationRepository.getConfiguration().first().repeat();
+    }
+
+    private Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre> combineAsShowsInGenre() {
+        return new Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre>() {
+
+            @Override
+            public ShowsInGenre call(GsonConfiguration configuration, GsonGenreAndGsonDiscoverTvShows discoverTvShows) {
+                GsonGenres.Genre genre = discoverTvShows.genre;
+                List<Show> shows = new ArrayList<>(discoverTvShows.size());
+                for (GsonDiscoverTv.Shows.Show discoverTvShow : discoverTvShows.gsonDiscoverTv) {
+                    String id = discoverTvShow.id;
+                    String name = discoverTvShow.name;
+                    URI posterUri = URI.create(configuration.getCompletePosterPath(discoverTvShow.posterPath));
+                    URI backdropUri = URI.create(configuration.getCompleteBackdropPath(discoverTvShow.backdropPath));
+
+                    shows.add(new Show(id, name, posterUri, backdropUri));
+                }
+                return new ShowsInGenre(genre, shows);
+            }
+
+        };
     }
 
     private static class GsonGenreAndGsonDiscoverTvShows {
