@@ -54,7 +54,7 @@
     <activity-alias
       android:name="activity.primary_launcher"
       android:label="@string/app_name"
-      android:targetActivity="com.ataulm.wutson.discover.DiscoverActivity">
+      android:targetActivity="com.ataulm.wutson.myshows.MyShowsActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
