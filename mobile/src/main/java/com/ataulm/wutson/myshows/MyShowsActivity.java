@@ -1,7 +1,6 @@
 package com.ataulm.wutson.myshows;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
@@ -17,10 +16,10 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (activityWasOpenedFromLauncher()) {
-            Log.d("TVSHOW", "is launcher");
-        } else {
-            Log.d("TVSHOW", "is not launcher");
+        if (userHasZeroTrackedShows() && activityWasOpenedFromLauncher()) {
+            navigate().toDiscover();
+            finish();
+            return;
         }
 
         setContentView(R.layout.activity_my_shows);
@@ -31,6 +30,11 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
     private boolean activityWasOpenedFromLauncher() {
         Set<String> categories = getIntent().getCategories();
         return categories != null && categories.contains("android.intent.category.LAUNCHER");
+    }
+
+    private boolean userHasZeroTrackedShows() {
+        // TODO: check from DB / preference
+        return true;
     }
 
     @Override
