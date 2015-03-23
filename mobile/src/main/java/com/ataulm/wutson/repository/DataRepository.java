@@ -4,8 +4,8 @@ import com.ataulm.wutson.discover.ShowsInGenre;
 import com.ataulm.wutson.discover.ShowsInGenreRepository;
 import com.ataulm.wutson.seasons.Seasons;
 import com.ataulm.wutson.seasons.SeasonsRepository;
-import com.ataulm.wutson.show.Show;
-import com.ataulm.wutson.show.ShowRepository;
+import com.ataulm.wutson.showdetails.Show;
+import com.ataulm.wutson.showdetails.ShowRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
 
 import java.util.List;

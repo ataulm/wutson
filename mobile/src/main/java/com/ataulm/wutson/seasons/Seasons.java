@@ -1,6 +1,6 @@
 package com.ataulm.wutson.seasons;
 
-import com.ataulm.wutson.show.Show;
+import com.ataulm.wutson.showdetails.Show;
 
 import java.util.Iterator;
 import java.util.List;

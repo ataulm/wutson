@@ -1,8 +1,8 @@
 package com.ataulm.wutson.seasons;
 
 import com.ataulm.wutson.repository.ConfigurationRepository;
-import com.ataulm.wutson.show.Show;
-import com.ataulm.wutson.show.ShowRepository;
+import com.ataulm.wutson.showdetails.Show;
+import com.ataulm.wutson.showdetails.ShowRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
 import com.ataulm.wutson.tmdb.gson.GsonSeason;

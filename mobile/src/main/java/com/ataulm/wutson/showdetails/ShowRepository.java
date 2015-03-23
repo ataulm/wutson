@@ -1,4 +1,4 @@
-package com.ataulm.wutson.show;
+package com.ataulm.wutson.showdetails;
 
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;

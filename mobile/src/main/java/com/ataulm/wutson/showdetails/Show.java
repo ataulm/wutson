@@ -1,4 +1,4 @@
-package com.ataulm.wutson.show;
+package com.ataulm.wutson.showdetails;
 
 import java.net.URI;
 import java.util.List;

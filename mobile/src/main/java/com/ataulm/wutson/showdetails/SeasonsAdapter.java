@@ -1,4 +1,4 @@
-package com.ataulm.wutson.show;
+package com.ataulm.wutson.showdetails;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

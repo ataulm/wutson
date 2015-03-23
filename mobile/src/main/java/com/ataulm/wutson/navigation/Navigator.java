@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.ataulm.wutson.show.ShowDetailsActivity;
+import com.ataulm.wutson.showdetails.ShowDetailsActivity;
 
 public class Navigator {
 

@@ -18,7 +18,7 @@
       android:theme="@style/Wutson.Theme.Discover" />
 
     <activity
-      android:name="com.ataulm.wutson.show.ShowDetailsActivity"
+      android:name="com.ataulm.wutson.showdetails.ShowDetailsActivity"
       android:parentActivityName="com.ataulm.wutson.discover.DiscoverActivity"
       android:theme="@style/Wutson.Theme.ShowDetails">
       <intent-filter>
@@ -30,7 +30,7 @@
 
     <activity
       android:name="com.ataulm.wutson.seasons.SeasonsActivity"
-      android:parentActivityName="com.ataulm.wutson.show.ShowDetailsActivity"
+      android:parentActivityName="com.ataulm.wutson.showdetails.ShowDetailsActivity"
       android:theme="@style/Wutson.Theme.Seasons">
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
