@@ -13,6 +13,11 @@
     android:theme="@style/Wutson.Theme">
 
     <activity
+      android:name="com.ataulm.wutson.myshows.MyShowsActivity"
+      android:label="@string/my_shows_label"
+      android:theme="@style/Wutson.Theme.MyShows" />
+
+    <activity
       android:name="com.ataulm.wutson.discover.DiscoverActivity"
       android:label="@string/discover_label"
       android:theme="@style/Wutson.Theme.Discover" />
@@ -41,8 +46,8 @@
 
     <activity
       android:name="com.ataulm.wutson.settings.SettingsActivity"
-      android:theme="@style/Wutson.Theme.Settings"
-      android:label="@string/settings_label" />
+      android:label="@string/settings_label"
+      android:theme="@style/Wutson.Theme.Settings" />
 
     <activity android:name="com.ataulm.wutson.settings.SoftwareLicensesActivity" />
 

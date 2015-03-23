@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.ataulm.wutson.discover.DiscoverActivity;
+import com.ataulm.wutson.myshows.MyShowsActivity;
+import com.ataulm.wutson.settings.SettingsActivity;
 import com.ataulm.wutson.showdetails.ShowDetailsActivity;
 
 public class Navigator {
@@ -17,6 +20,16 @@ public class Navigator {
 
     public Navigator(Activity activity) {
         this.activity = activity;
+    }
+
+    public void toMyShows() {
+        Intent intent = new Intent(activity, MyShowsActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public void toDiscover() {
+        Intent intent = new Intent(activity, DiscoverActivity.class);
+        activity.startActivity(intent);
     }
 
     public void toShowDetails(String showId, String showTitle, String showBackdropUri) {
@@ -38,7 +51,12 @@ public class Navigator {
         start(view(uri, MIME_TYPE_SEASON_DIR));
     }
 
-    public void toWutsonGooglePlusCommunity() {
+    public void toSettings() {
+        Intent intent = new Intent(activity, SettingsActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public void toHelpAndFeedback() {
         start(view(WUTSON_GPLUS_COMMUNITY));
     }
 

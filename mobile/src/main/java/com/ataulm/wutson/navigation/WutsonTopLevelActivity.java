@@ -1,6 +1,5 @@
 package com.ataulm.wutson.navigation;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,8 +9,6 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.discover.DiscoverActivity;
-import com.ataulm.wutson.settings.SettingsActivity;
 
 public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
@@ -44,14 +41,17 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
             public void onNavigationClick(NavigationDrawerItem item) {
                 closeDrawer();
                 switch (item) {
+                    case MY_SHOWS:
+                        navigate().toMyShows();
+                        break;
                     case DISCOVER_SHOWS:
-                        startActivity(new Intent(WutsonTopLevelActivity.this, DiscoverActivity.class));
+                        navigate().toDiscover();
                         break;
                     case SETTINGS:
-                        startActivity(new Intent(WutsonTopLevelActivity.this, SettingsActivity.class));
+                        navigate().toSettings();
                         break;
                     case HELP_FEEDBACK:
-                        navigate().toWutsonGooglePlusCommunity();
+                        navigate().toHelpAndFeedback();
                         break;
                     default:
                         onNotImplementedActionFor(item);
