@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.BuildConfig;
-import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
@@ -21,6 +20,8 @@ import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static com.ataulm.wutson.Jabber.dataRepository;
 
 public class ShowDetailsActivity extends WutsonActivity implements OnClickSeasonListener {
 
@@ -79,7 +80,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         MenuItem trackMenuItem = menu.findItem(R.id.show_details_menu_item_toggle_track);
         Observer<Boolean> observer = new TrackingShowObserver(trackMenuItem);
 
-        trackedStatusSubscription = Jabber.dataRepository().getTrackedStatusOfShowWith(getShowId())
+        trackedStatusSubscription = dataRepository().getTrackedStatusOfShowWith(getShowId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
@@ -90,7 +91,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     @Override
     protected void onResume() {
         super.onResume();
-        showDetailsSubscription = Jabber.dataRepository().getShow(getShowId())
+        showDetailsSubscription = dataRepository().getShow(getShowId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ShowObserver());
@@ -119,7 +120,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.show_details_menu_item_toggle_track) {
-            Jabber.dataRepository().toggleTrackingShowWithId(getShowId());
+            dataRepository().toggleTrackingShowWithId(getShowId());
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -130,7 +131,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
         private final MenuItem item;
 
-        private TrackingShowObserver(MenuItem item) {
+        TrackingShowObserver(MenuItem item) {
             this.item = item;
         }
 
