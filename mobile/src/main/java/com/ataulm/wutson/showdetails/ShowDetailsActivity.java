@@ -1,6 +1,5 @@
 package com.ataulm.wutson.showdetails;
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -31,7 +30,6 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     private Subscription trackedStatusSubscription;
     private Subscription showDetailsSubscription;
     private ShowPagerAdapter adapter;
-    private TrackedShowsRepository trackedShowsRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,11 +39,6 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         ViewPager viewPager = (ViewPager) findViewById(R.id.show_details_pager_show);
         viewPager.setAdapter(adapter = new ShowPagerAdapter(getResources(), this, getLayoutInflater(), getShowBackdropUri()));
         ((PagerSlidingTabStrip) findViewById(R.id.show_details_tabs_show)).setViewPager(viewPager);
-
-
-        SharedPreferences sharedPreferences = getSharedPreferences("TRACKED_SHOWS_REPO", MODE_PRIVATE);
-        // TODO: move to DataRepository
-        trackedShowsRepository = TrackedShowsRepository.newInstance(sharedPreferences);
     }
 
     private URI getShowBackdropUri() {
@@ -86,7 +79,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         MenuItem trackMenuItem = menu.findItem(R.id.show_details_menu_item_toggle_track);
         Observer<Boolean> observer = new TrackingShowObserver(trackMenuItem);
 
-        trackedStatusSubscription = trackedShowsRepository.getTrackedStatusOfShowWith(getShowId())
+        trackedStatusSubscription = Jabber.dataRepository().getTrackedStatusOfShowWith(getShowId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
@@ -126,7 +119,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.show_details_menu_item_toggle_track) {
-            trackedShowsRepository.toggleTrackingShowWithId(getShowId());
+            Jabber.dataRepository().toggleTrackingShowWithId(getShowId());
             return true;
         } else {
             return super.onOptionsItemSelected(item);

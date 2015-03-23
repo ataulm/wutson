@@ -38,7 +38,7 @@ public final class Jabber {
             boolean enableLogs = BuildConfig.DEBUG;
             TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(BuildConfig.TMDB_API_KEY, newClient(), enableLogs);
             TmdbApi api = tmdbApiFactory.createApi();
-            instance.dataRepository = new DataRepository(api);
+            instance.dataRepository = new DataRepository(api, instance.context.getSharedPreferences("key_prefs_tracked_shows", Context.MODE_PRIVATE));
         }
         return instance.dataRepository;
     }

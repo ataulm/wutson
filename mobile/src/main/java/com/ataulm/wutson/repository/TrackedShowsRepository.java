@@ -1,4 +1,4 @@
-package com.ataulm.wutson.showdetails;
+package com.ataulm.wutson.repository;
 
 import android.content.SharedPreferences;
 
