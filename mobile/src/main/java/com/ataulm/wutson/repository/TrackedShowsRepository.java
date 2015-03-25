@@ -28,9 +28,7 @@ final class TrackedShowsRepository {
     }
 
     Observable<Boolean> getTrackedStatusOfShowWith(String showId) {
-        if (!subject.hasValue()) {
-            subject.onNext(idsOfTrackedShows.contains(showId));
-        }
+        subject.onNext(idsOfTrackedShows.contains(showId));
         return subject;
     }
 
