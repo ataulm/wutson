@@ -80,7 +80,7 @@ public class ShowsInGenreRepository {
             public ShowsInGenre call(GsonConfiguration configuration, GsonGenreAndGsonDiscoverTvShows discoverTvShows) {
                 GsonGenres.Genre genre = discoverTvShows.genre;
                 List<ShowSummary> showSummaries = new ArrayList<>(discoverTvShows.size());
-                for (GsonDiscoverTv.Shows.Show discoverTvShow : discoverTvShows.gsonDiscoverTv) {
+                for (GsonDiscoverTv.Show discoverTvShow : discoverTvShows.gsonDiscoverTv) {
                     String id = discoverTvShow.id;
                     String name = discoverTvShow.name;
                     URI posterUri = URI.create(configuration.getCompletePosterPath(discoverTvShow.posterPath));

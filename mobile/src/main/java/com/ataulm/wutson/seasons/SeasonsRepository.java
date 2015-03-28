@@ -30,27 +30,39 @@ public class SeasonsRepository {
     public Observable<Seasons> getSeasons(final String showId) {
         Observable<Show> showObservable = showRepository.getShow(showId);
         Observable<GsonConfiguration> gsonConfigurationObservable = configurationRepository.getConfiguration().first();
-        Observable<GsonSeason> listObservable = showObservable
+        Observable<GsonSeason> gsonSeasonObservable = showObservable
                 .flatMap(forEachSeasonInShow())
                 .flatMap(fetchGsonSeason());
 
-        Observable<List<Season>> seasonObservable = Observable.combineLatest(listObservable, gsonConfigurationObservable, toSeason()).toSortedList();
+        Observable<List<Season>> seasonObservable = Observable.combineLatest(gsonSeasonObservable, gsonConfigurationObservable, asSeason()).toSortedList();
 
         return Observable.combineLatest(showObservable, seasonObservable, asSeasons());
     }
 
-    private Func2<Show, List<Season>, Seasons> asSeasons() {
-        return new Func2<Show, List<Season>, Seasons>() {
+    private Func1<Show, Observable<Show.Season>> forEachSeasonInShow() {
+        return new Func1<Show, Observable<Show.Season>>() {
 
             @Override
-            public Seasons call(Show show, List<Season> seasons) {
-                return new Seasons(show, seasons);
+            public Observable<Show.Season> call(Show show) {
+                Iterable<Show.Season> seasons = show.getSeasons();
+                return Observable.from(seasons);
             }
 
         };
     }
 
-    private Func2<GsonSeason, GsonConfiguration, Season> toSeason() {
+    private Func1<Show.Season, Observable<GsonSeason>> fetchGsonSeason() {
+        return new Func1<Show.Season, Observable<GsonSeason>>() {
+
+            @Override
+            public Observable<GsonSeason> call(Show.Season season) {
+                return api.getSeason(season.getShowId(), season.getSeasonNumber());
+            }
+
+        };
+    }
+
+    private static Func2<GsonSeason, GsonConfiguration, Season> asSeason() {
         return new Func2<GsonSeason, GsonConfiguration, Season>() {
 
             @Override
@@ -77,23 +89,12 @@ public class SeasonsRepository {
         };
     }
 
-    private Func1<Show, Observable<Show.Season>> forEachSeasonInShow() {
-        return new Func1<Show, Observable<Show.Season>>() {
+    private static Func2<Show, List<Season>, Seasons> asSeasons() {
+        return new Func2<Show, List<Season>, Seasons>() {
 
             @Override
-            public Observable<Show.Season> call(Show show) {
-                return Observable.from(show.getSeasons());
-            }
-
-        };
-    }
-
-    private Func1<Show.Season, Observable<GsonSeason>> fetchGsonSeason() {
-        return new Func1<Show.Season, Observable<GsonSeason>>() {
-
-            @Override
-            public Observable<GsonSeason> call(Show.Season season) {
-                return api.getSeason(season.getShowId(), season.getSeasonNumber());
+            public Seasons call(Show show, List<Season> seasons) {
+                return new Seasons(show, seasons);
             }
 
         };
