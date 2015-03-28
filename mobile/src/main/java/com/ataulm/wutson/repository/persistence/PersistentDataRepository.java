@@ -25,8 +25,7 @@ public class PersistentDataRepository {
     }
 
     public void writeJsonConfiguration(String json) {
-        // TODO: this should be a timestamp as the first param
-        ContentValues contentValues = ConfigurationColumn.write(0, json);
+        ContentValues contentValues = ConfigurationColumn.write(Timestamp.now().asLong(), json);
         contentResolver.insert(CONFIGURATION.uri(), contentValues);
     }
 
