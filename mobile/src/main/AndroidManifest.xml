@@ -62,7 +62,7 @@
     </activity-alias>
 
     <provider
-      android:name=".repository.persistence.PersistentDataRepository"
+      android:name=".repository.persistence.WutsonSQLiteContentProvider"
       android:authorities="${applicationId}"
       android:exported="false" />
 

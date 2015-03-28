@@ -11,7 +11,7 @@ enum DatabaseTable {
     SHOW_SUMMARIES;
 
     Uri uri() {
-        return Uri.parse(PersistentDataRepository.AUTHORITY).buildUpon().appendPath(tableName()).build();
+        return Uri.parse(WutsonSQLiteContentProvider.AUTHORITY).buildUpon().appendPath(tableName()).build();
     }
 
     private String tableName() {

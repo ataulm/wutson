@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 
 import com.ataulm.wutson.discover.ShowsInGenre;
 import com.ataulm.wutson.discover.ShowsInGenreRepository;
+import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.seasons.Seasons;
 import com.ataulm.wutson.seasons.SeasonsRepository;
 import com.ataulm.wutson.showdetails.Show;
@@ -21,8 +22,8 @@ public class DataRepository {
     private final ShowRepository showRepository;
     private final SeasonsRepository seasonsRepository;
 
-    public DataRepository(TmdbApi api, SharedPreferences sharedPreferences) {
-        ConfigurationRepository configurationRepository = new ConfigurationRepository(api);
+    public DataRepository(TmdbApi api, SharedPreferences sharedPreferences, PersistentDataRepository persistentDataRepository) {
+        ConfigurationRepository configurationRepository = new ConfigurationRepository(api, persistentDataRepository);
 
         this.showsInGenreRepository = new ShowsInGenreRepository(api, configurationRepository);
         this.showRepository = new ShowRepository(api, configurationRepository);
