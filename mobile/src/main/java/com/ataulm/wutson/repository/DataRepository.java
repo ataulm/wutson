@@ -25,7 +25,7 @@ public class DataRepository {
     public DataRepository(TmdbApi api, SharedPreferences sharedPreferences, PersistentDataRepository persistentDataRepository) {
         ConfigurationRepository configurationRepository = new ConfigurationRepository(api, persistentDataRepository);
 
-        this.showsInGenreRepository = new ShowsInGenreRepository(api, configurationRepository);
+        this.showsInGenreRepository = new ShowsInGenreRepository(api, configurationRepository, persistentDataRepository);
         this.showRepository = new ShowRepository(api, configurationRepository);
         this.seasonsRepository = new SeasonsRepository(api, showRepository, configurationRepository);
         this.trackedShowsRepository = TrackedShowsRepository.newInstance(sharedPreferences);

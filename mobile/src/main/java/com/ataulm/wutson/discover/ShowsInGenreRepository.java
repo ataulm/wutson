@@ -2,6 +2,7 @@ package com.ataulm.wutson.discover;
 
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.repository.ConfigurationRepository;
+import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
@@ -25,11 +26,11 @@ public class ShowsInGenreRepository {
     private final ConfigurationRepository configurationRepository;
     private final BehaviorSubject<List<ShowsInGenre>> subject;
 
-    public ShowsInGenreRepository(TmdbApi api, ConfigurationRepository configurationRepository) {
+    public ShowsInGenreRepository(TmdbApi api, ConfigurationRepository configurationRepository, PersistentDataRepository persistentDataRepository) {
         this.api = api;
         this.configurationRepository = configurationRepository;
 
-        this.genresRepository = new GenresRepository(api);
+        this.genresRepository = new GenresRepository(api, persistentDataRepository);
         this.subject = BehaviorSubject.create();
     }
 
