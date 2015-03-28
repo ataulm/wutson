@@ -61,6 +61,11 @@
       </intent-filter>
     </activity-alias>
 
+    <provider
+      android:name=".repository.persistence.PersistentDataRepository"
+      android:authorities="${applicationId}"
+      android:exported="false" />
+
   </application>
 
 </manifest>
