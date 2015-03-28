@@ -14,8 +14,16 @@ public class ToastDisplayer {
     }
 
     public void display(String message) {
+        displayDuration(message, Toast.LENGTH_SHORT);
+    }
+
+    public void displayLong(String message) {
+        displayDuration(message, Toast.LENGTH_LONG);
+    }
+
+    private void displayDuration(String message, int duration) {
         cancelToast();
-        toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        toast = Toast.makeText(context, message, duration);
         toast.show();
     }
 
