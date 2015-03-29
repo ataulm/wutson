@@ -46,8 +46,8 @@ public class DataRepository {
         return trackedShowsRepository.getTrackedStatusOfShowWith(showId);
     }
 
-    public Observable<Boolean> toggleTrackingShowWithId(String showId) {
-        return trackedShowsRepository.toggleTrackingShowWithId(showId);
+    public Observable<Boolean> toggleTrackedStatusOfShowWith(String showId) {
+        return trackedShowsRepository.toggleTrackedStatusOfShowWith(showId);
     }
 
 }

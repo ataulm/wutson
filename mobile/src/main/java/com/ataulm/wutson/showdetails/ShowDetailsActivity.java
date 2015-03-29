@@ -120,7 +120,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.show_details_menu_item_toggle_track) {
-            dataRepository().toggleTrackingShowWithId(getShowId())
+            dataRepository().toggleTrackedStatusOfShowWith(getShowId())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new TrackingShowObserver(item));
             return true;
