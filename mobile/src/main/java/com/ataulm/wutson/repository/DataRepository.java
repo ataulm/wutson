@@ -24,8 +24,9 @@ public class DataRepository {
     public DataRepository(TmdbApi api, PersistentDataRepository persistentDataRepository) {
         ConfigurationRepository configurationRepository = new ConfigurationRepository(api, persistentDataRepository);
 
-        this.showsInGenreRepository = new ShowsInGenreRepository(api, persistentDataRepository, new Gson(), configurationRepository);
-        this.showRepository = new ShowRepository(api, configurationRepository);
+        Gson gson = new Gson();
+        this.showsInGenreRepository = new ShowsInGenreRepository(api, persistentDataRepository, gson, configurationRepository);
+        this.showRepository = new ShowRepository(api, persistentDataRepository, gson, configurationRepository);
         this.seasonsRepository = new SeasonsRepository(api, showRepository, configurationRepository);
         this.trackedShowsRepository = new TrackedShowsRepository(persistentDataRepository);
     }

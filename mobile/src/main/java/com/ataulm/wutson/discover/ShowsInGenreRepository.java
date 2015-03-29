@@ -1,5 +1,7 @@
 package com.ataulm.wutson.discover;
 
+import android.util.Log;
+
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
@@ -64,8 +66,8 @@ public class ShowsInGenreRepository {
         return new Func1<GsonGenres.Genre, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
 
             @Override
-            public Observable<GsonGenreAndGsonDiscoverTvShows> call(final GsonGenres.Genre genre) {
-                return  fetchJsonShowSummariesFrom(persistentDataRepository, genre.id)
+            public Observable<GsonGenreAndGsonDiscoverTvShows> call(GsonGenres.Genre genre) {
+                return fetchJsonShowSummariesFrom(persistentDataRepository, genre.id)
                         .flatMap(asGsonDiscoverTv(gson))
                         .switchIfEmpty(api.getShowsMatchingGenre(genre.id).doOnNext(saveTo(persistentDataRepository, gson, genre.id)))
                         .flatMap(asGsonGenreAndGsonDiscoverTvShows(genre));
@@ -102,7 +104,8 @@ public class ShowsInGenreRepository {
 
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext(repository.readJsonShowSummaries(tmdbGenreId));
+                String json = repository.readJsonShowSummaries(tmdbGenreId);
+                subscriber.onNext(json);
                 subscriber.onCompleted();
             }
 
@@ -118,9 +121,11 @@ public class ShowsInGenreRepository {
 
                     @Override
                     public void call(Subscriber<? super GsonDiscoverTv> subscriber) {
-                        if (!json.isEmpty()) {
-                            GsonDiscoverTv gsonConfiguration = gson.fromJson(json, GsonDiscoverTv.class);
-                            subscriber.onNext(gsonConfiguration);
+                        if (json.isEmpty()) {
+                            Log.w("WHATWHAT", "DiscoverTv json is empty");
+                        } else {
+                            GsonDiscoverTv gsonDiscoverTv = gson.fromJson(json, GsonDiscoverTv.class);
+                            subscriber.onNext(gsonDiscoverTv);
                         }
                         subscriber.onCompleted();
                     }

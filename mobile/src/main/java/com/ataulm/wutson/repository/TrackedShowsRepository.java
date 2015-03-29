@@ -31,13 +31,17 @@ final class TrackedShowsRepository {
         return new Func1<Boolean, Observable<Boolean>>() {
 
             @Override
-            public Observable<Boolean> call(Boolean isTracked) {
-                if (isTracked) {
+            public Observable<Boolean> call(Boolean isCurrentlyTracked) {
+                toggleTrackedStatus(isCurrentlyTracked);
+                return Observable.just(!isCurrentlyTracked);
+            }
+
+            private void toggleTrackedStatus(Boolean isCurrentlyTracked) {
+                if (isCurrentlyTracked) {
                     repository.deleteFromTrackedShows(tmdbShowId);
                 } else {
                     repository.addToTrackedShows(tmdbShowId);
                 }
-                return Observable.just(!isTracked);
             }
 
         };

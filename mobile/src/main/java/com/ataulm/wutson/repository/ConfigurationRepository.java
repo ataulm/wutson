@@ -1,5 +1,7 @@
 package com.ataulm.wutson.repository;
 
+import android.util.Log;
+
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.TmdbApi;
@@ -65,7 +67,9 @@ public class ConfigurationRepository {
 
                     @Override
                     public void call(Subscriber<? super GsonConfiguration> subscriber) {
-                        if (!json.isEmpty()) {
+                        if (json.isEmpty()) {
+                            Log.w("WHATWHAT", "Configuration json is empty");
+                        } else {
                             GsonConfiguration gsonConfiguration = gson.fromJson(json, GsonConfiguration.class);
                             subscriber.onNext(gsonConfiguration);
                         }

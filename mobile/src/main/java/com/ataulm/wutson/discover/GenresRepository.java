@@ -1,5 +1,7 @@
 package com.ataulm.wutson.discover;
 
+import android.util.Log;
+
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
@@ -64,7 +66,9 @@ public class GenresRepository {
 
                     @Override
                     public void call(Subscriber<? super GsonGenres> subscriber) {
-                        if (!json.isEmpty()) {
+                        if (json.isEmpty()) {
+                            Log.w("WHATWHAT", "Genres json is empty");
+                        } else {
                             GsonGenres gsonGenres = gson.fromJson(json, GsonGenres.class);
                             subscriber.onNext(gsonGenres);
                         }
