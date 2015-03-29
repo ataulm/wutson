@@ -32,7 +32,7 @@ public class DataRepository {
         this.trackedShowsRepository = TrackedShowsRepository.newInstance(sharedPreferences);
     }
 
-    public Observable<Show> getShow(final String showId) {
+    public Observable<Show> getShow(String showId) {
         return showRepository.getShow(showId);
     }
 
