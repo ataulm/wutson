@@ -16,3 +16,9 @@ CREATE TABLE 'show_summaries' (
     tmdb_genre_id TEXT NOT NULL,
     json TEXT NOT NULL
 );
+
+CREATE TABLE 'tracked_shows' (
+    _id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created INTEGER NOT NULL,
+    tmdb_show_id TEXT NOT NULL UNIQUE ON CONFLICT IGNORE
+);

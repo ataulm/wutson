@@ -1,7 +1,5 @@
 package com.ataulm.wutson.repository;
 
-import android.content.SharedPreferences;
-
 import com.ataulm.wutson.discover.ShowsInGenre;
 import com.ataulm.wutson.discover.ShowsInGenreRepository;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
@@ -23,13 +21,13 @@ public class DataRepository {
     private final ShowRepository showRepository;
     private final SeasonsRepository seasonsRepository;
 
-    public DataRepository(TmdbApi api, SharedPreferences sharedPreferences, PersistentDataRepository persistentDataRepository) {
+    public DataRepository(TmdbApi api, PersistentDataRepository persistentDataRepository) {
         ConfigurationRepository configurationRepository = new ConfigurationRepository(api, persistentDataRepository);
 
         this.showsInGenreRepository = new ShowsInGenreRepository(api, persistentDataRepository, new Gson(), configurationRepository);
         this.showRepository = new ShowRepository(api, configurationRepository);
         this.seasonsRepository = new SeasonsRepository(api, showRepository, configurationRepository);
-        this.trackedShowsRepository = TrackedShowsRepository.newInstance(sharedPreferences);
+        this.trackedShowsRepository = new TrackedShowsRepository(persistentDataRepository);
     }
 
     public Observable<Show> getShow(String showId) {
@@ -48,8 +46,8 @@ public class DataRepository {
         return trackedShowsRepository.getTrackedStatusOfShowWith(showId);
     }
 
-    public void toggleTrackingShowWithId(String showId) {
-        trackedShowsRepository.toggleTrackingShowWithId(showId);
+    public Observable<Boolean> toggleTrackingShowWithId(String showId) {
+        return trackedShowsRepository.toggleTrackingShowWithId(showId);
     }
 
 }

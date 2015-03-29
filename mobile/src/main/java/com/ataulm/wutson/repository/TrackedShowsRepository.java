@@ -1,61 +1,51 @@
 package com.ataulm.wutson.repository;
 
-import android.content.SharedPreferences;
-
-import java.util.HashSet;
-import java.util.Set;
+import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 
 import rx.Observable;
-import rx.subjects.BehaviorSubject;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 final class TrackedShowsRepository {
 
-    private static final String KEY_TRACKED_SHOWS = "key_tracked_shows";
+    private final PersistentDataRepository persistentDataRepository;
 
-    private final SharedPreferences sharedPreferences;
-    private final Set<String> idsOfTrackedShows;
-    private final BehaviorSubject<Boolean> subject;
-
-    static TrackedShowsRepository newInstance(SharedPreferences sharedPreferences) {
-        Set<String> idsOfTrackedShows = sharedPreferences.getStringSet(KEY_TRACKED_SHOWS, new HashSet<String>());
-        return new TrackedShowsRepository(idsOfTrackedShows, sharedPreferences);
-    }
-
-    private TrackedShowsRepository(Set<String> idsOfTrackedShows, SharedPreferences sharedPreferences) {
-        this.sharedPreferences = sharedPreferences;
-        this.subject = BehaviorSubject.create();
-        this.idsOfTrackedShows = idsOfTrackedShows;
+    TrackedShowsRepository(PersistentDataRepository persistentDataRepository) {
+        this.persistentDataRepository = persistentDataRepository;
     }
 
     Observable<Boolean> getTrackedStatusOfShowWith(String showId) {
-        subject.onNext(idsOfTrackedShows.contains(showId));
-        return subject;
+        return Observable.just(persistentDataRepository.isShowTracked(showId));
     }
 
-    void toggleTrackingShowWithId(String showId) {
-        if (idsOfTrackedShows.contains(showId)) {
-            stopTrackingShowWithId(showId);
-        } else {
-            startTrackingShowWithId(showId);
-        }
+    Observable<Boolean> toggleTrackingShowWithId(String showId) {
+        return getTrackedStatusOfShowWith(showId)
+                .doOnNext(toggleTrackingShowWithId(showId, persistentDataRepository))
+                .flatMap(new Func1<Boolean, Observable<Boolean>>() {
+
+                    @Override
+                    public Observable<Boolean> call(Boolean trackedStatusBeforeToggle) {
+                        return Observable.just(!trackedStatusBeforeToggle);
+                    }
+
+                })
+                .subscribeOn(Schedulers.io());
     }
 
-    private void startTrackingShowWithId(String showId) {
-        if (idsOfTrackedShows.add(showId)) {
-            resynchronisePrefs();
-        }
-        subject.onNext(true);
-    }
+    private static Action1<Boolean> toggleTrackingShowWithId(final String tmdbShowId, final PersistentDataRepository repository) {
+        return new Action1<Boolean>() {
 
-    private void stopTrackingShowWithId(String showId) {
-        if (idsOfTrackedShows.remove(showId)) {
-            resynchronisePrefs();
-        }
-        subject.onNext(false);
-    }
+            @Override
+            public void call(Boolean isTracked) {
+                if (isTracked) {
+                    repository.deleteFromTrackedShows(tmdbShowId);
+                } else {
+                    repository.addToTrackedShows(tmdbShowId);
+                }
+            }
 
-    private void resynchronisePrefs() {
-        sharedPreferences.edit().putStringSet(KEY_TRACKED_SHOWS, idsOfTrackedShows).apply();
+        };
     }
 
 }

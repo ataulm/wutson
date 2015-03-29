@@ -2,7 +2,6 @@ package com.ataulm.wutson;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.ataulm.wutson.repository.DataRepository;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
@@ -40,10 +39,9 @@ public final class Jabber {
             boolean enableLogs = BuildConfig.DEBUG;
             TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(BuildConfig.TMDB_API_KEY, newClient(), enableLogs);
             TmdbApi api = tmdbApiFactory.createApi();
-            SharedPreferences sharedPreferences = instance.context.getSharedPreferences("key_prefs_tracked_shows", Context.MODE_PRIVATE);
             PersistentDataRepository persistentDataRepository = new PersistentDataRepository(instance.context.getContentResolver());
 
-            instance.dataRepository = new DataRepository(api, sharedPreferences, persistentDataRepository);
+            instance.dataRepository = new DataRepository(api, persistentDataRepository);
         }
         return instance.dataRepository;
     }
