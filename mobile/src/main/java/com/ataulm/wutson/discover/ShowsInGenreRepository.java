@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
@@ -63,11 +65,64 @@ public class ShowsInGenreRepository {
 
             @Override
             public Observable<GsonGenreAndGsonDiscoverTvShows> call(final GsonGenres.Genre genre) {
-                return api.getShowsMatchingGenre(genre.id).flatMap(new Func1<GsonDiscoverTv, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
+                return  fetchJsonShowSummariesFrom(persistentDataRepository, genre.id)
+                        .flatMap(asGsonDiscoverTv(gson))
+                        .switchIfEmpty(api.getShowsMatchingGenre(genre.id).doOnNext(saveTo(persistentDataRepository, gson, genre.id)))
+                        .flatMap(asGsonGenreAndGsonDiscoverTvShows(genre));
+            }
+
+        };
+    }
+
+    private static Action1<? super GsonDiscoverTv> saveTo(final PersistentDataRepository persistentDataRepository, final Gson gson, final String tmdbGenreId) {
+        return new Action1<GsonDiscoverTv>() {
+
+            @Override
+            public void call(GsonDiscoverTv gsonDiscoverTv) {
+                String json = gson.toJson(gsonDiscoverTv, GsonDiscoverTv.class);
+                persistentDataRepository.writeJsonShowSummary(tmdbGenreId, json);
+            }
+
+        };
+    }
+
+    private static Func1<GsonDiscoverTv, Observable<GsonGenreAndGsonDiscoverTvShows>> asGsonGenreAndGsonDiscoverTvShows(final GsonGenres.Genre genre) {
+        return new Func1<GsonDiscoverTv, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
+
+            @Override
+            public Observable<GsonGenreAndGsonDiscoverTvShows> call(GsonDiscoverTv gsonDiscoverTv) {
+                return Observable.just(new GsonGenreAndGsonDiscoverTvShows(genre, gsonDiscoverTv));
+            }
+
+        };
+    }
+
+    private static Observable<String> fetchJsonShowSummariesFrom(final PersistentDataRepository repository, final String tmdbGenreId) {
+        return Observable.create(new Observable.OnSubscribe<String>() {
+
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                subscriber.onNext(repository.readJsonShowSummaries(tmdbGenreId));
+                subscriber.onCompleted();
+            }
+
+        });
+    }
+
+    private static Func1<String, Observable<GsonDiscoverTv>> asGsonDiscoverTv(final Gson gson) {
+        return new Func1<String, Observable<GsonDiscoverTv>>() {
+
+            @Override
+            public Observable<GsonDiscoverTv> call(final String json) {
+                return Observable.create(new Observable.OnSubscribe<GsonDiscoverTv>() {
 
                     @Override
-                    public Observable<GsonGenreAndGsonDiscoverTvShows> call(GsonDiscoverTv gsonDiscoverTv) {
-                        return Observable.just(new GsonGenreAndGsonDiscoverTvShows(genre, gsonDiscoverTv));
+                    public void call(Subscriber<? super GsonDiscoverTv> subscriber) {
+                        if (!json.isEmpty()) {
+                            GsonDiscoverTv gsonConfiguration = gson.fromJson(json, GsonDiscoverTv.class);
+                            subscriber.onNext(gsonConfiguration);
+                        }
+                        subscriber.onCompleted();
                     }
 
                 });
@@ -80,7 +135,7 @@ public class ShowsInGenreRepository {
         return configurationRepository.getConfiguration().first().repeat();
     }
 
-    private Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre> combineAsShowsInGenre() {
+    private static Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre> combineAsShowsInGenre() {
         return new Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre>() {
 
             @Override
