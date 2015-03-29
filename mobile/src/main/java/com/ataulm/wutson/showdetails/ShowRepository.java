@@ -32,6 +32,7 @@ public class ShowRepository {
 
     private static Func2<GsonConfiguration, GsonTvShow, Show> asShow(final String showId) {
         return new Func2<GsonConfiguration, GsonTvShow, Show>() {
+
             @Override
             public Show call(GsonConfiguration gsonConfiguration, GsonTvShow gsonTvShow) {
                 List<Character> characters = getCharacters(gsonConfiguration, gsonTvShow);

@@ -7,6 +7,7 @@ import android.net.Uri;
 
 import static com.ataulm.wutson.repository.persistence.DatabaseTable.CONFIGURATION;
 import static com.ataulm.wutson.repository.persistence.DatabaseTable.GENRES;
+import static com.ataulm.wutson.repository.persistence.DatabaseTable.SHOW_DETAILS;
 import static com.ataulm.wutson.repository.persistence.DatabaseTable.SHOW_SUMMARIES;
 import static com.ataulm.wutson.repository.persistence.DatabaseTable.TRACKED_SHOWS;
 
@@ -85,6 +86,25 @@ public class PersistentDataRepository {
         String selection = TrackedShowsColumn.TMDB_SHOW_ID.columnName() + "=?";
         String[] selectionArgs = {tmdbShowId};
         return contentResolver.delete(TRACKED_SHOWS.uri(), selection, selectionArgs);
+    }
+
+    public String readJsonShowDetails(String tmdbShowId) {
+        String[] projection = {ShowDetailsColumn.JSON.columnName()};
+        String selection = ShowDetailsColumn.TMDB_SHOW_ID.columnName() + "=?";
+        String[] selectionArgs = {tmdbShowId};
+        Cursor cursor = contentResolver.query(SHOW_DETAILS.uri(), projection, selection, selectionArgs, null);
+
+        if (!cursor.moveToFirst()) {
+            return "";
+        }
+        String json = ShowDetailsColumn.readJsonFrom(cursor);
+        cursor.close();
+        return json;
+    }
+
+    public void writeJsonShowDetails(String tmdbShowId, String json) {
+        ContentValues contentValues = ShowDetailsColumn.write(Timestamp.now().asLong(), tmdbShowId, json);
+        contentResolver.insert(SHOW_DETAILS.uri(), contentValues);
     }
 
 }

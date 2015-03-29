@@ -9,7 +9,8 @@ enum DatabaseTable {
     CONFIGURATION,
     GENRES,
     SHOW_SUMMARIES,
-    TRACKED_SHOWS;
+    TRACKED_SHOWS,
+    SHOW_DETAILS;
 
     Uri uri() {
         return Uri.parse(WutsonSQLiteContentProvider.AUTHORITY).buildUpon().appendPath(tableName()).build();
