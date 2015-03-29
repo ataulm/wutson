@@ -16,15 +16,16 @@ public class GenresRepository {
 
     private final TmdbApi api;
     private final PersistentDataRepository persistentDataRepository;
-    private final BehaviorSubject<GsonGenres> subject;
     private final Gson gson;
 
-    GenresRepository(TmdbApi api, PersistentDataRepository persistentDataRepository) {
+    private final BehaviorSubject<GsonGenres> subject;
+
+    GenresRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson) {
         this.api = api;
         this.persistentDataRepository = persistentDataRepository;
-        this.subject = BehaviorSubject.create();
+        this.gson = gson;
 
-        this.gson = new Gson();
+        this.subject = BehaviorSubject.create();
     }
 
     Observable<GsonGenres> getGenres() {

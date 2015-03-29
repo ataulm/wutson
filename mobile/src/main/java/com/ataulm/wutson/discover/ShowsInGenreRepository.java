@@ -8,6 +8,7 @@ import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
 import com.ataulm.wutson.tmdb.gson.GsonDiscoverTv;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
+import com.google.gson.Gson;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -22,15 +23,20 @@ import rx.subjects.BehaviorSubject;
 public class ShowsInGenreRepository {
 
     private final TmdbApi api;
-    private final GenresRepository genresRepository;
+    private final PersistentDataRepository persistentDataRepository;
+    private final Gson gson;
     private final ConfigurationRepository configurationRepository;
+
+    private final GenresRepository genresRepository;
     private final BehaviorSubject<List<ShowsInGenre>> subject;
 
-    public ShowsInGenreRepository(TmdbApi api, ConfigurationRepository configurationRepository, PersistentDataRepository persistentDataRepository) {
+    public ShowsInGenreRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson, ConfigurationRepository configurationRepository) {
         this.api = api;
+        this.persistentDataRepository = persistentDataRepository;
+        this.gson = gson;
         this.configurationRepository = configurationRepository;
 
-        this.genresRepository = new GenresRepository(api, persistentDataRepository);
+        this.genresRepository = new GenresRepository(api, persistentDataRepository, gson);
         this.subject = BehaviorSubject.create();
     }
 

@@ -10,6 +10,7 @@ import com.ataulm.wutson.seasons.SeasonsRepository;
 import com.ataulm.wutson.showdetails.Show;
 import com.ataulm.wutson.showdetails.ShowRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class DataRepository {
     public DataRepository(TmdbApi api, SharedPreferences sharedPreferences, PersistentDataRepository persistentDataRepository) {
         ConfigurationRepository configurationRepository = new ConfigurationRepository(api, persistentDataRepository);
 
-        this.showsInGenreRepository = new ShowsInGenreRepository(api, configurationRepository, persistentDataRepository);
+        this.showsInGenreRepository = new ShowsInGenreRepository(api, persistentDataRepository, new Gson(), configurationRepository);
         this.showRepository = new ShowRepository(api, configurationRepository);
         this.seasonsRepository = new SeasonsRepository(api, showRepository, configurationRepository);
         this.trackedShowsRepository = TrackedShowsRepository.newInstance(sharedPreferences);
