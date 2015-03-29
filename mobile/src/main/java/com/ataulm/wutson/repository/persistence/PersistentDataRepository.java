@@ -6,6 +6,7 @@ import android.database.Cursor;
 
 import static com.ataulm.wutson.repository.persistence.DatabaseTable.CONFIGURATION;
 import static com.ataulm.wutson.repository.persistence.DatabaseTable.GENRES;
+import static com.ataulm.wutson.repository.persistence.DatabaseTable.SHOW_SUMMARIES;
 
 public class PersistentDataRepository {
 
@@ -43,6 +44,25 @@ public class PersistentDataRepository {
     public void writeJsonGenres(String json) {
         ContentValues contentValues = GenresColumn.write(Timestamp.now().asLong(), json);
         contentResolver.insert(GENRES.uri(), contentValues);
+    }
+
+    public String readJsonShowSummaries(String tmdbGenreId) {
+        String[] projection = {ShowSummariesColumn.JSON.columnName()};
+        String selection = ShowSummariesColumn.TMDB_GENRE_ID.columnName() + "=?";
+        String[] selectionArgs = {tmdbGenreId};
+        Cursor cursor = contentResolver.query(SHOW_SUMMARIES.uri(), projection, selection, selectionArgs, null);
+
+        if (!cursor.moveToFirst()) {
+            return "";
+        }
+        String json = ShowSummariesColumn.readJsonFrom(cursor);
+        cursor.close();
+        return json;
+    }
+
+    public void writeJsonShowSummary(String tmdbGenreId, String json) {
+        ContentValues contentValues = ShowSummariesColumn.write(Timestamp.now().asLong(), tmdbGenreId, json);
+        contentResolver.insert(SHOW_SUMMARIES.uri(), contentValues);
     }
 
 }

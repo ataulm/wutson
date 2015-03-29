@@ -31,7 +31,7 @@ enum ShowSummariesColumn {
         return cursor.getString(cursor.getColumnIndex(JSON.columnName()));
     }
 
-    private String columnName() {
+    String columnName() {
         return name().toLowerCase(Locale.UK);
     }
 
