@@ -26,6 +26,6 @@ CREATE TABLE 'tracked_shows' (
 CREATE TABLE 'show_details' (
     _id INTEGER PRIMARY KEY AUTOINCREMENT,
     created INTEGER NOT NULL,
-    tmdb_show_id TEXT NOT NULL UNIQUE ON CONFLICT REPLACE
+    tmdb_show_id TEXT NOT NULL UNIQUE ON CONFLICT REPLACE,
     json TEXT NOT NULL
 );
