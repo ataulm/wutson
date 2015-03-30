@@ -28,23 +28,23 @@ public class ShowsInGenreRepository {
 
     private final TmdbApi api;
     private final PersistentDataRepository persistentDataRepository;
-    private final Gson gson;
     private final ConfigurationRepository configurationRepository;
-
     private final GenresRepository genresRepository;
+    private final Gson gson;
+
     private final BehaviorSubject<List<ShowsInGenre>> subject;
 
-    public ShowsInGenreRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson, ConfigurationRepository configurationRepository) {
+    public ShowsInGenreRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, ConfigurationRepository configurationRepository, GenresRepository genresRepository, Gson gson) {
         this.api = api;
         this.persistentDataRepository = persistentDataRepository;
-        this.gson = gson;
         this.configurationRepository = configurationRepository;
+        this.genresRepository = genresRepository;
+        this.gson = gson;
 
-        this.genresRepository = new GenresRepository(api, persistentDataRepository, gson);
         this.subject = BehaviorSubject.create();
     }
 
-    public Observable<List<ShowsInGenre>> getShowsSeparatedByGenre() {
+    public Observable<List<ShowsInGenre>> getDiscoverShowsList() {
         if (!subject.hasValue()) {
             refreshBrowseShows();
         }

@@ -91,7 +91,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     @Override
     protected void onResume() {
         super.onResume();
-        showDetailsSubscription = dataRepository().getShow(getShowId())
+        showDetailsSubscription = dataRepository().getShowDetails(getShowId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ShowObserver());

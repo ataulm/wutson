@@ -22,7 +22,7 @@ public class GenresRepository {
 
     private final BehaviorSubject<GsonGenres> subject;
 
-    GenresRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson) {
+    public GenresRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson) {
         this.api = api;
         this.persistentDataRepository = persistentDataRepository;
         this.gson = gson;

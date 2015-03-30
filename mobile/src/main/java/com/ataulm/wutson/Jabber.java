@@ -3,10 +3,17 @@ package com.ataulm.wutson;
 import android.app.Application;
 import android.content.Context;
 
+import com.ataulm.wutson.discover.GenresRepository;
+import com.ataulm.wutson.discover.ShowsInGenreRepository;
+import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.repository.DataRepository;
+import com.ataulm.wutson.repository.TrackedShowsRepository;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
+import com.ataulm.wutson.seasons.SeasonsRepository;
+import com.ataulm.wutson.showdetails.ShowRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.TmdbApiFactory;
+import com.google.gson.Gson;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -36,14 +43,25 @@ public final class Jabber {
 
     public static DataRepository dataRepository() {
         if (instance.dataRepository == null) {
-            boolean enableLogs = BuildConfig.DEBUG;
-            TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(BuildConfig.TMDB_API_KEY, newClient(), enableLogs);
-            TmdbApi api = tmdbApiFactory.createApi();
-            PersistentDataRepository persistentDataRepository = new PersistentDataRepository(instance.context.getContentResolver());
+            TmdbApi api = newApi();
+            Gson gson = new Gson();
+            PersistentDataRepository persistentDataRepo = new PersistentDataRepository(instance.context.getContentResolver());
+            ConfigurationRepository configurationRepo = new ConfigurationRepository(api, persistentDataRepo, gson);
+            TrackedShowsRepository trackedShowsRepo = new TrackedShowsRepository(persistentDataRepo, gson);
+            GenresRepository genresRepo = new GenresRepository(api, persistentDataRepo, gson);
+            ShowsInGenreRepository showsInGenreRepo = new ShowsInGenreRepository(api, persistentDataRepo, configurationRepo, genresRepo, gson);
+            ShowRepository showRepo = new ShowRepository(api, persistentDataRepo, configurationRepo, gson);
+            SeasonsRepository seasonsRepo = new SeasonsRepository(api, configurationRepo, showRepo);
 
-            instance.dataRepository = new DataRepository(api, persistentDataRepository);
+            instance.dataRepository = new DataRepository(trackedShowsRepo, showsInGenreRepo, showRepo, seasonsRepo);
         }
         return instance.dataRepository;
+    }
+
+    private static TmdbApi newApi() {
+        boolean enableLogs = BuildConfig.DEBUG;
+        TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(BuildConfig.TMDB_API_KEY, newClient(), enableLogs);
+        return tmdbApiFactory.createApi();
     }
 
     private static Client newClient() {

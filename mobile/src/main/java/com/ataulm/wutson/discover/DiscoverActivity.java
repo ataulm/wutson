@@ -54,7 +54,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
     @Override
     protected void onResume() {
         super.onResume();
-        discoverShowsSubscription = Jabber.dataRepository().getShowsSeparatedByGenre()
+        discoverShowsSubscription = Jabber.dataRepository().getDiscoverShowsList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());

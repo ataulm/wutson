@@ -24,17 +24,17 @@ public class ShowRepository {
 
     private final TmdbApi api;
     private final PersistentDataRepository persistentDataRepository;
-    private final Gson gson;
     private final ConfigurationRepository configurationRepository;
+    private final Gson gson;
 
-    public ShowRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson, ConfigurationRepository configurationRepository) {
+    public ShowRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, ConfigurationRepository configurationRepository, Gson gson) {
         this.api = api;
         this.persistentDataRepository = persistentDataRepository;
-        this.gson = gson;
         this.configurationRepository = configurationRepository;
+        this.gson = gson;
     }
 
-    public Observable<Show> getShow(String showId) {
+    public Observable<Show> getShowDetails(String showId) {
         Observable<GsonConfiguration> gsonConfigurationObservable = configurationRepository.getConfiguration();
         Observable<GsonTvShow> gsonTvShowObservable = fetchJsonTvShowFrom(persistentDataRepository, showId)
                 .flatMap(asGsonTvShow(gson))

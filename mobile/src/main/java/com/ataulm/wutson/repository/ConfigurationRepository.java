@@ -19,15 +19,16 @@ public class ConfigurationRepository {
 
     private final TmdbApi api;
     private final PersistentDataRepository persistentDataRepository;
-    private final BehaviorSubject<GsonConfiguration> subject;
     private final Gson gson;
 
-    ConfigurationRepository(TmdbApi api, PersistentDataRepository persistentDataRepository) {
+    private final BehaviorSubject<GsonConfiguration> subject;
+
+    public ConfigurationRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson) {
         this.api = api;
         this.persistentDataRepository = persistentDataRepository;
-        this.subject = BehaviorSubject.create();
+        this.gson = gson;
 
-        this.gson = new Gson();
+        this.subject = BehaviorSubject.create();
     }
 
     public Observable<GsonConfiguration> getConfiguration() {

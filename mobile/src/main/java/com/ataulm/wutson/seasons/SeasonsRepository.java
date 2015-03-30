@@ -18,17 +18,17 @@ import rx.functions.Func2;
 public class SeasonsRepository {
 
     private final TmdbApi api;
-    private final ShowRepository showRepository;
     private final ConfigurationRepository configurationRepository;
+    private final ShowRepository showRepository;
 
-    public SeasonsRepository(TmdbApi api, ShowRepository showRepository, ConfigurationRepository configurationRepository) {
+    public SeasonsRepository(TmdbApi api, ConfigurationRepository configurationRepository, ShowRepository showRepository) {
         this.api = api;
-        this.showRepository = showRepository;
         this.configurationRepository = configurationRepository;
+        this.showRepository = showRepository;
     }
 
     public Observable<Seasons> getSeasons(final String showId) {
-        Observable<Show> showObservable = showRepository.getShow(showId);
+        Observable<Show> showObservable = showRepository.getShowDetails(showId);
         Observable<GsonConfiguration> gsonConfigurationObservable = configurationRepository.getConfiguration().first();
         Observable<GsonSeason> gsonSeasonObservable = showObservable
                 .flatMap(forEachSeasonInShow())
