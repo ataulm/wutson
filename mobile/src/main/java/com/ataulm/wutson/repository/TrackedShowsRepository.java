@@ -19,10 +19,12 @@ import rx.schedulers.Schedulers;
 public final class TrackedShowsRepository {
 
     private final PersistentDataRepository persistentDataRepository;
+    private final ConfigurationRepository configurationRepo;
     private final Gson gson;
 
-    public TrackedShowsRepository(PersistentDataRepository persistentDataRepository, Gson gson) {
+    public TrackedShowsRepository(PersistentDataRepository persistentDataRepository, ConfigurationRepository configurationRepo, Gson gson) {
         this.persistentDataRepository = persistentDataRepository;
+        this.configurationRepo = configurationRepo;
         this.gson = gson;
     }
 

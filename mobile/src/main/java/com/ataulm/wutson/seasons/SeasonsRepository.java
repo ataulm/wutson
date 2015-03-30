@@ -1,13 +1,12 @@
 package com.ataulm.wutson.seasons;
 
+import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.showdetails.Show;
 import com.ataulm.wutson.showdetails.ShowRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
-import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
 import com.ataulm.wutson.tmdb.gson.GsonSeason;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +28,12 @@ public class SeasonsRepository {
 
     public Observable<Seasons> getSeasons(final String showId) {
         Observable<Show> showObservable = showRepository.getShowDetails(showId);
-        Observable<GsonConfiguration> gsonConfigurationObservable = configurationRepository.getConfiguration().first();
+        Observable<TmdbConfiguration> configurationObservable = configurationRepository.getConfiguration().first();
         Observable<GsonSeason> gsonSeasonObservable = showObservable
                 .flatMap(forEachSeasonInShow())
                 .flatMap(fetchGsonSeason());
 
-        Observable<List<Season>> seasonObservable = Observable.combineLatest(gsonSeasonObservable, gsonConfigurationObservable, asSeason()).toSortedList();
+        Observable<List<Season>> seasonObservable = Observable.combineLatest(gsonSeasonObservable, configurationObservable, asSeason()).toSortedList();
 
         return Observable.combineLatest(showObservable, seasonObservable, asSeasons());
     }
@@ -62,11 +61,11 @@ public class SeasonsRepository {
         };
     }
 
-    private static Func2<GsonSeason, GsonConfiguration, Season> asSeason() {
-        return new Func2<GsonSeason, GsonConfiguration, Season>() {
+    private static Func2<GsonSeason, TmdbConfiguration, Season> asSeason() {
+        return new Func2<GsonSeason, TmdbConfiguration, Season>() {
 
             @Override
-            public Season call(GsonSeason gsonSeason, GsonConfiguration gsonConfiguration) {
+            public Season call(GsonSeason gsonSeason, TmdbConfiguration configuration) {
                 List<Season.Episode> episodes = new ArrayList<>(gsonSeason.episodes.size());
                 for (GsonSeason.Episodes.Episode gsonEpisode : gsonSeason.episodes) {
                     episodes.add(new Season.Episode(
@@ -74,15 +73,14 @@ public class SeasonsRepository {
                             gsonEpisode.episodeNumber,
                             gsonEpisode.name,
                             gsonEpisode.overview,
-                            URI.create(gsonConfiguration.getCompleteStillPath(gsonEpisode.stillPath))
-                    ));
+                            configuration.completeStill(gsonEpisode.stillPath)));
                 }
 
                 return new Season(
                         gsonSeason.airDate,
                         gsonSeason.seasonNumber,
                         gsonSeason.overview,
-                        URI.create(gsonConfiguration.getCompletePosterPath(gsonSeason.posterPath)),
+                        configuration.completePoster(gsonSeason.posterPath),
                         episodes);
             }
 

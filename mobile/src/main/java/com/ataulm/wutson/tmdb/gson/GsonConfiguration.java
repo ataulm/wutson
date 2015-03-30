@@ -6,50 +6,29 @@ import java.util.List;
 
 public class GsonConfiguration {
 
-    private static final int PROFILE_SIZE_STANDARD = 1;
-    private static final int POSTER_SIZE_STANDARD = 2;
-    private static final int BACKDROP_SIZE_STANDARD = 2;
-    private static final int STILL_SIZE_STANDARD = 2;
-
     @SerializedName("images")
-    final Images images;
+    public final Images images;
 
     private GsonConfiguration(Images images) {
         this.images = images;
     }
 
-    public String getCompletePosterPath(String posterPath) {
-        return images.baseUrl + images.posterSizes.get(POSTER_SIZE_STANDARD) + posterPath;
-    }
-
-    public String getCompleteBackdropPath(String backdropPath) {
-        return images.baseUrl + images.backdropSizes.get(BACKDROP_SIZE_STANDARD) + backdropPath;
-    }
-
-    public String getCompleteProfilePath(String profilePath) {
-        return images.baseUrl + images.profileSizes.get(PROFILE_SIZE_STANDARD) + profilePath;
-    }
-
-    public String getCompleteStillPath(String stillPath) {
-        return images.baseUrl + images.stillSizes.get(STILL_SIZE_STANDARD) + stillPath;
-    }
-
-    private static class Images {
+    public static class Images {
 
         @SerializedName("base_url")
-        final String baseUrl;
+        public final String baseUrl;
 
         @SerializedName("profile_sizes")
-        final List<String> profileSizes;
+        public final List<String> profileSizes;
 
         @SerializedName("poster_sizes")
-        final List<String> posterSizes;
+        public final List<String> posterSizes;
 
         @SerializedName("backdrop_sizes")
-        final List<String> backdropSizes;
+        public final List<String> backdropSizes;
 
         @SerializedName("still_sizes")
-        final List<String> stillSizes;
+        public final List<String> stillSizes;
 
         private Images(String baseUrl, List<String> profileSizes, List<String> posterSizes, List<String> backdropSizes, List<String> stillSizes) {
             this.baseUrl = baseUrl;

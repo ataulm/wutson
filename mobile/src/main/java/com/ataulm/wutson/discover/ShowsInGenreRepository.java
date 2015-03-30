@@ -3,11 +3,11 @@ package com.ataulm.wutson.discover;
 import android.util.Log;
 
 import com.ataulm.wutson.model.ShowSummary;
+import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.TmdbApi;
-import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
 import com.ataulm.wutson.tmdb.gson.GsonDiscoverTv;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
 import com.google.gson.Gson;
@@ -136,22 +136,22 @@ public class ShowsInGenreRepository {
         };
     }
 
-    private Observable<GsonConfiguration> repeatingConfigurationObservable() {
+    private Observable<TmdbConfiguration> repeatingConfigurationObservable() {
         return configurationRepository.getConfiguration().first().repeat();
     }
 
-    private static Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre> combineAsShowsInGenre() {
-        return new Func2<GsonConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre>() {
+    private static Func2<TmdbConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre> combineAsShowsInGenre() {
+        return new Func2<TmdbConfiguration, GsonGenreAndGsonDiscoverTvShows, ShowsInGenre>() {
 
             @Override
-            public ShowsInGenre call(GsonConfiguration configuration, GsonGenreAndGsonDiscoverTvShows discoverTvShows) {
+            public ShowsInGenre call(TmdbConfiguration configuration, GsonGenreAndGsonDiscoverTvShows discoverTvShows) {
                 GsonGenres.Genre genre = discoverTvShows.genre;
                 List<ShowSummary> showSummaries = new ArrayList<>(discoverTvShows.size());
                 for (GsonDiscoverTv.Show discoverTvShow : discoverTvShows.gsonDiscoverTv) {
                     String id = discoverTvShow.id;
                     String name = discoverTvShow.name;
-                    URI posterUri = URI.create(configuration.getCompletePosterPath(discoverTvShow.posterPath));
-                    URI backdropUri = URI.create(configuration.getCompleteBackdropPath(discoverTvShow.backdropPath));
+                    URI posterUri = configuration.completePoster(discoverTvShow.posterPath);
+                    URI backdropUri = configuration.completeBackdrop(discoverTvShow.backdropPath);
 
                     showSummaries.add(new ShowSummary(id, name, posterUri, backdropUri));
                 }

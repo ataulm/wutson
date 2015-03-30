@@ -16,7 +16,7 @@ public class TmdbConfiguration {
     private final List<String> backdropImageSizes;
     private final List<String> stillImageSizes;
 
-    TmdbConfiguration(String baseUrl, List<String> profileImageSizes, List<String> posterImageSizes, List<String> backdropImageSizes, List<String> stillImageSizes) {
+    public TmdbConfiguration(String baseUrl, List<String> profileImageSizes, List<String> posterImageSizes, List<String> backdropImageSizes, List<String> stillImageSizes) {
         this.baseUrl = baseUrl;
         this.profileImageSizes = profileImageSizes;
         this.posterImageSizes = posterImageSizes;
@@ -24,19 +24,19 @@ public class TmdbConfiguration {
         this.stillImageSizes = stillImageSizes;
     }
 
-    URI completeStill(String partialPath) {
+    public URI completeStill(String partialPath) {
         return URI.create(baseUrl + stillImageSizes.get(STILL_SIZE_STANDARD) + partialPath);
     }
 
-    URI completePoster(String partialPath) {
+    public URI completePoster(String partialPath) {
         return URI.create(baseUrl + posterImageSizes.get(POSTER_SIZE_STANDARD) + partialPath);
     }
 
-    URI completeBackdrop(String partialPath) {
+    public URI completeBackdrop(String partialPath) {
         return URI.create(baseUrl + backdropImageSizes.get(BACKDROP_SIZE_STANDARD) + partialPath);
     }
 
-    URI completeProfile(String partialPath) {
+    public URI completeProfile(String partialPath) {
         return URI.create(baseUrl + profileImageSizes.get(PROFILE_SIZE_STANDARD) + partialPath);
     }
 

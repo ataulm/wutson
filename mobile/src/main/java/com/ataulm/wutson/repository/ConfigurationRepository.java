@@ -2,6 +2,7 @@ package com.ataulm.wutson.repository;
 
 import android.util.Log;
 
+import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.TmdbApi;
@@ -21,7 +22,7 @@ public class ConfigurationRepository {
     private final PersistentDataRepository persistentDataRepository;
     private final Gson gson;
 
-    private final BehaviorSubject<GsonConfiguration> subject;
+    private final BehaviorSubject<TmdbConfiguration> subject;
 
     public ConfigurationRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson) {
         this.api = api;
@@ -31,7 +32,7 @@ public class ConfigurationRepository {
         this.subject = BehaviorSubject.create();
     }
 
-    public Observable<GsonConfiguration> getConfiguration() {
+    public Observable<TmdbConfiguration> getConfiguration() {
         if (!subject.hasValue()) {
             refreshConfiguration();
         }
@@ -42,9 +43,28 @@ public class ConfigurationRepository {
         fetchJsonConfigurationFrom(persistentDataRepository)
                 .flatMap(asGsonConfiguration(gson))
                 .switchIfEmpty(api.getConfiguration().doOnNext(saveTo(persistentDataRepository, gson)))
-                .lift(Function.<GsonConfiguration>swallowOnCompleteEvents())
+                .flatMap(asTmdbConfiguration())
+                .lift(Function.<TmdbConfiguration>swallowOnCompleteEvents())
                 .subscribeOn(Schedulers.io())
                 .subscribe(subject);
+    }
+
+    private static Func1<GsonConfiguration, Observable<TmdbConfiguration>> asTmdbConfiguration() {
+        return new Func1<GsonConfiguration, Observable<TmdbConfiguration>>() {
+
+            @Override
+            public Observable<TmdbConfiguration> call(GsonConfiguration gsonConfiguration) {
+                TmdbConfiguration tmdbConfiguration = new TmdbConfiguration(
+                        gsonConfiguration.images.baseUrl,
+                        gsonConfiguration.images.profileSizes,
+                        gsonConfiguration.images.posterSizes,
+                        gsonConfiguration.images.backdropSizes,
+                        gsonConfiguration.images.stillSizes
+                );
+                return Observable.just(tmdbConfiguration);
+            }
+
+        };
     }
 
     private static Observable<String> fetchJsonConfigurationFrom(final PersistentDataRepository repository) {

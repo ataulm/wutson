@@ -47,7 +47,7 @@ public final class Jabber {
             Gson gson = new Gson();
             PersistentDataRepository persistentDataRepo = new PersistentDataRepository(instance.context.getContentResolver());
             ConfigurationRepository configurationRepo = new ConfigurationRepository(api, persistentDataRepo, gson);
-            TrackedShowsRepository trackedShowsRepo = new TrackedShowsRepository(persistentDataRepo, gson);
+            TrackedShowsRepository trackedShowsRepo = new TrackedShowsRepository(persistentDataRepo, configurationRepo, gson);
             GenresRepository genresRepo = new GenresRepository(api, persistentDataRepo, gson);
             ShowsInGenreRepository showsInGenreRepo = new ShowsInGenreRepository(api, persistentDataRepo, configurationRepo, genresRepo, gson);
             ShowRepository showRepo = new ShowRepository(api, persistentDataRepo, configurationRepo, gson);

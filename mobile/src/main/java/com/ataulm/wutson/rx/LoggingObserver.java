@@ -8,17 +8,17 @@ public class LoggingObserver<T> implements Observer<T> {
 
     @Override
     public void onCompleted() {
-        Log.d(getClass().getSimpleName(), "onCompleted()");
+        Log.d(getClass().getCanonicalName(), "onCompleted()");
     }
 
     @Override
     public void onError(Throwable e) {
-        Log.e(getClass().getSimpleName(), "onError(): " + e.getMessage());
+        Log.e(getClass().getCanonicalName(), "onError(): " + e.getMessage());
     }
 
     @Override
     public void onNext(T t) {
-        Log.d(getClass().getSimpleName(), "onNext(t): " + t);
+        Log.d(getClass().getCanonicalName(), "onNext(t): " + t);
     }
 
 }
