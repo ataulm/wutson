@@ -2,6 +2,7 @@ package com.ataulm.wutson.myshows;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -67,7 +68,12 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
         }
 
         private void updateUiWith(List<ShowSummary> showSummaries) {
-            // TODO: update UI, with empty view or updated adapter
+            myShowsTextView.setTextColor(Color.GREEN);
+            String text = "Number of TrackedShows: " + showSummaries.size();
+            for (ShowSummary showSummary : showSummaries) {
+                text += "\n" + showSummary.getName();
+            }
+            myShowsTextView.setText(text);
         }
 
         private boolean nothingToSeeHere(List<ShowSummary> showSummaries) {

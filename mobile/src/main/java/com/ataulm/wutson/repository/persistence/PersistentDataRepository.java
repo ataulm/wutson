@@ -107,7 +107,7 @@ public class PersistentDataRepository {
         contentResolver.insert(SHOW_DETAILS.uri(), contentValues);
     }
 
-    public List<String> getTmdbShowIdOfTrackedShows() {
+    public List<String> getListOfTmdbShowIdsFromAllTrackedShows() {
         String[] projection = {TrackedShowsColumn.TMDB_SHOW_ID.columnName()};
         Cursor cursor = contentResolver.query(TRACKED_SHOWS.uri(), projection, null, null, null);
         if (!cursor.moveToFirst()) {
