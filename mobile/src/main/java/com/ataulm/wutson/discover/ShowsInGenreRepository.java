@@ -70,7 +70,7 @@ public class ShowsInGenreRepository {
                 return fetchJsonShowSummariesFrom(persistentDataRepository, genre.id)
                         .flatMap(asGsonDiscoverTv(gson))
                         .switchIfEmpty(api.getShowsMatchingGenre(genre.id).doOnNext(saveTo(persistentDataRepository, gson, genre.id)))
-                        .flatMap(asGsonGenreAndGsonDiscoverTvShows(genre));
+                        .map(asGsonGenreAndGsonDiscoverTvShows(genre));
             }
 
         };
@@ -88,12 +88,12 @@ public class ShowsInGenreRepository {
         };
     }
 
-    private static Func1<GsonDiscoverTv, Observable<GsonGenreAndGsonDiscoverTvShows>> asGsonGenreAndGsonDiscoverTvShows(final GsonGenres.Genre genre) {
-        return new Func1<GsonDiscoverTv, Observable<GsonGenreAndGsonDiscoverTvShows>>() {
+    private static Func1<GsonDiscoverTv, GsonGenreAndGsonDiscoverTvShows> asGsonGenreAndGsonDiscoverTvShows(final GsonGenres.Genre genre) {
+        return new Func1<GsonDiscoverTv, GsonGenreAndGsonDiscoverTvShows>() {
 
             @Override
-            public Observable<GsonGenreAndGsonDiscoverTvShows> call(GsonDiscoverTv gsonDiscoverTv) {
-                return Observable.just(new GsonGenreAndGsonDiscoverTvShows(genre, gsonDiscoverTv));
+            public GsonGenreAndGsonDiscoverTvShows call(GsonDiscoverTv gsonDiscoverTv) {
+                return new GsonGenreAndGsonDiscoverTvShows(genre, gsonDiscoverTv);
             }
 
         };

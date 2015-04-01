@@ -3,9 +3,12 @@ package com.ataulm.wutson.discover;
 import android.util.Log;
 
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
+import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -20,29 +23,17 @@ public class GenresRepository {
     private final PersistentDataRepository persistentDataRepository;
     private final Gson gson;
 
-    private final BehaviorSubject<GsonGenres> subject;
-
     public GenresRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson) {
         this.api = api;
         this.persistentDataRepository = persistentDataRepository;
         this.gson = gson;
-
-        this.subject = BehaviorSubject.create();
     }
 
     Observable<GsonGenres> getGenres() {
-        if (!subject.hasValue()) {
-            refreshGenres();
-        }
-        return subject;
-    }
-
-    private void refreshGenres() {
-        fetchJsonGenresFrom(persistentDataRepository)
+        return fetchJsonGenresFrom(persistentDataRepository)
                 .flatMap(asGsonGenres(gson))
                 .switchIfEmpty(api.getGenres().doOnNext(saveTo(persistentDataRepository, gson)))
-                .subscribeOn(Schedulers.io())
-                .subscribe(subject);
+                .subscribeOn(Schedulers.io());
     }
 
     private static Observable<String> fetchJsonGenresFrom(final PersistentDataRepository repository) {
