@@ -1,7 +1,5 @@
 package com.ataulm.wutson.repository;
 
-import android.util.Log;
-
 import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
