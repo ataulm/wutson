@@ -82,10 +82,23 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(DRAWER_GRAVITY)) {
-            closeDrawer();
+        if (closeNavigationDrawer()) {
+            return;
         } else {
             super.onBackPressed();
+        }
+    }
+
+    /**
+     * Closes the navigation drawer if it's open.
+     * @return true if navigation drawer was successfully closed, false if it wasn't open anyway
+     */
+    protected boolean closeNavigationDrawer() {
+        if (drawerLayout.isDrawerOpen(DRAWER_GRAVITY)) {
+            closeDrawer();
+            return true;
+        } else {
+            return false;
         }
     }
 

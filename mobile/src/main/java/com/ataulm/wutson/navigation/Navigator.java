@@ -24,12 +24,16 @@ public class Navigator {
 
     public void toMyShows() {
         Intent intent = new Intent(activity, MyShowsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
     }
 
     public void toDiscover() {
         Intent intent = new Intent(activity, DiscoverActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
     }
 
     public void toShowDetails(String showId, String showTitle, String showBackdropUri) {

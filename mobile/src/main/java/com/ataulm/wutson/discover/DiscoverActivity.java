@@ -44,10 +44,13 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
 
     @Override
     public void onBackPressed() {
+        if (closeNavigationDrawer()) {
+            return;
+        }
         if (viewPager.getCurrentItem() != 0) {
             viewPager.setCurrentItem(0);
         } else {
-            super.onBackPressed();
+            navigate().toMyShows();
         }
     }
 
