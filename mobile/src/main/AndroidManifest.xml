@@ -1,6 +1,5 @@
-<manifest
-  package="com.ataulm.wutson"
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.ataulm.wutson">
 
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.INTERNET" />
@@ -11,6 +10,15 @@
     android:icon="@drawable/ic_launcher"
     android:label="@string/app_name"
     android:theme="@style/Wutson.Theme">
+
+    <!--TODO: Activity launch modes/behaviour-->
+    <!--MyShows (single instance, back should go to first tab, 2nd back should finish())-->
+    <!--Discover (single instance, back should go to first tab, 2nd back should return to MyShows)-->
+    <!--Settings (up should finish())-->
+
+    <!--ShowDetails (up should finish() if opened internally, else up to MyShows())-->
+    <!--Seasons (up should go to ShowDetails)-->
+    <!--Episode (up to Seasons)-->
 
     <activity
       android:name="com.ataulm.wutson.myshows.MyShowsActivity"
