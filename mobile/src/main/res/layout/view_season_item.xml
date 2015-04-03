@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ataulm.wutson.seasons.SeasonsEpisodeItemView xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/Seasons.EpisodeItem.View"
+<com.ataulm.wutson.seasons.SeasonEpisodeView xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/Seasons.Episode.View"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:layout_marginLeft="@dimen/seasons_episode_item_margin_left"

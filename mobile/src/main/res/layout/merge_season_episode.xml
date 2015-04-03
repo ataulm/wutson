@@ -5,27 +5,27 @@
   android:layout_height="wrap_content">
 
   <com.ataulm.wutson.view.CrossfadeImageView
-    android:id="@+id/season_episode_item_image_poster"
-    style="@style/Seasons.EpisodeItem.Poster"
+    android:id="@+id/seasons_episode_image_poster"
+    style="@style/Seasons.Episode.Poster"
     android:layout_width="@dimen/seasons_episode_item_poster_width"
     android:layout_height="@dimen/seasons_episode_item_poster_height"
     android:contentDescription="@null" />
 
   <TextView
-    android:id="@+id/season_episode_item_text_episode_name"
-    style="@style/Seasons.EpisodeItem.Name"
+    android:id="@+id/season_episode_text_episode_name"
+    style="@style/Seasons.Episode.Name"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_toRightOf="@id/season_episode_item_image_poster"
+    android:layout_toRightOf="@id/seasons_episode_image_poster"
     tools:ignore="RtlHardcoded" />
 
   <TextView
-    android:id="@+id/season_episode_item_text_episode_air_date"
-    style="@style/Seasons.EpisodeItem.AirDate"
+    android:id="@+id/season_episode_text_episode_air_date"
+    style="@style/Seasons.Episode.AirDate"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignLeft="@id/season_episode_item_text_episode_name"
-    android:layout_below="@id/season_episode_item_text_episode_name"
+    android:layout_alignLeft="@id/season_episode_text_episode_name"
+    android:layout_below="@id/season_episode_text_episode_name"
     tools:ignore="RtlHardcoded" />
 
 </merge>

@@ -7,7 +7,7 @@
     <item name="android:background">@color/black</item>
   </style>
 
-  <style name="Seasons.View">
+  <style name="Seasons.RecyclerView">
     <item name="android:background">@color/seasons_background</item>
     <item name="android:paddingLeft">@dimen/seasons_padding_left</item>
     <item name="android:paddingTop">@dimen/seasons_padding_top</item>
@@ -16,19 +16,19 @@
     <item name="android:clipToPadding">false</item>
   </style>
 
-  <style name="Seasons.EpisodeItem" />
+  <style name="Seasons.Episode" />
 
-  <style name="Seasons.EpisodeItem.View">
+  <style name="Seasons.Episode.View">
     <item name="android:background">@drawable/show_details_seasons_list_item_background</item>
     <item name="android:focusable">true</item>
   </style>
 
-  <style name="Seasons.EpisodeItem.Poster">
+  <style name="Seasons.Episode.Poster">
     <item name="android:scaleType">centerCrop</item>
   </style>
 
-  <style name="Seasons.EpisodeItem.Name" />
+  <style name="Seasons.Episode.Name" />
 
-  <style name="Seasons.EpisodeItem.AirDate" />
+  <style name="Seasons.Episode.AirDate" />
 
 </resources>

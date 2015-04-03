@@ -2,6 +2,8 @@ package com.ataulm.wutson.seasons;
 
 import android.content.res.Resources;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +24,10 @@ class SeasonsPagerAdapter extends PagerAdapter {
 
     @Override
     public View instantiateItem(ViewGroup container, int position) {
-        View view = layoutInflater.inflate(R.layout.view_season, container, false);
-        ((SeasonView) view).display(seasons.get(position));
+        RecyclerView view = (RecyclerView) layoutInflater.inflate(R.layout.view_season_page, container, false);
+        Season season = seasons.get(position);
+        view.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        view.setAdapter(new SeasonAdapter(season, layoutInflater));
         container.addView(view);
         return view;
     }
