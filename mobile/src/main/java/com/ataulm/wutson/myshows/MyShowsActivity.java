@@ -29,6 +29,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(null);
         setContentView(R.layout.activity_my_shows);
         myShowsTextView = (TextView) findViewById(R.id.test);
     }
@@ -63,17 +64,9 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
                 navigate().toDiscover();
                 finish();
             } else {
+                setTitle(R.string.my_shows_label);
                 updateUiWith(showSummaries);
             }
-        }
-
-        private void updateUiWith(List<ShowSummary> showSummaries) {
-            myShowsTextView.setTextColor(Color.GREEN);
-            String text = "Number of TrackedShows: " + showSummaries.size();
-            for (ShowSummary showSummary : showSummaries) {
-                text += "\n" + showSummary.getName();
-            }
-            myShowsTextView.setText(text);
         }
 
         private boolean nothingToSeeHere(List<ShowSummary> showSummaries) {
@@ -83,6 +76,15 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
         private boolean activityWasOpenedFromLauncher() {
             Set<String> categories = getIntent().getCategories();
             return categories != null && categoryLauncherIsIn(categories);
+        }
+
+        private void updateUiWith(List<ShowSummary> showSummaries) {
+            myShowsTextView.setTextColor(Color.GREEN);
+            String text = "Number of TrackedShows: " + showSummaries.size();
+            for (ShowSummary showSummary : showSummaries) {
+                text += "\n" + showSummary.getName();
+            }
+            myShowsTextView.setText(text);
         }
 
     }
