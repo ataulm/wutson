@@ -1,7 +1,5 @@
 package com.ataulm.wutson.discover;
 
-import android.util.Log;
-
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.ConfigurationRepository;
@@ -23,6 +21,8 @@ import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
+
+import static com.ataulm.wutson.rx.Function.*;
 
 public class ShowsInGenreRepository {
 
@@ -68,7 +68,8 @@ public class ShowsInGenreRepository {
             @Override
             public Observable<GsonGenreAndGsonDiscoverTvShows> call(GsonGenres.Genre genre) {
                 return fetchJsonShowSummariesFrom(persistentDataRepository, genre.id)
-                        .flatMap(asGsonDiscoverTv(gson))
+                        .filter(ignoreEmptyStrings())
+                        .map(jsonTo(GsonDiscoverTv.class, gson))
                         .switchIfEmpty(api.getShowsMatchingGenre(genre.id).doOnNext(saveTo(persistentDataRepository, gson, genre.id)))
                         .map(asGsonGenreAndGsonDiscoverTvShows(genre));
             }
@@ -110,30 +111,6 @@ public class ShowsInGenreRepository {
             }
 
         });
-    }
-
-    private static Func1<String, Observable<GsonDiscoverTv>> asGsonDiscoverTv(final Gson gson) {
-        return new Func1<String, Observable<GsonDiscoverTv>>() {
-
-            @Override
-            public Observable<GsonDiscoverTv> call(final String json) {
-                return Observable.create(new Observable.OnSubscribe<GsonDiscoverTv>() {
-
-                    @Override
-                    public void call(Subscriber<? super GsonDiscoverTv> subscriber) {
-                        if (json.isEmpty()) {
-                            Log.w("WHATWHAT", "DiscoverTv json is empty");
-                        } else {
-                            GsonDiscoverTv gsonDiscoverTv = gson.fromJson(json, GsonDiscoverTv.class);
-                            subscriber.onNext(gsonDiscoverTv);
-                        }
-                        subscriber.onCompleted();
-                    }
-
-                });
-            }
-
-        };
     }
 
     private Observable<TmdbConfiguration> repeatingConfigurationObservable() {

@@ -1,6 +1,7 @@
 package com.ataulm.wutson.rx;
 
 import com.ataulm.wutson.DeveloperError;
+import com.google.gson.Gson;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -10,6 +11,17 @@ public final class Function {
 
     private Function() {
         throw DeveloperError.nonInstantiableClass();
+    }
+
+    public static Func1<String, Boolean> ignoreEmptyStrings() {
+        return new Func1<String, Boolean>() {
+
+            @Override
+            public Boolean call(String string) {
+                return string != null && !string.trim().isEmpty();
+            }
+
+        };
     }
 
     public static <T> Func1<Iterable<T>, Observable<T>> emitEachElement() {
@@ -46,6 +58,17 @@ public final class Function {
                     }
 
                 };
+            }
+
+        };
+    }
+
+    public static <T> Func1<String, T> jsonTo(final Class<T> gsonClass, final Gson gson) {
+        return new Func1<String, T>() {
+
+            @Override
+            public T call(String json) {
+                return gson.fromJson(json, gsonClass);
             }
 
         };

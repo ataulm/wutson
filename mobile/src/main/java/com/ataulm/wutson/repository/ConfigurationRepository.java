@@ -16,6 +16,9 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
+import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
+import static com.ataulm.wutson.rx.Function.jsonTo;
+
 public class ConfigurationRepository {
 
     private final TmdbApi api;
@@ -41,27 +44,27 @@ public class ConfigurationRepository {
 
     private void refreshConfiguration() {
         fetchJsonConfigurationFrom(persistentDataRepository)
-                .flatMap(asGsonConfiguration(gson))
+                .filter(ignoreEmptyStrings())
+                .map(jsonTo(GsonConfiguration.class, gson))
                 .switchIfEmpty(api.getConfiguration().doOnNext(saveTo(persistentDataRepository, gson)))
-                .flatMap(asTmdbConfiguration())
+                .map(asTmdbConfiguration())
                 .lift(Function.<TmdbConfiguration>swallowOnCompleteEvents())
                 .subscribeOn(Schedulers.io())
                 .subscribe(subject);
     }
 
-    private static Func1<GsonConfiguration, Observable<TmdbConfiguration>> asTmdbConfiguration() {
-        return new Func1<GsonConfiguration, Observable<TmdbConfiguration>>() {
+    private static Func1<GsonConfiguration, TmdbConfiguration> asTmdbConfiguration() {
+        return new Func1<GsonConfiguration, TmdbConfiguration>() {
 
             @Override
-            public Observable<TmdbConfiguration> call(GsonConfiguration gsonConfiguration) {
-                TmdbConfiguration tmdbConfiguration = new TmdbConfiguration(
+            public TmdbConfiguration call(GsonConfiguration gsonConfiguration) {
+                return new TmdbConfiguration(
                         gsonConfiguration.images.baseUrl,
                         gsonConfiguration.images.profileSizes,
                         gsonConfiguration.images.posterSizes,
                         gsonConfiguration.images.backdropSizes,
                         gsonConfiguration.images.stillSizes
                 );
-                return Observable.just(tmdbConfiguration);
             }
 
         };
@@ -77,30 +80,6 @@ public class ConfigurationRepository {
             }
 
         });
-    }
-
-    private static Func1<String, Observable<GsonConfiguration>> asGsonConfiguration(final Gson gson) {
-        return new Func1<String, Observable<GsonConfiguration>>() {
-
-            @Override
-            public Observable<GsonConfiguration> call(final String json) {
-                return Observable.create(new Observable.OnSubscribe<GsonConfiguration>() {
-
-                    @Override
-                    public void call(Subscriber<? super GsonConfiguration> subscriber) {
-                        if (json.isEmpty()) {
-                            Log.w("WHATWHAT", "Configuration json is empty");
-                        } else {
-                            GsonConfiguration gsonConfiguration = gson.fromJson(json, GsonConfiguration.class);
-                            subscriber.onNext(gsonConfiguration);
-                        }
-                        subscriber.onCompleted();
-                    }
-
-                });
-            }
-
-        };
     }
 
     private static Action1<GsonConfiguration> saveTo(final PersistentDataRepository persistentDataRepository, final Gson gson) {

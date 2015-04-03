@@ -5,6 +5,7 @@ import android.util.Log;
 import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
+import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonCredits;
 import com.ataulm.wutson.tmdb.gson.GsonTvShow;
@@ -19,6 +20,9 @@ import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func2;
+
+import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
+import static com.ataulm.wutson.rx.Function.jsonTo;
 
 public class ShowRepository {
 
@@ -37,7 +41,8 @@ public class ShowRepository {
     public Observable<Show> getShowDetails(String showId) {
         Observable<TmdbConfiguration> configurationObservable = configurationRepository.getConfiguration();
         Observable<GsonTvShow> gsonTvShowObservable = fetchJsonTvShowFrom(persistentDataRepository, showId)
-                .flatMap(asGsonTvShow(gson))
+                .filter(ignoreEmptyStrings())
+                .map(jsonTo(GsonTvShow.class, gson))
                 .switchIfEmpty(api.getTvShow(showId).doOnNext(saveTo(persistentDataRepository, gson, showId)));
 
         return Observable.zip(configurationObservable, gsonTvShowObservable, asShow(showId));
@@ -50,30 +55,6 @@ public class ShowRepository {
             public void call(GsonTvShow gsonTvShow) {
                 String json = gson.toJson(gsonTvShow, GsonTvShow.class);
                 persistentDataRepository.writeJsonShowDetails(tmdbShowId, json);
-            }
-
-        };
-    }
-
-    private static Func1<String, Observable<GsonTvShow>> asGsonTvShow(final Gson gson) {
-        return new Func1<String, Observable<GsonTvShow>>() {
-
-            @Override
-            public Observable<GsonTvShow> call(final String json) {
-                return Observable.create(new Observable.OnSubscribe<GsonTvShow>() {
-
-                    @Override
-                    public void call(Subscriber<? super GsonTvShow> subscriber) {
-                        if (json.isEmpty()) {
-                            Log.w("WHATWHAT", "TvShow json is empty");
-                        } else {
-                            GsonTvShow gsonTvShow = gson.fromJson(json, GsonTvShow.class);
-                            subscriber.onNext(gsonTvShow);
-                        }
-                        subscriber.onCompleted();
-                    }
-
-                });
             }
 
         };

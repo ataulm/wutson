@@ -17,6 +17,9 @@ import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
+import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
+import static com.ataulm.wutson.rx.Function.jsonTo;
+
 public final class TrackedShowsRepository {
 
     private final PersistentDataRepository persistentDataRepository;
@@ -75,9 +78,10 @@ public final class TrackedShowsRepository {
         Observable<GsonTvShow> gsonTvShowsObservable = fetchListOfMyShowIdsFrom(persistentDataRepository)
                 .flatMap(Function.<String>emitEachElement())
                 .flatMap(fetchShowDetailsJsonFrom(persistentDataRepository))
-                .flatMap(asGsonTvShow(gson));
+                .filter(ignoreEmptyStrings())
+                .map(jsonTo(GsonTvShow.class, gson));
 
-        return Observable.zip(repeatingConfigurationObservable, gsonTvShowsObservable, asShowSummary())
+        return Observable.zip(repeatingConfigurationObservable, gsonTvShowsObservable,asShowSummary())
                 .toList();
     }
 
@@ -115,30 +119,6 @@ public final class TrackedShowsRepository {
             @Override
             public Observable<String> call(String tmdbShowId) {
                 return Observable.just(repository.readJsonShowDetails(tmdbShowId));
-            }
-
-        };
-    }
-
-    private static Func1<String, Observable<GsonTvShow>> asGsonTvShow(final Gson gson) {
-        return new Func1<String, Observable<GsonTvShow>>() {
-
-            @Override
-            public Observable<GsonTvShow> call(final String json) {
-                return Observable.create(new Observable.OnSubscribe<GsonTvShow>() {
-
-                    @Override
-                    public void call(Subscriber<? super GsonTvShow> subscriber) {
-                        if (json.isEmpty()) {
-                            Log.w("WHATWHAT", "TvShow json is empty");
-                        } else {
-                            GsonTvShow gsonTvShow = gson.fromJson(json, GsonTvShow.class);
-                            subscriber.onNext(gsonTvShow);
-                        }
-                        subscriber.onCompleted();
-                    }
-
-                });
             }
 
         };
