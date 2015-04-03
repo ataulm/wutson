@@ -5,7 +5,9 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonActivity;
@@ -22,7 +24,8 @@ public class SeasonsActivity extends WutsonActivity {
     private Subscription seasonSubscription;
     private String showId;
     private int seasonNumber;
-    private SeasonsView seasonsView;
+    private ViewPager pager;
+    private PagerSlidingTabStrip tabs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,8 @@ public class SeasonsActivity extends WutsonActivity {
         Uri data = getIntent().getData();
         showId = data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID);
         seasonNumber = Integer.parseInt(data.getLastPathSegment());
-        seasonsView = (SeasonsView) findViewById(R.id.seasons);
+        tabs = (PagerSlidingTabStrip) findViewById(R.id.seasons_view_tabs);
+        pager = (ViewPager) findViewById(R.id.seasons_view_pager);
     }
 
     @Override
@@ -70,7 +74,8 @@ public class SeasonsActivity extends WutsonActivity {
 
         @Override
         public void onNext(Seasons seasons) {
-            seasonsView.display(seasons);
+            pager.setAdapter(new SeasonsPagerAdapter(seasons, getLayoutInflater(), getResources()));
+            tabs.setViewPager(pager);
 
             setTitle(seasons.getShowName());
             getSupportActionBar().setDisplayShowTitleEnabled(true);
