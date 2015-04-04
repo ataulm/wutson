@@ -37,6 +37,11 @@ class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowS
     }
 
     @Override
+    public long getItemId(int position) {
+        return showsInGenre.get(position).getId().hashCode();
+    }
+
+    @Override
     public int getItemCount() {
         return showsInGenre.size();
     }
