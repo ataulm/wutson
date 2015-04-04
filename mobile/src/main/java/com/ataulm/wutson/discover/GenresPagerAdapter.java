@@ -26,7 +26,7 @@ class GenresPagerAdapter extends ViewPagerAdapter {
 
     void update(List<ShowsInGenre> showsInGenres) {
         this.showsInGenres = showsInGenres;
-        Collections.sort(showsInGenres);
+        Collections.sort(this.showsInGenres);
         notifyDataSetChanged();
     }
 
