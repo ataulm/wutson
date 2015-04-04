@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.ataulm.wutson.R;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 
 public class CrossfadeRoundedLeftImageView extends ImageView {
 
@@ -17,6 +18,13 @@ public class CrossfadeRoundedLeftImageView extends ImageView {
 
     public CrossfadeRoundedLeftImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    @Override
+    public void setImageDrawable(Drawable drawable) {
+        if (drawable instanceof GlideBitmapDrawable) {
+            setImageBitmap(((GlideBitmapDrawable) drawable).getBitmap());
+        }
     }
 
     @Override

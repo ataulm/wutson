@@ -26,7 +26,9 @@
   </style>
 
   <style name="Wutson.Theme.Seasons">
+    <item name="android:windowBackground">@color/seasons_background</item>
     <item name="theme">@style/Seasons.AppBar</item>
+    <item name="colorPrimary">@color/white</item>
   </style>
 
   <style name="Wutson.Theme.Settings">

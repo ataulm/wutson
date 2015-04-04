@@ -25,7 +25,7 @@ class SeasonSummaryView extends RelativeLayout {
 
     @Override
     protected void onFinishInflate() {
-        View.inflate(getContext(), R.layout.merge_show_season_summary, this);
+        View.inflate(getContext(), R.layout.merge_season_summary, this);
         posterImageView = (ImageView) findViewById(R.id.season_summary_image_poster);
         seasonNumberTextView = (TextView) findViewById(R.id.season_summary_text_season_number);
         episodeCountTextView = (TextView) findViewById(R.id.season_summary_text_episode_count);

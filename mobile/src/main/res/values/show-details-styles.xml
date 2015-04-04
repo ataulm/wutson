@@ -88,7 +88,7 @@
     <item name="android:paddingTop">@dimen/show_details_seasons_list_item_padding_top</item>
     <item name="android:paddingRight">@dimen/show_details_seasons_list_item_padding_right</item>
     <item name="android:paddingBottom">@dimen/show_details_seasons_list_item_padding_bottom</item>
-    <item name="android:background">@drawable/show_details_seasons_list_item_background</item>
+    <item name="android:background">@drawable/card_background</item>
     <item name="android:focusable">true</item>
   </style>
 

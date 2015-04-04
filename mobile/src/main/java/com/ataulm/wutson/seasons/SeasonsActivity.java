@@ -35,8 +35,9 @@ public class SeasonsActivity extends WutsonActivity {
         Uri data = getIntent().getData();
         showId = data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID);
         seasonNumber = Integer.parseInt(data.getLastPathSegment());
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.seasons_view_tabs);
-        pager = (ViewPager) findViewById(R.id.seasons_view_pager);
+
+        tabs = (PagerSlidingTabStrip) findViewById(R.id.seasons_tabs);
+        pager = (ViewPager) findViewById(R.id.seasons_pager);
     }
 
     @Override

@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <color name="seasons_app_bar_background">@color/black</color>
   <color name="seasons_background">@color/grey</color>
   <color name="seasons_episodes_item_background">@color/white</color>
+
+  <color name="seasons_tabs_text_selected">@color/white</color>
+  <color name="seasons_tabs_text_default">@color/white_59pc</color>
+  <color name="seasons_tabs_background">@color/black</color>
+  <color name="seasons_tabs_indicator">@color/white</color>
 
 </resources>

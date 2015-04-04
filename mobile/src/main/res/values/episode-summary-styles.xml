@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="SeasonSummary" />
+  <style name="EpisodeSummary" />
 
-  <style name="SeasonSummary.Poster" />
+  <style name="EpisodeSummary.Poster" />
 
-  <style name="SeasonSummary.SeasonNumber">
+  <style name="EpisodeSummary.EpisodeName">
     <item name="android:textSize">@dimen/season_summary_season_number_text</item>
     <item name="android:textColor">@color/season_summary_season_number_text</item>
     <item name="textFont">robotoMedium</item>
   </style>
 
-  <style name="SeasonSummary.EpisodeCount">
+  <style name="EpisodeSummary.EpisodeAirDate">
     <item name="android:textSize">@dimen/season_summary_episode_count_text</item>
     <item name="android:textColor">@color/season_summary_episode_count_text</item>
     <item name="textFont">robotoRegular</item>

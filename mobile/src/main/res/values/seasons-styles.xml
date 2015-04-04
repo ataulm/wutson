@@ -4,11 +4,19 @@
   <style name="Seasons" />
 
   <style name="Seasons.AppBar">
-    <item name="android:background">@color/black</item>
+    <item name="android:background">@color/seasons_app_bar_background</item>
+  </style>
+
+  <style name="Seasons.Tabs">
+    <item name="android:paddingLeft">@dimen/discover_tabs_genres_padding_left</item>
+    <item name="android:background">@color/seasons_tabs_background</item>
+    <item name="android:textColor">@color/seasons_tabs_text_default</item>
+    <item name="pstsTextColorSelected">@color/seasons_tabs_text_selected</item>
+    <item name="pstsIndicatorHeight">@dimen/seasons_tabs_indicator_height</item>
+    <item name="pstsIndicatorColor">@color/seasons_tabs_indicator</item>
   </style>
 
   <style name="Seasons.RecyclerView">
-    <item name="android:background">@color/seasons_background</item>
     <item name="android:paddingLeft">@dimen/seasons_padding_left</item>
     <item name="android:paddingTop">@dimen/seasons_padding_top</item>
     <item name="android:paddingRight">@dimen/seasons_padding_right</item>
@@ -19,7 +27,11 @@
   <style name="Seasons.Episode" />
 
   <style name="Seasons.Episode.View">
-    <item name="android:background">@drawable/show_details_seasons_list_item_background</item>
+    <item name="android:paddingLeft">@dimen/seasons_episode_item_padding_left</item>
+    <item name="android:paddingTop">@dimen/seasons_episode_item_padding_top</item>
+    <item name="android:paddingRight">@dimen/seasons_episode_item_padding_right</item>
+    <item name="android:paddingBottom">@dimen/seasons_episode_item_padding_bottom</item>
+    <item name="android:background">@drawable/card_background</item>
     <item name="android:focusable">true</item>
   </style>
 

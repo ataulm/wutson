@@ -25,7 +25,7 @@ class SeasonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Season.Episode item = season.get(position);
-        ((SeasonEpisodeView) holder.itemView).display(item);
+        ((EpisodeSummaryView) holder.itemView).display(item);
     }
 
     @Override
