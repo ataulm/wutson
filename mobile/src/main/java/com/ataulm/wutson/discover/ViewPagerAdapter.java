@@ -20,6 +20,7 @@ abstract class ViewPagerAdapter extends PagerAdapter {
     @Override
     public final View instantiateItem(ViewGroup container, int position) {
         View view = getView(container, position);
+        view.setId(position);
         instantiatedViews.put(view, position);
         restoreViewState(position, view);
         container.addView(view);
