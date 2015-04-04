@@ -26,6 +26,15 @@ abstract class ViewPagerAdapter extends PagerAdapter {
         return view;
     }
 
+    /**
+     * Inflate and bind data to the view representing an item at the given position.
+     *
+     * Do not add the view to the container, this is handled.
+     *
+     * @param container the parent view from which sizing information can be grabbed during inflation
+     * @param position the position of the dataset that is to be represented by this view
+     * @return the inflated and data-binded view
+     */
     protected abstract View getView(ViewGroup container, int position);
 
     private void restoreViewState(int position, View view) {
