@@ -1,6 +1,5 @@
 package com.ataulm.wutson.discover;
 
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +11,7 @@ import com.ataulm.wutson.R;
 import java.util.Collections;
 import java.util.List;
 
-class GenresPagerAdapter extends PagerAdapter {
+class GenresPagerAdapter extends ViewPagerAdapter {
 
     private final LayoutInflater layoutInflater;
     private final OnShowClickListener listener;
@@ -32,10 +31,9 @@ class GenresPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public View instantiateItem(ViewGroup container, int position) {
+    public View getView(ViewGroup container, int position) {
         RecyclerView view = createView(container);
         bind(view, showsInGenres.get(position));
-        container.addView(view);
         return view;
     }
 
@@ -49,6 +47,7 @@ class GenresPagerAdapter extends PagerAdapter {
 
     private void bind(RecyclerView view, ShowsInGenre showsInGenre) {
         ShowsInGenreAdapter adapter = new ShowsInGenreAdapter(layoutInflater, listener);
+        adapter.setHasStableIds(true);
         adapter.update(showsInGenre);
         view.setAdapter(adapter);
     }
