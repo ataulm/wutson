@@ -37,7 +37,7 @@ abstract class ViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public final void destroyItem(ViewGroup container, int position, Object object) {
         View view = (View) object;
         saveViewState(position, view);
         container.removeView(view);
@@ -73,6 +73,11 @@ abstract class ViewPagerAdapter extends PagerAdapter {
             this.viewStates = ((ViewStates) state);
             notifyDataSetChanged(); // TODO: is this needed? not if `restoreState()` is called before `instantiateItem()`
         }
+    }
+
+    @Override
+    public final boolean isViewFromObject(View view, Object object) {
+        return view.equals(object);
     }
 
 }
