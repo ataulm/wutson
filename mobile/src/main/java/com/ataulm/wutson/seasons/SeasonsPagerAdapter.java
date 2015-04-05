@@ -39,11 +39,11 @@ class SeasonsPagerAdapter extends ViewPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        if (position == 0) {
-            // FIXME: dat direct usage without aliases - also, this isn't true for shows without Specials!
+        Season season = seasons.get(position);
+        if (season.getSeasonNumber() == 0) {
+            // FIXME: dat direct usage without aliases
             return resources.getString(R.string.specials);
         } else {
-            Season season = seasons.get(position);
             // TODO: dat literal
             return "SEASON " + season.getSeasonNumber();
         }
