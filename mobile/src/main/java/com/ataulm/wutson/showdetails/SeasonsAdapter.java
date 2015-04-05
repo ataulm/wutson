@@ -34,6 +34,11 @@ class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.SeasonViewHolde
     }
 
     @Override
+    public long getItemId(int position) {
+        return seasons.get(position).getId().hashCode();
+    }
+
+    @Override
     public int getItemCount() {
         return seasons.size();
     }

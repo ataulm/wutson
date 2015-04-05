@@ -65,6 +65,7 @@ class ShowPagerAdapter extends ViewPagerAdapter {
     private void updateShowSeasons() {
         RecyclerView seasonsView = (RecyclerView) pageViews.get(Page.SEASONS);
         RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, show.getSeasons(), onSeasonClickListener);
+        seasonsAdapter.setHasStableIds(true);
         seasonsView.setAdapter(seasonsAdapter);
     }
 
