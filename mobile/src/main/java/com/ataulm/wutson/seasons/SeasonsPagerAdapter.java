@@ -1,7 +1,6 @@
 package com.ataulm.wutson.seasons;
 
 import android.content.res.Resources;
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.vpa.ViewPagerAdapter;
 
-class SeasonsPagerAdapter extends PagerAdapter {
+class SeasonsPagerAdapter extends ViewPagerAdapter {
 
     private final Seasons seasons;
     private final LayoutInflater layoutInflater;
@@ -23,12 +23,12 @@ class SeasonsPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public View instantiateItem(ViewGroup container, int position) {
+    protected View getView(ViewGroup container, int position) {
         RecyclerView view = (RecyclerView) layoutInflater.inflate(R.layout.view_season_page, container, false);
-        Season season = seasons.get(position);
         view.setLayoutManager(new LinearLayoutManager(container.getContext()));
-        view.setAdapter(new SeasonAdapter(season, layoutInflater));
-        container.addView(view);
+        RecyclerView.Adapter adapter = new SeasonAdapter(seasons.get(position), layoutInflater);
+        adapter.setHasStableIds(true);
+        view.setAdapter(adapter);
         return view;
     }
 
@@ -38,19 +38,9 @@ class SeasonsPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
-    }
-
-    @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            // TODO: dat direct usage without aliases
+            // FIXME: dat direct usage without aliases - also, this isn't true for shows without Specials!
             return resources.getString(R.string.specials);
         } else {
             Season season = seasons.get(position);
