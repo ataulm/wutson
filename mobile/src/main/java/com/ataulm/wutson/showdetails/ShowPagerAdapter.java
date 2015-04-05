@@ -34,6 +34,23 @@ class ShowPagerAdapter extends ViewPagerAdapter {
         this.showBackdropUri = showBackdropUri;
     }
 
+    void update(Show show) {
+        this.show = show;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getCount() {
+        return Page.values().length;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        Page page = Page.from(position);
+        return resources.getString(page.getTitleResId())
+                .toUpperCase(Locale.getDefault());
+    }
+
     @Override
     protected View getView(ViewGroup container, int position) {
         switch (Page.from(position)) {
@@ -72,23 +89,6 @@ class ShowPagerAdapter extends ViewPagerAdapter {
         view.setLayoutManager(new LinearLayoutManager(container.getContext()));
         view.setAdapter(seasonsAdapter);
         return view;
-    }
-
-    void update(Show show) {
-        this.show = show;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getCount() {
-        return Page.values().length;
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        Page page = Page.from(position);
-        return resources.getString(page.getTitleResId())
-                .toUpperCase(Locale.getDefault());
     }
 
     private enum Page {
