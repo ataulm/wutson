@@ -16,11 +16,20 @@ abstract class ViewPagerAdapter extends PagerAdapter {
 
     private final Map<View, Integer> instantiatedViews = new WeakHashMap<>();
 
+    private ViewPager viewPager;
     private int position = PagerAdapter.POSITION_NONE;
     private ViewPagerAdapterState viewPagerAdapterState = ViewPagerAdapterState.newInstance();
 
     @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged(); // called when we have updated the adapter, so it's safe to setCurrentItem
+        viewPager.setCurrentItem(viewPagerAdapterState.getCurrentPosition());
+    }
+
+    @Override
     public final View instantiateItem(ViewGroup container, int position) {
+        this.viewPager = (ViewPager) container;
+
         View view = getView(container, position);
         view.setId(position);
         instantiatedViews.put(view, position);
@@ -35,8 +44,8 @@ abstract class ViewPagerAdapter extends PagerAdapter {
      * Do not add the view to the container, this is handled.
      *
      * @param container the parent view from which sizing information can be grabbed during inflation
-     * @param position  the position of the dataset that is to be represented by this view
-     * @return the inflated and data-binded view
+     * @param position  the position of the data set that is to be represented by this view
+     * @return the inflated and data-bound view
      */
     protected abstract View getView(ViewGroup container, int position);
 
@@ -63,6 +72,7 @@ abstract class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Parcelable saveState() {
+        viewPagerAdapterState.setCurrentPosition(position);
         for (Map.Entry<View, Integer> entry : instantiatedViews.entrySet()) {
             int position = entry.getValue();
             View view = entry.getKey();
@@ -94,13 +104,12 @@ abstract class ViewPagerAdapter extends PagerAdapter {
     @Override
     public void setPrimaryItem(ViewGroup viewPager, int position, Object view) {
         if (this.position != position) {
-            this.position = position;
-            onPrimaryItemChanged(((ViewPager) viewPager), position, (View) view);
+            onPrimaryItemChanged(position);
         }
     }
 
-    private void onPrimaryItemChanged(ViewPager viewPager, int position, View view) {
-        viewPagerAdapterState.setCurrentPosition(position);
+    private void onPrimaryItemChanged(int position) {
+        this.position = position;
     }
 
 }

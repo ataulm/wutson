@@ -20,13 +20,10 @@ import rx.schedulers.Schedulers;
 
 public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowClickListener {
 
-    private static final String KEY_CURRENT_PAGE = BuildConfig.APPLICATION_ID + ".KEY_CURRENT_PAGE";
-
     private Subscription discoverShowsSubscription;
     private ViewPager viewPager;
 
     private GenresPagerAdapter adapter;
-    private int pageToRestore;
 
     @Override
     protected NavigationDrawerItem getNavigationDrawerItem() {
@@ -43,22 +40,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         viewPager = (ViewPager) findViewById(R.id.discover_pager_genres);
         viewPager.setAdapter(adapter = new GenresPagerAdapter(getLayoutInflater(), this));
 
-        PagerSlidingTabStrip pagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.discover_tabs_genres);
-        pagerSlidingTabStrip.setViewPager(viewPager);
-        pagerSlidingTabStrip.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int position) {
-                DiscoverActivity.this.pageToRestore = position;
-            }
-
-        });
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        pageToRestore = savedInstanceState.getInt(KEY_CURRENT_PAGE);
+        ((PagerSlidingTabStrip) findViewById(R.id.discover_tabs_genres)).setViewPager(viewPager);
     }
 
     @Override
@@ -83,12 +65,6 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(KEY_CURRENT_PAGE, viewPager.getCurrentItem());
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     protected void onPause() {
         if (!discoverShowsSubscription.isUnsubscribed()) {
             discoverShowsSubscription.unsubscribe();
@@ -107,7 +83,6 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         public void onNext(List<ShowsInGenre> showsSeparateByGenre) {
             super.onNext(showsSeparateByGenre);
             adapter.update(showsSeparateByGenre);
-            viewPager.setCurrentItem(pageToRestore);
         }
 
     }
