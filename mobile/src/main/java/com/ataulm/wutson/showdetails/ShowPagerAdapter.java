@@ -11,13 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.vpa.ViewPagerAdapter;
 
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-class ShowPagerAdapter extends PagerAdapter {
+class ShowPagerAdapter extends ViewPagerAdapter {
 
     private final Resources resources;
     private final OnClickSeasonListener onSeasonClickListener;
@@ -38,7 +39,7 @@ class ShowPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public View instantiateItem(ViewGroup container, int position) {
+    protected View getView(ViewGroup container, int position) {
         Page page = Page.from(position);
         View pageView = layoutInflater.inflate(page.getLayoutResId(), container, false);
         pageViews.put(page, pageView);
@@ -58,7 +59,6 @@ class ShowPagerAdapter extends PagerAdapter {
                 break;
         }
 
-        container.addView(pageView);
         return pageView;
     }
 
@@ -92,13 +92,8 @@ class ShowPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view.equals(object);
-    }
-
-    @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
+        super.destroyItem(container, position, object);
         pageViews.remove(Page.from(position));
     }
 
