@@ -1,5 +1,6 @@
 package com.ataulm.wutson.seasons;
 
+import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.showdetails.Show;
@@ -66,9 +67,9 @@ public class SeasonsRepository {
 
             @Override
             public Season call(GsonSeason gsonSeason, TmdbConfiguration configuration) {
-                List<Season.Episode> episodes = new ArrayList<>(gsonSeason.episodes.size());
+                List<Episode> episodes = new ArrayList<>(gsonSeason.episodes.size());
                 for (GsonSeason.Episodes.Episode gsonEpisode : gsonSeason.episodes) {
-                    episodes.add(new Season.Episode(
+                    episodes.add(new Episode(
                             gsonEpisode.airDate,
                             gsonEpisode.episodeNumber,
                             gsonEpisode.name,

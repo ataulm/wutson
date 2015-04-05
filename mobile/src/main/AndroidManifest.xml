@@ -55,6 +55,17 @@
     </activity>
 
     <activity
+      android:name=".episodes.EpisodeDetailsActivity"
+      android:parentActivityName="com.ataulm.wutson.seasons.SeasonsActivity"
+      android:theme="@style/Wutson.Theme.Episodes">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.com.ataulm.wutson.episode" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
+
+    <activity
       android:name="com.ataulm.wutson.settings.SettingsActivity"
       android:label="@string/settings_label"
       android:theme="@style/Wutson.Theme.Settings" />

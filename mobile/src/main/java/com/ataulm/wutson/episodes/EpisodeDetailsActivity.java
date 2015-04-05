@@ -1,13 +1,11 @@
-package com.ataulm.wutson.seasons;
+package com.ataulm.wutson.episodes;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonActivity;
@@ -17,27 +15,16 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class SeasonsActivity extends WutsonActivity {
+public class EpisodeDetailsActivity extends WutsonActivity {
 
-    private static final int URI_PATH_SEGMENT_SHOW_ID = 1;
-
-    private Subscription seasonSubscription;
-    private String showId;
-    private int seasonNumber;
+    private Subscription episodesSubscription;
     private ViewPager pager;
-    private PagerSlidingTabStrip tabs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seasons);
-
-        Uri data = getIntent().getData();
-        showId = data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID);
-        seasonNumber = Integer.parseInt(data.getLastPathSegment());
-
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.seasons_tabs);
-        pager = (ViewPager) findViewById(R.id.seasons_pager);
+        setContentView(R.layout.activity_episode_details);
+        pager = (ViewPager) findViewById(R.id.episodes_pager);
     }
 
     @Override
@@ -53,7 +40,7 @@ public class SeasonsActivity extends WutsonActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        seasonSubscription = Jabber.dataRepository().getSeasons(showId)
+        episodesSubscription = Jabber.dataRepository().getEpisodes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
@@ -61,20 +48,18 @@ public class SeasonsActivity extends WutsonActivity {
 
     @Override
     protected void onPause() {
-        if (!seasonSubscription.isUnsubscribed()) {
-            seasonSubscription.unsubscribe();
+        if (!episodesSubscription.isUnsubscribed()) {
+            episodesSubscription.unsubscribe();
         }
         super.onPause();
     }
 
-    private class Observer extends LoggingObserver<Seasons> {
+    private class Observer extends LoggingObserver<Episodes> {
 
         @Override
-        public void onNext(Seasons seasons) {
-            pager.setAdapter(new SeasonsPagerAdapter(seasons, getLayoutInflater(), getResources()));
-            tabs.setViewPager(pager);
-
-            setTitle(seasons.getShowName());
+        public void onNext(Episodes episodes) {
+            // update adapter
+            setTitle(episodes.getShowName());
             getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
 

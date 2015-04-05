@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.episodes.Episode;
 import com.bumptech.glide.Glide;
 
 public class EpisodeSummaryView extends RelativeLayout {
@@ -28,7 +29,7 @@ public class EpisodeSummaryView extends RelativeLayout {
         episodeNumberTextView = (TextView) findViewById(R.id.episode_summary_text_episode_air_date);
     }
 
-    void display(Season.Episode episode) {
+    void display(Episode episode) {
         Glide.with(getContext())
                 .load(episode.getStillPath().toString())
                 .centerCrop()

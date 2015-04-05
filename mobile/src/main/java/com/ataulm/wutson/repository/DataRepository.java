@@ -2,6 +2,7 @@ package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.discover.ShowsInGenre;
 import com.ataulm.wutson.discover.ShowsInGenreRepository;
+import com.ataulm.wutson.episodes.Episodes;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.seasons.Seasons;
 import com.ataulm.wutson.seasons.SeasonsRepository;
@@ -48,6 +49,11 @@ public class DataRepository {
 
     public Observable<Seasons> getSeasons(String showId) {
         return seasonsRepo.getSeasons(showId);
+    }
+
+    public Observable<Episodes> getEpisodes() {
+        // TODO: add episodes pipeline
+        return Observable.empty();
     }
 
 }

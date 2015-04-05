@@ -31,6 +31,12 @@
     <item name="colorPrimary">@color/white</item>
   </style>
 
+  <style name="Wutson.Theme.Episodes">
+    <item name="android:windowBackground">@color/white</item>
+    <item name="theme">@style/Episodes.AppBar</item>
+    <item name="colorPrimary">@color/white</item>
+  </style>
+
   <style name="Wutson.Theme.Settings">
     <item name="theme">@style/Settings.AppBar</item>
   </style>

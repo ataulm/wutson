@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.episodes.Episode;
 
 class SeasonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -24,7 +25,7 @@ class SeasonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Season.Episode item = season.get(position);
+        Episode item = season.get(position);
         ((EpisodeSummaryView) holder.itemView).display(item);
     }
 
