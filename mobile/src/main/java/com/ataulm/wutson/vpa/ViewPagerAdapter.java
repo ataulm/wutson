@@ -1,4 +1,4 @@
-package com.ataulm.wutson.discover;
+package com.ataulm.wutson.vpa;
 
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
@@ -7,12 +7,10 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ataulm.wutson.vpa.ViewPagerAdapterState;
-
 import java.util.Map;
 import java.util.WeakHashMap;
 
-abstract class ViewPagerAdapter extends PagerAdapter {
+public abstract class ViewPagerAdapter extends PagerAdapter {
 
     private final Map<View, Integer> instantiatedViews = new WeakHashMap<>();
 
@@ -58,7 +56,7 @@ abstract class ViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public final void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(ViewGroup container, int position, Object object) {
         View view = (View) object;
         saveViewState(position, view);
         container.removeView(view);
