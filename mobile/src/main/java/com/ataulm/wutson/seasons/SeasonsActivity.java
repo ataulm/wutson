@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonActivity;
@@ -19,7 +20,8 @@ import rx.schedulers.Schedulers;
 
 public class SeasonsActivity extends WutsonActivity {
 
-    private static final int URI_PATH_SEGMENT_SHOW_ID = 1;
+    private static final String KEY_RESET_PAGE_POSITION = BuildConfig.APPLICATION_ID + ".KEY_RESET_PAGE_POSITION";
+    private static final int URI_PATH_SEGMENT_SHOW_ID_INDEX = 1;
 
     private Subscription seasonSubscription;
     private String showId;
@@ -27,17 +29,25 @@ public class SeasonsActivity extends WutsonActivity {
     private ViewPager pager;
     private PagerSlidingTabStrip tabs;
 
+    private boolean shouldResetPagePosition;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seasons);
 
         Uri data = getIntent().getData();
-        showId = data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID);
+        showId = data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID_INDEX);
         seasonNumber = Integer.parseInt(data.getLastPathSegment());
 
         tabs = (PagerSlidingTabStrip) findViewById(R.id.seasons_tabs);
         pager = (ViewPager) findViewById(R.id.seasons_pager);
+
+        if (savedInstanceState == null) {
+            shouldResetPagePosition = true;
+        } else if (savedInstanceState.containsKey(KEY_RESET_PAGE_POSITION)) {
+            shouldResetPagePosition = savedInstanceState.getBoolean(KEY_RESET_PAGE_POSITION);
+        }
     }
 
     @Override
@@ -64,6 +74,12 @@ public class SeasonsActivity extends WutsonActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(KEY_RESET_PAGE_POSITION, shouldResetPagePosition);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     protected void onPause() {
         if (!seasonSubscription.isUnsubscribed()) {
             seasonSubscription.unsubscribe();
@@ -77,6 +93,10 @@ public class SeasonsActivity extends WutsonActivity {
         public void onNext(Seasons seasons) {
             pager.setAdapter(new SeasonsPagerAdapter(seasons, getLayoutInflater(), getResources()));
             tabs.setViewPager(pager);
+            if (shouldResetPagePosition) {
+                shouldResetPagePosition = false;
+                pager.setCurrentItem(seasonNumber);
+            }
 
             setTitle(seasons.getShowName());
             getSupportActionBar().setDisplayShowTitleEnabled(true);
