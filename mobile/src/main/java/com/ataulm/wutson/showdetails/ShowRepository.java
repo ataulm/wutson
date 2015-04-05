@@ -82,7 +82,7 @@ public class ShowRepository {
                 String name = gsonTvShow.name;
                 String overview = gsonTvShow.overview;
                 URI posterUri = configuration.completePoster(gsonTvShow.posterPath);
-                URI backdropUri = configuration.completeBackdrop(gsonTvShow.posterPath);
+                URI backdropUri = configuration.completeBackdrop(gsonTvShow.backdropPath);
                 Cast cast = new Cast(characters);
 
                 List<Show.Season> seasons = getSeasons(configuration, gsonTvShow);
