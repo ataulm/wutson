@@ -82,8 +82,7 @@ public abstract class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        View view = (View) object;
-        return instantiatedViews.get(view);
+        return POSITION_NONE;
     }
 
     @Override
