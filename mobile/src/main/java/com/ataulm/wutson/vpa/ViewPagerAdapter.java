@@ -21,7 +21,8 @@ public abstract class ViewPagerAdapter extends PagerAdapter {
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged(); // called when we have updated the adapter, so it's safe to setCurrentItem
-        viewPager.setCurrentItem(viewPagerAdapterState.getCurrentPosition());
+        int currentPosition = viewPagerAdapterState.getCurrentPosition();
+        viewPager.setCurrentItem(currentPosition, false);
     }
 
     @Override
