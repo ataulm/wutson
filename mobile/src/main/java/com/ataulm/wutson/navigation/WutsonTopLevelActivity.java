@@ -40,6 +40,10 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
             @Override
             public void onNavigationClick(NavigationDrawerItem item) {
                 closeDrawer();
+                if (item == getNavigationDrawerItem()) {
+                    return;
+                }
+
                 switch (item) {
                     case MY_SHOWS:
                         navigate().toMyShows();
