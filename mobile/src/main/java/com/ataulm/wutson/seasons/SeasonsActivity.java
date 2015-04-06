@@ -54,6 +54,11 @@ public class SeasonsActivity extends WutsonActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         customiseShowDetailsToolbar();
+
+        seasonSubscription = Jabber.dataRepository().getSeasons(showId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer());
     }
 
     private void customiseShowDetailsToolbar() {
@@ -65,26 +70,17 @@ public class SeasonsActivity extends WutsonActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        seasonSubscription = Jabber.dataRepository().getSeasons(showId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer());
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(KEY_RESET_PAGE_POSITION, shouldResetPagePosition);
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    protected void onPause() {
+    protected void onDestroy() {
         if (!seasonSubscription.isUnsubscribed()) {
             seasonSubscription.unsubscribe();
         }
-        super.onPause();
+        super.onDestroy();
     }
 
     private class Observer extends LoggingObserver<Seasons> {
