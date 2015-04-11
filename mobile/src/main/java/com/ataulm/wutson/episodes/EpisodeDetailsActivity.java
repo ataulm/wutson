@@ -25,6 +25,7 @@ public class EpisodeDetailsActivity extends WutsonActivity {
 
     private Subscription episodesSubscription;
     private ViewPager pager;
+    private EpisodesPagerAdapter adapter;
 
     private String showId;
     private int seasonNumber;
@@ -41,6 +42,7 @@ public class EpisodeDetailsActivity extends WutsonActivity {
         episodeNumber = Integer.parseInt(data.getPathSegments().get(URI_PATH_SEGMENT_EPISODE_NUMBER_INDEX));
 
         pager = (ViewPager) findViewById(R.id.episodes_pager);
+        pager.setAdapter(adapter = new EpisodesPagerAdapter(getLayoutInflater()));
     }
 
     @Override
@@ -74,7 +76,7 @@ public class EpisodeDetailsActivity extends WutsonActivity {
 
         @Override
         public void onNext(Season season) {
-            // TODO: update adapter
+            adapter.update(season);
             // TODO pass show name to activity to setTitle
 //            getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
