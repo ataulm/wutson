@@ -49,7 +49,7 @@
       android:theme="@style/Wutson.Theme.Seasons">
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
-        <data android:mimeType="vnd.android.cursor.item/vnd.com.ataulm.wutson.season" />
+        <data android:mimeType="vnd.android.cursor.dir/vnd.com.ataulm.wutson.season" />
         <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>
@@ -60,7 +60,7 @@
       android:theme="@style/Wutson.Theme.Episodes">
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
-        <data android:mimeType="vnd.android.cursor.item/vnd.com.ataulm.wutson.episode" />
+        <data android:mimeType="vnd.android.cursor.dir/vnd.com.ataulm.wutson.episode" />
         <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>
