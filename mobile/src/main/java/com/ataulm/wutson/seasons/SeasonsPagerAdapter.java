@@ -51,4 +51,13 @@ class SeasonsPagerAdapter extends ViewPagerAdapter {
         }
     }
 
+    int positionOfSeasonNumber(int seasonNumber) {
+        for (int i = 0; i < seasons.size(); i++) {
+            if (seasons.get(i).getSeasonNumber() == seasonNumber) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
 }

@@ -44,11 +44,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
         tabs = (PagerSlidingTabStrip) findViewById(R.id.seasons_tabs);
         pager = (ViewPager) findViewById(R.id.seasons_pager);
 
-        if (savedInstanceState == null) {
-            shouldResetPagePosition = true;
-        } else if (savedInstanceState.containsKey(KEY_RESET_PAGE_POSITION)) {
-            shouldResetPagePosition = savedInstanceState.getBoolean(KEY_RESET_PAGE_POSITION);
-        }
+        shouldResetPagePosition = savedInstanceState == null || savedInstanceState.getBoolean(KEY_RESET_PAGE_POSITION);
     }
 
     @Override
@@ -93,11 +89,12 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
 
         @Override
         public void onNext(Seasons seasons) {
-            pager.setAdapter(new SeasonsPagerAdapter(seasons, SeasonsActivity.this, getLayoutInflater(), getResources()));
+            SeasonsPagerAdapter adapter = new SeasonsPagerAdapter(seasons, SeasonsActivity.this, getLayoutInflater(), getResources());
+            pager.setAdapter(adapter);
             tabs.setViewPager(pager);
             if (shouldResetPagePosition) {
                 shouldResetPagePosition = false;
-                pager.setCurrentItem(seasonNumber);
+                pager.setCurrentItem(adapter.positionOfSeasonNumber(seasonNumber));
             }
 
             setTitle(seasons.getShowName());
