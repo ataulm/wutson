@@ -11,10 +11,12 @@ import com.ataulm.wutson.episodes.Episode;
 class SeasonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Season season;
+    private final OnClickEpisodeListener listener;
     private final LayoutInflater inflater;
 
-    SeasonAdapter(Season season, LayoutInflater inflater) {
+    SeasonAdapter(Season season, OnClickEpisodeListener listener, LayoutInflater inflater) {
         this.season = season;
+        this.listener = listener;
         this.inflater = inflater;
     }
 
@@ -26,7 +28,7 @@ class SeasonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Episode item = season.get(position);
-        ((EpisodeSummaryView) holder.itemView).display(item);
+        ((EpisodeSummaryView) holder.itemView).display(item, listener);
     }
 
     @Override

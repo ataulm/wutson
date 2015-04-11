@@ -33,6 +33,9 @@ class EpisodesPagerAdapter extends ViewPagerAdapter {
 
     @Override
     public int getCount() {
+        if (season == null) {
+            return 0;
+        }
         return season.size();
     }
 

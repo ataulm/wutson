@@ -93,7 +93,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
 
         @Override
         public void onNext(Seasons seasons) {
-            pager.setAdapter(new SeasonsPagerAdapter(seasons, getLayoutInflater(), getResources()));
+            pager.setAdapter(new SeasonsPagerAdapter(seasons, SeasonsActivity.this, getLayoutInflater(), getResources()));
             tabs.setViewPager(pager);
             if (shouldResetPagePosition) {
                 shouldResetPagePosition = false;

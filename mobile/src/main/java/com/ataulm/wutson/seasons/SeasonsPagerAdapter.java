@@ -13,11 +13,13 @@ import com.ataulm.wutson.vpa.ViewPagerAdapter;
 class SeasonsPagerAdapter extends ViewPagerAdapter {
 
     private final Seasons seasons;
+    private final OnClickEpisodeListener listener;
     private final LayoutInflater layoutInflater;
     private final Resources resources;
 
-    SeasonsPagerAdapter(Seasons seasons, LayoutInflater layoutInflater, Resources resources) {
+    SeasonsPagerAdapter(Seasons seasons, OnClickEpisodeListener listener, LayoutInflater layoutInflater, Resources resources) {
         this.seasons = seasons;
+        this.listener = listener;
         this.layoutInflater = layoutInflater;
         this.resources = resources;
     }
@@ -26,7 +28,7 @@ class SeasonsPagerAdapter extends ViewPagerAdapter {
     protected View getView(ViewGroup container, int position) {
         RecyclerView view = (RecyclerView) layoutInflater.inflate(R.layout.view_season_page, container, false);
         view.setLayoutManager(new LinearLayoutManager(container.getContext()));
-        RecyclerView.Adapter adapter = new SeasonAdapter(seasons.get(position), layoutInflater);
+        RecyclerView.Adapter adapter = new SeasonAdapter(seasons.get(position), listener, layoutInflater);
         adapter.setHasStableIds(true);
         view.setAdapter(adapter);
         return view;

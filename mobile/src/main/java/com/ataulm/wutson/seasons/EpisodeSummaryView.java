@@ -29,7 +29,16 @@ public class EpisodeSummaryView extends RelativeLayout {
         episodeNumberTextView = (TextView) findViewById(R.id.episode_summary_text_episode_air_date);
     }
 
-    void display(Episode episode) {
+    void display(final Episode episode, final OnClickEpisodeListener listener) {
+        setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                listener.onClick(episode);
+            }
+
+        });
+
         Glide.with(getContext())
                 .load(episode.getStillPath().toString())
                 .centerCrop()
