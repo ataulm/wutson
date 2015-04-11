@@ -6,7 +6,7 @@ import java.net.URI;
 import java.util.Iterator;
 import java.util.List;
 
-class Season implements Iterable<Episode>, Comparable<Season> {
+public class Season implements Iterable<Episode>, Comparable<Season> {
 
     private final String airDate; // TODO: this should be typed
     private final int seasonNumber;

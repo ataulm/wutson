@@ -1,12 +1,8 @@
 package com.ataulm.wutson.showdetails;
 
-import android.util.Log;
-
-import com.ataulm.wutson.episodes.Episodes;
 import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
-import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonCredits;
 import com.ataulm.wutson.tmdb.gson.GsonTvShow;
@@ -19,7 +15,6 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.functions.Func2;
 
 import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;

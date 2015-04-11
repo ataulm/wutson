@@ -13,7 +13,8 @@ public class Navigator {
 
     private static final Uri BASE_URI = Uri.parse("content://com.ataulm.wutson2");
     private static final String MIME_TYPE_SHOW_ITEM = "vnd.android.cursor.item/vnd.com.ataulm.wutson.show";
-    private static final String MIME_TYPE_SEASON_DIR = "vnd.android.cursor.item/vnd.com.ataulm.wutson.season";
+    private static final String MIME_TYPE_SEASON_DIR = "vnd.android.cursor.dir/vnd.com.ataulm.wutson.season";
+    private static final String MIME_TYPE_EPISODES_DIR = "vnd.android.cursor.dir/vnd.com.ataulm.wutson.episode";
     private static final Uri WUTSON_GPLUS_COMMUNITY = Uri.parse("https://plus.google.com/communities/111719082560247438789");
 
     private final Activity activity;
@@ -53,6 +54,16 @@ public class Navigator {
                 .build();
 
         start(view(uri, MIME_TYPE_SEASON_DIR));
+    }
+
+    public void toEpisodeDetails(String showId, int seasonNumber, int episodeNumber) {
+        Uri uri = BASE_URI.buildUpon()
+                .appendPath("show").appendPath(showId)
+                .appendPath("season").appendPath(String.valueOf(seasonNumber))
+                .appendPath("episode").appendPath(String.valueOf(episodeNumber))
+                .build();
+
+        start(view(uri, MIME_TYPE_EPISODES_DIR));
     }
 
     public void toSettings() {

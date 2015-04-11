@@ -1,9 +1,9 @@
 package com.ataulm.wutson.seasons;
 
 import com.ataulm.wutson.episodes.Episode;
-import com.ataulm.wutson.episodes.Episodes;
 import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.ConfigurationRepository;
+import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.showdetails.Show;
 import com.ataulm.wutson.showdetails.ShowRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
@@ -100,8 +100,22 @@ public class SeasonsRepository {
         };
     }
 
-    public Observable<Episodes> getEpisodes(String showId, String seasonId) {
-        return Observable.empty();
+    public Observable<Season> getSeason(String showId, final int seasonNumber) {
+        return getSeasons(showId)
+                .flatMap(Function.<Season>emitEachElement())
+                .filter(seasonsNumber(seasonNumber))
+                .first();
     }
-    
+
+    private static Func1<Season, Boolean> seasonsNumber(final int seasonId) {
+        return new Func1<Season, Boolean>() {
+
+            @Override
+            public Boolean call(Season season) {
+                return season.getSeasonNumber() == seasonId;
+            }
+
+        };
+    }
+
 }

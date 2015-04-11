@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 public class GsonSeason {
 
+    @SerializedName("id")
+    public final String id;
+
     @SerializedName("air_date")
     public final String airDate;
 
@@ -21,7 +24,8 @@ public class GsonSeason {
     @SerializedName("episodes")
     public final Episodes episodes;
 
-    private GsonSeason(String airDate, int seasonNumber, String overview, String posterPath, Episodes episodes) {
+    private GsonSeason(String id, String airDate, int seasonNumber, String overview, String posterPath, Episodes episodes) {
+        this.id = id;
         this.airDate = airDate;
         this.seasonNumber = seasonNumber;
         this.overview = overview;
