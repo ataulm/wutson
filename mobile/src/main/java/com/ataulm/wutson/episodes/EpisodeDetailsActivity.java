@@ -53,11 +53,7 @@ public class EpisodeDetailsActivity extends WutsonActivity {
         if (navigationIcon != null) {
             navigationIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         }
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         episodesSubscription = Jabber.dataRepository().getSeason(showId, seasonNumber)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -65,11 +61,11 @@ public class EpisodeDetailsActivity extends WutsonActivity {
     }
 
     @Override
-    protected void onPause() {
+    protected void onDestroy() {
         if (!episodesSubscription.isUnsubscribed()) {
             episodesSubscription.unsubscribe();
         }
-        super.onPause();
+        super.onDestroy();
     }
 
     private class Observer extends LoggingObserver<Season> {
