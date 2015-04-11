@@ -3,20 +3,20 @@ package com.ataulm.wutson.showdetails;
 import android.content.res.Resources;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.vpa.ViewPagerAdapter;
 
 import java.net.URI;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 class ShowPagerAdapter extends ViewPagerAdapter {
 
@@ -25,8 +25,6 @@ class ShowPagerAdapter extends ViewPagerAdapter {
     private final LayoutInflater layoutInflater;
     private final URI showBackdropUri;
 
-    private final Map<Page, View> pageViews;
-
     private Show show;
 
     ShowPagerAdapter(Resources resources, OnClickSeasonListener onSeasonClickListener, LayoutInflater layoutInflater, URI showBackdropUri) {
@@ -34,56 +32,11 @@ class ShowPagerAdapter extends ViewPagerAdapter {
         this.onSeasonClickListener = onSeasonClickListener;
         this.layoutInflater = layoutInflater;
         this.showBackdropUri = showBackdropUri;
-
-        this.pageViews = new HashMap<>(Page.values().length);
-    }
-
-    @Override
-    protected View getView(ViewGroup container, int position) {
-        Page page = Page.from(position);
-        View pageView = layoutInflater.inflate(page.getLayoutResId(), container, false);
-        pageViews.put(page, pageView);
-
-        switch (page) {
-            case OVERVIEW:
-                ((ShowOverviewView) pageView).setBackdrop(showBackdropUri);
-                if (show != null) {
-                    updateShowOverview();
-                }
-                break;
-            case SEASONS:
-                ((RecyclerView) pageView).setLayoutManager(new LinearLayoutManager(pageView.getContext()));
-                if (show != null) {
-                    updateShowSeasons();
-                }
-                break;
-        }
-
-        return pageView;
-    }
-
-    private void updateShowSeasons() {
-        RecyclerView seasonsView = (RecyclerView) pageViews.get(Page.SEASONS);
-        RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, show.getSeasons(), onSeasonClickListener);
-        seasonsView.setAdapter(seasonsAdapter);
-    }
-
-    private void updateShowOverview() {
-        ShowOverviewView view = (ShowOverviewView) pageViews.get(Page.OVERVIEW);
-        view.setOverview(show.getOverview());
-        view.setCast(show.getCast());
     }
 
     void update(Show show) {
         this.show = show;
-
-        if (pageViews.containsKey(Page.OVERVIEW)) {
-            updateShowOverview();
-        }
-
-        if (pageViews.containsKey(Page.SEASONS)) {
-            updateShowSeasons();
-        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -92,14 +45,50 @@ class ShowPagerAdapter extends ViewPagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
-        pageViews.remove(Page.from(position));
+    public CharSequence getPageTitle(int position) {
+        Page page = Page.from(position);
+        return resources.getString(page.getTitleResId())
+                .toUpperCase(Locale.getDefault());
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-        return resources.getString(Page.from(position).getTitleResId()).toUpperCase(Locale.getDefault());
+    protected View getView(ViewGroup container, int position) {
+        switch (Page.from(position)) {
+            case OVERVIEW:
+                return getShowView(container);
+            case SEASONS:
+                return getShowSeasonsView(container);
+            default:
+                throw DeveloperError.because("max " + Page.values().length + " page(s). Got request for page at position: " + position);
+        }
+    }
+
+    private View getShowView(ViewGroup container) {
+        ShowOverviewView view = (ShowOverviewView) layoutInflater.inflate(Page.OVERVIEW.getLayoutResId(), container, false);
+        if (show != null) {
+            view.setBackdrop(show.getBackdropUri());
+            view.setCast(show.getCast());
+            view.setOverview(show.getOverview());
+        } else {
+            view.setBackdrop(showBackdropUri);
+        }
+        return view;
+    }
+
+    private View getShowSeasonsView(ViewGroup container) {
+        List<Show.Season> seasons;
+        if (show != null) {
+            seasons = show.getSeasons();
+        } else {
+            seasons = Collections.emptyList();
+        }
+
+        RecyclerView view = (RecyclerView) layoutInflater.inflate(Page.SEASONS.getLayoutResId(), container, false);
+        RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, seasons, onSeasonClickListener);
+        seasonsAdapter.setHasStableIds(true);
+        view.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        view.setAdapter(seasonsAdapter);
+        return view;
     }
 
     private enum Page {

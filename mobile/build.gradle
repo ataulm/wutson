@@ -30,13 +30,13 @@ def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword 
 
 android {
     compileSdkVersion 22
-    buildToolsVersion '22.0.0'
+    buildToolsVersion '22.0.1'
 
     defaultConfig {
         applicationId "com.ataulm.wutson2"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 10
+        versionCode 12
         versionName '_dog-food'
 
         Calendar instance = Calendar.getInstance()

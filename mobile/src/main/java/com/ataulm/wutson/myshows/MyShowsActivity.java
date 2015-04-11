@@ -32,11 +32,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
         setTitle(null);
         setContentView(R.layout.activity_my_shows);
         myShowsTextView = (TextView) findViewById(R.id.test);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         trackedShowsSubscription = Jabber.dataRepository().getMyShows()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -44,11 +40,11 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
     }
 
     @Override
-    protected void onPause() {
+    protected void onDestroy() {
         if (!trackedShowsSubscription.isUnsubscribed()) {
             trackedShowsSubscription.unsubscribe();
         }
-        super.onPause();
+        super.onDestroy();
     }
 
     @Override

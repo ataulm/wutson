@@ -55,6 +55,11 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         super.onPostCreate(savedInstanceState);
         applyTitleFromIntentExtras();
         applyColorFilterToAppBarIcons();
+
+        showDetailsSubscription = dataRepository().getShowDetails(getShowId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ShowObserver());
     }
 
     private void applyTitleFromIntentExtras() {
@@ -88,28 +93,19 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         return true;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        showDetailsSubscription = dataRepository().getShowDetails(getShowId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ShowObserver());
-    }
-
     private String getShowId() {
         return getIntent().getData().getLastPathSegment();
     }
 
     @Override
-    protected void onPause() {
+    protected void onDestroy() {
         if (!showDetailsSubscription.isUnsubscribed()) {
             showDetailsSubscription.unsubscribe();
         }
         if (!trackedStatusSubscription.isUnsubscribed()) {
             trackedStatusSubscription.unsubscribe();
         }
-        super.onPause();
+        super.onDestroy();
     }
 
     @Override
