@@ -72,6 +72,7 @@ public class SeasonsRepository {
                 for (GsonSeason.Episodes.Episode gsonEpisode : gsonSeason.episodes) {
                     episodes.add(new Episode(
                             gsonEpisode.airDate,
+                            gsonSeason.seasonNumber,
                             gsonEpisode.episodeNumber,
                             gsonEpisode.name,
                             gsonEpisode.overview,

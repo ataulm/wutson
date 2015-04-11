@@ -11,6 +11,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 
@@ -18,7 +19,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class SeasonsActivity extends WutsonActivity {
+public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeListener {
 
     private static final String KEY_RESET_PAGE_POSITION = BuildConfig.APPLICATION_ID + ".KEY_RESET_PAGE_POSITION";
     private static final int URI_PATH_SEGMENT_SHOW_ID_INDEX = 1;
@@ -81,6 +82,11 @@ public class SeasonsActivity extends WutsonActivity {
             seasonSubscription.unsubscribe();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(Episode episode) {
+        navigate().toEpisodeDetails(showId, episode.getSeasonNumber(), episode.getEpisodeNumber());
     }
 
     private class Observer extends LoggingObserver<Seasons> {
