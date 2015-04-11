@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
+import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.navigation.WutsonActivity;
@@ -19,6 +20,7 @@ import rx.schedulers.Schedulers;
 
 public class EpisodeDetailsActivity extends WutsonActivity {
 
+    private static final String KEY_RESET_PAGE_POSITION = BuildConfig.APPLICATION_ID + ".KEY_RESET_PAGE_POSITION";
     private static final int URI_PATH_SEGMENT_SHOW_ID_INDEX = 1;
     private static final int URI_PATH_SEGMENT_SEASON_NUMBER_INDEX = 3;
     private static final int URI_PATH_SEGMENT_EPISODE_NUMBER_INDEX = 5;
@@ -30,6 +32,8 @@ public class EpisodeDetailsActivity extends WutsonActivity {
     private String showId;
     private int seasonNumber;
     private int episodeNumber;
+
+    private boolean shouldResetPagePosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,8 @@ public class EpisodeDetailsActivity extends WutsonActivity {
 
         pager = (ViewPager) findViewById(R.id.episodes_pager);
         pager.setAdapter(adapter = new EpisodesPagerAdapter(getLayoutInflater()));
+
+        shouldResetPagePosition = savedInstanceState == null || savedInstanceState.getBoolean(KEY_RESET_PAGE_POSITION);
     }
 
     @Override
@@ -61,6 +67,12 @@ public class EpisodeDetailsActivity extends WutsonActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(KEY_RESET_PAGE_POSITION, shouldResetPagePosition);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     protected void onDestroy() {
         if (!episodesSubscription.isUnsubscribed()) {
             episodesSubscription.unsubscribe();
@@ -73,6 +85,10 @@ public class EpisodeDetailsActivity extends WutsonActivity {
         @Override
         public void onNext(Season season) {
             adapter.update(season);
+            if (shouldResetPagePosition) {
+                shouldResetPagePosition = false;
+                pager.setCurrentItem(adapter.positionOfEpisodeNumber(episodeNumber));
+            }
             // TODO pass show name to activity to setTitle
 //            getSupportActionBar().setDisplayShowTitleEnabled(true);
         }

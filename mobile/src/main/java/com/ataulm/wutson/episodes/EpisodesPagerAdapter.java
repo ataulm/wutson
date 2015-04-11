@@ -39,4 +39,13 @@ class EpisodesPagerAdapter extends ViewPagerAdapter {
         return season.size();
     }
 
+    int positionOfEpisodeNumber(int episodeNumber) {
+        for (int i = 0; i < season.size(); i++) {
+            if (season.get(i).getEpisodeNumber() == episodeNumber) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
 }
