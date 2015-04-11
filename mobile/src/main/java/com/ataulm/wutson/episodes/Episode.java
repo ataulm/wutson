@@ -30,6 +30,10 @@ public class Episode {
         return name;
     }
 
+    public String getOverview() {
+        return overview;
+    }
+
     public String getAirDate() {
         return airDate;
     }

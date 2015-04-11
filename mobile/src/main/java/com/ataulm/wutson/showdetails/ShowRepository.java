@@ -2,6 +2,7 @@ package com.ataulm.wutson.showdetails;
 
 import android.util.Log;
 
+import com.ataulm.wutson.episodes.Episodes;
 import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;

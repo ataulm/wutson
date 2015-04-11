@@ -51,9 +51,8 @@ public class DataRepository {
         return seasonsRepo.getSeasons(showId);
     }
 
-    public Observable<Episodes> getEpisodes() {
-        // TODO: add episodes pipeline
-        return Observable.empty();
+    public Observable<Episodes> getEpisodes(String showId, String seasonId) {
+        return seasonsRepo.getEpisodes(showId, seasonId);
     }
 
 }
