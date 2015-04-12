@@ -11,16 +11,16 @@ public class Show {
     private final URI posterUri;
     private final URI backdropUri;
     private final Cast cast;
-    private final List<Season> seasons;
+    private final List<SeasonSummary> seasonSummaries;
 
-    Show(String id, String name, String overview, URI posterUri, URI backdropUri, Cast cast, List<Season> seasons) {
+    Show(String id, String name, String overview, URI posterUri, URI backdropUri, Cast cast, List<SeasonSummary> seasonSummaries) {
         this.id = id;
         this.name = name;
         this.overview = overview;
         this.posterUri = posterUri;
         this.backdropUri = backdropUri;
         this.cast = cast;
-        this.seasons = seasons;
+        this.seasonSummaries = seasonSummaries;
     }
 
     public String getId() {
@@ -47,21 +47,23 @@ public class Show {
         return cast;
     }
 
-    public List<Season> getSeasons() {
-        return seasons;
+    public List<SeasonSummary> getSeasonSummaries() {
+        return seasonSummaries;
     }
 
-    public static class Season {
+    public static class SeasonSummary {
 
         private final String id;
         private final String showId;
+        private final String showName;
         private final int seasonNumber;
         private final int episodeCount;
         private final URI posterPath;
 
-        Season(String id, String showId, int seasonNumber, int episodeCount, URI posterPath) {
+        SeasonSummary(String id, String showId, String showName, int seasonNumber, int episodeCount, URI posterPath) {
             this.id = id;
             this.showId = showId;
+            this.showName = showName;
             this.seasonNumber = seasonNumber;
             this.episodeCount = episodeCount;
             this.posterPath = posterPath;
@@ -73,6 +75,10 @@ public class Show {
 
         public String getShowId() {
             return showId;
+        }
+
+        public String getShowName() {
+            return showName;
         }
 
         public int getSeasonNumber() {

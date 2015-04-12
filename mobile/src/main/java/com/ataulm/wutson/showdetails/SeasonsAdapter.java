@@ -12,12 +12,12 @@ import java.util.List;
 class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.SeasonViewHolder> {
 
     private final LayoutInflater inflater;
-    private final List<Show.Season> seasons;
+    private final List<Show.SeasonSummary> seasonSummaries;
     private final OnClickSeasonListener listener;
 
-    SeasonsAdapter(LayoutInflater inflater, List<Show.Season> seasons, OnClickSeasonListener listener) {
+    SeasonsAdapter(LayoutInflater inflater, List<Show.SeasonSummary> seasonSummaries, OnClickSeasonListener listener) {
         this.inflater = inflater;
-        this.seasons = seasons;
+        this.seasonSummaries = seasonSummaries;
         this.listener = listener;
     }
 
@@ -29,18 +29,18 @@ class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.SeasonViewHolde
 
     @Override
     public void onBindViewHolder(SeasonViewHolder holder, int position) {
-        Show.Season season = seasons.get(position);
-        holder.display(season);
+        Show.SeasonSummary seasonSummary = seasonSummaries.get(position);
+        holder.display(seasonSummary);
     }
 
     @Override
     public long getItemId(int position) {
-        return seasons.get(position).getId().hashCode();
+        return seasonSummaries.get(position).getId().hashCode();
     }
 
     @Override
     public int getItemCount() {
-        return seasons.size();
+        return seasonSummaries.size();
     }
 
     static class SeasonViewHolder extends RecyclerView.ViewHolder {
@@ -54,15 +54,15 @@ class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.SeasonViewHolde
             this.listener = listener;
         }
 
-        void display(final Show.Season season) {
-            seasonSummaryView.setPoster(season.getPosterPath().toString());
-            seasonSummaryView.setSeasonNumber(season.getSeasonNumber());
-            seasonSummaryView.setEpisodeCount(season.getEpisodeCount());
+        void display(final Show.SeasonSummary seasonSummary) {
+            seasonSummaryView.setPoster(seasonSummary.getPosterPath().toString());
+            seasonSummaryView.setSeasonNumber(seasonSummary.getSeasonNumber());
+            seasonSummaryView.setEpisodeCount(seasonSummary.getEpisodeCount());
             seasonSummaryView.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    listener.onClick(season);
+                    listener.onClick(seasonSummary);
                 }
 
             });

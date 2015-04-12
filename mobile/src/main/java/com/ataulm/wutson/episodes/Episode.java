@@ -10,14 +10,16 @@ public class Episode {
     private final String name;
     private final String overview;
     private final URI stillPath;
+    private final String showName;
 
-    public Episode(String airDate, int seasonNumber, int episodeNumber, String name, String overview, URI stillPath) {
+    public Episode(String airDate, int seasonNumber, int episodeNumber, String name, String overview, URI stillPath, String showName) {
         this.airDate = airDate;
         this.seasonNumber = seasonNumber;
         this.episodeNumber = episodeNumber;
         this.name = name;
         this.overview = overview;
         this.stillPath = stillPath;
+        this.showName = showName;
     }
 
     public int getEpisodeNumber() {
@@ -42,6 +44,10 @@ public class Episode {
 
     public int getSeasonNumber() {
         return seasonNumber;
+    }
+
+    public String getShowName() {
+        return showName;
     }
 
 }

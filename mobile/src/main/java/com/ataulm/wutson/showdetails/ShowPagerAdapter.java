@@ -76,15 +76,15 @@ class ShowPagerAdapter extends ViewPagerAdapter {
     }
 
     private View getShowSeasonsView(ViewGroup container) {
-        List<Show.Season> seasons;
+        List<Show.SeasonSummary> seasonSummaries;
         if (show != null) {
-            seasons = show.getSeasons();
+            seasonSummaries = show.getSeasonSummaries();
         } else {
-            seasons = Collections.emptyList();
+            seasonSummaries = Collections.emptyList();
         }
 
         RecyclerView view = (RecyclerView) layoutInflater.inflate(Page.SEASONS.getLayoutResId(), container, false);
-        RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, seasons, onSeasonClickListener);
+        RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, seasonSummaries, onSeasonClickListener);
         seasonsAdapter.setHasStableIds(true);
         view.setLayoutManager(new LinearLayoutManager(container.getContext()));
         view.setAdapter(seasonsAdapter);

@@ -15,6 +15,7 @@ import java.util.List;
 import rx.Observable;
 import rx.functions.Func1;
 import rx.functions.Func2;
+import rx.functions.Func3;
 
 public class SeasonsRepository {
 
@@ -30,44 +31,31 @@ public class SeasonsRepository {
 
     public Observable<Seasons> getSeasons(final String showId) {
         Observable<Show> showObservable = showRepository.getShowDetails(showId);
-        Observable<TmdbConfiguration> configurationObservable = configurationRepository.getConfiguration().first();
-        Observable<GsonSeason> gsonSeasonObservable = showObservable
+
+        Observable<Season> seasonObservable = showObservable
                 .flatMap(forEachSeasonInShow())
-                .flatMap(fetchGsonSeason());
+                .flatMap(fetchCompleteSeasonFrom(api, configurationRepository));
 
-        Observable<List<Season>> seasonObservable = Observable.combineLatest(gsonSeasonObservable, configurationObservable, asSeason()).toSortedList();
-
-        return Observable.combineLatest(showObservable, seasonObservable, asSeasons());
+        return Observable.combineLatest(showObservable, seasonObservable.toSortedList(), asSeasons());
     }
 
-    private Func1<Show, Observable<Show.Season>> forEachSeasonInShow() {
-        return new Func1<Show, Observable<Show.Season>>() {
-
+    private static Func1<Show.SeasonSummary, Observable<Season>> fetchCompleteSeasonFrom(final TmdbApi api, final ConfigurationRepository configurationRepository) {
+        return new Func1<Show.SeasonSummary, Observable<Season>>() {
             @Override
-            public Observable<Show.Season> call(Show show) {
-                Iterable<Show.Season> seasons = show.getSeasons();
-                return Observable.from(seasons);
+            public Observable<Season> call(Show.SeasonSummary seasonSummary) {
+                return Observable.zip(
+                        configurationRepository.getConfiguration().first(),
+                        api.getSeason(seasonSummary.getShowId(), seasonSummary.getSeasonNumber()),
+                        Observable.just(seasonSummary),
+                        asSeason());
             }
-
         };
     }
 
-    private Func1<Show.Season, Observable<GsonSeason>> fetchGsonSeason() {
-        return new Func1<Show.Season, Observable<GsonSeason>>() {
-
+    private static Func3<TmdbConfiguration, GsonSeason, Show.SeasonSummary, Season> asSeason() {
+        return new Func3<TmdbConfiguration, GsonSeason, Show.SeasonSummary, Season>() {
             @Override
-            public Observable<GsonSeason> call(Show.Season season) {
-                return api.getSeason(season.getShowId(), season.getSeasonNumber());
-            }
-
-        };
-    }
-
-    private static Func2<GsonSeason, TmdbConfiguration, Season> asSeason() {
-        return new Func2<GsonSeason, TmdbConfiguration, Season>() {
-
-            @Override
-            public Season call(GsonSeason gsonSeason, TmdbConfiguration configuration) {
+            public Season call(TmdbConfiguration configuration, GsonSeason gsonSeason, Show.SeasonSummary seasonSummary) {
                 List<Episode> episodes = new ArrayList<>(gsonSeason.episodes.size());
                 for (GsonSeason.Episodes.Episode gsonEpisode : gsonSeason.episodes) {
                     episodes.add(new Episode(
@@ -76,7 +64,8 @@ public class SeasonsRepository {
                             gsonEpisode.episodeNumber,
                             gsonEpisode.name,
                             gsonEpisode.overview,
-                            configuration.completeStill(gsonEpisode.stillPath)));
+                            configuration.completeStill(gsonEpisode.stillPath),
+                            seasonSummary.getShowName()));
                 }
 
                 return new Season(
@@ -85,6 +74,17 @@ public class SeasonsRepository {
                         gsonSeason.overview,
                         configuration.completePoster(gsonSeason.posterPath),
                         episodes);
+            }
+        };
+    }
+
+    private Func1<Show, Observable<Show.SeasonSummary>> forEachSeasonInShow() {
+        return new Func1<Show, Observable<Show.SeasonSummary>>() {
+
+            @Override
+            public Observable<Show.SeasonSummary> call(Show show) {
+                Iterable<Show.SeasonSummary> seasons = show.getSeasonSummaries();
+                return Observable.from(seasons);
             }
 
         };

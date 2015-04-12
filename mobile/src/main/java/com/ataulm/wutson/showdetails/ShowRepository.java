@@ -81,8 +81,8 @@ public class ShowRepository {
                 URI backdropUri = configuration.completeBackdrop(gsonTvShow.backdropPath);
                 Cast cast = new Cast(characters);
 
-                List<Show.Season> seasons = getSeasons(configuration, gsonTvShow);
-                return new Show(gsonTvShow.id, name, overview, posterUri, backdropUri, cast, seasons);
+                List<Show.SeasonSummary> seasonSummaries = getSeasons(configuration, gsonTvShow);
+                return new Show(gsonTvShow.id, name, overview, posterUri, backdropUri, cast, seasonSummaries);
             }
 
             private List<Character> getCharacters(TmdbConfiguration configuration, GsonTvShow gsonTvShow) {
@@ -94,16 +94,17 @@ public class ShowRepository {
                 return characters;
             }
 
-            private List<Show.Season> getSeasons(TmdbConfiguration configuration, GsonTvShow gsonTvShow) {
-                List<Show.Season> seasons = new ArrayList<>();
+            private List<Show.SeasonSummary> getSeasons(TmdbConfiguration configuration, GsonTvShow gsonTvShow) {
+                List<Show.SeasonSummary> seasonSummaries = new ArrayList<>();
                 for (GsonTvShow.Season season : gsonTvShow.seasons) {
                     String id = season.id;
+                    String showName = gsonTvShow.name;
                     int seasonNumber = season.seasonNumber;
                     int episodeCount = season.episodeCount;
                     URI posterPath = configuration.completePoster(season.posterPath);
-                    seasons.add(new Show.Season(id, showId, seasonNumber, episodeCount, posterPath));
+                    seasonSummaries.add(new Show.SeasonSummary(id, showId, showName, seasonNumber, episodeCount, posterPath));
                 }
-                return seasons;
+                return seasonSummaries;
             }
 
         };

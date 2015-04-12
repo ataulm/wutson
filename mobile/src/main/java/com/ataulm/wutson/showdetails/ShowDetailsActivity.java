@@ -109,8 +109,8 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     }
 
     @Override
-    public void onClick(Show.Season season) {
-        navigate().toSeason(getShowId(), season.getSeasonNumber());
+    public void onClick(Show.SeasonSummary seasonSummary) {
+        navigate().toSeason(getShowId(), seasonSummary.getSeasonNumber());
     }
 
     @Override
