@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.discover.ShowSummaryView;
 import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
@@ -98,7 +99,8 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
             }
 
             void bind(ShowSummary show) {
-                ((TrackedShowSummaryView) itemView).setShowName(show.getName());
+                ((ShowSummaryView) itemView).setPoster(show.getPosterUri());
+                ((ShowSummaryView) itemView).setTitle(show.getName());
             }
 
         }

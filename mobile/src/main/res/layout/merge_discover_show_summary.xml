@@ -4,14 +4,14 @@
   android:layout_height="match_parent">
 
   <com.ataulm.wutson.view.CrossfadeImageView
-    android:id="@+id/discover_show_summary_image_poster"
+    android:id="@+id/show_summary_image_poster"
     style="@style/Discover.ShowSummary.Poster"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:contentDescription="@null" />
 
   <TextView
-    android:id="@+id/discover_show_summary_text_title"
+    android:id="@+id/show_summary_text_title"
     style="@style/Discover.ShowSummary.Title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

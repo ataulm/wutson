@@ -58,7 +58,7 @@ class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowS
         }
 
         void update(final ShowSummary showSummary) {
-            showSummaryView.setPoster(showSummary.getPosterUri().toString());
+            showSummaryView.setPoster(showSummary.getPosterUri());
             showSummaryView.setTitle(showSummary.getName());
             showSummaryView.setOnClickListener(new View.OnClickListener() {
 

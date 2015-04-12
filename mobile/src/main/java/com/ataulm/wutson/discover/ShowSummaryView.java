@@ -1,6 +1,5 @@
 package com.ataulm.wutson.discover;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,9 +10,9 @@ import android.widget.TextView;
 import com.ataulm.wutson.R;
 import com.bumptech.glide.Glide;
 
-// not a problem - https://code.google.com/p/android/issues/detail?id=67434
-@SuppressLint("Instantiatable")
-class ShowSummaryView extends FrameLayout {
+import java.net.URI;
+
+public class ShowSummaryView extends FrameLayout {
 
     private static final float HEIGHT_BY_WIDTH_RATIO = 214f / 178;
     private static final float HALF_PIXEL = 0.5f;
@@ -37,20 +36,20 @@ class ShowSummaryView extends FrameLayout {
     protected void onFinishInflate() {
         View.inflate(getContext(), R.layout.merge_discover_show_summary, this);
 
-        posterImageView = (ImageView) findViewById(R.id.discover_show_summary_image_poster);
-        titleTextView = (TextView) findViewById(R.id.discover_show_summary_text_title);
+        posterImageView = (ImageView) findViewById(R.id.show_summary_image_poster);
+        titleTextView = (TextView) findViewById(R.id.show_summary_text_title);
     }
 
-    void setPoster(String uri) {
+    public void setPoster(URI uri) {
         posterImageView.setImageBitmap(null);
 
         Glide.with(getContext())
-                .load(uri)
+                .load(uri.toString())
                 .asBitmap()
                 .into(posterImageView);
     }
 
-    void setTitle(String title) {
+    public void setTitle(String title) {
         titleTextView.setText(title);
     }
 
