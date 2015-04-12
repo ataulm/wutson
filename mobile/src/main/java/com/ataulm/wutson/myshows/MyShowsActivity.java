@@ -5,10 +5,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
@@ -23,20 +28,81 @@ import rx.schedulers.Schedulers;
 
 public class MyShowsActivity extends WutsonTopLevelActivity {
 
-    private TextView myShowsTextView;
     private Subscription trackedShowsSubscription;
+    private TrackedShowsAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(null);
         setContentView(R.layout.activity_my_shows);
-        myShowsTextView = (TextView) findViewById(R.id.test);
+        RecyclerView listView = (RecyclerView) findViewById(R.id.my_shows_list);
+        listView.setLayoutManager(new GridLayoutManager(this, 3));
+        adapter = new TrackedShowsAdapter(getLayoutInflater());
+        adapter.setHasStableIds(true);
+        listView.setAdapter(adapter);
 
         trackedShowsSubscription = Jabber.dataRepository().getMyShows()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer());
+    }
+
+    private static class TrackedShowsAdapter extends RecyclerView.Adapter<TrackedShowsAdapter.TrackedShowsItemViewHolder> {
+
+        private final LayoutInflater layoutInflater;
+
+        private List<ShowSummary> showSummaries;
+
+        TrackedShowsAdapter(LayoutInflater layoutInflater) {
+            this.layoutInflater = layoutInflater;
+        }
+
+        void update(List<ShowSummary> showSummaries) {
+            this.showSummaries = showSummaries;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public TrackedShowsItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return TrackedShowsItemViewHolder.createViewHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(TrackedShowsItemViewHolder holder, int position) {
+            holder.bind(showSummaries.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            if (showSummaries == null) {
+                return 0;
+            }
+            return showSummaries.size();
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return showSummaries.get(position).getId().hashCode();
+        }
+
+        static class TrackedShowsItemViewHolder extends RecyclerView.ViewHolder {
+
+            static TrackedShowsItemViewHolder createViewHolder(LayoutInflater layoutInflater, ViewGroup parent) {
+                View view = layoutInflater.inflate(R.layout.view_tracked_shows_item, parent, false);
+                return new TrackedShowsItemViewHolder(view);
+            }
+
+            public TrackedShowsItemViewHolder(View itemView) {
+                super(itemView);
+            }
+
+            void bind(ShowSummary show) {
+                ((TrackedShowSummaryView) itemView).setShowName(show.getName());
+            }
+
+        }
+
     }
 
     @Override
@@ -75,12 +141,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
         }
 
         private void updateUiWith(List<ShowSummary> showSummaries) {
-            myShowsTextView.setTextColor(Color.GREEN);
-            String text = "Number of TrackedShows: " + showSummaries.size();
-            for (ShowSummary showSummary : showSummaries) {
-                text += "\n" + showSummary.getName();
-            }
-            myShowsTextView.setText(text);
+            adapter.update(showSummaries);
         }
 
     }
