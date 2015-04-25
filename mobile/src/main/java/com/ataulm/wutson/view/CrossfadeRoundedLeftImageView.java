@@ -120,6 +120,7 @@ public class CrossfadeRoundedLeftImageView extends ImageView {
             this.cornerRadius = cornerRadius;
         }
 
+        @Override
         protected void innerDraw(Canvas canvas, RectF bounds, Paint bitmapPaint) {
             canvas.drawRoundRect(bounds, cornerRadius, cornerRadius, bitmapPaint);
         }

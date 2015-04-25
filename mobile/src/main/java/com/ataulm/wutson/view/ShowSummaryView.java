@@ -1,4 +1,4 @@
-package com.ataulm.wutson.discover;
+package com.ataulm.wutson.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -29,12 +29,13 @@ public class ShowSummaryView extends FrameLayout {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int desiredHeight = (int) (width * HEIGHT_BY_WIDTH_RATIO + HALF_PIXEL);
 
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY));
+        int desiredHeightMeasureSpec = MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY);
+        super.onMeasure(widthMeasureSpec, desiredHeightMeasureSpec);
     }
 
     @Override
     protected void onFinishInflate() {
-        View.inflate(getContext(), R.layout.merge_discover_show_summary, this);
+        View.inflate(getContext(), R.layout.merge_show_summary, this);
 
         posterImageView = (ImageView) findViewById(R.id.show_summary_image_poster);
         titleTextView = (TextView) findViewById(R.id.show_summary_text_title);
@@ -45,7 +46,6 @@ public class ShowSummaryView extends FrameLayout {
 
         Glide.with(getContext())
                 .load(uri.toString())
-                .asBitmap()
                 .into(posterImageView);
     }
 

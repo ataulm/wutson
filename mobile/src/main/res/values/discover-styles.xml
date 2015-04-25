@@ -14,21 +14,4 @@
     <item name="android:foreground">@drawable/discover_shows_in_genre_item_foreground</item>
   </style>
 
-  <style name="Discover.ShowSummary" />
-
-  <style name="Discover.ShowSummary.Poster">
-    <item name="android:scaleType">centerCrop</item>
-  </style>
-
-  <style name="Discover.ShowSummary.Title">
-    <item name="android:minHeight">@dimen/discover_show_summary_title_min_height</item>
-    <item name="android:paddingLeft">@dimen/discover_show_summary_title_padding_left</item>
-    <item name="android:paddingTop">@dimen/discover_show_summary_title_padding_top</item>
-    <item name="android:paddingRight">@dimen/discover_show_summary_title_padding_right</item>
-    <item name="android:paddingBottom">@dimen/discover_show_summary_title_padding_bottom</item>
-    <item name="android:textColor">@color/discover_show_summary_title_text</item>
-    <item name="android:background">@color/discover_show_summary_title_background</item>
-    <item name="android:gravity">center_vertical</item>
-  </style>
-
 </resources>

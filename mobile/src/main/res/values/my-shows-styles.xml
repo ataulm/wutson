@@ -5,4 +5,10 @@
 
   <style name="MyShows.AppBar" />
 
+    <style name="MyShows.ShowsList">
+      <item name="android:numColumns">@integer/my_shows_span_count</item>
+      <item name="android:horizontalSpacing">@dimen/my_shows_item_spacing</item>
+      <item name="android:verticalSpacing">@dimen/my_shows_item_spacing</item>
+    </style>
+
 </resources>

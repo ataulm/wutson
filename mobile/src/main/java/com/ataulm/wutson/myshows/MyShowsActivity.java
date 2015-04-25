@@ -2,19 +2,14 @@ package com.ataulm.wutson.myshows;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.os.Parcelable;
+import android.widget.GridView;
 
+import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.discover.ShowSummaryView;
-import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
@@ -29,19 +24,20 @@ import rx.schedulers.Schedulers;
 
 public class MyShowsActivity extends WutsonTopLevelActivity {
 
+    private static final String KEY_SHOWS_LIST_STATE = BuildConfig.APPLICATION_ID + ".KEY_SHOWS_LIST_STATE";
+
     private Subscription trackedShowsSubscription;
     private TrackedShowsAdapter adapter;
+    private GridView showsList;
+    private Parcelable showsListState;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(null);
         setContentView(R.layout.activity_my_shows);
-        RecyclerView listView = (RecyclerView) findViewById(R.id.my_shows_list);
-        listView.setLayoutManager(new GridLayoutManager(this, 3));
-        adapter = new TrackedShowsAdapter(getLayoutInflater());
-        adapter.setHasStableIds(true);
-        listView.setAdapter(adapter);
+        showsList = (GridView) findViewById(R.id.my_shows_list);
+        showsList.setAdapter(adapter = new TrackedShowsAdapter(getLayoutInflater()));
 
         trackedShowsSubscription = Jabber.dataRepository().getMyShows()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -49,62 +45,16 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
                 .subscribe(new Observer());
     }
 
-    private static class TrackedShowsAdapter extends RecyclerView.Adapter<TrackedShowsAdapter.TrackedShowsItemViewHolder> {
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        showsListState = savedInstanceState.getParcelable(KEY_SHOWS_LIST_STATE);
+    }
 
-        private final LayoutInflater layoutInflater;
-
-        private List<ShowSummary> showSummaries;
-
-        TrackedShowsAdapter(LayoutInflater layoutInflater) {
-            this.layoutInflater = layoutInflater;
-        }
-
-        void update(List<ShowSummary> showSummaries) {
-            this.showSummaries = showSummaries;
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public TrackedShowsItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return TrackedShowsItemViewHolder.createViewHolder(layoutInflater, parent);
-        }
-
-        @Override
-        public void onBindViewHolder(TrackedShowsItemViewHolder holder, int position) {
-            holder.bind(showSummaries.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            if (showSummaries == null) {
-                return 0;
-            }
-            return showSummaries.size();
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return showSummaries.get(position).getId().hashCode();
-        }
-
-        static class TrackedShowsItemViewHolder extends RecyclerView.ViewHolder {
-
-            static TrackedShowsItemViewHolder createViewHolder(LayoutInflater layoutInflater, ViewGroup parent) {
-                View view = layoutInflater.inflate(R.layout.view_tracked_shows_item, parent, false);
-                return new TrackedShowsItemViewHolder(view);
-            }
-
-            public TrackedShowsItemViewHolder(View itemView) {
-                super(itemView);
-            }
-
-            void bind(ShowSummary show) {
-                ((ShowSummaryView) itemView).setPoster(show.getPosterUri());
-                ((ShowSummaryView) itemView).setTitle(show.getName());
-            }
-
-        }
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(KEY_SHOWS_LIST_STATE, showsList.onSaveInstanceState());
     }
 
     @Override
@@ -129,12 +79,13 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
                 finish();
             } else {
                 setTitle(R.string.my_shows_label);
-                updateUiWith(showSummaries);
+                adapter.update(showSummaries);
+                showsList.onRestoreInstanceState(showsListState);
             }
         }
 
         private boolean nothingToSeeHere(List<ShowSummary> showSummaries) {
-            return activityWasOpenedFromLauncher() && showSummaries.isEmpty();
+            return showSummaries.isEmpty() && activityWasOpenedFromLauncher();
         }
 
         private boolean activityWasOpenedFromLauncher() {
@@ -142,19 +93,15 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
             return categories != null && categoryLauncherIsIn(categories);
         }
 
-        private void updateUiWith(List<ShowSummary> showSummaries) {
-            adapter.update(showSummaries);
+        private boolean categoryLauncherIsIn(Set<String> categories) {
+            return categories.contains(Intent.CATEGORY_LAUNCHER) || categoryLeanbackLauncherIsIn(categories);
         }
 
-    }
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+        private boolean categoryLeanbackLauncherIsIn(Set<String> categories) {
+            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && categories.contains(Intent.CATEGORY_LEANBACK_LAUNCHER);
+        }
 
-    private static boolean categoryLauncherIsIn(Set<String> categories) {
-        return categories.contains(Intent.CATEGORY_LAUNCHER) || categoryLeanbackLauncherIsIn(categories);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static boolean categoryLeanbackLauncherIsIn(Set<String> categories) {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && categories.contains(Intent.CATEGORY_LEANBACK_LAUNCHER);
     }
 
 }
