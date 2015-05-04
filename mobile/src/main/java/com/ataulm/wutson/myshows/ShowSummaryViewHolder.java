@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.view.ShowSummaryView;
 
@@ -21,9 +22,17 @@ final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    void bind(ShowSummary show) {
+    void bind(final ShowSummary show, final OnShowClickListener listener) {
         ((ShowSummaryView) itemView).setTitle(show.getName());
         ((ShowSummaryView) itemView).setPoster(show.getPosterUri());
+        itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onClick(show);
+                    }
+                }
+        );
     }
 
 }

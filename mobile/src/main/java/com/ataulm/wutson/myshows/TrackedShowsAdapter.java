@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.view.ShowSummaryView;
 
@@ -13,7 +14,13 @@ import java.util.List;
 
 class TrackedShowsAdapter extends RecyclerView.Adapter<ShowSummaryViewHolder> {
 
+    private final OnShowClickListener listener;
+
     private List<ShowSummary> showSummaries;
+
+    TrackedShowsAdapter(OnShowClickListener listener) {
+        this.listener = listener;
+    }
 
     void update(List<ShowSummary> showSummaries) {
         this.showSummaries = showSummaries;
@@ -27,7 +34,7 @@ class TrackedShowsAdapter extends RecyclerView.Adapter<ShowSummaryViewHolder> {
 
     @Override
     public void onBindViewHolder(ShowSummaryViewHolder holder, int position) {
-        holder.bind(showSummaries.get(position));
+        holder.bind(showSummaries.get(position), listener);
     }
 
     @Override

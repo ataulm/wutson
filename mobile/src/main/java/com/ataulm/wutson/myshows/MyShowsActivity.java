@@ -14,6 +14,7 @@ import com.ataulm.rv.SpanSizeLookup;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
@@ -26,7 +27,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MyShowsActivity extends WutsonTopLevelActivity {
+public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowClickListener {
 
     private static final String KEY_SAVED_STATE = BuildConfig.APPLICATION_ID + ".KEY_SAVED_STATE";
 
@@ -49,7 +50,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
     }
 
     private void bindNewTrackedShowsAdapterToShowsView() {
-        adapter = new TrackedShowsAdapter();
+        adapter = new TrackedShowsAdapter(this);
         adapter.setHasStableIds(true);
 
         final int spanCount = getResources().getInteger(R.integer.my_shows_span_count);
@@ -101,6 +102,11 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
     @Override
     protected NavigationDrawerItem getNavigationDrawerItem() {
         return NavigationDrawerItem.MY_SHOWS;
+    }
+
+    @Override
+    public void onClick(ShowSummary showSummary) {
+        navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
     }
 
     private class Observer extends LoggingObserver<List<ShowSummary>> {
