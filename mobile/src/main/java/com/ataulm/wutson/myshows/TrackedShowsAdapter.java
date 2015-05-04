@@ -1,9 +1,9 @@
 package com.ataulm.wutson.myshows;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.ShowSummary;
@@ -11,15 +11,9 @@ import com.ataulm.wutson.view.ShowSummaryView;
 
 import java.util.List;
 
-class TrackedShowsAdapter extends BaseAdapter {
-
-    private final LayoutInflater layoutInflater;
+class TrackedShowsAdapter extends RecyclerView.Adapter<ShowSummaryViewHolder> {
 
     private List<ShowSummary> showSummaries;
-
-    TrackedShowsAdapter(LayoutInflater layoutInflater) {
-        this.layoutInflater = layoutInflater;
-    }
 
     void update(List<ShowSummary> showSummaries) {
         this.showSummaries = showSummaries;
@@ -27,37 +21,26 @@ class TrackedShowsAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        if (showSummaries == null) {
-            return 0;
-        }
-        return showSummaries.size();
+    public ShowSummaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return ShowSummaryViewHolder.inflate(parent);
     }
 
     @Override
-    public ShowSummary getItem(int position) {
-        return showSummaries.get(position);
+    public void onBindViewHolder(ShowSummaryViewHolder holder, int position) {
+        holder.bind(showSummaries.get(position));
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return showSummaries.get(position).getId().hashCode();
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        if (view == null) {
-            view = layoutInflater.inflate(R.layout.view_tracked_shows_item, parent, false);
+    public int getItemCount() {
+        if (showSummaries == null) {
+            return 0;
         }
-        bindView(position, (ShowSummaryView) view);
-        return view;
-    }
-
-    private void bindView(int position, ShowSummaryView view) {
-        ShowSummary show = getItem(position);
-        view.setTitle(show.getName());
-        view.setPoster(show.getPosterUri());
+        return showSummaries.size();
     }
 
 }

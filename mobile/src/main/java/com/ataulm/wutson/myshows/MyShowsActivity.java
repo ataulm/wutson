@@ -4,10 +4,11 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.widget.GridView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-import com.ataulm.wutson.BuildConfig;
+import com.ataulm.rv.SpacesItemDecoration;
+import com.ataulm.rv.SpanSizeLookup;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.ShowSummary;
@@ -24,20 +25,15 @@ import rx.schedulers.Schedulers;
 
 public class MyShowsActivity extends WutsonTopLevelActivity {
 
-    private static final String KEY_SHOWS_LIST_STATE = BuildConfig.APPLICATION_ID + ".KEY_SHOWS_LIST_STATE";
-
     private Subscription trackedShowsSubscription;
     private TrackedShowsAdapter adapter;
-    private GridView showsList;
-    private Parcelable showsListState;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(null);
         setContentView(R.layout.activity_my_shows);
-        showsList = (GridView) findViewById(R.id.my_shows_list);
-        showsList.setAdapter(adapter = new TrackedShowsAdapter(getLayoutInflater()));
+        bindNewTrackedShowsAdapterToShowsView();
 
         trackedShowsSubscription = Jabber.dataRepository().getMyShows()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -45,16 +41,30 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
                 .subscribe(new Observer());
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        showsListState = savedInstanceState.getParcelable(KEY_SHOWS_LIST_STATE);
-    }
+    private void bindNewTrackedShowsAdapterToShowsView() {
+        adapter = new TrackedShowsAdapter();
+        adapter.setHasStableIds(true);
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable(KEY_SHOWS_LIST_STATE, showsList.onSaveInstanceState());
+        final int spanCount = getResources().getInteger(R.integer.my_shows_span_count);
+        int spacing = getResources().getDimensionPixelSize(R.dimen.my_shows_item_spacing);
+        SpacesItemDecoration itemDecoration = SpacesItemDecoration.newInstance(spacing, spacing,
+                new SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int i) {
+                        return 1;
+                    }
+
+                    @Override
+                    public int getSpanCount() {
+                        return spanCount;
+                    }
+                }
+        );
+
+        RecyclerView showsView = (RecyclerView) findViewById(R.id.my_shows_list);
+        showsView.setLayoutManager(new GridLayoutManager(this, spanCount));
+        showsView.addItemDecoration(itemDecoration);
+        showsView.setAdapter(adapter);
     }
 
     @Override
@@ -80,7 +90,6 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
             } else {
                 setTitle(R.string.my_shows_label);
                 adapter.update(showSummaries);
-                showsList.onRestoreInstanceState(showsListState);
             }
         }
 
