@@ -4,11 +4,14 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 
 import com.ataulm.rv.SpacesItemDecoration;
 import com.ataulm.rv.SpanSizeLookup;
+import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.ShowSummary;
@@ -25,8 +28,12 @@ import rx.schedulers.Schedulers;
 
 public class MyShowsActivity extends WutsonTopLevelActivity {
 
+    private static final String KEY_SAVED_STATE = BuildConfig.APPLICATION_ID + ".KEY_SAVED_STATE";
+
     private Subscription trackedShowsSubscription;
     private TrackedShowsAdapter adapter;
+    private RecyclerView showsView;
+    private SparseArray<Parcelable> savedStateForShowsView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,10 +68,26 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
                 }
         );
 
-        RecyclerView showsView = (RecyclerView) findViewById(R.id.my_shows_list);
+        showsView = (RecyclerView) findViewById(R.id.my_shows_list);
         showsView.setLayoutManager(new GridLayoutManager(this, spanCount));
         showsView.addItemDecoration(itemDecoration);
         showsView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        SparseArray<Parcelable> container = new SparseArray<>();
+        showsView.saveHierarchyState(container);
+        outState.putSparseParcelableArray(KEY_SAVED_STATE, container);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState.containsKey(KEY_SAVED_STATE)) {
+            savedStateForShowsView = savedInstanceState.getSparseParcelableArray(KEY_SAVED_STATE);
+        }
     }
 
     @Override
@@ -90,6 +113,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity {
             } else {
                 setTitle(R.string.my_shows_label);
                 adapter.update(showSummaries);
+                showsView.restoreHierarchyState(savedStateForShowsView);
             }
         }
 
