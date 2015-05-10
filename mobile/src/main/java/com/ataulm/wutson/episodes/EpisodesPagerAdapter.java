@@ -4,9 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.seasons.Season;
-import com.ataulm.wutson.vpa.ViewPagerAdapter;
 
 class EpisodesPagerAdapter extends ViewPagerAdapter {
 

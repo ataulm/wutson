@@ -13,7 +13,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-
+        maven { url 'https://dl.bintray.com/ataulm/maven/' }
         maven {
             credentials {
                 username project.hasProperty('bintrayUsername') ? bintrayUsername : System.env.bintrayUsername
