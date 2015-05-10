@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 
 import com.ataulm.rv.SpacesItemDecoration;
-import com.ataulm.rv.SpanSizeLookup;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
@@ -55,20 +54,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
         final int spanCount = getResources().getInteger(R.integer.my_shows_span_count);
         int spacing = getResources().getDimensionPixelSize(R.dimen.my_shows_item_spacing);
-        SpacesItemDecoration itemDecoration = SpacesItemDecoration.newInstance(spacing, spacing,
-                new SpanSizeLookup() {
-                    @Override
-                    public int getSpanSize(int i) {
-                        return 1;
-                    }
-
-                    @Override
-                    public int getSpanCount() {
-                        return spanCount;
-                    }
-                }
-        );
-
+        RecyclerView.ItemDecoration itemDecoration = SpacesItemDecoration.newInstance(spacing, spacing, spanCount);
         showsView = (RecyclerView) findViewById(R.id.my_shows_list);
         showsView.setLayoutManager(new GridLayoutManager(this, spanCount));
         showsView.addItemDecoration(itemDecoration);
