@@ -1,14 +1,10 @@
 package com.ataulm.wutson.myshows;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
-import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.view.ShowSummaryView;
+import com.ataulm.wutson.core.model.ShowSummary;
 
 import java.util.List;
 

@@ -9,7 +9,7 @@ public class WutsonApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Crashlytics.start(this);
-        Jabber.init(this);
+        Jabber.init(this, BuildConfig.TMDB_API_KEY);
     }
 
 }

@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.ataulm.wutson.DeveloperError;
+import com.ataulm.wutson.core.DeveloperError;
 import com.ataulm.wutson.R;
 
 public class NavigationDrawerView extends LinearLayout {

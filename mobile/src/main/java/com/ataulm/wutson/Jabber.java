@@ -3,16 +3,16 @@ package com.ataulm.wutson;
 import android.app.Application;
 import android.content.Context;
 
-import com.ataulm.wutson.discover.GenresRepository;
-import com.ataulm.wutson.discover.ShowsInGenreRepository;
+import com.ataulm.wutson.core.showdetails.ShowRepository;
+import com.ataulm.wutson.core.discover.GenresRepository;
+import com.ataulm.wutson.core.discover.ShowsInGenreRepository;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.repository.DataRepository;
 import com.ataulm.wutson.repository.TrackedShowsRepository;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
-import com.ataulm.wutson.seasons.SeasonsRepository;
-import com.ataulm.wutson.showdetails.ShowRepository;
-import com.ataulm.wutson.tmdb.TmdbApi;
-import com.ataulm.wutson.tmdb.TmdbApiFactory;
+import com.ataulm.wutson.core.seasons.SeasonsRepository;
+import com.ataulm.wutson.core.tmdb.TmdbApi;
+import com.ataulm.wutson.core.tmdb.TmdbApiFactory;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
@@ -29,21 +29,23 @@ public final class Jabber {
     private static Jabber instance;
 
     private final Context context;
+    private final String tmdbApiKey;
 
     private DataRepository dataRepository;
     private ToastDisplayer toastDisplayer;
 
-    public static void init(Application application) {
-        instance = new Jabber(application.getApplicationContext());
+    public static void init(Application application, String tmdbApiKey) {
+        instance = new Jabber(application.getApplicationContext(), tmdbApiKey);
     }
 
-    private Jabber(Context context) {
+    private Jabber(Context context, String tmdbApiKey) {
         this.context = context;
+        this.tmdbApiKey = tmdbApiKey;
     }
 
     public static DataRepository dataRepository() {
         if (instance.dataRepository == null) {
-            TmdbApi api = newApi();
+            TmdbApi api = newApi(instance.tmdbApiKey);
             Gson gson = new Gson();
             PersistentDataRepository persistentDataRepo = new PersistentDataRepository(instance.context.getContentResolver());
             ConfigurationRepository configurationRepo = new ConfigurationRepository(api, persistentDataRepo, gson);
@@ -58,9 +60,9 @@ public final class Jabber {
         return instance.dataRepository;
     }
 
-    private static TmdbApi newApi() {
+    private static TmdbApi newApi(String tmdbApiKey) {
         boolean enableLogs = BuildConfig.DEBUG;
-        TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(BuildConfig.TMDB_API_KEY, newClient(), enableLogs);
+        TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(tmdbApiKey, newClient(), enableLogs);
         return tmdbApiFactory.createApi();
     }
 

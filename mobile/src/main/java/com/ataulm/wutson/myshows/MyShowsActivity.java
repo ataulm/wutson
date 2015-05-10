@@ -14,7 +14,7 @@ import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
-import com.ataulm.wutson.model.ShowSummary;
+import com.ataulm.wutson.core.model.ShowSummary;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;

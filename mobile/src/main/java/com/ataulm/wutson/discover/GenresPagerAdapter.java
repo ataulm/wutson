@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.core.discover.ShowsInGenre;
 
 import java.util.Collections;
 import java.util.List;

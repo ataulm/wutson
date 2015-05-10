@@ -6,7 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.episodes.Episode;
+import com.ataulm.wutson.core.episodes.Episode;
+import com.ataulm.wutson.core.seasons.Season;
 
 class SeasonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

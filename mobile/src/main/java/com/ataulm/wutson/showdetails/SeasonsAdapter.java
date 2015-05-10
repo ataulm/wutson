@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.core.showdetails.Show;
 
 import java.util.List;
 

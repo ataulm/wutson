@@ -3,15 +3,11 @@ package com.ataulm.wutson.episodes;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ataulm.wutson.DeveloperError;
+import com.ataulm.wutson.core.DeveloperError;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.episodes.Episode;
-import com.bumptech.glide.Glide;
 
 public class EpisodeDetailsView extends LinearLayout {
 
