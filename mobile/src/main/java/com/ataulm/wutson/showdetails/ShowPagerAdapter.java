@@ -99,7 +99,7 @@ class ShowPagerAdapter extends ViewPagerAdapter {
         private final int layoutResId;
         private final int titleResId;
 
-        private Page(@LayoutRes int layoutResId, @StringRes int titleResId) {
+        Page(@LayoutRes int layoutResId, @StringRes int titleResId) {
             this.layoutResId = layoutResId;
             this.titleResId = titleResId;
         }
