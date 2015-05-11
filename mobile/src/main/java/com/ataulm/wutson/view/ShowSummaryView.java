@@ -2,9 +2,11 @@ package com.ataulm.wutson.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
@@ -19,6 +21,7 @@ public class ShowSummaryView extends FrameLayout {
 
     private ImageView posterImageView;
     private TextView titleTextView;
+    private View overflowButtonView;
 
     public ShowSummaryView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -39,6 +42,25 @@ public class ShowSummaryView extends FrameLayout {
 
         posterImageView = (ImageView) findViewById(R.id.show_summary_image_poster);
         titleTextView = (TextView) findViewById(R.id.show_summary_text_title);
+        overflowButtonView = findViewById(R.id.show_summary_button_overflow);
+
+        final PopupMenu popupMenu = new PopupMenu(getContext(), overflowButtonView);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return false;
+            }
+        });
+        popupMenu.inflate(R.menu.menu_show_summary);
+
+        overflowButtonView.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                popupMenu.show();
+            }
+
+        });
     }
 
     public void setPoster(URI uri) {
@@ -51,6 +73,12 @@ public class ShowSummaryView extends FrameLayout {
 
     public void setTitle(String title) {
         titleTextView.setText(title);
+    }
+
+    public interface MenuClickListener {
+
+        void onMenuItemClick(int id);
+
     }
 
 }

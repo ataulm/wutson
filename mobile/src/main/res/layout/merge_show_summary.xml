@@ -10,11 +10,26 @@
     android:layout_height="match_parent"
     android:contentDescription="@null" />
 
-  <TextView
-    android:id="@+id/show_summary_text_title"
-    style="@style/ShowSummary.Title"
+  <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom" />
+    android:layout_gravity="bottom"
+    android:background="@color/show_summary_title_background">
 
+    <TextView
+      android:id="@+id/show_summary_text_title"
+      style="@style/ShowSummary.Title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_toLeftOf="@+id/show_summary_button_overflow" />
+
+    <ImageView
+      android:id="@id/show_summary_button_overflow"
+      style="@style/ShowSummary.Overflow"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_alignParentRight="true"
+      android:src="@drawable/ic_show_summary_overflow" />
+
+  </RelativeLayout>
 </merge>
