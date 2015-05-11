@@ -3,6 +3,7 @@ package com.ataulm.wutson.myshows;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.core.model.ShowSummary;
 
@@ -11,11 +12,13 @@ import java.util.List;
 class TrackedShowsAdapter extends RecyclerView.Adapter<ShowSummaryViewHolder> {
 
     private final OnShowClickListener listener;
+    private final ToastDisplayer toaster;
 
     private List<ShowSummary> showSummaries;
 
-    TrackedShowsAdapter(OnShowClickListener listener) {
+    TrackedShowsAdapter(OnShowClickListener listener, ToastDisplayer toaster) {
         this.listener = listener;
+        this.toaster = toaster;
     }
 
     void update(List<ShowSummary> showSummaries) {
@@ -25,7 +28,7 @@ class TrackedShowsAdapter extends RecyclerView.Adapter<ShowSummaryViewHolder> {
 
     @Override
     public ShowSummaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return ShowSummaryViewHolder.inflate(parent);
+        return ShowSummaryViewHolder.inflate(parent, toaster);
     }
 
     @Override

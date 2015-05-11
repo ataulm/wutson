@@ -1,6 +1,7 @@
 package com.ataulm.wutson.view;
 
 import android.content.Context;
+import android.support.annotation.MenuRes;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ public class ShowSummaryView extends FrameLayout {
     private ImageView posterImageView;
     private TextView titleTextView;
     private View overflowButtonView;
+    private PopupMenu popupMenu;
 
     public ShowSummaryView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,24 +45,26 @@ public class ShowSummaryView extends FrameLayout {
         posterImageView = (ImageView) findViewById(R.id.show_summary_image_poster);
         titleTextView = (TextView) findViewById(R.id.show_summary_text_title);
         overflowButtonView = findViewById(R.id.show_summary_button_overflow);
+    }
 
-        final PopupMenu popupMenu = new PopupMenu(getContext(), overflowButtonView);
+    public void setPopupMenu(@MenuRes int menuResId, final OnMenuItemClickListener onMenuItemClickListener) {
+        popupMenu = new PopupMenu(getContext(), overflowButtonView);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                return false;
+                onMenuItemClickListener.onClick(item);
+                return true;
             }
         });
-        popupMenu.inflate(R.menu.menu_show_summary);
+        popupMenu.inflate(menuResId);
 
         overflowButtonView.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 popupMenu.show();
             }
-
         });
+        overflowButtonView.setVisibility(VISIBLE);
     }
 
     public void setPoster(URI uri) {
@@ -75,9 +79,9 @@ public class ShowSummaryView extends FrameLayout {
         titleTextView.setText(title);
     }
 
-    public interface MenuClickListener {
+    public interface OnMenuItemClickListener {
 
-        void onMenuItemClick(int id);
+        void onClick(MenuItem menuItem);
 
     }
 

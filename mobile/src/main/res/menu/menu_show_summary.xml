@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item
-    android:id="@+id/show_summary_menu_item_add_favourite"
-    android:title="Add favourite" />
-  <item
-    android:id="@+id/show_summary_menu_item_remove_favourite"
-    android:title="Remove favourite"
-    android:visible="false" />
+    android:id="@+id/show_summary_menu_item_toggle_favourite"
+    android:title="Add favourite"
+    android:checkable="true"
+    android:checked="false" />
   <item
     android:id="@+id/show_summary_menu_item_stop_tracking"
     android:title="Stop tracking" />

@@ -49,7 +49,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
     }
 
     private void bindNewTrackedShowsAdapterToShowsView() {
-        adapter = new TrackedShowsAdapter(this);
+        adapter = new TrackedShowsAdapter(this, Jabber.toastDisplayer());
         adapter.setHasStableIds(true);
 
         final int spanCount = getResources().getInteger(R.integer.my_shows_span_count);
