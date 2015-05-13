@@ -4,6 +4,7 @@ import com.ataulm.wutson.core.discover.ShowsInGenre;
 import com.ataulm.wutson.core.episodes.Episode;
 import com.ataulm.wutson.core.seasons.Season;
 import com.ataulm.wutson.core.seasons.Seasons;
+import com.ataulm.wutson.core.showdetails.Actor;
 import com.ataulm.wutson.core.showdetails.Show;
 
 import java.util.List;
@@ -34,10 +35,14 @@ public interface WutsonDataRepository {
 
     Observable<Seasons> getSeasons();
 
+    Observable<Actor> getActor(String id);
+
     void setTrackedStatus(Show show, TrackedStatus trackedStatus);
 
     void setWatchedStatus(Episode episode, WatchedStatus watchedStatus);
 
     void setWatchedStatus(Season season, WatchedStatus watchedStatus);
+
+    void setWatchedStatus(Show show, WatchedStatus watchedStatus);
 
 }
