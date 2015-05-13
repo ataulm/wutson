@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.navigation.WutsonActivity;
 
 public class SettingsActivity extends WutsonActivity {
@@ -78,13 +79,16 @@ public class SettingsActivity extends WutsonActivity {
             versionPreference.setOnPreferenceClickListener(EasterEggPreferenceClickListener.newInstanceNoHints(getActivity(),
                     new EasterEggPreferenceClickListener.EasterEgg() {
 
+                        private final ToastDisplayer toastDisplayer = new ToastDisplayer(getActivity());
+
                         @Override
                         public void onClickSpammed() {
                             String text = "Version code: " + BuildConfig.VERSION_CODE + "\n" + BuildConfig.BUILD_TIME;
-                            Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show();
+                            toastDisplayer.display(text);
                         }
 
-                    }));
+                    })
+            );
         }
     }
 
