@@ -11,8 +11,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.core.episodes.Episode;
-import com.ataulm.wutson.core.seasons.Seasons;
+import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 

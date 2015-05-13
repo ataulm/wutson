@@ -1,7 +1,7 @@
 # Retrofit
 -keepattributes *Annotation*
 -keep class retrofit.** { *; }
--keep class com.ataulm.wutson.core.tmdb.gson.** { *; }
+-keep class com.ataulm.wutson.tmdb.gson.** { *; }
 -keepclassmembernames interface * {
     @retrofit.http.* <methods>;
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.ToastDisplayer;
-import com.ataulm.wutson.core.model.ShowSummary;
+import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.view.ShowSummaryView;
 

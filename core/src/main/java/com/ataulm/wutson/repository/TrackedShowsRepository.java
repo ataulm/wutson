@@ -1,10 +1,10 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.core.model.ShowSummary;
-import com.ataulm.wutson.core.model.TmdbConfiguration;
+import com.ataulm.wutson.model.ShowSummary;
+import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
-import com.ataulm.wutson.core.tmdb.gson.GsonTvShow;
+import com.ataulm.wutson.tmdb.gson.GsonTvShow;
 import com.google.gson.Gson;
 
 import java.util.List;

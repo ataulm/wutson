@@ -1,6 +1,6 @@
 package com.ataulm.wutson.rx;
 
-import com.ataulm.wutson.core.DeveloperError;
+import com.ataulm.wutson.DeveloperError;
 import com.google.gson.Gson;
 
 import rx.Observable;

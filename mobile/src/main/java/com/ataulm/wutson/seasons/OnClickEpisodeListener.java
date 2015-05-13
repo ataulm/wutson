@@ -1,6 +1,6 @@
 package com.ataulm.wutson.seasons;
 
-import com.ataulm.wutson.core.episodes.Episode;
+import com.ataulm.wutson.episodes.Episode;
 
 public interface OnClickEpisodeListener {
 

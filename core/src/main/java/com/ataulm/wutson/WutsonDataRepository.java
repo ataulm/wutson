@@ -1,0 +1,48 @@
+package com.ataulm.wutson;
+
+import com.ataulm.wutson.discover.ShowsInGenre;
+import com.ataulm.wutson.episodes.Episode;
+import com.ataulm.wutson.seasons.Season;
+import com.ataulm.wutson.seasons.Seasons;
+import com.ataulm.wutson.showdetails.Actor;
+import com.ataulm.wutson.showdetails.Show;
+
+import java.util.List;
+
+import rx.Observable;
+
+public interface WutsonDataRepository {
+
+    Observable<List<ShowsInGenre>> getDiscoverShows();
+
+    Observable<ShowSummaries> getTrackedShows();
+
+    Observable<List<GroupedShowSummaries>> getUpcomingShows();
+
+    Observable<List<GroupedShowSummaries>> getRecentShows();
+
+    Observable<Show> getShow(String id);
+
+    Observable<TrackedStatus> getTrackedStatus(Show show);
+
+    Observable<Episodes> getWatchedEpisodes(Season season);
+
+    Observable<WatchedStatus> getWatchedStatus(Episode episode);
+
+    Observable<Integer> getWatchedCount(Season season);
+
+    Observable<Season> getSeason(String id);
+
+    Observable<Seasons> getSeasons();
+
+    Observable<Actor> getActor(String id);
+
+    void setTrackedStatus(Show show, TrackedStatus trackedStatus);
+
+    void setWatchedStatus(Episode episode, WatchedStatus watchedStatus);
+
+    void setWatchedStatus(Season season, WatchedStatus watchedStatus);
+
+    void setWatchedStatus(Show show, WatchedStatus watchedStatus);
+
+}

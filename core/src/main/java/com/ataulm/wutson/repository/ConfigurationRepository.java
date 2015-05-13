@@ -1,10 +1,10 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.core.model.TmdbConfiguration;
+import com.ataulm.wutson.model.TmdbConfiguration;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
-import com.ataulm.wutson.core.tmdb.TmdbApi;
-import com.ataulm.wutson.core.tmdb.gson.GsonConfiguration;
+import com.ataulm.wutson.tmdb.TmdbApi;
+import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
 import com.google.gson.Gson;
 
 import rx.Observable;

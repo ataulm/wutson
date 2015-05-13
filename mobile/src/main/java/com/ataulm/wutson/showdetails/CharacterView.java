@@ -28,7 +28,7 @@ public class CharacterView extends RelativeLayout {
         actorTextView = (TextView) findViewById(R.id.character_text_actor);
     }
 
-    public void display(com.ataulm.wutson.core.showdetails.Character character) {
+    public void display(com.ataulm.wutson.showdetails.Character character) {
         Glide.with(getContext()).load(character.getActor().getProfileUri().toString()).into(actorImageView);
         characterTextView.setText(character.getName());
         actorTextView.setText(character.getActor().getName());
