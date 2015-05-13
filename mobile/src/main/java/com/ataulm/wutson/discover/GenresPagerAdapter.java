@@ -61,7 +61,7 @@ class GenresPagerAdapter extends ViewPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return showsInGenres.get(position).getGenre();
+        return showsInGenres.get(position).getGenre().toString();
     }
 
 }

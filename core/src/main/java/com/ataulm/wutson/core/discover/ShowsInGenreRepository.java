@@ -1,14 +1,13 @@
 package com.ataulm.wutson.core.discover;
 
-import com.ataulm.wutson.core.discover.ShowsInGenre;
 import com.ataulm.wutson.core.model.ShowSummary;
 import com.ataulm.wutson.core.model.TmdbConfiguration;
-import com.ataulm.wutson.repository.ConfigurationRepository;
-import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
-import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.core.tmdb.TmdbApi;
 import com.ataulm.wutson.core.tmdb.gson.GsonDiscoverTv;
 import com.ataulm.wutson.core.tmdb.gson.GsonGenres;
+import com.ataulm.wutson.repository.ConfigurationRepository;
+import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
+import com.ataulm.wutson.rx.Function;
 import com.google.gson.Gson;
 
 import java.net.URI;
@@ -23,7 +22,8 @@ import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
-import static com.ataulm.wutson.rx.Function.*;
+import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
+import static com.ataulm.wutson.rx.Function.jsonTo;
 
 public class ShowsInGenreRepository {
 
@@ -123,7 +123,7 @@ public class ShowsInGenreRepository {
 
             @Override
             public ShowsInGenre call(TmdbConfiguration configuration, GsonGenreAndGsonDiscoverTvShows discoverTvShows) {
-                GsonGenres.Genre genre = discoverTvShows.genre;
+                Genre genre = new Genre(discoverTvShows.genre.id, discoverTvShows.genre.name);
                 List<ShowSummary> showSummaries = new ArrayList<>(discoverTvShows.size());
                 for (GsonDiscoverTv.Show discoverTvShow : discoverTvShows.gsonDiscoverTv) {
                     String id = discoverTvShow.id;

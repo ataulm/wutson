@@ -1,24 +1,22 @@
 package com.ataulm.wutson.core.discover;
 
 import com.ataulm.wutson.core.model.ShowSummary;
-import com.ataulm.wutson.core.tmdb.gson.GsonGenres;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class ShowsInGenre implements Iterable<ShowSummary>, Comparable<ShowsInGenre> {
 
-    // TODO: should not be using Gson model here
-    private final GsonGenres.Genre genre;
+    private final Genre genre;
     private final List<ShowSummary> showSummaries;
 
-    ShowsInGenre(GsonGenres.Genre genre, List<ShowSummary> showSummaries) {
+    ShowsInGenre(Genre genre, List<ShowSummary> showSummaries) {
         this.genre = genre;
         this.showSummaries = showSummaries;
     }
 
-    public String getGenre() {
-        return genre.name;
+    public Genre getGenre() {
+        return genre;
     }
 
     public int size() {
