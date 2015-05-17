@@ -1,4 +1,4 @@
-package com.ataulm.wutson.discover;
+package com.ataulm.wutson.model;
 
 public class Genre implements Comparable<Genre> {
 

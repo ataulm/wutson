@@ -8,7 +8,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:contentDescription="@null"
-    android:scaleType="fitStart" />
+    android:scaleType="fitStart"
+    android:background="@color/transparent" />
 
   <ScrollView
     android:layout_width="match_parent"

@@ -1,11 +1,11 @@
-package com.ataulm.wutson.seasons;
+package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.episodes.Episode;
-import com.ataulm.wutson.model.TmdbConfiguration;
-import com.ataulm.wutson.repository.ConfigurationRepository;
+import com.ataulm.wutson.tmdb.Configuration;
+import com.ataulm.wutson.model.Episode;
+import com.ataulm.wutson.model.Season;
+import com.ataulm.wutson.model.Seasons;
+import com.ataulm.wutson.model.Show;
 import com.ataulm.wutson.rx.Function;
-import com.ataulm.wutson.showdetails.Show;
-import com.ataulm.wutson.showdetails.ShowRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonSeason;
 
@@ -52,10 +52,10 @@ public class SeasonsRepository {
         };
     }
 
-    private static Func3<TmdbConfiguration, GsonSeason, Show.SeasonSummary, Season> asSeason() {
-        return new Func3<TmdbConfiguration, GsonSeason, Show.SeasonSummary, Season>() {
+    private static Func3<Configuration, GsonSeason, Show.SeasonSummary, Season> asSeason() {
+        return new Func3<Configuration, GsonSeason, Show.SeasonSummary, Season>() {
             @Override
-            public Season call(TmdbConfiguration configuration, GsonSeason gsonSeason, Show.SeasonSummary seasonSummary) {
+            public Season call(Configuration configuration, GsonSeason gsonSeason, Show.SeasonSummary seasonSummary) {
                 List<Episode> episodes = new ArrayList<>(gsonSeason.episodes.size());
                 for (GsonSeason.Episodes.Episode gsonEpisode : gsonSeason.episodes) {
                     episodes.add(new Episode(

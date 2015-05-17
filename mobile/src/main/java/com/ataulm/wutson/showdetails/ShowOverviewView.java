@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ataulm.wutson.R;
+import com.ataulm.wutson.*;
+import com.ataulm.wutson.model.Cast;
+import com.ataulm.wutson.model.Character;
 import com.bumptech.glide.Glide;
 
 import java.net.URI;
@@ -73,13 +75,13 @@ class ShowOverviewView extends FrameLayout {
 
         castView.setVisibility(VISIBLE);
 
-        for (com.ataulm.wutson.showdetails.Character character : cast) {
+        for (Character character : cast) {
             View characterView = getViewFor(character);
             castMembersContainer.addView(characterView, layoutParams);
         }
     }
 
-    private View getViewFor(com.ataulm.wutson.showdetails.Character character) {
+    private View getViewFor(Character character) {
         CharacterView characterView = ((CharacterView) layoutInflater.inflate(R.layout.view_character, this, false));
         characterView.display(character);
         return characterView;

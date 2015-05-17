@@ -5,7 +5,6 @@
 
   <style name="Wutson.Theme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="android:windowBackground">@color/white</item>
-    <item name="windowActionBar">false</item>
     <item name="colorPrimary">@color/white</item>
   </style>
 

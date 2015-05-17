@@ -1,4 +1,4 @@
-package com.ataulm.wutson;
+package com.ataulm.wutson.model;
 
 public enum WatchedStatus {
 

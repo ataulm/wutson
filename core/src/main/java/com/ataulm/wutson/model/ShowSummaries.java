@@ -1,6 +1,4 @@
-package com.ataulm.wutson;
-
-import com.ataulm.wutson.model.ShowSummary;
+package com.ataulm.wutson.model;
 
 import java.util.Collections;
 import java.util.List;

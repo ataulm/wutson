@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.episodes.Episode;
+import com.ataulm.wutson.model.Episode;
 import com.bumptech.glide.Glide;
 
 public class EpisodeSummaryView extends RelativeLayout {

@@ -1,4 +1,4 @@
-package com.ataulm.wutson.episodes;
+package com.ataulm.wutson.model;
 
 import java.net.URI;
 

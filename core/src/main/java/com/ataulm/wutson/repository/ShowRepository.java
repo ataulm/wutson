@@ -1,13 +1,14 @@
-package com.ataulm.wutson.showdetails;
+package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.model.TmdbConfiguration;
+import com.ataulm.wutson.tmdb.Configuration;
+import com.ataulm.wutson.model.*;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonCredits;
 import com.ataulm.wutson.tmdb.gson.GsonTvShow;
-import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.google.gson.Gson;
 
+import java.lang.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class ShowRepository {
     }
 
     public Observable<Show> getShowDetails(String showId) {
-        Observable<TmdbConfiguration> configurationObservable = configurationRepository.getConfiguration();
+        Observable<Configuration> configurationObservable = configurationRepository.getConfiguration();
         Observable<GsonTvShow> gsonTvShowObservable = fetchJsonTvShowFrom(persistentDataRepository, showId)
                 .filter(ignoreEmptyStrings())
                 .map(jsonTo(GsonTvShow.class, gson))
@@ -68,12 +69,12 @@ public class ShowRepository {
         });
     }
 
-    private static Func2<TmdbConfiguration, GsonTvShow, Show> asShow(final String showId) {
-        return new Func2<TmdbConfiguration, GsonTvShow, Show>() {
+    private static Func2<Configuration, GsonTvShow, Show> asShow(final String showId) {
+        return new Func2<Configuration, GsonTvShow, Show>() {
 
             @Override
-            public Show call(TmdbConfiguration configuration, GsonTvShow gsonTvShow) {
-                List<com.ataulm.wutson.showdetails.Character> characters = getCharacters(configuration, gsonTvShow);
+            public Show call(Configuration configuration, GsonTvShow gsonTvShow) {
+                List<com.ataulm.wutson.model.Character> characters = getCharacters(configuration, gsonTvShow);
 
                 String name = gsonTvShow.name;
                 String overview = gsonTvShow.overview;
@@ -85,16 +86,16 @@ public class ShowRepository {
                 return new Show(gsonTvShow.id, name, overview, posterUri, backdropUri, cast, seasonSummaries);
             }
 
-            private List<com.ataulm.wutson.showdetails.Character> getCharacters(TmdbConfiguration configuration, GsonTvShow gsonTvShow) {
-                List<com.ataulm.wutson.showdetails.Character> characters = new ArrayList<>();
+            private List<com.ataulm.wutson.model.Character> getCharacters(Configuration configuration, GsonTvShow gsonTvShow) {
+                List<com.ataulm.wutson.model.Character> characters = new ArrayList<>();
                 for (GsonCredits.Cast.Entry entry : gsonTvShow.gsonCredits.cast) {
                     Actor actor = new Actor(entry.actorName, configuration.completeProfile(entry.profilePath));
-                    characters.add(new Character(entry.name, actor));
+                    characters.add(new com.ataulm.wutson.model.Character(entry.name, actor));
                 }
                 return characters;
             }
 
-            private List<Show.SeasonSummary> getSeasons(TmdbConfiguration configuration, GsonTvShow gsonTvShow) {
+            private List<Show.SeasonSummary> getSeasons(Configuration configuration, GsonTvShow gsonTvShow) {
                 List<Show.SeasonSummary> seasonSummaries = new ArrayList<>();
                 for (GsonTvShow.Season season : gsonTvShow.seasons) {
                     String id = season.id;

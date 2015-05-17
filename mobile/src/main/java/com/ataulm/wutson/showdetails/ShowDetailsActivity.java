@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.model.Show;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 
@@ -137,12 +138,20 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         public void onNext(Boolean trackingShow) {
             super.onNext(trackingShow);
             if (trackingShow) {
-                item.setIcon(R.drawable.abc_btn_rating_star_on_mtrl_alpha);
-                item.setTitle("Stop tracking show");
+                updateMenuItemReflectThatShowIsBeingTracked();
             } else {
-                item.setIcon(R.drawable.abc_btn_rating_star_off_mtrl_alpha);
-                item.setTitle("Start tracking show");
+                updateMenuItemReflectThatShowIsNotBeingTracked();
             }
+        }
+
+        private void updateMenuItemReflectThatShowIsBeingTracked() {
+            item.setIcon(R.drawable.ic_action_star_full);
+            item.setTitle("Stop tracking show");
+        }
+
+        private void updateMenuItemReflectThatShowIsNotBeingTracked() {
+            item.setIcon(R.drawable.ic_action_star);
+            item.setTitle("Start tracking show");
         }
 
     }

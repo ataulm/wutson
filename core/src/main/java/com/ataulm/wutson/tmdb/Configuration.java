@@ -1,9 +1,9 @@
-package com.ataulm.wutson.model;
+package com.ataulm.wutson.tmdb;
 
 import java.net.URI;
 import java.util.List;
 
-public class TmdbConfiguration {
+public class Configuration {
 
     private static final int PROFILE_SIZE_STANDARD = 1;
     private static final int POSTER_SIZE_STANDARD = 2;
@@ -16,7 +16,7 @@ public class TmdbConfiguration {
     private final List<String> backdropImageSizes;
     private final List<String> stillImageSizes;
 
-    public TmdbConfiguration(String baseUrl, List<String> profileImageSizes, List<String> posterImageSizes, List<String> backdropImageSizes, List<String> stillImageSizes) {
+    public Configuration(String baseUrl, List<String> profileImageSizes, List<String> posterImageSizes, List<String> backdropImageSizes, List<String> stillImageSizes) {
         this.baseUrl = baseUrl;
         this.profileImageSizes = profileImageSizes;
         this.posterImageSizes = posterImageSizes;

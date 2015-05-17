@@ -1,6 +1,6 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.model.TmdbConfiguration;
+import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.TmdbApi;
@@ -23,7 +23,7 @@ public class ConfigurationRepository {
     private final PersistentDataRepository persistentDataRepository;
     private final Gson gson;
 
-    private final BehaviorSubject<TmdbConfiguration> subject;
+    private final BehaviorSubject<Configuration> subject;
 
     public ConfigurationRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson) {
         this.api = api;
@@ -33,7 +33,7 @@ public class ConfigurationRepository {
         this.subject = BehaviorSubject.create();
     }
 
-    public Observable<TmdbConfiguration> getConfiguration() {
+    public Observable<Configuration> getConfiguration() {
         if (!subject.hasValue()) {
             refreshConfiguration();
         }
@@ -46,17 +46,17 @@ public class ConfigurationRepository {
                 .map(jsonTo(GsonConfiguration.class, gson))
                 .switchIfEmpty(api.getConfiguration().doOnNext(saveTo(persistentDataRepository, gson)))
                 .map(asTmdbConfiguration())
-                .lift(Function.<TmdbConfiguration>swallowOnCompleteEvents())
+                .lift(Function.<Configuration>swallowOnCompleteEvents())
                 .subscribeOn(Schedulers.io())
                 .subscribe(subject);
     }
 
-    private static Func1<GsonConfiguration, TmdbConfiguration> asTmdbConfiguration() {
-        return new Func1<GsonConfiguration, TmdbConfiguration>() {
+    private static Func1<GsonConfiguration, Configuration> asTmdbConfiguration() {
+        return new Func1<GsonConfiguration, Configuration>() {
 
             @Override
-            public TmdbConfiguration call(GsonConfiguration gsonConfiguration) {
-                return new TmdbConfiguration(
+            public Configuration call(GsonConfiguration gsonConfiguration) {
+                return new Configuration(
                         gsonConfiguration.images.baseUrl,
                         gsonConfiguration.images.profileSizes,
                         gsonConfiguration.images.posterSizes,

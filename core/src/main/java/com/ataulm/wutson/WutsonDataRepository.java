@@ -1,11 +1,16 @@
 package com.ataulm.wutson;
 
-import com.ataulm.wutson.discover.ShowsInGenre;
-import com.ataulm.wutson.episodes.Episode;
-import com.ataulm.wutson.seasons.Season;
-import com.ataulm.wutson.seasons.Seasons;
-import com.ataulm.wutson.showdetails.Actor;
-import com.ataulm.wutson.showdetails.Show;
+import com.ataulm.wutson.model.Actor;
+import com.ataulm.wutson.model.Episode;
+import com.ataulm.wutson.model.Episodes;
+import com.ataulm.wutson.model.GroupedShowSummaries;
+import com.ataulm.wutson.model.Season;
+import com.ataulm.wutson.model.Seasons;
+import com.ataulm.wutson.model.Show;
+import com.ataulm.wutson.model.ShowSummaries;
+import com.ataulm.wutson.model.ShowsInGenre;
+import com.ataulm.wutson.model.TrackedStatus;
+import com.ataulm.wutson.model.WatchedStatus;
 
 import java.util.List;
 
@@ -13,13 +18,13 @@ import rx.Observable;
 
 public interface WutsonDataRepository {
 
-    Observable<List<ShowsInGenre>> getDiscoverShows();
-
-    Observable<ShowSummaries> getTrackedShows();
+    Observable<ShowSummaries> getMyShows();
 
     Observable<List<GroupedShowSummaries>> getUpcomingShows();
 
     Observable<List<GroupedShowSummaries>> getRecentShows();
+
+    Observable<List<ShowsInGenre>> getDiscoverShows();
 
     Observable<Show> getShow(String id);
 

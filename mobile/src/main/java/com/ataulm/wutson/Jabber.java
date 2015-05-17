@@ -3,14 +3,14 @@ package com.ataulm.wutson;
 import android.app.Application;
 import android.content.Context;
 
-import com.ataulm.wutson.showdetails.ShowRepository;
-import com.ataulm.wutson.discover.GenresRepository;
-import com.ataulm.wutson.discover.ShowsInGenreRepository;
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.repository.DataRepository;
+import com.ataulm.wutson.repository.GenresRepository;
+import com.ataulm.wutson.repository.SeasonsRepository;
+import com.ataulm.wutson.repository.ShowRepository;
+import com.ataulm.wutson.repository.ShowsInGenreRepository;
 import com.ataulm.wutson.repository.TrackedShowsRepository;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
-import com.ataulm.wutson.seasons.SeasonsRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.TmdbApiFactory;
 import com.google.gson.Gson;

@@ -1,6 +1,4 @@
-package com.ataulm.wutson.seasons;
-
-import com.ataulm.wutson.episodes.Episode;
+package com.ataulm.wutson.model;
 
 import java.net.URI;
 import java.util.Iterator;
@@ -14,7 +12,7 @@ public class Season implements Iterable<Episode>, Comparable<Season> {
     private final URI posterPath;
     private final List<Episode> episodes;
 
-    Season(String airDate, int seasonNumber, String overview, URI posterPath, List<Episode> episodes) {
+    public Season(String airDate, int seasonNumber, String overview, URI posterPath, List<Episode> episodes) {
         this.airDate = airDate;
         this.seasonNumber = seasonNumber;
         this.overview = overview;

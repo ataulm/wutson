@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.ShowSummary;
+import com.ataulm.wutson.model.ShowsInGenre;
 import com.ataulm.wutson.view.ShowSummaryView;
 
 class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowSummaryViewHolder> {

@@ -1,7 +1,7 @@
 package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.model.TmdbConfiguration;
+import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.gson.GsonTvShow;
@@ -72,7 +72,7 @@ public final class TrackedShowsRepository {
     }
 
     Observable<List<ShowSummary>> getMyShows() {
-        Observable<TmdbConfiguration> repeatingConfigurationObservable = configurationRepo.getConfiguration().first().repeat();
+        Observable<Configuration> repeatingConfigurationObservable = configurationRepo.getConfiguration().first().repeat();
         Observable<GsonTvShow> gsonTvShowsObservable = fetchListOfMyShowIdsFrom(persistentDataRepository)
                 .flatMap(Function.<String>emitEachElement())
                 .flatMap(fetchShowDetailsJsonFrom(persistentDataRepository))
@@ -95,16 +95,16 @@ public final class TrackedShowsRepository {
         });
     }
 
-    private static Func2<TmdbConfiguration, GsonTvShow, ShowSummary> asShowSummary() {
-        return new Func2<TmdbConfiguration, GsonTvShow, ShowSummary>() {
+    private static Func2<Configuration, GsonTvShow, ShowSummary> asShowSummary() {
+        return new Func2<Configuration, GsonTvShow, ShowSummary>() {
 
             @Override
-            public ShowSummary call(TmdbConfiguration tmdbConfiguration, GsonTvShow gsonTvShow) {
+            public ShowSummary call(Configuration configuration, GsonTvShow gsonTvShow) {
                 return new ShowSummary(
                         gsonTvShow.id,
                         gsonTvShow.name,
-                        tmdbConfiguration.completePoster(gsonTvShow.posterPath),
-                        tmdbConfiguration.completeBackdrop(gsonTvShow.backdropPath)
+                        configuration.completePoster(gsonTvShow.posterPath),
+                        configuration.completeBackdrop(gsonTvShow.backdropPath)
                 );
             }
 

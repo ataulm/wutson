@@ -1,13 +1,10 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.discover.ShowsInGenre;
-import com.ataulm.wutson.discover.ShowsInGenreRepository;
+import com.ataulm.wutson.model.ShowsInGenre;
 import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.seasons.Season;
-import com.ataulm.wutson.seasons.Seasons;
-import com.ataulm.wutson.seasons.SeasonsRepository;
-import com.ataulm.wutson.showdetails.Show;
-import com.ataulm.wutson.showdetails.ShowRepository;
+import com.ataulm.wutson.model.Season;
+import com.ataulm.wutson.model.Seasons;
+import com.ataulm.wutson.model.Show;
 
 import java.util.List;
 

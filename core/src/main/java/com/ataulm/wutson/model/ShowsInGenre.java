@@ -1,6 +1,4 @@
-package com.ataulm.wutson.discover;
-
-import com.ataulm.wutson.model.ShowSummary;
+package com.ataulm.wutson.model;
 
 import java.util.Iterator;
 import java.util.List;
@@ -10,7 +8,7 @@ public class ShowsInGenre implements Iterable<ShowSummary>, Comparable<ShowsInGe
     private final Genre genre;
     private final List<ShowSummary> showSummaries;
 
-    ShowsInGenre(Genre genre, List<ShowSummary> showSummaries) {
+    public ShowsInGenre(Genre genre, List<ShowSummary> showSummaries) {
         this.genre = genre;
         this.showSummaries = showSummaries;
     }

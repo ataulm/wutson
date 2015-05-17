@@ -1,4 +1,4 @@
-package com.ataulm.wutson.discover;
+package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
