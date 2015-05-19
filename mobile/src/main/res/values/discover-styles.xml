@@ -3,8 +3,6 @@
 
   <style name="Discover" />
 
-  <style name="Discover.AppBar" />
-
   <style name="Discover.Tabs">
     <item name="android:paddingLeft">@dimen/discover_tabs_genres_padding_left</item>
     <item name="pstsIndicatorHeight">@dimen/discover_tabs_genres_indicator_height</item>

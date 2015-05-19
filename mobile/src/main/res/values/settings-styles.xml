@@ -3,8 +3,4 @@
 
   <style name="Settings" />
 
-  <style name="Settings.AppBar">
-    <item name="android:background">@color/black</item>
-  </style>
-
 </resources>

@@ -3,10 +3,6 @@
 
   <style name="Seasons" />
 
-  <style name="Seasons.AppBar">
-    <item name="android:background">@color/seasons_app_bar_background</item>
-  </style>
-
   <style name="Seasons.Tabs">
     <item name="android:paddingLeft">@dimen/discover_tabs_genres_padding_left</item>
     <item name="android:background">@color/seasons_tabs_background</item>

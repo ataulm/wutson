@@ -9,4 +9,9 @@
     </attr>
   </declare-styleable>
 
+  <declare-styleable name="AppBarWidget">
+    <attr name="mergeLayoutId" format="reference" />
+    <attr name="appBarBackgroundColor" format="color" />
+  </declare-styleable>
+
 </resources>
