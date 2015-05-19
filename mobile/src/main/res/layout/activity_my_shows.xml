@@ -5,7 +5,7 @@
   android:orientation="vertical">
 
   <com.ataulm.wutson.view.AppBar
-    style="@style/Wutson.AppBar"
+    style="@style/MyShows.AppBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 

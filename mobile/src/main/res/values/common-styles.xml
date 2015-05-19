@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="Wutson.AppBar">
-    <item name="theme">?attr/theme</item>
-  </style>
+  <style name="Wutson.AppBar" />
 
 </resources>

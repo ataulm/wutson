@@ -5,9 +5,9 @@
   android:orientation="vertical">
 
   <com.ataulm.wutson.view.AppBar
+    style="@style/ShowDetails.AppBar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:theme="?attr/theme" />
+    android:layout_height="wrap_content" />
 
   <com.astuetz.PagerSlidingTabStrip
     android:id="@+id/show_details_tabs_show"
