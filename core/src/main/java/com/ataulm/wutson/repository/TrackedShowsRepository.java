@@ -1,9 +1,11 @@
 package com.ataulm.wutson.repository;
 
+import com.ataulm.wutson.model.ShowSummaries;
 import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.tmdb.Configuration;
+import com.ataulm.wutson.model.TrackedStatus;
 import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
+import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.tmdb.gson.GsonTvShow;
 import com.google.gson.Gson;
 
@@ -14,6 +16,7 @@ import rx.Subscriber;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
+import rx.subjects.BehaviorSubject;
 
 import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
 import static com.ataulm.wutson.rx.Function.jsonTo;
@@ -30,48 +33,59 @@ public final class TrackedShowsRepository {
         this.gson = gson;
     }
 
-    Observable<Boolean> getTrackedStatusOfShowWith(final String showId) {
-        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+    public void toggleTrackedStatus(final String showId) {
+        Observable.create(new Observable.OnSubscribe<Void>() {
 
             @Override
-            public void call(Subscriber<? super Boolean> subscriber) {
-                subscriber.onNext(persistentDataRepository.isShowTracked(showId));
+            public void call(Subscriber<? super Void> subscriber) {
+                boolean currentlyTracked = persistentDataRepository.isShowTracked(showId);
+                if (currentlyTracked) {
+                    setTrackedStatus(showId, TrackedStatus.NOT_TRACKED);
+                } else {
+                    setTrackedStatus(showId, TrackedStatus.TRACKED);
+                }
+                subscriber.onCompleted();
+            }
+
+        }).subscribeOn(Schedulers.io())
+                .subscribe();
+    }
+
+    Observable<TrackedStatus> getTrackedStatusOfShowWith(final String showId) {
+        // TODO: should use a behaviorSubject to push updates whenever set is called
+        return Observable.create(new Observable.OnSubscribe<TrackedStatus>() {
+
+            @Override
+            public void call(Subscriber<? super TrackedStatus> subscriber) {
+                if (persistentDataRepository.isShowTracked(showId)) {
+                    subscriber.onNext(TrackedStatus.TRACKED);
+                } else {
+                    subscriber.onNext(TrackedStatus.NOT_TRACKED);
+                }
                 subscriber.onCompleted();
             }
 
         });
     }
 
-    /**
-     * Toggles the tracked status, and returns the final status, after toggling.
-     */
-    Observable<Boolean> toggleTrackedStatusOfShowWith(String showId) {
-        return getTrackedStatusOfShowWith(showId)
-                .flatMap(toggleTrackedStatusOfShowWith(showId, persistentDataRepository))
-                .subscribeOn(Schedulers.io());
-    }
-
-    private static Func1<Boolean, Observable<Boolean>> toggleTrackedStatusOfShowWith(final String tmdbShowId, final PersistentDataRepository repository) {
-        return new Func1<Boolean, Observable<Boolean>>() {
+    void setTrackedStatus(final String showId, final TrackedStatus trackedStatus) {
+        Observable.create(new Observable.OnSubscribe<Void>() {
 
             @Override
-            public Observable<Boolean> call(Boolean isCurrentlyTracked) {
-                toggleTrackedStatus(isCurrentlyTracked);
-                return Observable.just(!isCurrentlyTracked);
-            }
-
-            private void toggleTrackedStatus(Boolean isCurrentlyTracked) {
-                if (isCurrentlyTracked) {
-                    repository.deleteFromTrackedShows(tmdbShowId);
+            public void call(Subscriber<? super Void> subscriber) {
+                if (trackedStatus == TrackedStatus.TRACKED) {
+                    persistentDataRepository.addToTrackedShows(showId);
                 } else {
-                    repository.addToTrackedShows(tmdbShowId);
+                    persistentDataRepository.deleteFromTrackedShows(showId);
                 }
+                subscriber.onCompleted();
             }
 
-        };
+        }).subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
-    Observable<List<ShowSummary>> getMyShows() {
+    Observable<ShowSummaries> getMyShows() {
         Observable<Configuration> repeatingConfigurationObservable = configurationRepo.getConfiguration().first().repeat();
         Observable<GsonTvShow> gsonTvShowsObservable = fetchListOfMyShowIdsFrom(persistentDataRepository)
                 .flatMap(Function.<String>emitEachElement())
@@ -79,8 +93,9 @@ public final class TrackedShowsRepository {
                 .filter(ignoreEmptyStrings())
                 .map(jsonTo(GsonTvShow.class, gson));
 
-        return Observable.zip(repeatingConfigurationObservable, gsonTvShowsObservable,asShowSummary())
-                .toList();
+        return Observable.zip(repeatingConfigurationObservable, gsonTvShowsObservable, asShowSummary())
+                .toList()
+                .map(asShowSummaries());
     }
 
     private static Observable<List<String>> fetchListOfMyShowIdsFrom(final PersistentDataRepository persistentDataRepository) {
@@ -122,4 +137,14 @@ public final class TrackedShowsRepository {
         };
     }
 
+    private static Func1<List<ShowSummary>, ShowSummaries> asShowSummaries() {
+        return new Func1<List<ShowSummary>, ShowSummaries>() {
+
+            @Override
+            public ShowSummaries call(List<ShowSummary> showSummaries) {
+                return new ShowSummaries(showSummaries);
+            }
+
+        };
+    }
 }

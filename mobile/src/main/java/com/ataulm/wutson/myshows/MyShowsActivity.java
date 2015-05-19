@@ -14,6 +14,7 @@ import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
+import com.ataulm.wutson.model.ShowSummaries;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
@@ -95,10 +96,10 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
     }
 
-    private class Observer extends LoggingObserver<List<ShowSummary>> {
+    private class Observer extends LoggingObserver<ShowSummaries> {
 
         @Override
-        public void onNext(List<ShowSummary> showSummaries) {
+        public void onNext(ShowSummaries showSummaries) {
             if (nothingToSeeHere(showSummaries)) {
                 navigate().toDiscover();
                 finish();
@@ -109,8 +110,8 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
             }
         }
 
-        private boolean nothingToSeeHere(List<ShowSummary> showSummaries) {
-            return showSummaries.isEmpty() && activityWasOpenedFromLauncher();
+        private boolean nothingToSeeHere(ShowSummaries showSummaries) {
+            return showSummaries.size() == 0 && activityWasOpenedFromLauncher();
         }
 
         private boolean activityWasOpenedFromLauncher() {

@@ -12,6 +12,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.Show;
+import com.ataulm.wutson.model.TrackedStatus;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 
@@ -57,7 +58,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         applyTitleFromIntentExtras();
         applyColorFilterToAppBarIcons();
 
-        showDetailsSubscription = dataRepository().getShowDetails(getShowId())
+        showDetailsSubscription = dataRepository().getShow(getShowId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ShowObserver());
@@ -84,12 +85,10 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         getMenuInflater().inflate(R.menu.show_details, menu);
 
         MenuItem trackMenuItem = menu.findItem(R.id.show_details_menu_item_toggle_track);
-        Observer<Boolean> observer = new TrackingShowObserver(trackMenuItem);
-
-        trackedStatusSubscription = dataRepository().getTrackedStatusOfShowWith(getShowId())
+        trackedStatusSubscription = dataRepository().getTrackedStatus(getShowId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+                .subscribe(new TrackingShowObserver(trackMenuItem));
 
         return true;
     }
@@ -117,16 +116,14 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.show_details_menu_item_toggle_track) {
-            dataRepository().toggleTrackedStatusOfShowWith(getShowId())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new TrackingShowObserver(item));
+            dataRepository().toggleTrackedStatus(getShowId());
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
 
-    private class TrackingShowObserver extends LoggingObserver<Boolean> {
+    private class TrackingShowObserver extends LoggingObserver<TrackedStatus> {
 
         private final MenuItem item;
 
@@ -135,21 +132,21 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         }
 
         @Override
-        public void onNext(Boolean trackingShow) {
-            super.onNext(trackingShow);
-            if (trackingShow) {
-                updateMenuItemReflectThatShowIsBeingTracked();
+        public void onNext(TrackedStatus trackedStatus) {
+            super.onNext(trackedStatus);
+            if (trackedStatus == TrackedStatus.TRACKED) {
+                updateMenuItemToReflectThatShowIsBeingTracked();
             } else {
-                updateMenuItemReflectThatShowIsNotBeingTracked();
+                updateMenuItemToReflectThatShowIsNotBeingTracked();
             }
         }
 
-        private void updateMenuItemReflectThatShowIsBeingTracked() {
+        private void updateMenuItemToReflectThatShowIsBeingTracked() {
             item.setIcon(R.drawable.ic_action_star_full);
             item.setTitle("Stop tracking show");
         }
 
-        private void updateMenuItemReflectThatShowIsNotBeingTracked() {
+        private void updateMenuItemToReflectThatShowIsNotBeingTracked() {
             item.setIcon(R.drawable.ic_action_star);
             item.setTitle("Start tracking show");
         }

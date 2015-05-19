@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.ataulm.wutson.repository.ConfigurationRepository;
-import com.ataulm.wutson.repository.DataRepository;
+import com.ataulm.wutson.repository.WutsonDataRepository;
 import com.ataulm.wutson.repository.GenresRepository;
 import com.ataulm.wutson.repository.SeasonsRepository;
 import com.ataulm.wutson.repository.ShowRepository;
@@ -31,7 +31,7 @@ public final class Jabber {
     private final Context context;
     private final String tmdbApiKey;
 
-    private DataRepository dataRepository;
+    private WutsonDataRepository dataRepository;
     private ToastDisplayer toastDisplayer;
 
     public static void init(Application application, String tmdbApiKey) {
@@ -55,7 +55,7 @@ public final class Jabber {
             ShowRepository showRepo = new ShowRepository(api, persistentDataRepo, configurationRepo, gson);
             SeasonsRepository seasonsRepo = new SeasonsRepository(api, configurationRepo, showRepo);
 
-            instance.dataRepository = new DataRepository(trackedShowsRepo, showsInGenreRepo, showRepo, seasonsRepo);
+            instance.dataRepository = new WutsonDataRepository(trackedShowsRepo, showsInGenreRepo, showRepo, seasonsRepo);
         }
         return instance.dataRepository;
     }

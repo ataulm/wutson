@@ -5,23 +5,21 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.discover.OnShowClickListener;
-import com.ataulm.wutson.model.ShowSummary;
-
-import java.util.List;
+import com.ataulm.wutson.model.ShowSummaries;
 
 class TrackedShowsAdapter extends RecyclerView.Adapter<ShowSummaryViewHolder> {
 
     private final OnShowClickListener listener;
     private final ToastDisplayer toaster;
 
-    private List<ShowSummary> showSummaries;
+    private ShowSummaries showSummaries;
 
     TrackedShowsAdapter(OnShowClickListener listener, ToastDisplayer toaster) {
         this.listener = listener;
         this.toaster = toaster;
     }
 
-    void update(List<ShowSummary> showSummaries) {
+    void update(ShowSummaries showSummaries) {
         this.showSummaries = showSummaries;
         notifyDataSetChanged();
     }

@@ -16,7 +16,7 @@ import java.util.List;
 
 import rx.Observable;
 
-public interface WutsonDataRepository {
+public interface DataRepository {
 
     Observable<ShowSummaries> getMyShows();
 
@@ -28,7 +28,7 @@ public interface WutsonDataRepository {
 
     Observable<Show> getShow(String id);
 
-    Observable<TrackedStatus> getTrackedStatus(Show show);
+    Observable<TrackedStatus> getTrackedStatus(String showId);
 
     Observable<Episodes> getWatchedEpisodes(Season season);
 
@@ -36,18 +36,17 @@ public interface WutsonDataRepository {
 
     Observable<Integer> getWatchedCount(Season season);
 
-    Observable<Season> getSeason(String id);
+    Observable<Season> getSeason(String showId, int seasonNumber);
 
-    Observable<Seasons> getSeasons();
+    Observable<Seasons> getSeasons(String showId);
 
     Observable<Actor> getActor(String id);
 
-    void setTrackedStatus(Show show, TrackedStatus trackedStatus);
+    void toggleTrackedStatus(String showId);
+
+    void setTrackedStatus(String showId, TrackedStatus trackedStatus);
 
     void setWatchedStatus(Episode episode, WatchedStatus watchedStatus);
 
     void setWatchedStatus(Season season, WatchedStatus watchedStatus);
-
-    void setWatchedStatus(Show show, WatchedStatus watchedStatus);
-
 }
