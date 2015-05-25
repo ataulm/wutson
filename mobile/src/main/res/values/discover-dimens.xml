@@ -3,7 +3,4 @@
 
   <dimen name="discover_shows_in_genre_item_margin">2dp</dimen>
 
-  <dimen name="discover_tabs_genres_padding_left">46dp</dimen>
-  <dimen name="discover_tabs_genres_indicator_height">4dp</dimen>
-
 </resources>

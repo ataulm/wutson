@@ -8,13 +8,13 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.Show;
 import com.ataulm.wutson.model.TrackedStatus;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.novoda.landingstrip.LandingStrip;
 
 import java.net.URI;
 
@@ -40,7 +40,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.show_details_pager_show);
         viewPager.setAdapter(adapter = new ShowPagerAdapter(getResources(), this, getLayoutInflater(), getShowBackdropUri()));
-        ((PagerSlidingTabStrip) findViewById(R.id.tab_strip)).setViewPager(viewPager);
+        ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);
     }
 
     private URI getShowBackdropUri() {
