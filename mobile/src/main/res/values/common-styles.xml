@@ -19,8 +19,13 @@
   </style>
 
   <style name="Tab">
-    <item name="android:textColor">@color/tab_text</item>
+    <item name="android:paddingLeft">12dp</item>
+    <item name="android:paddingRight">12dp</item>
     <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/tab_text</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:textSize">14sp</item>
+    <item name="textFont">robotoMedium</item>
   </style>
 
 </resources>
