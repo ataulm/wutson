@@ -106,7 +106,9 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
             } else {
                 setTitle(R.string.my_shows_label);
                 adapter.update(showSummaries);
-                showsView.restoreHierarchyState(savedStateForShowsView);
+                if (savedStateForShowsView != null) {
+                    showsView.restoreHierarchyState(savedStateForShowsView);
+                }
             }
         }
 
