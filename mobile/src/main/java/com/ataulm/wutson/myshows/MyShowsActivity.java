@@ -20,7 +20,6 @@ import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 
-import java.util.List;
 import java.util.Set;
 
 import rx.Subscription;
