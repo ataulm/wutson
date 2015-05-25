@@ -64,7 +64,7 @@ android {
     }
 
     lintOptions {
-        lintConfig file("lint-config.xml")
+        lintConfig file("../lint-config.xml")
     }
 
     File crashlyticsProperties = new File("${project.projectDir.absolutePath}/crashlytics.properties")
