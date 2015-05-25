@@ -40,7 +40,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         viewPager = (ViewPager) findViewById(R.id.discover_pager_genres);
         viewPager.setAdapter(adapter = new GenresPagerAdapter(getLayoutInflater(), this));
 
-        ((PagerSlidingTabStrip) findViewById(R.id.discover_tabs_genres)).setViewPager(viewPager);
+        ((PagerSlidingTabStrip) findViewById(R.id.tab_strip)).setViewPager(viewPager);
 
         discoverShowsSubscription = Jabber.dataRepository().getDiscoverShows()
                 .subscribeOn(Schedulers.io())
