@@ -12,11 +12,17 @@
     android:id="@+id/show_details_tabs_show"
     style="@style/ShowDetails.Tabs"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/app_bar_height" />
+    android:layout_height="@dimen/app_bar_height"
+    android:elevation="4dp" />
 
-  <android.support.v4.view.ViewPager
-    android:id="@+id/show_details_pager_show"
+  <FrameLayout
+    style="@style/ContainerShadowedByAppBar"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent">
 
+    <android.support.v4.view.ViewPager
+      android:id="@+id/show_details_pager_show"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
+  </FrameLayout>
 </LinearLayout>

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="Wutson.AppBar" />
+  <style name="ContainerShadowedByAppBar">
+    <item name="android:foreground">@drawable/app_bar_shadow</item>
+    <item name="android:foregroundGravity">top|fill_horizontal</item>
+  </style>
 
 </resources>
