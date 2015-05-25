@@ -42,7 +42,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
         showId = data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID_INDEX);
         seasonNumber = Integer.parseInt(data.getLastPathSegment());
 
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.seasons_tabs);
+        tabs = (PagerSlidingTabStrip) findViewById(R.id.tab_strip);
         pager = (ViewPager) findViewById(R.id.seasons_pager);
 
         shouldResetPagePosition = savedInstanceState == null || savedInstanceState.getBoolean(KEY_RESET_PAGE_POSITION);
