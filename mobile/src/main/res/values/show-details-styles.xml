@@ -4,7 +4,6 @@
   <style name="ShowDetails" />
 
   <style name="ShowDetails.Tabs">
-    <item name="android:background">@color/show_details_tabs_background</item>
     <item name="android:textColor">@color/show_details_tabs_text_default</item>
     <item name="pstsTextColorSelected">@color/show_details_tabs_text_selected</item>
     <item name="pstsIndicatorHeight">@dimen/show_details_tabs_indicator_height</item>
