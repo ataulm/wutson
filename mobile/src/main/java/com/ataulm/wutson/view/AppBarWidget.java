@@ -22,10 +22,10 @@ public class AppBarWidget extends LinearLayout {
     private void applyCustomAttributes(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AppBarWidget);
         int mergeLayoutId = typedArray.getResourceId(R.styleable.AppBarWidget_mergeLayoutId, R.layout.merge_app_bar_default);
-        int backgroundColor = typedArray.getResourceId(R.styleable.AppBarWidget_appBarBackgroundColor, getResources().getColor(R.color.transparent));
+        int backgroundColor = typedArray.getColor(R.styleable.AppBarWidget_appBarBackgroundColor, getResources().getColor(R.color.transparent));
         typedArray.recycle();
 
-        setBackgroundResource(backgroundColor);
+        setBackgroundColor(backgroundColor);
         View.inflate(getContext(), mergeLayoutId, this);
     }
 
