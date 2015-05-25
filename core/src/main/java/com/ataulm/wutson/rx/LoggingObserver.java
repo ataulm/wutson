@@ -13,7 +13,7 @@ public class LoggingObserver<T> implements Observer<T> {
 
     @Override
     public void onError(Throwable e) {
-        Log.e(getClass().getCanonicalName(), "onError(): " + e.getMessage());
+        Log.e(getClass().getCanonicalName(), "onError(): " + e.getMessage(), e);
     }
 
     @Override
