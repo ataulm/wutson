@@ -79,23 +79,6 @@ public final class TrackedShowsRepository {
                 .subscribe();
     }
 
-    Observable<TrackedStatus> getTrackedStatusOfShowWith(final String showId) {
-        return Observable.create(new Observable.OnSubscribe<TrackedStatus>() {
-
-            @Override
-            public void call(Subscriber<? super TrackedStatus> subscriber) {
-                if (persistentDataRepository.isShowTracked(showId)) {
-                    subscriber.onNext(TrackedStatus.TRACKED);
-                } else {
-                    subscriber.onNext(TrackedStatus.NOT_TRACKED);
-                }
-                refreshTrackedShows();
-                subscriber.onCompleted();
-            }
-
-        });
-    }
-
     void setTrackedStatus(final String showId, final TrackedStatus trackedStatus) {
         Observable.create(new Observable.OnSubscribe<Void>() {
 

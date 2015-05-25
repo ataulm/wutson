@@ -16,6 +16,7 @@ import com.ataulm.wutson.model.WatchedStatus;
 import java.util.List;
 
 import rx.Observable;
+import rx.functions.Func1;
 
 public class WutsonDataRepository implements DataRepository {
 
@@ -38,8 +39,22 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public Observable<TrackedStatus> getTrackedStatus(String showId) {
-        return trackedShowsRepo.getTrackedStatusOfShowWith(showId);
+    public Observable<TrackedStatus> getTrackedStatus(final String showId) {
+        return getMyShows().map(asTrackedStatus(showId));
+    }
+
+    private static Func1<ShowSummaries, TrackedStatus> asTrackedStatus(final String showId) {
+        return new Func1<ShowSummaries, TrackedStatus>() {
+
+            @Override
+            public TrackedStatus call(ShowSummaries showSummaries) {
+                if (showSummaries.contains(showId)) {
+                    return TrackedStatus.TRACKED;
+                }
+                return TrackedStatus.NOT_TRACKED;
+            }
+
+        };
     }
 
     @Override

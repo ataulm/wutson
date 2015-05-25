@@ -19,4 +19,13 @@ public class ShowSummaries {
         return showSummaries.get(location);
     }
 
+    public boolean contains(String showId) {
+        for (ShowSummary showSummary : showSummaries) {
+            if (showSummary.getId().equals(showId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
