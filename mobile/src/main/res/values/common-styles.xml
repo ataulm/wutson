@@ -6,4 +6,12 @@
     <item name="android:foregroundGravity">top|fill_horizontal</item>
   </style>
 
+  <style name="TabStrip">
+    <item name="android:textColor">@color/show_details_tabs_text_default</item>
+    <item name="pstsTextColorSelected">@color/show_details_tabs_text_selected</item>
+    <item name="pstsIndicatorHeight">@dimen/show_details_tabs_indicator_height</item>
+    <item name="pstsIndicatorColor">@color/show_details_tabs_indicator</item>
+    <item name="pstsShouldExpand">true</item>
+  </style>
+
 </resources>

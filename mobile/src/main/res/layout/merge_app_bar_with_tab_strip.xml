@@ -8,9 +8,10 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/app_bar_height" />
 
+  <!--TODO: replace with landing strip and landing strip styles-->
   <com.astuetz.PagerSlidingTabStrip
-    android:id="@+id/show_details_tabs_show"
-    style="@style/ShowDetails.Tabs"
+    android:id="@+id/tab_strip"
+    style="@style/TabStrip"
     android:layout_width="match_parent"
     android:layout_height="@dimen/app_bar_height" />
 
