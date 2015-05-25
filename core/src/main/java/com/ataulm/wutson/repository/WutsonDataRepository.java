@@ -38,6 +38,20 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
+    public Observable<TrackedStatus> getTrackedStatus(String showId) {
+        return trackedShowsRepo.getTrackedStatusOfShowWith(showId);
+    }
+
+    @Override
+    public void toggleTrackedStatus(String showId) {
+        trackedShowsRepo.toggleTrackedStatus(showId);
+    }
+
+    @Override
+    public void setTrackedStatus(String showId, TrackedStatus trackedStatus) {
+        trackedShowsRepo.setTrackedStatus(showId, trackedStatus);
+    }
+
     public Observable<List<GroupedShowSummaries>> getUpcomingShows() {
         return Observable.empty();
     }
@@ -55,11 +69,6 @@ public class WutsonDataRepository implements DataRepository {
     @Override
     public Observable<Show> getShow(String id) {
         return showRepo.getShowDetails(id);
-    }
-
-    @Override
-    public Observable<TrackedStatus> getTrackedStatus(String showId) {
-        return trackedShowsRepo.getTrackedStatusOfShowWith(showId);
     }
 
     @Override
@@ -90,16 +99,6 @@ public class WutsonDataRepository implements DataRepository {
     @Override
     public Observable<Actor> getActor(String id) {
         return Observable.empty();
-    }
-
-    @Override
-    public void toggleTrackedStatus(String showId) {
-        trackedShowsRepo.toggleTrackedStatus(showId);
-    }
-
-    @Override
-    public void setTrackedStatus(String showId, TrackedStatus trackedStatus) {
-        trackedShowsRepo.setTrackedStatus(showId, trackedStatus);
     }
 
     @Override

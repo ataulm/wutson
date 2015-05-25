@@ -27,10 +27,37 @@ public final class TrackedShowsRepository {
     private final ConfigurationRepository configurationRepo;
     private final Gson gson;
 
+    private final BehaviorSubject<ShowSummaries> subject;
+
     public TrackedShowsRepository(PersistentDataRepository persistentDataRepository, ConfigurationRepository configurationRepo, Gson gson) {
         this.persistentDataRepository = persistentDataRepository;
         this.configurationRepo = configurationRepo;
         this.gson = gson;
+
+        this.subject = BehaviorSubject.create();
+    }
+
+    public Observable<ShowSummaries> getMyShows() {
+        if (!subject.hasValue()) {
+            refreshTrackedShows();
+        }
+        return subject;
+    }
+
+    private void refreshTrackedShows() {
+        Observable<Configuration> repeatingConfigurationObservable = configurationRepo.getConfiguration().first().repeat();
+        Observable<GsonTvShow> gsonTvShowsObservable = fetchListOfMyShowIdsFrom(persistentDataRepository)
+                .flatMap(Function.<String>emitEachElement())
+                .flatMap(fetchShowDetailsJsonFrom(persistentDataRepository))
+                .filter(ignoreEmptyStrings())
+                .map(jsonTo(GsonTvShow.class, gson));
+
+        Observable.zip(repeatingConfigurationObservable, gsonTvShowsObservable, asShowSummary())
+                .toList()
+                .map(asShowSummaries())
+                .lift(Function.<ShowSummaries>swallowOnCompleteEvents())
+                .subscribeOn(Schedulers.io())
+                .subscribe(subject);
     }
 
     public void toggleTrackedStatus(final String showId) {
@@ -44,6 +71,7 @@ public final class TrackedShowsRepository {
                 } else {
                     setTrackedStatus(showId, TrackedStatus.TRACKED);
                 }
+                refreshTrackedShows();
                 subscriber.onCompleted();
             }
 
@@ -52,7 +80,6 @@ public final class TrackedShowsRepository {
     }
 
     Observable<TrackedStatus> getTrackedStatusOfShowWith(final String showId) {
-        // TODO: should use a behaviorSubject to push updates whenever set is called
         return Observable.create(new Observable.OnSubscribe<TrackedStatus>() {
 
             @Override
@@ -62,6 +89,7 @@ public final class TrackedShowsRepository {
                 } else {
                     subscriber.onNext(TrackedStatus.NOT_TRACKED);
                 }
+                refreshTrackedShows();
                 subscriber.onCompleted();
             }
 
@@ -78,24 +106,12 @@ public final class TrackedShowsRepository {
                 } else {
                     persistentDataRepository.deleteFromTrackedShows(showId);
                 }
+                refreshTrackedShows();
                 subscriber.onCompleted();
             }
 
         }).subscribeOn(Schedulers.io())
                 .subscribe();
-    }
-
-    Observable<ShowSummaries> getMyShows() {
-        Observable<Configuration> repeatingConfigurationObservable = configurationRepo.getConfiguration().first().repeat();
-        Observable<GsonTvShow> gsonTvShowsObservable = fetchListOfMyShowIdsFrom(persistentDataRepository)
-                .flatMap(Function.<String>emitEachElement())
-                .flatMap(fetchShowDetailsJsonFrom(persistentDataRepository))
-                .filter(ignoreEmptyStrings())
-                .map(jsonTo(GsonTvShow.class, gson));
-
-        return Observable.zip(repeatingConfigurationObservable, gsonTvShowsObservable, asShowSummary())
-                .toList()
-                .map(asShowSummaries());
     }
 
     private static Observable<List<String>> fetchListOfMyShowIdsFrom(final PersistentDataRepository persistentDataRepository) {
