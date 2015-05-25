@@ -3,7 +3,6 @@ package com.ataulm.wutson.discover;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.ShowSummary;
@@ -11,6 +10,7 @@ import com.ataulm.wutson.model.ShowsInGenre;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.novoda.landingstrip.LandingStrip;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         viewPager = (ViewPager) findViewById(R.id.discover_pager_genres);
         viewPager.setAdapter(adapter = new GenresPagerAdapter(getLayoutInflater(), this));
 
-        ((PagerSlidingTabStrip) findViewById(R.id.tab_strip)).setViewPager(viewPager);
+        ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);
 
         discoverShowsSubscription = Jabber.dataRepository().getDiscoverShows()
                 .subscribeOn(Schedulers.io())

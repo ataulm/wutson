@@ -7,15 +7,25 @@
   </style>
 
   <style name="TabStrip">
-    <item name="android:textColor">@color/show_details_tabs_text_default</item>
-    <item name="pstsTextColorSelected">@color/show_details_tabs_text_selected</item>
-    <item name="pstsIndicatorHeight">@dimen/show_details_tabs_indicator_height</item>
-    <item name="pstsIndicatorColor">@color/show_details_tabs_indicator</item>
-    <item name="pstsShouldExpand">true</item>
+    <item name="tabLayoutId">@layout/view_tab</item>
+    <item name="tabsLeftPadding">0dp</item>
+    <item name="indicatorColor">@color/tab_strip_indicator</item>
+    <item name="indicatorHeight">@dimen/tab_strip_indicator_height</item>
   </style>
 
   <style name="SlidingTabStrip" parent="TabStrip">
-    <item name="pstsShouldExpand">false</item>
+    <item name="tabLayoutId">@layout/view_sliding_tab</item>
+    <item name="tabsLeftPadding">@dimen/tab_strip_offset_left</item>
+  </style>
+
+  <style name="Tab">
+    <item name="android:paddingLeft">12dp</item>
+    <item name="android:paddingRight">12dp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/tab_text</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:textSize">14sp</item>
+    <item name="textFont">robotoMedium</item>
   </style>
 
 </resources>

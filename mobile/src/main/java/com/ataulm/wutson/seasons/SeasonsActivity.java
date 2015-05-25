@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
@@ -15,6 +14,7 @@ import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.novoda.landingstrip.LandingStrip;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,7 +29,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
     private String showId;
     private int seasonNumber;
     private ViewPager pager;
-    private PagerSlidingTabStrip tabs;
+    private LandingStrip tabs;
 
     private boolean shouldResetPagePosition;
 
@@ -42,7 +42,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
         showId = data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID_INDEX);
         seasonNumber = Integer.parseInt(data.getLastPathSegment());
 
-        tabs = (PagerSlidingTabStrip) findViewById(R.id.tab_strip);
+        tabs = (LandingStrip) findViewById(R.id.tab_strip);
         pager = (ViewPager) findViewById(R.id.seasons_pager);
 
         shouldResetPagePosition = savedInstanceState == null || savedInstanceState.getBoolean(KEY_RESET_PAGE_POSITION);
@@ -92,7 +92,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
         public void onNext(Seasons seasons) {
             SeasonsPagerAdapter adapter = new SeasonsPagerAdapter(seasons, SeasonsActivity.this, getLayoutInflater(), getResources());
             pager.setAdapter(adapter);
-            tabs.setViewPager(pager);
+            tabs.attach(pager);
             if (shouldResetPagePosition) {
                 shouldResetPagePosition = false;
                 pager.setCurrentItem(adapter.positionOfSeasonNumber(seasonNumber));
