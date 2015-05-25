@@ -100,6 +100,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
         @Override
         public void onNext(ShowSummaries showSummaries) {
+            super.onNext(showSummaries);
             if (nothingToSeeHere(showSummaries)) {
                 navigate().toDiscover();
                 finish();
