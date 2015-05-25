@@ -8,7 +8,7 @@
   <com.ataulm.wutson.view.AppBarWidget
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:mergeLayoutId="@layout/merge_app_bar_with_tab_strip" />
+    app:mergeLayoutId="@layout/merge_app_bar_with_sliding_tab_strip" />
 
   <FrameLayout
     style="@style/ContainerShadowedByAppBar"
