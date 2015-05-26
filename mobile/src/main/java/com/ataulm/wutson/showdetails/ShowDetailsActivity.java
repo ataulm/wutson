@@ -8,15 +8,16 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.model.Show;
+import com.ataulm.wutson.model.TrackedStatus;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.novoda.landingstrip.LandingStrip;
 
 import java.net.URI;
 
-import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -39,7 +40,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.show_details_pager_show);
         viewPager.setAdapter(adapter = new ShowPagerAdapter(getResources(), this, getLayoutInflater(), getShowBackdropUri()));
-        ((PagerSlidingTabStrip) findViewById(R.id.show_details_tabs_show)).setViewPager(viewPager);
+        ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);
     }
 
     private URI getShowBackdropUri() {
@@ -56,7 +57,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         applyTitleFromIntentExtras();
         applyColorFilterToAppBarIcons();
 
-        showDetailsSubscription = dataRepository().getShowDetails(getShowId())
+        showDetailsSubscription = dataRepository().getShow(getShowId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ShowObserver());
@@ -83,12 +84,10 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         getMenuInflater().inflate(R.menu.show_details, menu);
 
         MenuItem trackMenuItem = menu.findItem(R.id.show_details_menu_item_toggle_track);
-        Observer<Boolean> observer = new TrackingShowObserver(trackMenuItem);
-
-        trackedStatusSubscription = dataRepository().getTrackedStatusOfShowWith(getShowId())
+        trackedStatusSubscription = dataRepository().getTrackedStatus(getShowId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+                .subscribe(new TrackingShowObserver(trackMenuItem));
 
         return true;
     }
@@ -109,23 +108,21 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     }
 
     @Override
-    public void onClick(Show.Season season) {
-        navigate().toSeason(getShowId(), season.getSeasonNumber());
+    public void onClick(Show.SeasonSummary seasonSummary) {
+        navigate().toSeason(getShowId(), seasonSummary.getSeasonNumber());
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.show_details_menu_item_toggle_track) {
-            dataRepository().toggleTrackedStatusOfShowWith(getShowId())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new TrackingShowObserver(item));
+            dataRepository().toggleTrackedStatus(getShowId());
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
 
-    private class TrackingShowObserver extends LoggingObserver<Boolean> {
+    private class TrackingShowObserver extends LoggingObserver<TrackedStatus> {
 
         private final MenuItem item;
 
@@ -134,15 +131,23 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         }
 
         @Override
-        public void onNext(Boolean trackingShow) {
-            super.onNext(trackingShow);
-            if (trackingShow) {
-                item.setIcon(R.drawable.abc_btn_rating_star_on_mtrl_alpha);
-                item.setTitle("Stop tracking show");
+        public void onNext(TrackedStatus trackedStatus) {
+            super.onNext(trackedStatus);
+            if (trackedStatus == TrackedStatus.TRACKED) {
+                updateMenuItemToReflectThatShowIsBeingTracked();
             } else {
-                item.setIcon(R.drawable.abc_btn_rating_star_off_mtrl_alpha);
-                item.setTitle("Start tracking show");
+                updateMenuItemToReflectThatShowIsNotBeingTracked();
             }
+        }
+
+        private void updateMenuItemToReflectThatShowIsBeingTracked() {
+            item.setIcon(R.drawable.ic_action_star_full);
+            item.setTitle("Stop tracking show");
+        }
+
+        private void updateMenuItemToReflectThatShowIsNotBeingTracked() {
+            item.setIcon(R.drawable.ic_action_star);
+            item.setTitle("Start tracking show");
         }
 
     }

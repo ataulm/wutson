@@ -1,25 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
-    compile 'com.android.support:recyclerview-v7:21.0.3'
-    compile 'com.jpardogo.materialtabstrip:library:1.0.9'
-    compile 'de.hdodenhof:circleimageview:1.2.2'
-
-    compile "com.android.support:appcompat-v7:22.0.0"
-    compile 'com.android.support:support-v13:21.0.0'
-    compile 'com.github.bumptech.glide:glide:3.5.2'
-    compile 'io.reactivex:rxandroid:0.24.0'
-    compile 'com.novoda:sqlite-provider:1.0.5'
-
-    compile 'io.reactivex:rxjava:1.0.8'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.okhttp:okhttp:2.2.0'
-    compile 'com.crashlytics.android:crashlytics:1.1.13'
-}
-
 def tmdbApiKey = hasProperty('tmdbApiKey') ? tmdbApiKey : 'provide this in gradle.properties'
 def crashlyticsApiKey = project.hasProperty('crashlyticsApiKey') ? crashlyticsApiKey : System.env.crashlyticsApiKey
 def crashlyticsApiSecret = project.hasProperty('crashlyticsApiSecret') ? crashlyticsApiSecret : System.env.crashlyticsApiSecret
@@ -27,6 +8,22 @@ def signingStoreFile = hasProperty('signingStoreFile') ? signingStoreFile : 'pro
 def signingStorePassword = hasProperty('signingStorePassword') ? signingStorePassword : 'provide this in gradle.properties'
 def signingKeyAlias = hasProperty('signingKeyAlias') ? signingKeyAlias : 'provide this in gradle.properties'
 def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword : 'provide this in gradle.properties'
+
+dependencies {
+    compile project(":core")
+
+    compile 'com.android.support:recyclerview-v7:22.1.1'
+    compile "com.android.support:appcompat-v7:22.1.1"
+    compile 'com.android.support:support-v4:22.1.1'
+
+    compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile 'com.novoda:landing-strip:0.0.8'
+    compile 'de.hdodenhof:circleimageview:1.2.2'
+    compile 'com.ataulm:rv-tools:0.0.3'
+    compile 'com.ataulm:view-pager-adapter:0.0.1'
+
+    compile 'com.crashlytics.android:crashlytics:1.1.13'
+}
 
 android {
     compileSdkVersion 22
@@ -36,7 +33,7 @@ android {
         applicationId "com.ataulm.wutson2"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 12
+        versionCode 14
         versionName '_dog-food'
 
         Calendar instance = Calendar.getInstance()
@@ -67,7 +64,7 @@ android {
     }
 
     lintOptions {
-        lintConfig file("lint-config.xml")
+        lintConfig file("../lint-config.xml")
     }
 
     File crashlyticsProperties = new File("${project.projectDir.absolutePath}/crashlytics.properties")

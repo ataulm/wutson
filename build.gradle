@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.android.tools.build:gradle:1.2.3'
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.16.0'
     }
 }
@@ -13,7 +13,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-
+        maven { url 'https://dl.bintray.com/ataulm/maven/' }
         maven {
             credentials {
                 username project.hasProperty('bintrayUsername') ? bintrayUsername : System.env.bintrayUsername

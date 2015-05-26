@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <dimen name="show_summary_title_min_height">60dp</dimen>
+  <dimen name="show_summary_title_padding_left">8dp</dimen>
+  <dimen name="show_summary_title_padding_top">8dp</dimen>
+  <dimen name="show_summary_title_padding_right">8dp</dimen>
+  <dimen name="show_summary_title_padding_bottom">8dp</dimen>
+  <dimen name="show_summary_title_text">16sp</dimen>
+
+</resources>

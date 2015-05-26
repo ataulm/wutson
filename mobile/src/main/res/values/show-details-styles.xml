@@ -3,19 +3,6 @@
 
   <style name="ShowDetails" />
 
-  <style name="ShowDetails.AppBar">
-    <item name="android:background">@color/black</item>
-  </style>
-
-  <style name="ShowDetails.Tabs">
-    <item name="android:background">@color/show_details_tabs_background</item>
-    <item name="android:textColor">@color/show_details_tabs_text_default</item>
-    <item name="pstsTextColorSelected">@color/show_details_tabs_text_selected</item>
-    <item name="pstsIndicatorHeight">@dimen/show_details_tabs_indicator_height</item>
-    <item name="pstsIndicatorColor">@color/show_details_tabs_indicator</item>
-    <item name="pstsShouldExpand">true</item>
-  </style>
-
   <style name="ShowDetails.ShowHeader">
     <item name="android:paddingLeft">16dp</item>
     <item name="android:paddingTop">16dp</item>

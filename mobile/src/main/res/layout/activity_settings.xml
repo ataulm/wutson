@@ -10,9 +10,8 @@
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/app_bar_height" />
 
-  <com.ataulm.wutson.view.AppBar
+  <com.ataulm.wutson.view.AppBarWidget
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:theme="?attr/theme" />
+    android:layout_height="wrap_content" />
 
 </merge>

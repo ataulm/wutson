@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="Wutson.AppBar">
-    <item name="theme">?attr/theme</item>
+  <style name="AppBarShadow">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">@dimen/app_bar_shadow_height</item>
+    <item name="android:background">@drawable/app_bar_shadow</item>
+  </style>
+
+  <style name="TabStrip">
+    <item name="tabLayoutId">@layout/view_tab</item>
+    <item name="tabsLeftPadding">0dp</item>
+    <item name="indicatorColor">@color/tab_strip_indicator</item>
+    <item name="indicatorHeight">@dimen/tab_strip_indicator_height</item>
+  </style>
+
+  <style name="SlidingTabStrip" parent="TabStrip">
+    <item name="tabLayoutId">@layout/view_sliding_tab</item>
+    <item name="tabsLeftPadding">@dimen/tab_strip_offset_left</item>
+  </style>
+
+  <style name="Tab">
+    <item name="android:paddingLeft">12dp</item>
+    <item name="android:paddingRight">12dp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/tab_text</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:textSize">14sp</item>
+    <item name="textFont">robotoMedium</item>
   </style>
 
 </resources>

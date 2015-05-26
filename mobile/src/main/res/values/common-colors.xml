@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <color name="app_bar_shadow_start">@color/black_30pc</color>
+  <color name="app_bar_shadow_end">@color/transparent</color>
+
+  <color name="tab_strip_indicator">@color/white</color>
+
+  <color name="tab_text_selected">@color/white</color>
+  <color name="tab_text_default">@color/white_59pc</color>
+
+</resources>

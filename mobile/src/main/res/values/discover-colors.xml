@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-  <color name="discover_show_summary_title_text">@color/white</color>
-  <color name="discover_show_summary_title_background">@color/black_87pc</color>
-
-</resources>

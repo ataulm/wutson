@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ataulm.wutson.R;
+import com.ataulm.wutson.*;
+import com.ataulm.wutson.model.Cast;
+import com.ataulm.wutson.model.Character;
 import com.bumptech.glide.Glide;
 
 import java.net.URI;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="ShowSummary" />
+
+  <style name="ShowSummary.Poster">
+    <item name="android:scaleType">centerCrop</item>
+  </style>
+
+  <style name="ShowSummary.Title">
+    <item name="android:minHeight">@dimen/show_summary_title_min_height</item>
+    <item name="android:paddingLeft">@dimen/show_summary_title_padding_left</item>
+    <item name="android:paddingTop">@dimen/show_summary_title_padding_top</item>
+    <item name="android:paddingRight">@dimen/show_summary_title_padding_right</item>
+    <item name="android:paddingBottom">@dimen/show_summary_title_padding_bottom</item>
+    <item name="android:textColor">@color/show_summary_title_text</item>
+    <item name="android:textSize">@dimen/show_summary_title_text</item>
+    <item name="textFont">robotoRegular</item>
+  </style>
+
+  <style name="ShowSummary.Overflow" />
+
+</resources>

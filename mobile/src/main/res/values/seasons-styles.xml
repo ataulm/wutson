@@ -3,19 +3,6 @@
 
   <style name="Seasons" />
 
-  <style name="Seasons.AppBar">
-    <item name="android:background">@color/seasons_app_bar_background</item>
-  </style>
-
-  <style name="Seasons.Tabs">
-    <item name="android:paddingLeft">@dimen/discover_tabs_genres_padding_left</item>
-    <item name="android:background">@color/seasons_tabs_background</item>
-    <item name="android:textColor">@color/seasons_tabs_text_default</item>
-    <item name="pstsTextColorSelected">@color/seasons_tabs_text_selected</item>
-    <item name="pstsIndicatorHeight">@dimen/seasons_tabs_indicator_height</item>
-    <item name="pstsIndicatorColor">@color/seasons_tabs_indicator</item>
-  </style>
-
   <style name="Seasons.RecyclerView">
     <item name="android:paddingLeft">@dimen/seasons_padding_left</item>
     <item name="android:paddingTop">@dimen/seasons_padding_top</item>

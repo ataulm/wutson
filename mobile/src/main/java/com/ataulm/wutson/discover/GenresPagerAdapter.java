@@ -6,8 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.vpa.ViewPagerAdapter;
+import com.ataulm.wutson.model.ShowsInGenre;
 
 import java.util.Collections;
 import java.util.List;
@@ -60,7 +61,7 @@ class GenresPagerAdapter extends ViewPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return showsInGenres.get(position).getGenre();
+        return showsInGenres.get(position).getGenre().toString();
     }
 
 }

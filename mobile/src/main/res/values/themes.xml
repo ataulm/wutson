@@ -3,42 +3,31 @@
 
   <style name="Wutson" />
 
-  <style name="Wutson.Theme" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:windowBackground">@color/white</item>
-    <item name="windowActionBar">false</item>
-    <item name="colorPrimary">@color/white</item>
-  </style>
-
-  <style name="Wutson.Theme.MyShows" parent="Theme.AppCompat.NoActionBar">
+  <style name="Wutson.Theme" parent="Theme.AppCompat.NoActionBar">
     <item name="android:windowBackground">@color/black</item>
-    <item name="theme">@style/MyShows.AppBar</item>
     <item name="colorPrimary">@color/white</item>
   </style>
 
-  <style name="Wutson.Theme.Discover" parent="Theme.AppCompat.NoActionBar">
-    <item name="android:windowBackground">@color/black</item>
-    <item name="theme">@style/Discover.AppBar</item>
+  <style name="Wutson.Theme.MyShows" />
+
+  <style name="Wutson.Theme.Discover">
     <item name="colorPrimary">@color/white</item>
   </style>
 
-  <style name="Wutson.Theme.ShowDetails">
-    <item name="theme">@style/ShowDetails.AppBar</item>
-  </style>
+  <style name="Wutson.Theme.ShowDetails" />
 
   <style name="Wutson.Theme.Seasons">
     <item name="android:windowBackground">@color/seasons_background</item>
-    <item name="theme">@style/Seasons.AppBar</item>
+    <item name="appBarBackgroundColor">@color/black</item>
     <item name="colorPrimary">@color/white</item>
   </style>
 
   <style name="Wutson.Theme.Episodes">
     <item name="android:windowBackground">@color/white</item>
-    <item name="theme">@style/Episodes.AppBar</item>
+    <item name="appBarBackgroundColor">@color/black</item>
     <item name="colorPrimary">@color/white</item>
   </style>
 
-  <style name="Wutson.Theme.Settings">
-    <item name="theme">@style/Settings.AppBar</item>
-  </style>
+  <style name="Wutson.Theme.Settings" />
 
 </resources>

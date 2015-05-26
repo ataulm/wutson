@@ -9,9 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.vpa.ViewPagerAdapter;
+import com.ataulm.wutson.model.Show;
 
 import java.net.URI;
 import java.util.Collections;
@@ -76,15 +77,15 @@ class ShowPagerAdapter extends ViewPagerAdapter {
     }
 
     private View getShowSeasonsView(ViewGroup container) {
-        List<Show.Season> seasons;
+        List<Show.SeasonSummary> seasonSummaries;
         if (show != null) {
-            seasons = show.getSeasons();
+            seasonSummaries = show.getSeasonSummaries();
         } else {
-            seasons = Collections.emptyList();
+            seasonSummaries = Collections.emptyList();
         }
 
         RecyclerView view = (RecyclerView) layoutInflater.inflate(Page.SEASONS.getLayoutResId(), container, false);
-        RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, seasons, onSeasonClickListener);
+        RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, seasonSummaries, onSeasonClickListener);
         seasonsAdapter.setHasStableIds(true);
         view.setLayoutManager(new LinearLayoutManager(container.getContext()));
         view.setAdapter(seasonsAdapter);
@@ -99,7 +100,7 @@ class ShowPagerAdapter extends ViewPagerAdapter {
         private final int layoutResId;
         private final int titleResId;
 
-        private Page(@LayoutRes int layoutResId, @StringRes int titleResId) {
+        Page(@LayoutRes int layoutResId, @StringRes int titleResId) {
             this.layoutResId = layoutResId;
             this.titleResId = titleResId;
         }

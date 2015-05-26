@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.ShowSummary;
+import com.ataulm.wutson.model.ShowsInGenre;
+import com.ataulm.wutson.view.ShowSummaryView;
 
 class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowSummaryViewHolder> {
 
@@ -58,7 +60,7 @@ class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowS
         }
 
         void update(final ShowSummary showSummary) {
-            showSummaryView.setPoster(showSummary.getPosterUri().toString());
+            showSummaryView.setPoster(showSummary.getPosterUri());
             showSummaryView.setTitle(showSummary.getName());
             showSummaryView.setOnClickListener(new View.OnClickListener() {
 

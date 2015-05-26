@@ -1,0 +1,23 @@
+apply plugin: 'com.android.library'
+
+dependencies {
+    compile 'io.reactivex:rxjava:1.0.8'
+    compile 'io.reactivex:rxandroid:0.24.0'
+    compile 'com.novoda:sqlite-provider:1.0.5'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.okhttp:okhttp:2.2.0'
+}
+
+android {
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 22
+    }
+
+    lintOptions {
+        lintConfig file("../lint-config.xml")
+    }
+
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+}
