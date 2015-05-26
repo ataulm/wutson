@@ -1,13 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-
-  <TextView
-    android:id="@+id/episode_details_text_episode_name"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:text="Pilot" />
+    android:orientation="vertical">
 
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/episode_details_image_episode_poster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:background="#cccccc" />
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#2c93b3">
+
+            <com.ataulm.wutson.view.WutsonTextView
+                android:id="@+id/episode_details_text_episode_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="something"
+                android:textColor="#ffffff"
+
+                />
+
+            <com.ataulm.wutson.view.WutsonTextView
+                android:id="@+id/episode_details_text_episode_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="else"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <com.ataulm.wutson.view.WutsonTextView
+        android:id="@+id/episode_details_text_episode_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="else"
+        android:textColor="#000000" />
+    </FrameLayout>
+
+</LinearLayout>
 </merge>

@@ -46,6 +46,8 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
+
+        navigate().toEpisodeDetails("1396", 1, 2);
     }
 
     @Override

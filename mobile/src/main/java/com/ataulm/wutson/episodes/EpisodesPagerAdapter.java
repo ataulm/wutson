@@ -28,6 +28,9 @@ class EpisodesPagerAdapter extends ViewPagerAdapter {
         EpisodeDetailsView view = (EpisodeDetailsView) layoutInflater.inflate(R.layout.view_episode_details_page, container, false);
         Episode episode = season.get(position);
         view.setEpisodeName(episode.getName());
+        view.setEpisodePoster(episode.getStillPath());
+        view.setEpisodeNumber(episode.getSeasonNumber(), episode.getEpisodeNumber());
+        view.setEpisodeDescription(episode.getOverview());
         return view;
     }
 
