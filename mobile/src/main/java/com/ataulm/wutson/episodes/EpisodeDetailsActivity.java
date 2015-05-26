@@ -84,6 +84,7 @@ public class EpisodeDetailsActivity extends WutsonActivity {
 
         @Override
         public void onNext(Season season) {
+            super.onNext(season);
             adapter.update(season);
             if (shouldResetPagePosition) {
                 shouldResetPagePosition = false;
