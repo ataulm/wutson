@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <!-- Should be pre-21 only, but elevation doesn't work when background have alpha - https://code.google.com/p/android/issues/detail?id=78248 -->
-  <item name="app_bar_shadow" type="drawable">@drawable/ic_appbar_shadow</item>
-</resources>

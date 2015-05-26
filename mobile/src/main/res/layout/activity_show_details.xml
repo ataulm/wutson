@@ -11,7 +11,6 @@
     app:mergeLayoutId="@layout/merge_app_bar_with_tab_strip" />
 
   <FrameLayout
-    style="@style/ContainerShadowedByAppBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,5 +18,9 @@
       android:id="@+id/show_details_pager_show"
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
+
+    <View style="@style/AppBarShadow" />
+
   </FrameLayout>
+
 </LinearLayout>
