@@ -3,7 +3,7 @@ package com.ataulm.wutson;
 import com.ataulm.wutson.model.Actor;
 import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.model.Episodes;
-import com.ataulm.wutson.model.GroupedShowSummaries;
+import com.ataulm.wutson.model.EpisodesByDay;
 import com.ataulm.wutson.model.Season;
 import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.model.Show;
@@ -21,9 +21,9 @@ public interface DataRepository {
 
     Observable<ShowSummaries> getMyShows();
 
-    Observable<List<GroupedShowSummaries>> getUpcomingShows();
+    Observable<List<EpisodesByDay>> getUpcomingEpisodes();
 
-    Observable<List<GroupedShowSummaries>> getRecentShows();
+    Observable<List<EpisodesByDay>> getRecentEpisodes();
 
     Observable<List<ShowsInGenre>> getDiscoverShows();
 

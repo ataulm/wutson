@@ -4,7 +4,7 @@ import com.ataulm.wutson.DataRepository;
 import com.ataulm.wutson.model.Actor;
 import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.model.Episodes;
-import com.ataulm.wutson.model.GroupedShowSummaries;
+import com.ataulm.wutson.model.EpisodesByDay;
 import com.ataulm.wutson.model.Season;
 import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.model.Show;
@@ -68,12 +68,12 @@ public class WutsonDataRepository implements DataRepository {
         trackedShowsRepo.setTrackedStatus(showId, trackedStatus);
     }
 
-    public Observable<List<GroupedShowSummaries>> getUpcomingShows() {
         return Observable.empty();
+    public Observable<List<EpisodesByDay>> getUpcomingEpisodes() {
     }
 
     @Override
-    public Observable<List<GroupedShowSummaries>> getRecentShows() {
+    public Observable<List<EpisodesByDay>> getRecentEpisodes() {
         return Observable.empty();
     }
 
