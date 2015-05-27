@@ -26,7 +26,7 @@ public class Seasons implements Iterable<Season> {
         return seasons.size();
     }
 
-    public String getShowId() {
+    public ShowId getShowId() {
         return show.getId();
     }
 

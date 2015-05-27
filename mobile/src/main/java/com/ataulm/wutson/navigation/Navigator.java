@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.ataulm.wutson.discover.DiscoverActivity;
+import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.myshows.MyShowsActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
 import com.ataulm.wutson.showdetails.ShowDetailsActivity;
@@ -37,9 +38,9 @@ public class Navigator {
         activity.overridePendingTransition(0, 0);
     }
 
-    public void toShowDetails(String showId, String showTitle, String showBackdropUri) {
+    public void toShowDetails(ShowId showId, String showTitle, String showBackdropUri) {
         Uri uri = BASE_URI.buildUpon()
-                .appendPath("show").appendPath(showId)
+                .appendPath("show").appendPath(showId.toString())
                 .build();
 
         start(view(uri, MIME_TYPE_SHOW_ITEM)
@@ -47,18 +48,18 @@ public class Navigator {
                 .putExtra(ShowDetailsActivity.EXTRA_SHOW_BACKDROP, showBackdropUri));
     }
 
-    public void toSeason(String showId, int seasonNumber) {
+    public void toSeason(ShowId showId, int seasonNumber) {
         Uri uri = BASE_URI.buildUpon()
-                .appendPath("show").appendPath(showId)
+                .appendPath("show").appendPath(showId.toString())
                 .appendPath("season").appendPath(String.valueOf(seasonNumber))
                 .build();
 
         start(view(uri, MIME_TYPE_SEASON_DIR));
     }
 
-    public void toEpisodeDetails(String showId, int seasonNumber, int episodeNumber) {
+    public void toEpisodeDetails(ShowId showId, int seasonNumber, int episodeNumber) {
         Uri uri = BASE_URI.buildUpon()
-                .appendPath("show").appendPath(showId)
+                .appendPath("show").appendPath(showId.toString())
                 .appendPath("season").appendPath(String.valueOf(seasonNumber))
                 .appendPath("episode").appendPath(String.valueOf(episodeNumber))
                 .build();

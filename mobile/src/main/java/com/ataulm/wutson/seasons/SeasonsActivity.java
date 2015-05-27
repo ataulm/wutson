@@ -12,6 +12,7 @@ import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.model.Seasons;
+import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 import com.novoda.landingstrip.LandingStrip;
@@ -26,7 +27,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
     private static final int URI_PATH_SEGMENT_SHOW_ID_INDEX = 1;
 
     private Subscription seasonSubscription;
-    private String showId;
+    private ShowId showId;
     private int seasonNumber;
     private ViewPager pager;
     private LandingStrip tabs;
@@ -39,7 +40,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
         setContentView(R.layout.activity_seasons);
 
         Uri data = getIntent().getData();
-        showId = data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID_INDEX);
+        showId = new ShowId(data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID_INDEX));
         seasonNumber = Integer.parseInt(data.getLastPathSegment());
 
         tabs = (LandingStrip) findViewById(R.id.tab_strip);

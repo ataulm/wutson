@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.Show;
+import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.model.TrackedStatus;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
@@ -92,8 +93,8 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         return true;
     }
 
-    private String getShowId() {
-        return getIntent().getData().getLastPathSegment();
+    private ShowId getShowId() {
+        return new ShowId(getIntent().getData().getLastPathSegment());
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.ataulm.wutson.model.GroupedShowSummaries;
 import com.ataulm.wutson.model.Season;
 import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.model.Show;
+import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.model.ShowSummaries;
 import com.ataulm.wutson.model.ShowsInGenre;
 import com.ataulm.wutson.model.TrackedStatus;
@@ -26,9 +27,9 @@ public interface DataRepository {
 
     Observable<List<ShowsInGenre>> getDiscoverShows();
 
-    Observable<Show> getShow(String id);
+    Observable<Show> getShow(ShowId id);
 
-    Observable<TrackedStatus> getTrackedStatus(String showId);
+    Observable<TrackedStatus> getTrackedStatus(ShowId showId);
 
     Observable<Episodes> getWatchedEpisodes(Season season);
 
@@ -36,15 +37,15 @@ public interface DataRepository {
 
     Observable<Integer> getWatchedCount(Season season);
 
-    Observable<Season> getSeason(String showId, int seasonNumber);
+    Observable<Season> getSeason(ShowId showId, int seasonNumber);
 
-    Observable<Seasons> getSeasons(String showId);
+    Observable<Seasons> getSeasons(ShowId showId);
 
     Observable<Actor> getActor(String id);
 
-    void toggleTrackedStatus(String showId);
+    void toggleTrackedStatus(ShowId showId);
 
-    void setTrackedStatus(String showId, TrackedStatus trackedStatus);
+    void setTrackedStatus(ShowId showId, TrackedStatus trackedStatus);
 
     void setWatchedStatus(Episode episode, WatchedStatus watchedStatus);
 

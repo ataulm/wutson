@@ -4,19 +4,19 @@ import java.net.URI;
 
 public class ShowSummary {
 
-    private final String id;
+    private final ShowId id;
     private final String name;
     private final URI posterUri;
     private final URI backdropUri;
 
-    public ShowSummary(String id, String name, URI posterUri, URI backdropUri) {
+    public ShowSummary(ShowId id, String name, URI posterUri, URI backdropUri) {
         this.id = id;
         this.name = name;
         this.posterUri = posterUri;
         this.backdropUri = backdropUri;
     }
 
-    public String getId() {
+    public ShowId getId() {
         return id;
     }
 

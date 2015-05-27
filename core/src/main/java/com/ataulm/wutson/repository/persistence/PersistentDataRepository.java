@@ -5,6 +5,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.ataulm.wutson.model.ShowId;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -68,30 +70,30 @@ public class PersistentDataRepository {
         contentResolver.insert(SHOW_SUMMARIES.uri(), contentValues);
     }
 
-    public boolean isShowTracked(String tmdbShowId) {
+    public boolean isShowTracked(ShowId tmdbShowId) {
         String selection = TrackedShowsColumn.TMDB_SHOW_ID.columnName() + "=?";
-        String[] selectionArgs = {tmdbShowId};
+        String[] selectionArgs = {tmdbShowId.toString()};
         Cursor cursor = contentResolver.query(TRACKED_SHOWS.uri(), null, selection, selectionArgs, null);
         boolean showIsTracked = cursor.getCount() > 0;
         cursor.close();
         return showIsTracked;
     }
 
-    public Uri addToTrackedShows(String tmdbShowId) {
+    public Uri addToTrackedShows(ShowId tmdbShowId) {
         ContentValues contentValues = TrackedShowsColumn.write(Timestamp.now().asLong(), tmdbShowId);
         return contentResolver.insert(TRACKED_SHOWS.uri(), contentValues);
     }
 
-    public int deleteFromTrackedShows(String tmdbShowId) {
+    public int deleteFromTrackedShows(ShowId tmdbShowId) {
         String selection = TrackedShowsColumn.TMDB_SHOW_ID.columnName() + "=?";
-        String[] selectionArgs = {tmdbShowId};
+        String[] selectionArgs = {tmdbShowId.toString()};
         return contentResolver.delete(TRACKED_SHOWS.uri(), selection, selectionArgs);
     }
 
-    public String readJsonShowDetails(String tmdbShowId) {
+    public String readJsonShowDetails(ShowId tmdbShowId) {
         String[] projection = {ShowDetailsColumn.JSON.columnName()};
         String selection = ShowDetailsColumn.TMDB_SHOW_ID.columnName() + "=?";
-        String[] selectionArgs = {tmdbShowId};
+        String[] selectionArgs = {tmdbShowId.toString()};
         Cursor cursor = contentResolver.query(SHOW_DETAILS.uri(), projection, selection, selectionArgs, null);
 
         if (!cursor.moveToFirst()) {
@@ -102,19 +104,19 @@ public class PersistentDataRepository {
         return json;
     }
 
-    public void writeJsonShowDetails(String tmdbShowId, String json) {
-        ContentValues contentValues = ShowDetailsColumn.write(Timestamp.now().asLong(), tmdbShowId, json);
+    public void writeJsonShowDetails(ShowId tmdbShowId, String json) {
+        ContentValues contentValues = ShowDetailsColumn.write(Timestamp.now().asLong(), tmdbShowId.toString(), json);
         contentResolver.insert(SHOW_DETAILS.uri(), contentValues);
     }
 
-    public List<String> getListOfTmdbShowIdsFromAllTrackedShows() {
+    public List<ShowId> getListOfTmdbShowIdsFromAllTrackedShows() {
         String[] projection = {TrackedShowsColumn.TMDB_SHOW_ID.columnName()};
         Cursor cursor = contentResolver.query(TRACKED_SHOWS.uri(), projection, null, null, null);
         if (!cursor.moveToFirst()) {
             return Collections.emptyList();
         }
 
-        List<String> showIds = new ArrayList<>();
+        List<ShowId> showIds = new ArrayList<>();
         do {
             showIds.add(TrackedShowsColumn.readTmdbShowIdFrom(cursor));
         } while (cursor.moveToNext());

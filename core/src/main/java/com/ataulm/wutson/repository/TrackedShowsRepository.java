@@ -1,5 +1,6 @@
 package com.ataulm.wutson.repository;
 
+import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.model.ShowSummaries;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.model.TrackedStatus;
@@ -46,8 +47,8 @@ public final class TrackedShowsRepository {
 
     private void refreshTrackedShows() {
         Observable<Configuration> repeatingConfigurationObservable = configurationRepo.getConfiguration().first().repeat();
-        Observable<GsonTvShow> gsonTvShowsObservable = fetchListOfMyShowIdsFrom(persistentDataRepository)
-                .flatMap(Function.<String>emitEachElement())
+        Observable<GsonTvShow> gsonTvShowsObservable = getTrackedShowIds()
+                .flatMap(Function.<ShowId>emitEachElement())
                 .flatMap(fetchShowDetailsJsonFrom(persistentDataRepository))
                 .filter(ignoreEmptyStrings())
                 .map(jsonTo(GsonTvShow.class, gson));
@@ -60,7 +61,11 @@ public final class TrackedShowsRepository {
                 .subscribe(subject);
     }
 
-    public void toggleTrackedStatus(final String showId) {
+    public Observable<List<ShowId>> getTrackedShowIds() {
+        return fetchListOfMyShowIdsFrom(persistentDataRepository);
+    }
+
+    public void toggleTrackedStatus(final ShowId showId) {
         Observable.create(new Observable.OnSubscribe<Void>() {
 
             @Override
@@ -79,7 +84,7 @@ public final class TrackedShowsRepository {
                 .subscribe();
     }
 
-    void setTrackedStatus(final String showId, final TrackedStatus trackedStatus) {
+    void setTrackedStatus(final ShowId showId, final TrackedStatus trackedStatus) {
         Observable.create(new Observable.OnSubscribe<Void>() {
 
             @Override
@@ -97,11 +102,11 @@ public final class TrackedShowsRepository {
                 .subscribe();
     }
 
-    private static Observable<List<String>> fetchListOfMyShowIdsFrom(final PersistentDataRepository persistentDataRepository) {
-        return Observable.create(new Observable.OnSubscribe<List<String>>() {
+    private static Observable<List<ShowId>> fetchListOfMyShowIdsFrom(final PersistentDataRepository persistentDataRepository) {
+        return Observable.create(new Observable.OnSubscribe<List<ShowId>>() {
 
             @Override
-            public void call(Subscriber<? super List<String>> subscriber) {
+            public void call(Subscriber<? super List<ShowId>> subscriber) {
                 subscriber.onNext(persistentDataRepository.getListOfTmdbShowIdsFromAllTrackedShows());
                 subscriber.onCompleted();
             }
@@ -115,7 +120,7 @@ public final class TrackedShowsRepository {
             @Override
             public ShowSummary call(Configuration configuration, GsonTvShow gsonTvShow) {
                 return new ShowSummary(
-                        gsonTvShow.id,
+                        new ShowId(gsonTvShow.id),
                         gsonTvShow.name,
                         configuration.completePoster(gsonTvShow.posterPath),
                         configuration.completeBackdrop(gsonTvShow.backdropPath)
@@ -125,11 +130,11 @@ public final class TrackedShowsRepository {
         };
     }
 
-    private static Func1<String, Observable<String>> fetchShowDetailsJsonFrom(final PersistentDataRepository repository) {
-        return new Func1<String, Observable<String>>() {
+    private static Func1<ShowId, Observable<String>> fetchShowDetailsJsonFrom(final PersistentDataRepository repository) {
+        return new Func1<ShowId, Observable<String>>() {
 
             @Override
-            public Observable<String> call(String tmdbShowId) {
+            public Observable<String> call(ShowId tmdbShowId) {
                 return Observable.just(repository.readJsonShowDetails(tmdbShowId));
             }
 

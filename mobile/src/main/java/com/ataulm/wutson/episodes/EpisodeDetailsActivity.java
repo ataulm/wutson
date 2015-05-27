@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 import com.ataulm.wutson.model.Season;
@@ -29,7 +30,7 @@ public class EpisodeDetailsActivity extends WutsonActivity {
     private ViewPager pager;
     private EpisodesPagerAdapter adapter;
 
-    private String showId;
+    private ShowId showId;
     private int seasonNumber;
     private int episodeNumber;
 
@@ -41,7 +42,7 @@ public class EpisodeDetailsActivity extends WutsonActivity {
         setContentView(R.layout.activity_episode_details);
 
         Uri data = getIntent().getData();
-        showId = data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID_INDEX);
+        showId = new ShowId(data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID_INDEX));
         seasonNumber = Integer.parseInt(data.getPathSegments().get(URI_PATH_SEGMENT_SEASON_NUMBER_INDEX));
         episodeNumber = Integer.parseInt(data.getPathSegments().get(URI_PATH_SEGMENT_EPISODE_NUMBER_INDEX));
 

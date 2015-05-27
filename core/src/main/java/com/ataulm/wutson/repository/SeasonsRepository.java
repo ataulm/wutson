@@ -1,5 +1,6 @@
 package com.ataulm.wutson.repository;
 
+import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.model.Season;
@@ -29,7 +30,7 @@ public class SeasonsRepository {
         this.showRepository = showRepository;
     }
 
-    public Observable<Seasons> getSeasons(final String showId) {
+    public Observable<Seasons> getSeasons(final ShowId showId) {
         Observable<Show> showObservable = showRepository.getShowDetails(showId);
 
         Observable<Season> seasonObservable = showObservable
@@ -45,7 +46,7 @@ public class SeasonsRepository {
             public Observable<Season> call(Show.SeasonSummary seasonSummary) {
                 return Observable.zip(
                         configurationRepository.getConfiguration().first(),
-                        api.getSeason(seasonSummary.getShowId(), seasonSummary.getSeasonNumber()),
+                        api.getSeason(seasonSummary.getShowId().toString(), seasonSummary.getSeasonNumber()),
                         Observable.just(seasonSummary),
                         asSeason());
             }
@@ -101,7 +102,7 @@ public class SeasonsRepository {
         };
     }
 
-    public Observable<Season> getSeason(String showId, final int seasonNumber) {
+    public Observable<Season> getSeason(ShowId showId, final int seasonNumber) {
         return getSeasons(showId)
                 .flatMap(Function.<Season>emitEachElement())
                 .filter(seasonsNumber(seasonNumber))

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Show {
 
-    private final String id;
+    private final ShowId id;
     private final String name;
     private final String overview;
     private final URI posterUri;
@@ -13,7 +13,7 @@ public class Show {
     private final Cast cast;
     private final List<SeasonSummary> seasonSummaries;
 
-    public Show(String id, String name, String overview, URI posterUri, URI backdropUri, Cast cast, List<SeasonSummary> seasonSummaries) {
+    public Show(ShowId id, String name, String overview, URI posterUri, URI backdropUri, Cast cast, List<SeasonSummary> seasonSummaries) {
         this.id = id;
         this.name = name;
         this.overview = overview;
@@ -23,7 +23,7 @@ public class Show {
         this.seasonSummaries = seasonSummaries;
     }
 
-    public String getId() {
+    public ShowId getId() {
         return id;
     }
 
@@ -54,13 +54,13 @@ public class Show {
     public static class SeasonSummary {
 
         private final String id;
-        private final String showId;
+        private final ShowId showId;
         private final String showName;
         private final int seasonNumber;
         private final int episodeCount;
         private final URI posterPath;
 
-        public SeasonSummary(String id, String showId, String showName, int seasonNumber, int episodeCount, URI posterPath) {
+        public SeasonSummary(String id, ShowId showId, String showName, int seasonNumber, int episodeCount, URI posterPath) {
             this.id = id;
             this.showId = showId;
             this.showName = showName;
@@ -73,7 +73,7 @@ public class Show {
             return id;
         }
 
-        public String getShowId() {
+        public ShowId getShowId() {
             return showId;
         }
 

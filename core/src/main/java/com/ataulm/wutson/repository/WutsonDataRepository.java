@@ -5,11 +5,12 @@ import com.ataulm.wutson.model.Actor;
 import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.model.Episodes;
 import com.ataulm.wutson.model.GroupedShowSummaries;
-import com.ataulm.wutson.model.ShowSummaries;
-import com.ataulm.wutson.model.ShowsInGenre;
 import com.ataulm.wutson.model.Season;
 import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.model.Show;
+import com.ataulm.wutson.model.ShowId;
+import com.ataulm.wutson.model.ShowSummaries;
+import com.ataulm.wutson.model.ShowsInGenre;
 import com.ataulm.wutson.model.TrackedStatus;
 import com.ataulm.wutson.model.WatchedStatus;
 
@@ -39,11 +40,11 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public Observable<TrackedStatus> getTrackedStatus(final String showId) {
+    public Observable<TrackedStatus> getTrackedStatus(ShowId showId) {
         return getMyShows().map(asTrackedStatus(showId));
     }
 
-    private static Func1<ShowSummaries, TrackedStatus> asTrackedStatus(final String showId) {
+    private static Func1<ShowSummaries, TrackedStatus> asTrackedStatus(final ShowId showId) {
         return new Func1<ShowSummaries, TrackedStatus>() {
 
             @Override
@@ -58,12 +59,12 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public void toggleTrackedStatus(String showId) {
+    public void toggleTrackedStatus(ShowId showId) {
         trackedShowsRepo.toggleTrackedStatus(showId);
     }
 
     @Override
-    public void setTrackedStatus(String showId, TrackedStatus trackedStatus) {
+    public void setTrackedStatus(ShowId showId, TrackedStatus trackedStatus) {
         trackedShowsRepo.setTrackedStatus(showId, trackedStatus);
     }
 
@@ -82,7 +83,7 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public Observable<Show> getShow(String id) {
+    public Observable<Show> getShow(ShowId id) {
         return showRepo.getShowDetails(id);
     }
 
@@ -102,12 +103,12 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public Observable<Season> getSeason(String showId, int seasonNumber) {
+    public Observable<Season> getSeason(ShowId showId, int seasonNumber) {
         return seasonsRepo.getSeason(showId, seasonNumber);
     }
 
     @Override
-    public Observable<Seasons> getSeasons(String showId) {
+    public Observable<Seasons> getSeasons(ShowId showId) {
         return seasonsRepo.getSeasons(showId);
     }
 

@@ -35,17 +35,17 @@ public class ShowRepository {
         this.gson = gson;
     }
 
-    public Observable<Show> getShowDetails(String showId) {
+    public Observable<Show> getShowDetails(ShowId showId) {
         Observable<Configuration> configurationObservable = configurationRepository.getConfiguration();
         Observable<GsonTvShow> gsonTvShowObservable = fetchJsonTvShowFrom(persistentDataRepository, showId)
                 .filter(ignoreEmptyStrings())
                 .map(jsonTo(GsonTvShow.class, gson))
-                .switchIfEmpty(api.getTvShow(showId).doOnNext(saveTo(persistentDataRepository, gson, showId)));
+                .switchIfEmpty(api.getTvShow(showId.toString()).doOnNext(saveTo(persistentDataRepository, gson, showId)));
 
         return Observable.zip(configurationObservable, gsonTvShowObservable, asShow(showId));
     }
 
-    private static Action1<GsonTvShow> saveTo(final PersistentDataRepository persistentDataRepository, final Gson gson, final String tmdbShowId) {
+    private static Action1<GsonTvShow> saveTo(final PersistentDataRepository persistentDataRepository, final Gson gson, final ShowId tmdbShowId) {
         return new Action1<GsonTvShow>() {
 
             @Override
@@ -57,7 +57,7 @@ public class ShowRepository {
         };
     }
 
-    private static Observable<String> fetchJsonTvShowFrom(final PersistentDataRepository repository, final String showId) {
+    private static Observable<String> fetchJsonTvShowFrom(final PersistentDataRepository repository, final ShowId showId) {
         return Observable.create(new Observable.OnSubscribe<String>() {
 
             @Override
@@ -69,7 +69,7 @@ public class ShowRepository {
         });
     }
 
-    private static Func2<Configuration, GsonTvShow, Show> asShow(final String showId) {
+    private static Func2<Configuration, GsonTvShow, Show> asShow(final ShowId showId) {
         return new Func2<Configuration, GsonTvShow, Show>() {
 
             @Override
@@ -83,7 +83,8 @@ public class ShowRepository {
                 Cast cast = new Cast(characters);
 
                 List<Show.SeasonSummary> seasonSummaries = getSeasons(configuration, gsonTvShow);
-                return new Show(gsonTvShow.id, name, overview, posterUri, backdropUri, cast, seasonSummaries);
+                ShowId id = new ShowId(gsonTvShow.id);
+                return new Show(id, name, overview, posterUri, backdropUri, cast, seasonSummaries);
             }
 
             private List<com.ataulm.wutson.model.Character> getCharacters(Configuration configuration, GsonTvShow gsonTvShow) {
