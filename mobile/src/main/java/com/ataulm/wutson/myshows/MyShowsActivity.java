@@ -97,13 +97,16 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
     private class Observer extends LoggingObserver<ShowSummaries> {
 
+        private boolean firstOpen = true;
+
         @Override
         public void onNext(ShowSummaries showSummaries) {
             super.onNext(showSummaries);
-            if (nothingToSeeHere(showSummaries)) {
+            if (firstOpen && nothingToSeeHere(showSummaries)) {
                 navigate().toDiscover();
                 finish();
             } else {
+                firstOpen = false;
                 setTitle(R.string.my_shows_label);
                 adapter.update(showSummaries);
                 if (savedStateForShowsView != null) {
