@@ -1,6 +1,7 @@
 package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.model.ShowId;
+import com.ataulm.wutson.model.SimpleDate;
 import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.model.Season;
@@ -60,7 +61,7 @@ public class SeasonsRepository {
                 List<Episode> episodes = new ArrayList<>(gsonSeason.episodes.size());
                 for (GsonSeason.Episodes.Episode gsonEpisode : gsonSeason.episodes) {
                     episodes.add(new Episode(
-                            gsonEpisode.airDate,
+                            SimpleDate.from(gsonEpisode.airDate),
                             gsonSeason.seasonNumber,
                             gsonEpisode.episodeNumber,
                             gsonEpisode.name,

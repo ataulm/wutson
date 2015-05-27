@@ -44,7 +44,7 @@ public class EpisodeSummaryView extends RelativeLayout {
                 .centerCrop()
                 .into(posterImageView);
         episodeNameTextView.setText(episode.getName());
-        episodeNumberTextView.setText(episode.getAirDate());
+        episodeNumberTextView.setText(episode.getAirDate().toString());
     }
 
 }

@@ -4,7 +4,7 @@ import java.net.URI;
 
 public class Episode {
 
-    private final String airDate; // TODO: should be typed
+    private final SimpleDate airDate;
     private final int seasonNumber;
     private final int episodeNumber;
     private final String name;
@@ -12,7 +12,7 @@ public class Episode {
     private final URI stillPath;
     private final String showName;
 
-    public Episode(String airDate, int seasonNumber, int episodeNumber, String name, String overview, URI stillPath, String showName) {
+    public Episode(SimpleDate airDate, int seasonNumber, int episodeNumber, String name, String overview, URI stillPath, String showName) {
         this.airDate = airDate;
         this.seasonNumber = seasonNumber;
         this.episodeNumber = episodeNumber;
@@ -38,7 +38,7 @@ public class Episode {
         return overview;
     }
 
-    public String getAirDate() {
+    public SimpleDate getAirDate() {
         return airDate;
     }
 
