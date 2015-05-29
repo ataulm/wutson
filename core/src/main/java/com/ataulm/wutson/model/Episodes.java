@@ -1,9 +1,10 @@
 package com.ataulm.wutson.model;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class Episodes {
+public class Episodes implements Iterable<Episode> {
 
     private final List<Episode> episodes;
 
@@ -17,6 +18,11 @@ public class Episodes {
 
     public Episode get(int location) {
         return episodes.get(location);
+    }
+
+    @Override
+    public Iterator<Episode> iterator() {
+        return episodes.iterator();
     }
 
 }

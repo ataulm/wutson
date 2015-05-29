@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.ataulm.rv.SpacesItemDecoration;
@@ -14,12 +15,15 @@ import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
+import com.ataulm.wutson.model.Episode;
+import com.ataulm.wutson.model.EpisodesByDay;
 import com.ataulm.wutson.model.ShowSummaries;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 
+import java.util.List;
 import java.util.Set;
 
 import rx.Subscription;
@@ -31,6 +35,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
     private static final String KEY_SAVED_STATE = BuildConfig.APPLICATION_ID + ".KEY_SAVED_STATE";
 
     private Subscription trackedShowsSubscription;
+    private Subscription upcomingShowsSubscription;
     private TrackedShowsAdapter adapter;
     private RecyclerView showsView;
     private SparseArray<Parcelable> savedStateForShowsView;
@@ -46,6 +51,11 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer());
+
+        upcomingShowsSubscription = Jabber.dataRepository().getUpcomingEpisodes()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new UpcomingObserver());
     }
 
     private void bindNewTrackedShowsAdapterToShowsView() {
@@ -82,6 +92,9 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         if (!trackedShowsSubscription.isUnsubscribed()) {
             trackedShowsSubscription.unsubscribe();
         }
+        if (!upcomingShowsSubscription.isUnsubscribed()) {
+            upcomingShowsSubscription.unsubscribe();
+        }
         super.onDestroy();
     }
 
@@ -93,6 +106,21 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
     @Override
     public void onClick(ShowSummary showSummary) {
         navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
+    }
+
+    private static class UpcomingObserver extends LoggingObserver<List<EpisodesByDay>> {
+
+        @Override
+        public void onNext(List<EpisodesByDay> episodes) {
+            super.onNext(episodes);
+            for (EpisodesByDay episodeList : episodes) {
+                Log.d("whatwhat.e", episodeList.getDate().toString());
+                for (Episode episode : episodeList.getEpisodes()) {
+                    Log.d("whatwhat.d", episode.toString());
+                }
+            }
+        }
+
     }
 
     private class Observer extends LoggingObserver<ShowSummaries> {

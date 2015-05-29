@@ -50,4 +50,12 @@ public class Episode {
         return showName;
     }
 
+    @Override
+    public String toString() {
+        return Episode.class.getSimpleName() + ": [" +
+                showName + " | " +
+                seasonNumber + "x" + episodeNumber + " | " +
+                airDate + "]";
+    }
+
 }

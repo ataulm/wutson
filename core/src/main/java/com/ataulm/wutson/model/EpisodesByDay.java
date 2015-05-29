@@ -2,16 +2,16 @@ package com.ataulm.wutson.model;
 
 public class EpisodesByDay {
 
-    private final String day;
+    private final SimpleDate date;
     private final Episodes episodes;
 
-    public EpisodesByDay(String day, Episodes episodes) {
-        this.day = day;
+    public EpisodesByDay(SimpleDate date, Episodes episodes) {
+        this.date = date;
         this.episodes = episodes;
     }
 
-    public String getDay() {
-        return day;
+    public SimpleDate getDate() {
+        return date;
     }
 
     public Episodes getEpisodes() {

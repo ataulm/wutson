@@ -7,7 +7,7 @@ import java.util.Locale;
 
 public final class SimpleDate {
 
-    private static final SimpleDate UNKNOWN = new SimpleDate(null);
+    private static final SimpleDate UNKNOWN = SimpleDate.from("0001-01-01");
     private static final int EXPECTED_LENGTH = 10;
     private static final SimpleDateFormat NAMED_DAY_MONTH_DAY_YEAR = new SimpleDateFormat("EEE d MMMM yyyy", Locale.UK);
 
@@ -49,6 +49,14 @@ public final class SimpleDate {
     @Override
     public String toString() {
         return NAMED_DAY_MONTH_DAY_YEAR.format(date);
+    }
+
+    public boolean isBefore(SimpleDate other) {
+        return (date.before(other.date));
+    }
+
+    public boolean isAfter(SimpleDate other) {
+        return (date.after(other.date));
     }
 
 }
