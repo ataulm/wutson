@@ -1,5 +1,7 @@
 package com.ataulm.wutson.tmdb;
 
+import android.util.Log;
+
 import retrofit.Endpoint;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -43,6 +45,12 @@ public class TmdbApiFactory {
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(tmdbEndpoint)
+                .setLog(new RestAdapter.Log() {
+                    @Override
+                    public void log(String message) {
+                        Log.v("retrofit", message);
+                    }
+                })
                 .setClient(client)
                 .setRequestInterceptor(tmdbRequestInterceptor)
                 .build();
