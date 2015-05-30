@@ -6,13 +6,13 @@ import java.util.List;
 
 public class Season implements Iterable<Episode>, Comparable<Season> {
 
-    private final String airDate; // TODO: this should be typed
+    private final SimpleDate airDate;
     private final int seasonNumber;
     private final String overview;
     private final URI posterPath;
     private final List<Episode> episodes;
 
-    public Season(String airDate, int seasonNumber, String overview, URI posterPath, List<Episode> episodes) {
+    public Season(SimpleDate airDate, int seasonNumber, String overview, URI posterPath, List<Episode> episodes) {
         this.airDate = airDate;
         this.seasonNumber = seasonNumber;
         this.overview = overview;

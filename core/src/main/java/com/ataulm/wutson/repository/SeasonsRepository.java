@@ -71,7 +71,7 @@ public class SeasonsRepository {
                 }
 
                 return new Season(
-                        gsonSeason.airDate,
+                        SimpleDate.from(gsonSeason.airDate),
                         gsonSeason.seasonNumber,
                         gsonSeason.overview,
                         configuration.completePoster(gsonSeason.posterPath),
