@@ -5,11 +5,19 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.LayoutRes;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ataulm.rv.SpacesItemDecoration;
+import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
@@ -20,12 +28,11 @@ import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.novoda.landingstrip.LandingStrip;
 
 import java.util.Set;
 
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowClickListener {
 
@@ -42,17 +49,69 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         super.onCreate(savedInstanceState);
         setTitle(null);
         setContentView(R.layout.activity_my_shows);
-        bindNewTrackedShowsAdapterToShowsView();
 
-        trackedShowsSubscription = Jabber.dataRepository().getMyShows()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer());
+        ViewPager viewPager = (ViewPager) findViewById(R.id.my_shows_pager);
+        viewPager.setAdapter(new MyShowsPager(getLayoutInflater()));
 
-        upcomingShowsSubscription = Jabber.dataRepository().getUpcomingEpisodes()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new UpcomingObserver());
+        LandingStrip tabStrip = (LandingStrip) findViewById(R.id.tab_strip);
+        tabStrip.attach(viewPager);
+
+
+//        bindNewTrackedShowsAdapterToShowsView();
+//
+//        trackedShowsSubscription = Jabber.dataRepository().getMyShows()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(new Observer());
+//
+//        upcomingShowsSubscription = Jabber.dataRepository().getUpcomingEpisodes()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(new UpcomingObserver());
+    }
+
+    private static class MyShowsPager extends ViewPagerAdapter {
+
+        private final LayoutInflater layoutInflater;
+
+        MyShowsPager(LayoutInflater layoutInflater) {
+            this.layoutInflater = layoutInflater;
+        }
+
+        @Override
+        protected View getView(ViewGroup viewGroup, int position) {
+            Page page = Page.values()[position];
+            TextView pageView = (TextView) layoutInflater.inflate(page.layout, viewGroup, false);
+            pageView.setText(page.name());
+            return pageView;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            // TODO: should be string resource
+            return Page.values()[position].name();
+        }
+
+        @Override
+        public int getCount() {
+            return Page.values().length;
+        }
+
+        private enum Page {
+
+            ALL(R.layout.view_my_shows_page_all),
+            UPCOMING(R.layout.view_my_shows_page_upcoming),
+            RECENT(R.layout.view_my_shows_page_recent);
+
+            @LayoutRes
+            private final int layout;
+
+            Page(int layout) {
+                this.layout = layout;
+            }
+
+        }
+
     }
 
     private void bindNewTrackedShowsAdapterToShowsView() {
@@ -68,30 +127,30 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         showsView.setAdapter(adapter);
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        SparseArray<Parcelable> container = new SparseArray<>();
-        showsView.saveHierarchyState(container);
-        outState.putSparseParcelableArray(KEY_SAVED_STATE, container);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState.containsKey(KEY_SAVED_STATE)) {
-            savedStateForShowsView = savedInstanceState.getSparseParcelableArray(KEY_SAVED_STATE);
-        }
-    }
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        SparseArray<Parcelable> container = new SparseArray<>();
+//        showsView.saveHierarchyState(container);
+//        outState.putSparseParcelableArray(KEY_SAVED_STATE, container);
+//    }
+//
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        if (savedInstanceState.containsKey(KEY_SAVED_STATE)) {
+//            savedStateForShowsView = savedInstanceState.getSparseParcelableArray(KEY_SAVED_STATE);
+//        }
+//    }
 
     @Override
     protected void onDestroy() {
-        if (!trackedShowsSubscription.isUnsubscribed()) {
-            trackedShowsSubscription.unsubscribe();
-        }
-        if (!upcomingShowsSubscription.isUnsubscribed()) {
-            upcomingShowsSubscription.unsubscribe();
-        }
+//        if (!trackedShowsSubscription.isUnsubscribed()) {
+//            trackedShowsSubscription.unsubscribe();
+//        }
+//        if (!upcomingShowsSubscription.isUnsubscribed()) {
+//            upcomingShowsSubscription.unsubscribe();
+//        }
         super.onDestroy();
     }
 
