@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-class ShowPagerAdapter extends ViewPagerAdapter {
+class ShowDetailsPagerAdapter extends ViewPagerAdapter {
 
     private final Resources resources;
     private final OnClickSeasonListener onSeasonClickListener;
@@ -28,7 +28,7 @@ class ShowPagerAdapter extends ViewPagerAdapter {
 
     private Show show;
 
-    ShowPagerAdapter(Resources resources, OnClickSeasonListener onSeasonClickListener, LayoutInflater layoutInflater, URI showBackdropUri) {
+    ShowDetailsPagerAdapter(Resources resources, OnClickSeasonListener onSeasonClickListener, LayoutInflater layoutInflater, URI showBackdropUri) {
         this.resources = resources;
         this.onSeasonClickListener = onSeasonClickListener;
         this.layoutInflater = layoutInflater;
@@ -78,10 +78,10 @@ class ShowPagerAdapter extends ViewPagerAdapter {
 
     private View getShowSeasonsView(ViewGroup container) {
         List<Show.SeasonSummary> seasonSummaries;
-        if (show != null) {
-            seasonSummaries = show.getSeasonSummaries();
-        } else {
+        if (show == null) {
             seasonSummaries = Collections.emptyList();
+        } else {
+            seasonSummaries = show.getSeasonSummaries();
         }
 
         RecyclerView view = (RecyclerView) layoutInflater.inflate(Page.SEASONS.getLayoutResId(), container, false);

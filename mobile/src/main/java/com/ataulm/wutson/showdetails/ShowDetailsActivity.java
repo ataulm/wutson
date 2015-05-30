@@ -32,7 +32,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
     private Subscription trackedStatusSubscription;
     private Subscription showDetailsSubscription;
-    private ShowPagerAdapter adapter;
+    private ShowDetailsPagerAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         setContentView(R.layout.activity_show_details);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.show_details_pager_show);
-        viewPager.setAdapter(adapter = new ShowPagerAdapter(getResources(), this, getLayoutInflater(), getShowBackdropUri()));
+        viewPager.setAdapter(adapter = new ShowDetailsPagerAdapter(getResources(), this, getLayoutInflater(), getShowBackdropUri()));
         ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);
     }
 
