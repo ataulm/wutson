@@ -4,7 +4,7 @@ import com.ataulm.wutson.DataRepository;
 import com.ataulm.wutson.model.Actor;
 import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.model.Episodes;
-import com.ataulm.wutson.model.EpisodesByDay;
+import com.ataulm.wutson.model.EpisodesByDate;
 import com.ataulm.wutson.model.Season;
 import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.model.Show;
@@ -16,12 +16,8 @@ import com.ataulm.wutson.model.TrackedStatus;
 import com.ataulm.wutson.model.WatchedStatus;
 import com.ataulm.wutson.rx.Function;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -78,7 +74,7 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public Observable<List<EpisodesByDay>> getUpcomingEpisodes() {
+    public Observable<EpisodesByDate> getUpcomingEpisodes() {
         return trackedShowsRepo.getTrackedShowIds()
                 .flatMap(getAllEpisodes())
                 .filter(onlyEpisodesAiringAfter(today()))
@@ -105,36 +101,16 @@ public class WutsonDataRepository implements DataRepository {
         };
     }
 
-    private static Func1<List<Episode>, List<EpisodesByDay>> splitIntoEpisodesByDay() {
-        return new Func1<List<Episode>, List<EpisodesByDay>>() {
+    private static Func1<List<Episode>, EpisodesByDate> splitIntoEpisodesByDay() {
+        return new Func1<List<Episode>, EpisodesByDate>() {
 
             @Override
-            public List<EpisodesByDay> call(List<Episode> episodes) {
-                Map<SimpleDate, List<Episode>> episodesByDayList = new HashMap<>();
+            public EpisodesByDate call(List<Episode> episodes) {
+                EpisodesByDate.Builder builder = new EpisodesByDate.Builder();
                 for (Episode episode : episodes) {
-                    if (!episodesByDayList.containsKey(episode.getAirDate())) {
-                        episodesByDayList.put(episode.getAirDate(), new ArrayList<Episode>());
-                    }
-                    episodesByDayList.get(episode.getAirDate()).add(episode);
+                    builder.add(episode);
                 }
-
-                List<EpisodesByDay> episodesByDay = new ArrayList<>(episodesByDayList.size());
-                for (SimpleDate simpleDate : episodesByDayList.keySet()) {
-                    episodesByDay.add(new EpisodesByDay(simpleDate, new Episodes(episodesByDayList.get(simpleDate))));
-                }
-                Collections.sort(episodesByDay, new Comparator<EpisodesByDay>() {
-                    @Override
-                    public int compare(EpisodesByDay lhs, EpisodesByDay rhs) {
-                        if (lhs.getDate().equals(rhs.getDate())) {
-                            return 0;
-                        }
-                        if (lhs.getDate().isBefore(rhs.getDate())) {
-                            return -1;
-                        }
-                        return 1;
-                    }
-                });
-                return episodesByDay;
+                return builder.build();
             }
 
         };
@@ -159,7 +135,7 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public Observable<List<EpisodesByDay>> getRecentEpisodes() {
+    public Observable<EpisodesByDate> getRecentEpisodes() {
         return Observable.empty();
     }
 

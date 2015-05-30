@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseArray;
 
 import com.ataulm.rv.SpacesItemDecoration;
@@ -15,15 +14,13 @@ import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
-import com.ataulm.wutson.model.Episode;
-import com.ataulm.wutson.model.EpisodesByDay;
+import com.ataulm.wutson.model.EpisodesByDate;
 import com.ataulm.wutson.model.ShowSummaries;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 
-import java.util.List;
 import java.util.Set;
 
 import rx.Subscription;
@@ -108,17 +105,12 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
     }
 
-    private static class UpcomingObserver extends LoggingObserver<List<EpisodesByDay>> {
+    private static class UpcomingObserver extends LoggingObserver<EpisodesByDate> {
 
         @Override
-        public void onNext(List<EpisodesByDay> episodes) {
+        public void onNext(EpisodesByDate episodes) {
             super.onNext(episodes);
-            for (EpisodesByDay episodeList : episodes) {
-                Log.d("whatwhat.e", episodeList.getDate().toString());
-                for (Episode episode : episodeList.getEpisodes()) {
-                    Log.d("whatwhat.d", episode.toString());
-                }
-            }
+            // TODO: make it a list ready for adapter
         }
 
     }
