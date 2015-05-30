@@ -2,11 +2,12 @@ package com.ataulm.wutson.myshows;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
-import android.support.v4.view.PagerAdapter;
+import android.support.annotation.StringRes;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,7 +52,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         setContentView(R.layout.activity_my_shows);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.my_shows_pager);
-        viewPager.setAdapter(new MyShowsPager(getLayoutInflater()));
+        viewPager.setAdapter(new MyShowsPager(getLayoutInflater(), getResources()));
 
         LandingStrip tabStrip = (LandingStrip) findViewById(R.id.tab_strip);
         tabStrip.attach(viewPager);
@@ -73,23 +74,24 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
     private static class MyShowsPager extends ViewPagerAdapter {
 
         private final LayoutInflater layoutInflater;
+        private final Resources resources;
 
-        MyShowsPager(LayoutInflater layoutInflater) {
+        MyShowsPager(LayoutInflater layoutInflater, Resources resources) {
             this.layoutInflater = layoutInflater;
+            this.resources = resources;
         }
 
         @Override
         protected View getView(ViewGroup viewGroup, int position) {
             Page page = Page.values()[position];
-            TextView pageView = (TextView) layoutInflater.inflate(page.layout, viewGroup, false);
-            pageView.setText(page.name());
+            TextView pageView = (TextView) layoutInflater.inflate(page.getLayoutResId(), viewGroup, false);
+            pageView.setText(getPageTitle(position));
             return pageView;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            // TODO: should be string resource
-            return Page.values()[position].name();
+            return Page.values()[position].getTitle(resources);
         }
 
         @Override
@@ -99,15 +101,30 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
         private enum Page {
 
-            ALL(R.layout.view_my_shows_page_all),
-            UPCOMING(R.layout.view_my_shows_page_upcoming),
-            RECENT(R.layout.view_my_shows_page_recent);
+            ALL(R.layout.view_my_shows_page_all, R.string.my_shows_page_all),
+            UPCOMING(R.layout.view_my_shows_page_upcoming, R.string.my_shows_page_upcoming),
+            RECENT(R.layout.view_my_shows_page_recent, R.string.my_shows_page_recent);
 
             @LayoutRes
-            private final int layout;
+            private final int layoutResId;
 
-            Page(int layout) {
-                this.layout = layout;
+            @StringRes
+            private final int titleResId;
+
+            Page(@LayoutRes int layoutResId, @StringRes int titleResId) {
+                this.layoutResId = layoutResId;
+                this.titleResId = titleResId;
+            }
+
+            @LayoutRes int getLayoutResId() {
+                return layoutResId;
+            }
+
+            String getTitle(Resources resources) {
+                if (this == UPCOMING || this == RECENT) {
+                    return "unimplemented";
+                }
+                return resources.getString(titleResId);
             }
 
         }

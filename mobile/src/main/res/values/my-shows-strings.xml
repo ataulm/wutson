@@ -2,5 +2,8 @@
 <resources>
 
   <string name="my_shows_label">@string/my_shows</string>
+  <string name="my_shows_page_all">@string/all</string>
+  <string name="my_shows_page_upcoming">@string/upcoming</string>
+  <string name="my_shows_page_recent">@string/recent</string>
 
 </resources>
