@@ -90,8 +90,10 @@ public class EpisodeDetailsActivity extends WutsonActivity {
                 shouldResetPagePosition = false;
                 pager.setCurrentItem(adapter.positionOfEpisodeNumber(episodeNumber));
             }
-            // TODO pass show name to activity to setTitle
-//            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            if (season.size() > 0) {
+                setTitle(season.get(0).getShowName());
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
+            }
         }
 
     }
