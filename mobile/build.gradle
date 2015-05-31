@@ -12,9 +12,10 @@ def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword 
 dependencies {
     compile project(":core")
 
-    compile 'com.android.support:recyclerview-v7:22.1.1'
-    compile "com.android.support:appcompat-v7:22.1.1"
-    compile 'com.android.support:support-v4:22.1.1'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:design:22.2.0'
 
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.novoda:landing-strip:0.0.8'
