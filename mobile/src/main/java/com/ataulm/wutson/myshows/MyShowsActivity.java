@@ -35,22 +35,22 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         setContentView(R.layout.activity_my_shows);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.my_shows_pager);
-        pagerAdapter = MyShowsPagerAdapter.newInstance(this, getResources(), getLayoutInflater(), this, Jabber.toastDisplayer());
+        pagerAdapter = MyShowsPagerAdapter.newInstance(this, this, Jabber.toastDisplayer());
         viewPager.setAdapter(pagerAdapter);
 
         LandingStrip tabStrip = (LandingStrip) findViewById(R.id.tab_strip);
         tabStrip.attach(viewPager);
 
-        subscriptions = new CompositeSubscription();
-        subscriptions.add(Jabber.dataRepository().getMyShows()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new TrackedShowsObserver()));
-
-        subscriptions.add(Jabber.dataRepository().getUpcomingEpisodes()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new UpcomingEpisodesObserver()));
+        subscriptions = new CompositeSubscription(
+                Jabber.dataRepository().getMyShows()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new TrackedShowsObserver()),
+                Jabber.dataRepository().getUpcomingEpisodes()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new UpcomingEpisodesObserver())
+        );
     }
 
     private void hideTitleWhileWeCheckForTrackedShows() {
