@@ -1,5 +1,6 @@
 package com.ataulm.wutson.myshows;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -8,8 +9,8 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.ToastDisplayer;
-import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.discover.OnShowClickListener;
+import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.view.ShowSummaryView;
 
 final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
@@ -36,7 +37,15 @@ final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
             public void onClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.show_summary_menu_item_stop_tracking:
-                        toaster.display("Removed " + show.getName());
+                        listener.onClickStopTracking(show);
+                        Snackbar.make(itemView, "Removed " + show.getName(), Snackbar.LENGTH_LONG)
+                                .setAction("UNDO", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        listener.onClickTrack(show);
+                                    }
+                                })
+                                .show();
                         return;
                     default:
                         throw new IllegalArgumentException("Unknown menuItem: " + menuItem.getTitle());

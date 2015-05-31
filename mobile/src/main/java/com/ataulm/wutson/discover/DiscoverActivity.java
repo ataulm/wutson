@@ -7,6 +7,7 @@ import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.model.ShowsInGenre;
+import com.ataulm.wutson.model.TrackedStatus;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
@@ -71,6 +72,16 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
     @Override
     public void onClick(ShowSummary showSummary) {
         navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
+    }
+
+    @Override
+    public void onClickStopTracking(ShowSummary showSummary) {
+        Jabber.dataRepository().setTrackedStatus(showSummary.getId(), TrackedStatus.NOT_TRACKED);
+    }
+
+    @Override
+    public void onClickTrack(ShowSummary showSummary) {
+        Jabber.dataRepository().setTrackedStatus(showSummary.getId(), TrackedStatus.TRACKED);
     }
 
     private class Observer extends LoggingObserver<List<ShowsInGenre>> {

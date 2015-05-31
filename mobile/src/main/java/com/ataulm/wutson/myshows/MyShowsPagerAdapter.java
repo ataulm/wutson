@@ -29,32 +29,12 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
     private final TrackedShowsAdapter trackedShowsAdapter;
     private final UpcomingEpisodesAdapter upcomingEpisodesAdapter;
 
-    static MyShowsPagerAdapter newInstance(Context context, OnShowClickListener onShowClickListener, ToastDisplayer toaster) {
-        TrackedShowsAdapter trackedShowsAdapter = new TrackedShowsAdapter(onShowClickListener, toaster);
-        trackedShowsAdapter.setHasStableIds(true);
-
-        UpcomingEpisodesAdapter upcomingEpisodesAdapter = new UpcomingEpisodesAdapter();
-        upcomingEpisodesAdapter.setHasStableIds(true);
-
-        return new MyShowsPagerAdapter(context, context.getResources(), LayoutInflater.from(context), trackedShowsAdapter, upcomingEpisodesAdapter);
-    }
-
-    private MyShowsPagerAdapter(Context context, Resources resources, LayoutInflater layoutInflater, TrackedShowsAdapter trackedShowsAdapter, UpcomingEpisodesAdapter upcomingEpisodesAdapter) {
+    MyShowsPagerAdapter(Context context, Resources resources, LayoutInflater layoutInflater, TrackedShowsAdapter trackedShowsAdapter, UpcomingEpisodesAdapter upcomingEpisodesAdapter) {
         this.context = context;
         this.resources = resources;
         this.layoutInflater = layoutInflater;
         this.trackedShowsAdapter = trackedShowsAdapter;
         this.upcomingEpisodesAdapter = upcomingEpisodesAdapter;
-    }
-
-    void update(ShowSummaries showSummaries) {
-        trackedShowsAdapter.update(showSummaries);
-        notifyDataSetChanged();
-    }
-
-    void update(EpisodesByDate episodesByDate) {
-        upcomingEpisodesAdapter.update(episodesByDate);
-        notifyDataSetChanged();
     }
 
     @Override

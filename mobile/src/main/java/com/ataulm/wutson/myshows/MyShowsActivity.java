@@ -12,6 +12,7 @@ import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.model.EpisodesByDate;
 import com.ataulm.wutson.model.ShowSummaries;
 import com.ataulm.wutson.model.ShowSummary;
+import com.ataulm.wutson.model.TrackedStatus;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
@@ -25,8 +26,11 @@ import rx.subscriptions.CompositeSubscription;
 
 public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowClickListener {
 
-    private CompositeSubscription subscriptions;
     private MyShowsPagerAdapter pagerAdapter;
+    private TrackedShowsAdapter trackedShowsAdapter;
+    private UpcomingEpisodesAdapter upcomingEpisodesAdapter;
+
+    private CompositeSubscription subscriptions;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,14 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         setContentView(R.layout.activity_my_shows);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.my_shows_pager);
-        pagerAdapter = MyShowsPagerAdapter.newInstance(this, this, Jabber.toastDisplayer());
+
+        trackedShowsAdapter = new TrackedShowsAdapter(this, Jabber.toastDisplayer());
+        trackedShowsAdapter.setHasStableIds(true);
+
+        upcomingEpisodesAdapter = new UpcomingEpisodesAdapter();
+        upcomingEpisodesAdapter.setHasStableIds(true);
+
+        pagerAdapter = new MyShowsPagerAdapter(this, getResources(), getLayoutInflater(), trackedShowsAdapter, upcomingEpisodesAdapter);
         viewPager.setAdapter(pagerAdapter);
 
         LandingStrip tabStrip = (LandingStrip) findViewById(R.id.tab_strip);
@@ -73,6 +84,16 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
     }
 
+    @Override
+    public void onClickStopTracking(ShowSummary showSummary) {
+        Jabber.dataRepository().setTrackedStatus(showSummary.getId(), TrackedStatus.NOT_TRACKED);
+    }
+
+    @Override
+    public void onClickTrack(ShowSummary showSummary) {
+        Jabber.dataRepository().setTrackedStatus(showSummary.getId(), TrackedStatus.TRACKED);
+    }
+
     private class TrackedShowsObserver extends LoggingObserver<ShowSummaries> {
 
         private boolean firstLoad = true;
@@ -86,7 +107,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
                 // TODO this is broken - open with no shows -> discover, backs into this activity (should close app)
                 firstLoad = false;
                 setTitle(R.string.my_shows_label);
-                pagerAdapter.update(showSummaries);
+                trackedShowsAdapter.update(showSummaries);
             }
         }
 
@@ -115,7 +136,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         @Override
         public void onNext(EpisodesByDate episodesByDate) {
             super.onNext(episodesByDate);
-            pagerAdapter.update(episodesByDate);
+            upcomingEpisodesAdapter.update(episodesByDate);
         }
 
     }
