@@ -92,7 +92,7 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
     }
 
     private View getUnimplementedView(ViewGroup container, Page page) {
-        TextView pageView = (TextView) layoutInflater.inflate(page.getLayoutResId(), container, false);
+        TextView pageView = (TextView) layoutInflater.inflate(R.layout.view_my_shows_page_unimplemented, container, false);
         pageView.setText(page.getTitle(resources));
         return pageView;
     }
@@ -111,7 +111,7 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
 
         ALL(R.layout.view_my_shows_page_all, R.string.my_shows_page_all),
         UPCOMING(R.layout.view_my_shows_page_upcoming, R.string.my_shows_page_upcoming),
-        RECENT(R.layout.view_my_shows_page_recent, R.string.my_shows_page_recent);
+        RECENT(R.layout.view_my_shows_page_unimplemented, R.string.my_shows_page_recent);
 
         @LayoutRes
         private final int layoutResId;

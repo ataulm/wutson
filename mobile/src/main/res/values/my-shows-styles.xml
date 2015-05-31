@@ -4,7 +4,7 @@
   <style name="MyShows" />
 
   <style name="MyShows.ShowsListItem">
-    <item name="android:foreground">@drawable/my_shows_shows_list_item_foreground</item>
+    <item name="android:foreground">@drawable/card_foreground</item>
   </style>
 
 </resources>

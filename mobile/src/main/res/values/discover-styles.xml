@@ -4,7 +4,7 @@
   <style name="Discover" />
 
   <style name="Discover.ShowsInGenreItem">
-    <item name="android:foreground">@drawable/discover_shows_in_genre_item_foreground</item>
+    <item name="android:foreground">@drawable/card_foreground</item>
   </style>
 
 </resources>

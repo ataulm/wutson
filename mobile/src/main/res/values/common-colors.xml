@@ -9,4 +9,8 @@
   <color name="tab_text_selected">@color/white</color>
   <color name="tab_text_default">@color/white_59pc</color>
 
+  <color name="card_foreground_pressed">@color/white_59pc</color>
+  <color name="card_foreground_focused">@color/white_30pc</color>
+  <color name="card_foreground_default">@color/transparent</color>
+
 </resources>

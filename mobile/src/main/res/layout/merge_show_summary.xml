@@ -26,10 +26,11 @@
     <ImageView
       android:id="@id/show_summary_button_overflow"
       style="@style/ShowSummary.Overflow"
-      android:layout_width="48dp"
-      android:layout_height="48dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_alignParentRight="true"
-      android:src="@drawable/ic_show_summary_overflow"
+      android:layout_marginTop="@dimen/my_shows_item_overflow_margin_top"
+      android:src="@drawable/ic_overflow"
       android:visibility="gone" />
 
   </RelativeLayout>
