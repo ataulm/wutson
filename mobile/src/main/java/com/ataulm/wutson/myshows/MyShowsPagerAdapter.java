@@ -64,7 +64,8 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
             case ALL:
                 return getAllTrackedShowsView(container);
             case UPCOMING:
-                return getUpcomingEpisodesView(container);
+                // TODO: tidy up ALL view first
+//                return getUpcomingEpisodesView(container);
             case RECENT:
                 return getUnimplementedView(container, page);
             default:

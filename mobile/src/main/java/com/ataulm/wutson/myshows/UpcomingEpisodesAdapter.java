@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import com.ataulm.wutson.model.EpisodesByDate;
 
 class UpcomingEpisodesAdapter extends RecyclerView.Adapter {
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;
