@@ -37,8 +37,17 @@ class MyShowsPagerAdapter extends ViewPagerAdapter {
     }
 
     public void update(ShowSummaries showSummaries) {
+        ensureTrackedShowsAdapterNotNull();
         trackedShowsAdapter.update(showSummaries);
         notifyDataSetChanged();
+    }
+
+    private void ensureTrackedShowsAdapterNotNull() {
+        // SMELL: suggests there's something wrong with the flow
+        if (trackedShowsAdapter == null) {
+            trackedShowsAdapter = new TrackedShowsAdapter(onShowClickListener, toaster);
+            trackedShowsAdapter.setHasStableIds(true);
+        }
     }
 
     @Override
@@ -63,10 +72,7 @@ class MyShowsPagerAdapter extends ViewPagerAdapter {
         view.setLayoutManager(new GridLayoutManager(context, spanCount));
         view.addItemDecoration(SpacesItemDecoration.newInstance(spacing, spacing, spanCount));
 
-        if (trackedShowsAdapter == null) {
-            trackedShowsAdapter = new TrackedShowsAdapter(onShowClickListener, toaster);
-            trackedShowsAdapter.setHasStableIds(true);
-        }
+        ensureTrackedShowsAdapterNotNull();
         view.setAdapter(trackedShowsAdapter);
         return view;
     }
@@ -111,7 +117,7 @@ class MyShowsPagerAdapter extends ViewPagerAdapter {
 
         String getTitle(Resources resources) {
             if (this == UPCOMING || this == RECENT) {
-                return "unimplemented";
+                return "not done";
             }
             return resources.getString(titleResId);
         }

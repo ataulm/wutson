@@ -20,7 +20,7 @@ dependencies {
     compile 'com.novoda:landing-strip:0.0.8'
     compile 'de.hdodenhof:circleimageview:1.2.2'
     compile 'com.ataulm:rv-tools:0.0.3'
-    compile 'com.ataulm:view-pager-adapter:0.0.1'
+    compile 'com.ataulm:view-pager-adapter:0.0.2'
 
     compile 'com.crashlytics.android:crashlytics:1.1.13'
 }
