@@ -35,26 +35,11 @@ final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.show_summary_menu_item_toggle_favourite:
-                        onClickToggleFavourite(menuItem);
-                        return;
                     case R.id.show_summary_menu_item_stop_tracking:
-                        toaster.display("Stopped tracking " + show.getName());
+                        toaster.display("Removed " + show.getName());
                         return;
                     default:
                         throw new IllegalArgumentException("Unknown menuItem: " + menuItem.getTitle());
-                }
-            }
-
-            private void onClickToggleFavourite(MenuItem menuItem) {
-                if (menuItem.isChecked()) {
-                    toaster.display("Removed favourite for  " + show.getName());
-                    menuItem.setTitle("Add favourite");
-                    menuItem.setChecked(false);
-                } else {
-                    toaster.display("Favourited " + show.getName() + "!");
-                    menuItem.setTitle("Remove favourite");
-                    menuItem.setChecked(true);
                 }
             }
 
