@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,37 +18,43 @@ import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.discover.OnShowClickListener;
+import com.ataulm.wutson.model.EpisodesByDate;
 import com.ataulm.wutson.model.ShowSummaries;
 
-class MyShowsPagerAdapter extends ViewPagerAdapter {
+final class MyShowsPagerAdapter extends ViewPagerAdapter {
 
     private final Context context;
     private final Resources resources;
     private final LayoutInflater layoutInflater;
-    private final OnShowClickListener onShowClickListener;
-    private final ToastDisplayer toaster;
-    private TrackedShowsAdapter trackedShowsAdapter;
+    private final TrackedShowsAdapter trackedShowsAdapter;
+    private final UpcomingEpisodesAdapter upcomingEpisodesAdapter;
 
-    MyShowsPagerAdapter(Context context, Resources resources, LayoutInflater layoutInflater, OnShowClickListener onShowClickListener, ToastDisplayer toaster) {
+    static MyShowsPagerAdapter newInstance(Context context, Resources resources, LayoutInflater layoutInflater, OnShowClickListener onShowClickListener, ToastDisplayer toaster) {
+        TrackedShowsAdapter trackedShowsAdapter = new TrackedShowsAdapter(onShowClickListener, toaster);
+        trackedShowsAdapter.setHasStableIds(true);
+
+        UpcomingEpisodesAdapter upcomingEpisodesAdapter = new UpcomingEpisodesAdapter();
+        upcomingEpisodesAdapter.setHasStableIds(true);
+
+        return new MyShowsPagerAdapter(context, resources, layoutInflater, trackedShowsAdapter, upcomingEpisodesAdapter);
+    }
+
+    private MyShowsPagerAdapter(Context context, Resources resources, LayoutInflater layoutInflater, TrackedShowsAdapter trackedShowsAdapter, UpcomingEpisodesAdapter upcomingEpisodesAdapter) {
         this.context = context;
         this.resources = resources;
         this.layoutInflater = layoutInflater;
-        this.onShowClickListener = onShowClickListener;
-        this.toaster = toaster;
+        this.trackedShowsAdapter = trackedShowsAdapter;
+        this.upcomingEpisodesAdapter = upcomingEpisodesAdapter;
     }
 
-    public void update(ShowSummaries showSummaries) {
-        ensureTrackedShowsAdapterNotNull();
+    void update(ShowSummaries showSummaries) {
         trackedShowsAdapter.update(showSummaries);
         notifyDataSetChanged();
     }
 
-    private void ensureTrackedShowsAdapterNotNull() {
-        // SMELL: suggests there's something wrong with the flow
-        if (trackedShowsAdapter == null) {
-            trackedShowsAdapter = new TrackedShowsAdapter(onShowClickListener, toaster);
-            trackedShowsAdapter.setHasStableIds(true);
-        }
+    void update(EpisodesByDate episodesByDate) {
+        upcomingEpisodesAdapter.update(episodesByDate);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -57,6 +64,7 @@ class MyShowsPagerAdapter extends ViewPagerAdapter {
             case ALL:
                 return getAllTrackedShowsView(container);
             case UPCOMING:
+                return getUpcomingEpisodesView(container);
             case RECENT:
                 return getUnimplementedView(container, page);
             default:
@@ -71,9 +79,14 @@ class MyShowsPagerAdapter extends ViewPagerAdapter {
         int spacing = resources.getDimensionPixelSize(R.dimen.my_shows_item_spacing);
         view.setLayoutManager(new GridLayoutManager(context, spanCount));
         view.addItemDecoration(SpacesItemDecoration.newInstance(spacing, spacing, spanCount));
-
-        ensureTrackedShowsAdapterNotNull();
         view.setAdapter(trackedShowsAdapter);
+        return view;
+    }
+
+    private View getUpcomingEpisodesView(ViewGroup container) {
+        RecyclerView view = (RecyclerView) layoutInflater.inflate(Page.UPCOMING.getLayoutResId(), container, false);
+        view.setLayoutManager(new LinearLayoutManager(context));
+        view.setAdapter(upcomingEpisodesAdapter);
         return view;
     }
 

@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
+import com.ataulm.wutson.model.EpisodesByDate;
 import com.ataulm.wutson.model.ShowSummaries;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
@@ -34,7 +35,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         setContentView(R.layout.activity_my_shows);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.my_shows_pager);
-        pagerAdapter = new MyShowsPagerAdapter(this, getResources(), getLayoutInflater(), this, Jabber.toastDisplayer());
+        pagerAdapter = MyShowsPagerAdapter.newInstance(this, getResources(), getLayoutInflater(), this, Jabber.toastDisplayer());
         viewPager.setAdapter(pagerAdapter);
 
         LandingStrip tabStrip = (LandingStrip) findViewById(R.id.tab_strip);
@@ -44,7 +45,12 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         subscriptions.add(Jabber.dataRepository().getMyShows()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer()));
+                .subscribe(new TrackedShowsObserver()));
+
+        subscriptions.add(Jabber.dataRepository().getUpcomingEpisodes()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new UpcomingEpisodesObserver()));
     }
 
     private void hideTitleWhileWeCheckForTrackedShows() {
@@ -67,7 +73,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
     }
 
-    private class Observer extends LoggingObserver<ShowSummaries> {
+    private class TrackedShowsObserver extends LoggingObserver<ShowSummaries> {
 
         private boolean firstLoad = true;
 
@@ -101,6 +107,16 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         private boolean categoryLeanbackLauncherIsIn(Set<String> categories) {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && categories.contains(Intent.CATEGORY_LEANBACK_LAUNCHER);
+        }
+
+    }
+
+    private class UpcomingEpisodesObserver extends LoggingObserver<EpisodesByDate> {
+
+        @Override
+        public void onNext(EpisodesByDate episodesByDate) {
+            super.onNext(episodesByDate);
+            pagerAdapter.update(episodesByDate);
         }
 
     }
