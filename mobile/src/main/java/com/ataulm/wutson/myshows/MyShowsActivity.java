@@ -80,12 +80,11 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         @Override
         public void onNext(ShowSummaries showSummaries) {
             super.onNext(showSummaries);
-            firstLoad = false;
-
             if (nothingToSeeHere(showSummaries)) {
                 navigate().toDiscover();
-                finish();
             } else {
+                // TODO this is broken - open with no shows -> discover, backs into this activity (should close app)
+                firstLoad = false;
                 setTitle(R.string.my_shows_label);
                 pagerAdapter.update(showSummaries);
             }
