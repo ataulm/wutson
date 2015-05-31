@@ -28,7 +28,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
     private MyShowsPagerAdapter pagerAdapter;
     private TrackedShowsAdapter trackedShowsAdapter;
-    private UpcomingEpisodesAdapter upcomingEpisodesAdapter;
+    private EpisodesByDateAdapter episodesByDateAdapter;
 
     private CompositeSubscription subscriptions;
 
@@ -43,10 +43,10 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         trackedShowsAdapter = new TrackedShowsAdapter(this, Jabber.toastDisplayer());
         trackedShowsAdapter.setHasStableIds(true);
 
-        upcomingEpisodesAdapter = new UpcomingEpisodesAdapter();
-        upcomingEpisodesAdapter.setHasStableIds(true);
+        episodesByDateAdapter = new EpisodesByDateAdapter();
+        episodesByDateAdapter.setHasStableIds(true);
 
-        pagerAdapter = new MyShowsPagerAdapter(this, getResources(), getLayoutInflater(), trackedShowsAdapter, upcomingEpisodesAdapter);
+        pagerAdapter = new MyShowsPagerAdapter(this, getResources(), getLayoutInflater(), trackedShowsAdapter, episodesByDateAdapter);
         viewPager.setAdapter(pagerAdapter);
 
         LandingStrip tabStrip = (LandingStrip) findViewById(R.id.tab_strip);
@@ -136,7 +136,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         @Override
         public void onNext(EpisodesByDate episodesByDate) {
             super.onNext(episodesByDate);
-            upcomingEpisodesAdapter.update(episodesByDate);
+            episodesByDateAdapter.update(episodesByDate);
         }
 
     }

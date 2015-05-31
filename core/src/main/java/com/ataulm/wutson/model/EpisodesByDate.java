@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class EpisodesByDate {
 
@@ -13,6 +14,14 @@ public class EpisodesByDate {
 
     EpisodesByDate(Map<SimpleDate, Episodes> map) {
         this.map = map;
+    }
+
+    public Set<SimpleDate> getDates() {
+        return map.keySet();
+    }
+
+    public Episodes get(SimpleDate date) {
+        return map.get(date);
     }
 
     public static class Builder {

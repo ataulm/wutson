@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <ImageView
+    android:id="@+id/show_summary_image_poster"
+    style="@style/ShowSummary.Poster"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:contentDescription="@null" />
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@color/show_summary_title_background">
+
+    <TextView
+      android:id="@+id/show_summary_text_title"
+      style="@style/ShowSummary.Title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_toLeftOf="@+id/show_summary_button_overflow" />
+
+    <ImageView
+      android:id="@id/show_summary_button_overflow"
+      style="@style/ShowSummary.Overflow"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_marginTop="@dimen/my_shows_item_overflow_margin_top"
+      android:src="@drawable/ic_overflow"
+      android:visibility="gone" />
+
+  </RelativeLayout>
+</merge>

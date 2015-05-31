@@ -8,24 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.view.ShowSummaryView;
 
 final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
 
-    private final ToastDisplayer toaster;
-
-    static ShowSummaryViewHolder inflate(ViewGroup parent, ToastDisplayer toaster) {
+    static ShowSummaryViewHolder inflate(ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.view_tracked_shows_item, parent, false);
-        return new ShowSummaryViewHolder(view, toaster);
+        return new ShowSummaryViewHolder(view);
     }
 
-    private ShowSummaryViewHolder(View itemView, ToastDisplayer toaster) {
+    private ShowSummaryViewHolder(View itemView) {
         super(itemView);
-        this.toaster = toaster;
     }
 
     void bind(final ShowSummary show, final OnShowClickListener listener) {

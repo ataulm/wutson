@@ -26,7 +26,7 @@ class TrackedShowsAdapter extends RecyclerView.Adapter<ShowSummaryViewHolder> {
 
     @Override
     public ShowSummaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return ShowSummaryViewHolder.inflate(parent, toaster);
+        return ShowSummaryViewHolder.inflate(parent);
     }
 
     @Override

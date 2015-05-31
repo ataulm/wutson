@@ -16,10 +16,6 @@ import com.ataulm.rv.SpacesItemDecoration;
 import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.ToastDisplayer;
-import com.ataulm.wutson.discover.OnShowClickListener;
-import com.ataulm.wutson.model.EpisodesByDate;
-import com.ataulm.wutson.model.ShowSummaries;
 
 final class MyShowsPagerAdapter extends ViewPagerAdapter {
 
@@ -27,14 +23,14 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
     private final Resources resources;
     private final LayoutInflater layoutInflater;
     private final TrackedShowsAdapter trackedShowsAdapter;
-    private final UpcomingEpisodesAdapter upcomingEpisodesAdapter;
+    private final EpisodesByDateAdapter episodesByDateAdapter;
 
-    MyShowsPagerAdapter(Context context, Resources resources, LayoutInflater layoutInflater, TrackedShowsAdapter trackedShowsAdapter, UpcomingEpisodesAdapter upcomingEpisodesAdapter) {
+    MyShowsPagerAdapter(Context context, Resources resources, LayoutInflater layoutInflater, TrackedShowsAdapter trackedShowsAdapter, EpisodesByDateAdapter episodesByDateAdapter) {
         this.context = context;
         this.resources = resources;
         this.layoutInflater = layoutInflater;
         this.trackedShowsAdapter = trackedShowsAdapter;
-        this.upcomingEpisodesAdapter = upcomingEpisodesAdapter;
+        this.episodesByDateAdapter = episodesByDateAdapter;
     }
 
     @Override
@@ -44,8 +40,7 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
             case ALL:
                 return getAllTrackedShowsView(container);
             case UPCOMING:
-                // TODO: tidy up ALL view first
-//                return getUpcomingEpisodesView(container);
+                return getUpcomingEpisodesView(container);
             case RECENT:
                 return getUnimplementedView(container, page);
             default:
@@ -67,7 +62,7 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
     private View getUpcomingEpisodesView(ViewGroup container) {
         RecyclerView view = (RecyclerView) layoutInflater.inflate(Page.UPCOMING.getLayoutResId(), container, false);
         view.setLayoutManager(new LinearLayoutManager(context));
-        view.setAdapter(upcomingEpisodesAdapter);
+        view.setAdapter(episodesByDateAdapter);
         return view;
     }
 
@@ -110,7 +105,7 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
         }
 
         String getTitle(Resources resources) {
-            if (this == UPCOMING || this == RECENT) {
+            if (this == RECENT) {
                 return "not done";
             }
             return resources.getString(titleResId);
