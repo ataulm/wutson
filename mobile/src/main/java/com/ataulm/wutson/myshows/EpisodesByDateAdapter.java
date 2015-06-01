@@ -7,7 +7,6 @@ import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.model.EpisodesByDate;
 import com.ataulm.wutson.model.SimpleDate;
-import com.ataulm.wutson.view.UpcomingEpisodeView;
 
 import java.util.ArrayList;
 import java.util.List;
