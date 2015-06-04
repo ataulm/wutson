@@ -24,6 +24,18 @@ public class EpisodesByDate {
         return map.get(date);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (SimpleDate simpleDate : map.keySet()) {
+            builder.append(simpleDate + "\n");
+            for (Episode episode : map.get(simpleDate)) {
+                builder.append(episode.getShowName() + ": " + episode.getName() + "\n");
+            }
+        }
+        return builder.toString();
+    }
+
     public static class Builder {
 
         private final Map<SimpleDate, List<Episode>> map;

@@ -90,6 +90,25 @@ public class PersistentDataRepository {
         return contentResolver.delete(TRACKED_SHOWS.uri(), selection, selectionArgs);
     }
 
+    public String readJsonSeason(ShowId tmdbShowId, int seasonNumber) {
+        String[] projection = {SeasonColumn.JSON.columnName()};
+        String selection = SeasonColumn.TMDB_SHOW_ID.columnName() + "=? AND " + SeasonColumn.SEASON_NUMBER.columnName() + "=?";
+        String[] selectionArgs = {tmdbShowId.toString(), String.valueOf(seasonNumber)};
+        Cursor cursor = contentResolver.query(SEASONS.uri(), projection, selection, selectionArgs, null);
+
+        if (!cursor.moveToFirst()) {
+            return "";
+        }
+        String json = SeasonColumn.readJsonFrom(cursor);
+        cursor.close();
+        return json;
+    }
+
+    public void writeJsonSeason(ShowId tmdbShowId, int seasonNumber, String json) {
+        ContentValues contentValues = SeasonColumn.write(Timestamp.now().asLong(), tmdbShowId.toString(), seasonNumber, json);
+        contentResolver.insert(SEASONS.uri(), contentValues);
+    }
+
     public String readJsonShowDetails(ShowId tmdbShowId) {
         String[] projection = {ShowDetailsColumn.JSON.columnName()};
         String selection = ShowDetailsColumn.TMDB_SHOW_ID.columnName() + "=?";

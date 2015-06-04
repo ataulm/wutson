@@ -53,7 +53,7 @@ public final class Jabber {
             GenresRepository genresRepo = new GenresRepository(api, persistentDataRepo, gson);
             ShowsInGenreRepository showsInGenreRepo = new ShowsInGenreRepository(api, persistentDataRepo, configurationRepo, genresRepo, gson);
             ShowRepository showRepo = new ShowRepository(api, persistentDataRepo, configurationRepo, gson);
-            SeasonsRepository seasonsRepo = new SeasonsRepository(api, configurationRepo, showRepo);
+            SeasonsRepository seasonsRepo = new SeasonsRepository(api, persistentDataRepo, configurationRepo, showRepo, gson);
 
             instance.dataRepository = new WutsonDataRepository(trackedShowsRepo, showsInGenreRepo, showRepo, seasonsRepo);
         }
