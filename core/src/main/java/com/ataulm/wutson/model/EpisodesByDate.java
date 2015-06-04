@@ -3,10 +3,12 @@ package com.ataulm.wutson.model;
 import com.ataulm.wutson.DeveloperError;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class EpisodesByDate {
 
@@ -16,8 +18,21 @@ public class EpisodesByDate {
         this.map = map;
     }
 
-    public Set<SimpleDate> getDates() {
-        return map.keySet();
+    public List<SimpleDate> getDates() {
+        List<SimpleDate> keys = Arrays.asList(map.keySet().toArray(new SimpleDate[map.size()]));
+        Collections.sort(keys, new Comparator<SimpleDate>() {
+            @Override
+            public int compare(SimpleDate lhs, SimpleDate rhs) {
+                if (lhs.equals(rhs)) {
+                    return 0;
+                } else if (lhs.isBefore(rhs)) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            }
+        });
+        return keys;
     }
 
     public Episodes get(SimpleDate date) {
