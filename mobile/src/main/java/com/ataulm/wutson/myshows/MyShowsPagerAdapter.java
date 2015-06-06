@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.ataulm.rv.SpacesItemDecoration;
@@ -62,6 +63,7 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
     private View getUpcomingEpisodesView(ViewGroup container) {
         RecyclerView view = (RecyclerView) layoutInflater.inflate(Page.UPCOMING.getLayoutResId(), container, false);
         view.setLayoutManager(new LinearLayoutManager(context));
+        view.addItemDecoration(SpacesItemDecoration.newInstance(4, 4, 1));
         view.setAdapter(episodesByDateAdapter);
         return view;
     }

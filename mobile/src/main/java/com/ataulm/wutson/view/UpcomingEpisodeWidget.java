@@ -1,6 +1,7 @@
 package com.ataulm.wutson.view;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,13 +13,12 @@ import com.bumptech.glide.Glide;
 
 import java.net.URI;
 
-public class UpcomingEpisodeWidget extends LinearLayout {
+public class UpcomingEpisodeWidget extends CardView {
 
     private ImageView posterImageView;
     private TextView showNameTextView;
     private TextView episodeNumberTextView;
     private TextView airDateTextView;
-    private String imageUrl;
 
     public UpcomingEpisodeWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -27,7 +27,6 @@ public class UpcomingEpisodeWidget extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         View.inflate(getContext(), R.layout.merge_upcoming_episode, this);
-        setOrientation(HORIZONTAL);
 
         posterImageView = (ImageView) findViewById(R.id.upcoming_episode_image_poster);
         showNameTextView = (TextView) findViewById(R.id.upcoming_episode_text_show_name);
@@ -35,31 +34,14 @@ public class UpcomingEpisodeWidget extends LinearLayout {
         airDateTextView = (TextView) findViewById(R.id.upcoming_episode_text_air_date);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (posterImageView != null && imageUrl != null) {
-            loadImage();
-        }
-    }
-
-    private void loadImage() {
+    public void setPoster(URI uri) {
         posterImageView.setImageBitmap(null);
         Glide.with(getContext())
-                .load(imageUrl)
+                .load(uri.toString())
                 .crossFade()
-                .centerCrop()
                 .placeholder(R.drawable.ic_episode_placeholder)
                 .error(R.drawable.ic_episode_placeholder)
                 .into(posterImageView);
-    }
-
-    public void setPoster(URI uri) {
-        this.imageUrl = uri.toString();
-        if (getMeasuredWidth() != 0 && getMeasuredHeight() != 0) {
-            return;
-        }
-        loadImage();
     }
 
     public void setShowName(String showName) {
