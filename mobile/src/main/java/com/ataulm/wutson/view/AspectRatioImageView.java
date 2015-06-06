@@ -32,9 +32,8 @@ public class AspectRatioImageView extends CrossfadeImageView {
 
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int desiredHeight = (int) (width * ratio + 0.5f);
-        int desiredHeightSpec = MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY);
 
-        super.onMeasure(widthMeasureSpec, desiredHeightSpec);
+        setMeasuredDimension(width, desiredHeight);
     }
 
 }
