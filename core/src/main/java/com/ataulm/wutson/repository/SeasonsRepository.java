@@ -13,6 +13,7 @@ import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonSeason;
 import com.google.gson.Gson;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,7 +122,7 @@ public class SeasonsRepository {
                             gsonEpisode.episodeNumber,
                             gsonEpisode.name,
                             gsonEpisode.overview,
-                            configuration.completeStill(gsonEpisode.stillPath),
+                            gsonEpisode.stillPath == null ? URI.create("") :configuration.completeStill(gsonEpisode.stillPath),
                             seasonSummary.getShowName()));
                 }
 
