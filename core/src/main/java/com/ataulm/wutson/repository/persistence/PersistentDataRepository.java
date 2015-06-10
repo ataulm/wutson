@@ -24,6 +24,7 @@ public class PersistentDataRepository {
     public String readJsonConfiguration() {
         Cursor cursor = contentResolver.query(CONFIGURATION.uri(), null, null, null, null);
         if (!cursor.moveToFirst()) {
+            cursor.close();
             return "";
         }
         String json = ConfigurationColumn.readJsonFrom(cursor);
@@ -39,6 +40,7 @@ public class PersistentDataRepository {
     public String readJsonGenres() {
         Cursor cursor = contentResolver.query(GENRES.uri(), null, null, null, null);
         if (!cursor.moveToFirst()) {
+            cursor.close();
             return "";
         }
         String json = GenresColumn.readJsonFrom(cursor);
@@ -58,6 +60,7 @@ public class PersistentDataRepository {
         Cursor cursor = contentResolver.query(SHOW_SUMMARIES.uri(), projection, selection, selectionArgs, null);
 
         if (!cursor.moveToFirst()) {
+            cursor.close();
             return "";
         }
         String json = ShowSummariesColumn.readJsonFrom(cursor);
@@ -97,6 +100,7 @@ public class PersistentDataRepository {
         Cursor cursor = contentResolver.query(SEASONS.uri(), projection, selection, selectionArgs, null);
 
         if (!cursor.moveToFirst()) {
+            cursor.close();
             return "";
         }
         String json = SeasonColumn.readJsonFrom(cursor);
@@ -116,6 +120,7 @@ public class PersistentDataRepository {
         Cursor cursor = contentResolver.query(SHOW_DETAILS.uri(), projection, selection, selectionArgs, null);
 
         if (!cursor.moveToFirst()) {
+            cursor.close();
             return "";
         }
         String json = ShowDetailsColumn.readJsonFrom(cursor);
@@ -132,6 +137,7 @@ public class PersistentDataRepository {
         String[] projection = {TrackedShowsColumn.TMDB_SHOW_ID.columnName()};
         Cursor cursor = contentResolver.query(TRACKED_SHOWS.uri(), projection, null, null, null);
         if (!cursor.moveToFirst()) {
+            cursor.close();
             return Collections.emptyList();
         }
 
