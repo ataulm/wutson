@@ -2,17 +2,25 @@ package com.ataulm.wutson.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.text.Spannable;
+import android.text.Spanned;
+import android.text.method.TransformationMethod;
 import android.util.AttributeSet;
-import android.widget.CheckedTextView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.ataulm.wutson.R;
 
 import java.lang.ref.SoftReference;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-public class WutsonTextView extends CheckedTextView {
+public class WutsonTextView extends TextView {
 
     private final TypefaceFactory typefaceFactory;
 
@@ -31,6 +39,32 @@ public class WutsonTextView extends CheckedTextView {
         Typeface typeface = typefaceFactory.createFrom(context, attrs);
         int style = TypefaceFactory.extractStyle(context, attrs);
         setTypeface(typeface, style);
+        setAllCaps(extractTextAllCaps(context, attrs));
+    }
+
+    private static boolean extractTextAllCaps(Context context, AttributeSet attrs) {
+        int[] attrValues = {android.R.attr.textAllCaps};
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, attrValues);
+        try {
+            return typedArray.getBoolean(0, false);
+        } finally {
+            typedArray.recycle();
+        }
+    }
+
+    @Override
+    public final void setAllCaps(boolean allCaps) {
+        if (allCaps) {
+            setTransformationMethod(new SpanFriendlyAllCapsTransformationMethod(getContext()));
+        } else {
+            setTransformationMethod(null);
+        }
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        getPaint().setSubpixelText(true);
     }
 
     private static class TypefaceFactory {
@@ -125,6 +159,82 @@ public class WutsonTextView extends CheckedTextView {
 
         private void saveFontToCache(FontType fontType, Typeface typeface) {
             FONT_CACHE.put(fontType, new SoftReference<Typeface>(typeface));
+        }
+
+    }
+
+    private static class SpanFriendlyAllCapsTransformationMethod implements TransformationMethod {
+
+        private final Locale locale;
+
+        public SpanFriendlyAllCapsTransformationMethod(Context context) {
+            locale = context.getResources().getConfiguration().locale;
+        }
+
+        @Override
+        public CharSequence getTransformation(CharSequence source, View view) {
+            if (source == null || source.length() == 0) {
+                return source;
+            }
+            return toUpperCase(source);
+        }
+
+        private CharSequence toUpperCase(CharSequence source) {
+            String upperCase = source.toString().toUpperCase(locale);
+            if (isNotASpannedSource(source)) {
+                return upperCase;
+            }
+
+            List<SpanPosition> spanPositions = extractSpansFrom((Spanned) source);
+            return applySpansTo(upperCase, spanPositions);
+        }
+
+        @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+        // SpanPositions can't be predicted and not worth the optimisation of an object pool
+        private List<SpanPosition> extractSpansFrom(Spanned spannable) {
+            Object[] spans = spannable.getSpans(0, spannable.length(), Object.class);
+            List<SpanPosition> spanPositions = new ArrayList<>();
+            for (Object span : spans) {
+                int spanStart = spannable.getSpanStart(span);
+                int spanEnd = spannable.getSpanEnd(span);
+                int spanFlags = spannable.getSpanFlags(span);
+                spanPositions.add(new SpanPosition(span, spanStart, spanEnd, spanFlags));
+            }
+            return spanPositions;
+        }
+
+        private Spannable applySpansTo(String upperCase, List<SpanPosition> spanPositions) {
+            Spannable spannedUpperCase = Spannable.Factory.getInstance().newSpannable(upperCase);
+            for (SpanPosition spanPosition : spanPositions) {
+                spannedUpperCase.setSpan(spanPosition.span, spanPosition.start, spanPosition.end, spanPosition.flags);
+            }
+            return spannedUpperCase;
+        }
+
+        private boolean isNotASpannedSource(CharSequence source) {
+            return !(source instanceof Spanned);
+        }
+
+        @Override
+        public void onFocusChanged(View view, CharSequence sourceText, boolean focused, int direction, Rect previouslyFocusedRect) {
+            // No op
+        }
+
+        @SuppressWarnings("checkstyle:visibilitymodifier") // We follow closer to Google code style for this one.
+        private static final class SpanPosition {
+
+            public final Object span;
+            public final int start;
+            public final int end;
+            public final int flags;
+
+            SpanPosition(Object span, int start, int end, int flags) {
+                this.span = span;
+                this.start = start;
+                this.end = end;
+                this.flags = flags;
+            }
+
         }
 
     }
