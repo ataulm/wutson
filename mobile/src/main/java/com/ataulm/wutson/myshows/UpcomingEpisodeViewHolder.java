@@ -8,7 +8,7 @@ import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.view.UpcomingEpisodeWidget;
 
-class UpcomingEpisodeViewHolder extends EpisodesByDateItemViewHolder {
+class UpcomingEpisodeViewHolder extends WatchlistItemViewHolder {
 
     static UpcomingEpisodeViewHolder inflate(ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());

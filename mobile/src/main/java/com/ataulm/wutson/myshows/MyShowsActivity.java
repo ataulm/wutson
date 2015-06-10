@@ -4,12 +4,12 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
-import com.ataulm.wutson.model.EpisodesByDate;
 import com.ataulm.wutson.model.ShowSummaries;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.model.TrackedStatus;
@@ -26,9 +26,8 @@ import rx.subscriptions.CompositeSubscription;
 
 public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowClickListener {
 
-    private MyShowsPagerAdapter pagerAdapter;
     private TrackedShowsAdapter trackedShowsAdapter;
-    private EpisodesByDateAdapter episodesByDateAdapter;
+    private WatchlistAdapter watchlistAdapter;
 
     private CompositeSubscription subscriptions;
 
@@ -43,10 +42,10 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         trackedShowsAdapter = new TrackedShowsAdapter(this, Jabber.toastDisplayer());
         trackedShowsAdapter.setHasStableIds(true);
 
-        episodesByDateAdapter = new EpisodesByDateAdapter();
-        episodesByDateAdapter.setHasStableIds(true);
+        watchlistAdapter = new WatchlistAdapter();
+        watchlistAdapter.setHasStableIds(true);
 
-        pagerAdapter = new MyShowsPagerAdapter(this, getResources(), getLayoutInflater(), trackedShowsAdapter, episodesByDateAdapter);
+        PagerAdapter pagerAdapter = new MyShowsPagerAdapter(this, getResources(), getLayoutInflater(), trackedShowsAdapter, watchlistAdapter);
         viewPager.setAdapter(pagerAdapter);
 
         LandingStrip tabStrip = (LandingStrip) findViewById(R.id.tab_strip);
@@ -57,10 +56,10 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe(new TrackedShowsObserver()),
-                Jabber.dataRepository().getUpcomingEpisodes()
+                Jabber.dataRepository().getWatchlist()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
-                        .subscribe(new UpcomingEpisodesObserver())
+                        .subscribe(new WatchlistObserver())
         );
     }
 
@@ -131,12 +130,12 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
     }
 
-    private class UpcomingEpisodesObserver extends LoggingObserver<EpisodesByDate> {
+    private class WatchlistObserver extends LoggingObserver<Watchlist> {
 
         @Override
-        public void onNext(EpisodesByDate episodesByDate) {
-            super.onNext(episodesByDate);
-            episodesByDateAdapter.update(episodesByDate);
+        public void onNext(Watchlist episodes) {
+            super.onNext(episodes);
+            watchlistAdapter.update(episodes);
         }
 
     }

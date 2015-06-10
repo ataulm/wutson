@@ -10,8 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Space;
-import android.widget.TextView;
 
 import com.ataulm.rv.SpacesItemDecoration;
 import com.ataulm.vpa.ViewPagerAdapter;
@@ -24,14 +22,14 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
     private final Resources resources;
     private final LayoutInflater layoutInflater;
     private final TrackedShowsAdapter trackedShowsAdapter;
-    private final EpisodesByDateAdapter episodesByDateAdapter;
+    private final WatchlistAdapter watchlistAdapter;
 
-    MyShowsPagerAdapter(Context context, Resources resources, LayoutInflater layoutInflater, TrackedShowsAdapter trackedShowsAdapter, EpisodesByDateAdapter episodesByDateAdapter) {
+    MyShowsPagerAdapter(Context context, Resources resources, LayoutInflater layoutInflater, TrackedShowsAdapter trackedShowsAdapter, WatchlistAdapter watchlistAdapter) {
         this.context = context;
         this.resources = resources;
         this.layoutInflater = layoutInflater;
         this.trackedShowsAdapter = trackedShowsAdapter;
-        this.episodesByDateAdapter = episodesByDateAdapter;
+        this.watchlistAdapter = watchlistAdapter;
     }
 
     @Override
@@ -40,10 +38,8 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
         switch (page) {
             case ALL:
                 return getAllTrackedShowsView(container);
-            case UPCOMING:
-                return getUpcomingEpisodesView(container);
-            case RECENT:
-                return getUnimplementedView(container, page);
+            case WATCHLIST:
+                return getWatchlistView(container);
             default:
                 throw DeveloperError.because("max " + Page.values().length + " page(s). Got request for page at position: " + position);
         }
@@ -60,18 +56,12 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
         return view;
     }
 
-    private View getUpcomingEpisodesView(ViewGroup container) {
-        RecyclerView view = (RecyclerView) layoutInflater.inflate(Page.UPCOMING.getLayoutResId(), container, false);
+    private View getWatchlistView(ViewGroup container) {
+        RecyclerView view = (RecyclerView) layoutInflater.inflate(Page.WATCHLIST.getLayoutResId(), container, false);
         view.setLayoutManager(new LinearLayoutManager(context));
         view.addItemDecoration(SpacesItemDecoration.newInstance(4, 4, 1));
-        view.setAdapter(episodesByDateAdapter);
+        view.setAdapter(watchlistAdapter);
         return view;
-    }
-
-    private View getUnimplementedView(ViewGroup container, Page page) {
-        TextView pageView = (TextView) layoutInflater.inflate(R.layout.view_my_shows_page_unimplemented, container, false);
-        pageView.setText(page.getTitle(resources));
-        return pageView;
     }
 
     @Override
@@ -87,8 +77,7 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
     private enum Page {
 
         ALL(R.layout.view_my_shows_page_all, R.string.my_shows_page_all),
-        UPCOMING(R.layout.view_my_shows_page_upcoming, R.string.my_shows_page_upcoming),
-        RECENT(R.layout.view_my_shows_page_unimplemented, R.string.my_shows_page_recent);
+        WATCHLIST(R.layout.view_my_shows_page_watchlist, R.string.my_shows_page_watchlist);
 
         @LayoutRes
         private final int layoutResId;
@@ -107,9 +96,6 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
         }
 
         String getTitle(Resources resources) {
-            if (this == RECENT) {
-                return "not done";
-            }
             return resources.getString(titleResId);
         }
 

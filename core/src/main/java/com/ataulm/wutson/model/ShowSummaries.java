@@ -1,9 +1,10 @@
 package com.ataulm.wutson.model;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class ShowSummaries {
+public class ShowSummaries implements Iterable<ShowSummary> {
 
     private final List<ShowSummary> showSummaries;
 
@@ -26,6 +27,11 @@ public class ShowSummaries {
             }
         }
         return false;
+    }
+
+    @Override
+    public Iterator<ShowSummary> iterator() {
+        return showSummaries.iterator();
     }
 
 }

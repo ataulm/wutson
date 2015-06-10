@@ -3,7 +3,6 @@ package com.ataulm.wutson;
 import com.ataulm.wutson.model.Actor;
 import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.model.Episodes;
-import com.ataulm.wutson.model.EpisodesByDate;
 import com.ataulm.wutson.model.Season;
 import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.model.Show;
@@ -12,6 +11,7 @@ import com.ataulm.wutson.model.ShowSummaries;
 import com.ataulm.wutson.model.ShowsInGenre;
 import com.ataulm.wutson.model.TrackedStatus;
 import com.ataulm.wutson.model.WatchedStatus;
+import com.ataulm.wutson.myshows.Watchlist;
 
 import java.util.List;
 
@@ -21,9 +21,7 @@ public interface DataRepository {
 
     Observable<ShowSummaries> getMyShows();
 
-    Observable<EpisodesByDate> getUpcomingEpisodes();
-
-    Observable<EpisodesByDate> getRecentEpisodes();
+    Observable<Watchlist> getWatchlist();
 
     Observable<List<ShowsInGenre>> getDiscoverShows();
 

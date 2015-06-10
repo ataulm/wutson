@@ -59,4 +59,21 @@ public final class SimpleDate {
         return (date.after(other.date));
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        SimpleDate that = (SimpleDate) o;
+        return date.equals(that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return date != null ? date.hashCode() : 0;
+    }
+
 }

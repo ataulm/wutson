@@ -4,25 +4,25 @@ import com.ataulm.wutson.DataRepository;
 import com.ataulm.wutson.model.Actor;
 import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.model.Episodes;
-import com.ataulm.wutson.model.EpisodesByDate;
 import com.ataulm.wutson.model.Season;
 import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.model.Show;
 import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.model.ShowSummaries;
+import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.model.ShowsInGenre;
-import com.ataulm.wutson.model.SimpleDate;
 import com.ataulm.wutson.model.TrackedStatus;
 import com.ataulm.wutson.model.WatchedStatus;
+import com.ataulm.wutson.myshows.Watchlist;
+import com.ataulm.wutson.myshows.WatchlistItem;
 import com.ataulm.wutson.rx.Function;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
 import rx.functions.Func1;
-
-import static com.ataulm.wutson.model.SimpleDate.today;
+import rx.observables.GroupedObservable;
 
 public class WutsonDataRepository implements DataRepository {
 
@@ -74,69 +74,73 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public Observable<EpisodesByDate> getUpcomingEpisodes() {
-        return trackedShowsRepo.getTrackedShowIds()
-                .flatMap(getAllEpisodes())
-                .filter(onlyEpisodesAiringAfter(today()))
+    public Observable<Watchlist> getWatchlist() {
+        return getMyShows().take(1)
+                .flatMap(Function.<ShowSummary>emitEachElement())
+                .flatMap(getListOfSeasonsForThatShow())
+                .flatMap(Function.<Season>emitEachElement())
+                .flatMap(Function.<Episode>emitEachElement())
+                .filter(onlyUnwatchedEpisodes())
+                .groupBy(showName())
+                .flatMap(asEpisodeListCappedAt(5))
                 .toList()
-                .map(new Func1<List<Episode>, List<Episode>>() {
-                    @Override
-                    public List<Episode> call(List<Episode> episodes) {
-                        Collections.sort(episodes, new EpisodeDateComparator());
-                        return episodes;
-                    }
-                })
-                .map(splitIntoEpisodesByDay());
+                .map(asWatchlist());
     }
 
-    private Func1<List<ShowId>, Observable<Episode>> getAllEpisodes() {
-        return new Func1<List<ShowId>, Observable<Episode>>() {
+    private Func1<ShowSummary, Observable<Seasons>> getListOfSeasonsForThatShow() {
+        return new Func1<ShowSummary, Observable<Seasons>>() {
             @Override
-            public Observable<Episode> call(List<ShowId> showIds) {
-                return Observable.from(showIds)
-                        .flatMap(getSeasons())
-                        .flatMap(Function.<Season>emitEachElement())
-                        .flatMap(Function.<Episode>emitEachElement());
+            public Observable<Seasons> call(ShowSummary showSummary) {
+                return getSeasons(showSummary.getId());
             }
         };
     }
 
-    private static Func1<List<Episode>, EpisodesByDate> splitIntoEpisodesByDay() {
-        return new Func1<List<Episode>, EpisodesByDate>() {
-
-            @Override
-            public EpisodesByDate call(List<Episode> episodes) {
-                EpisodesByDate.Builder builder = new EpisodesByDate.Builder();
-                for (Episode episode : episodes) {
-                    builder.add(episode);
-                }
-                return builder.build();
-            }
-
-        };
-    }
-
-    private static Func1<Episode, Boolean> onlyEpisodesAiringAfter(final SimpleDate today) {
+    private static Func1<Episode, Boolean> onlyUnwatchedEpisodes() {
         return new Func1<Episode, Boolean>() {
             @Override
             public Boolean call(Episode episode) {
-                return episode.getAirDate().isAfter(today);
+                // TODO: if the episode has been marked as watched, return false!
+                return true;
             }
         };
     }
 
-    private Func1<ShowId, Observable<Seasons>> getSeasons() {
-        return new Func1<ShowId, Observable<Seasons>>() {
+    private static Func1<Episode, String> showName() {
+        return new Func1<Episode, String>() {
             @Override
-            public Observable<Seasons> call(ShowId showId) {
-                return getSeasons(showId);
+            public String call(Episode episode) {
+                return episode.getShowName();
             }
         };
     }
 
-    @Override
-    public Observable<EpisodesByDate> getRecentEpisodes() {
-        return Observable.empty();
+    private static Func1<GroupedObservable<String, Episode>, Observable<List<Episode>>> asEpisodeListCappedAt(final int maxEpisodes) {
+        return new Func1<GroupedObservable<String, Episode>, Observable<List<Episode>>>() {
+            @Override
+            public Observable<List<Episode>> call(GroupedObservable<String, Episode> episodesFromSingleShow) {
+                return episodesFromSingleShow.take(maxEpisodes).toList();
+            }
+        };
+    }
+
+    private static Func1<List<List<Episode>>, Watchlist> asWatchlist() {
+        return new Func1<List<List<Episode>>, Watchlist>() {
+
+            @Override
+            public Watchlist call(List<List<Episode>> lists) {
+                List<WatchlistItem> watchlistItems = new ArrayList<>();
+                for (List<Episode> list : lists) {
+                    String showName = list.get(0).getShowName();
+                    watchlistItems.add(WatchlistItem.from(showName));
+                    for (Episode episode : list) {
+                        watchlistItems.add(WatchlistItem.from(episode));
+                    }
+                }
+                return new Watchlist(watchlistItems);
+            }
+
+        };
     }
 
     @Override

@@ -14,8 +14,7 @@
   <string name="discover">Discover</string>
   <string name="my_shows">My Shows</string>
   <string name="all">All</string>
-  <string name="upcoming">Upcoming</string>
-  <string name="recent">Recent</string>
+  <string name="watchlist">Watchlist</string>
   <string name="specials">Specials</string>
   <string name="season_x_format">Season %1$d</string>
   <string name="x_episodes_format">%1$d episodes</string>
