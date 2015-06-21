@@ -34,7 +34,7 @@ public class AspectRatioFrameLayout extends FrameLayout {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int desiredHeight = (int) (width * ratio + 0.5f);
 
-        setMeasuredDimension(width, desiredHeight);
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY));
     }
 
 }
