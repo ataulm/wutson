@@ -22,7 +22,7 @@ import rx.schedulers.Schedulers;
 
 import static com.ataulm.wutson.Jabber.dataRepository;
 
-public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowClickListener, ShowsInGenreAdapter.ShowSummaryViewHolder.Listener {
+public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowClickListener, OnClickShowSummaryListener {
 
     private Subscription discoverShowsSubscription;
     private ViewPager viewPager;

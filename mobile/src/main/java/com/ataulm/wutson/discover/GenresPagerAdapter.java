@@ -16,13 +16,13 @@ import java.util.List;
 class GenresPagerAdapter extends ViewPagerAdapter {
 
     private final LayoutInflater layoutInflater;
-    private final ShowsInGenreAdapter.ShowSummaryViewHolder.Listener listener;
+    private final OnClickShowSummaryListener onClickShowSummaryListener;
 
     private List<ShowsInGenre> showsInGenres;
 
-    GenresPagerAdapter(LayoutInflater layoutInflater, ShowsInGenreAdapter.ShowSummaryViewHolder.Listener listener) {
+    GenresPagerAdapter(LayoutInflater layoutInflater, OnClickShowSummaryListener onClickShowSummaryListener) {
         this.layoutInflater = layoutInflater;
-        this.listener = listener;
+        this.onClickShowSummaryListener = onClickShowSummaryListener;
         this.showsInGenres = Collections.emptyList();
     }
 
@@ -48,7 +48,7 @@ class GenresPagerAdapter extends ViewPagerAdapter {
     }
 
     private void bind(RecyclerView view, ShowsInGenre showsInGenre) {
-        ShowsInGenreAdapter adapter = new ShowsInGenreAdapter(layoutInflater, listener);
+        ShowsInGenreAdapter adapter = new ShowsInGenreAdapter(layoutInflater, onClickShowSummaryListener);
         adapter.setHasStableIds(true);
         adapter.update(showsInGenre);
         view.setAdapter(adapter);

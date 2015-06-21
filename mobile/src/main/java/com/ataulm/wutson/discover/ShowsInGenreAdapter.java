@@ -8,19 +8,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.model.ShowsInGenre;
 import com.bumptech.glide.Glide;
 
 public class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowSummaryViewHolder> {
 
-    private final ShowSummaryViewHolder.Listener listener;
+    private final OnClickShowSummaryListener onClickShowSummaryListener;
     private final LayoutInflater layoutInflater;
     private ShowsInGenre showsInGenre;
 
-    ShowsInGenreAdapter(LayoutInflater layoutInflater, ShowSummaryViewHolder.Listener listener) {
-        this.listener = listener;
+    ShowsInGenreAdapter(LayoutInflater layoutInflater, OnClickShowSummaryListener onClickShowSummaryListener) {
+        this.onClickShowSummaryListener = onClickShowSummaryListener;
         this.layoutInflater = layoutInflater;
     }
 
@@ -31,7 +30,7 @@ public class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapte
 
     @Override
     public ShowSummaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return ShowSummaryViewHolder.inflate(layoutInflater, parent, listener);
+        return ShowSummaryViewHolder.inflate(layoutInflater, parent, onClickShowSummaryListener);
     }
 
     @Override
@@ -50,30 +49,30 @@ public class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapte
         return showsInGenre.size();
     }
 
-    public static final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
+    static final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
 
         private final View itemView;
         private final ImageView posterImageView;
         private final TextView showNameTextView;
         private final View trackToggleView;
 
-        private final Listener listener;
+        private final OnClickShowSummaryListener onClickShowSummaryListener;
 
-        static ShowSummaryViewHolder inflate(LayoutInflater layoutInflater, ViewGroup parent, Listener listener) {
+        static ShowSummaryViewHolder inflate(LayoutInflater layoutInflater, ViewGroup parent, OnClickShowSummaryListener onClickShowSummaryListener) {
             View itemView = layoutInflater.inflate(R.layout.view_discover_shows_in_genre_item, parent, false);
             ImageView posterImageView = (ImageView) itemView.findViewById(R.id.discover_shows_in_genre_item_image_poster);
             TextView showNameTextView = (TextView) itemView.findViewById(R.id.discover_shows_in_genre_item_text_show_name);
             View trackToggleView = itemView.findViewById(R.id.discover_shows_in_genre_item_view_track_toggle);
-            return new ShowSummaryViewHolder(itemView, posterImageView, showNameTextView, trackToggleView, listener);
+            return new ShowSummaryViewHolder(itemView, posterImageView, showNameTextView, trackToggleView, onClickShowSummaryListener);
         }
 
-        private ShowSummaryViewHolder(View itemView, ImageView posterImageView, TextView showNameTextView, View trackToggleView, Listener listener) {
+        private ShowSummaryViewHolder(View itemView, ImageView posterImageView, TextView showNameTextView, View trackToggleView, OnClickShowSummaryListener onClickShowSummaryListener) {
             super(itemView);
             this.itemView = itemView;
             this.posterImageView = posterImageView;
             this.showNameTextView = showNameTextView;
             this.trackToggleView = trackToggleView;
-            this.listener = listener;
+            this.onClickShowSummaryListener = onClickShowSummaryListener;
         }
 
         void update(final ShowSummary showSummary) {
@@ -87,7 +86,7 @@ public class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapte
 
                 @Override
                 public void onClick(View v) {
-                    listener.onClickToggleTrackedStatus(showSummary.getId());
+                    onClickShowSummaryListener.onClickToggleTrackedStatus(showSummary.getId());
                 }
 
             });
@@ -95,18 +94,10 @@ public class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapte
 
                 @Override
                 public void onClick(View v) {
-                    listener.onClick(showSummary);
+                    onClickShowSummaryListener.onClick(showSummary);
                 }
 
             });
-        }
-
-        public interface Listener {
-
-            void onClick(ShowSummary showSummary);
-
-            void onClickToggleTrackedStatus(ShowId showId);
-
         }
 
     }
