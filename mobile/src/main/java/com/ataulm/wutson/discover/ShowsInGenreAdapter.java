@@ -77,12 +77,12 @@ public class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapte
         }
 
         void update(final ShowSummary showSummary) {
-//            posterImageView.setImageBitmap(null);
-//            Glide.with(posterImageView.getContext())
-//                    .load(showSummary.getPosterUri().toString())
-//                    .into(posterImageView);
+            posterImageView.setImageBitmap(null);
+            Glide.with(posterImageView.getContext())
+                    .load(showSummary.getPosterUri().toString())
+                    .into(posterImageView);
 
-//            showNameTextView.setText(showSummary.getName());
+            showNameTextView.setText(showSummary.getName());
             trackToggleView.setOnClickListener(new View.OnClickListener() {
 
                 @Override

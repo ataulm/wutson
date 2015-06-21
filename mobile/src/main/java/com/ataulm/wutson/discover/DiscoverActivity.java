@@ -20,6 +20,8 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.ataulm.wutson.Jabber.dataRepository;
+
 public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowClickListener, ShowsInGenreAdapter.ShowSummaryViewHolder.Listener {
 
     private Subscription discoverShowsSubscription;
@@ -87,7 +89,8 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
 
     @Override
     public void onClickToggleTrackedStatus(ShowId showId) {
-
+        dataRepository().toggleTrackedStatus(showId);
+        // TODO: ensure changes like this kick off an onNext to cause the UI to update
     }
 
     private class Observer extends LoggingObserver<List<ShowsInGenre>> {
