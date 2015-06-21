@@ -18,6 +18,10 @@
     <attr name="aspectRatio" />
   </declare-styleable>
 
+  <declare-styleable name="AspectRatioFrameLayout">
+    <attr name="aspectRatio" />
+  </declare-styleable>
+
   <attr name="aspectRatio" format="string" />
 
 </resources>
