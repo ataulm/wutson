@@ -4,19 +4,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.model.ShowsInGenre;
-import com.ataulm.wutson.view.ShowSummaryView;
+import com.bumptech.glide.Glide;
 
-class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowSummaryViewHolder> {
+public class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowSummaryViewHolder> {
 
-    private final OnShowClickListener listener;
+    private final ShowSummaryViewHolder.Listener listener;
     private final LayoutInflater layoutInflater;
     private ShowsInGenre showsInGenre;
 
-    ShowsInGenreAdapter(LayoutInflater layoutInflater, OnShowClickListener listener) {
+    ShowsInGenreAdapter(LayoutInflater layoutInflater, ShowSummaryViewHolder.Listener listener) {
         this.listener = listener;
         this.layoutInflater = layoutInflater;
     }
@@ -47,25 +50,47 @@ class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowS
         return showsInGenre.size();
     }
 
-    static final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
+    public static final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
 
-        private final ShowSummaryView itemView;
-        private final OnShowClickListener listener;
+        private final View itemView;
+        private final ImageView posterImageView;
+        private final TextView showNameTextView;
+        private final View trackToggleView;
 
-        static ShowSummaryViewHolder inflate(LayoutInflater layoutInflater, ViewGroup parent, OnShowClickListener listener) {
-            ShowSummaryView itemView = (ShowSummaryView) layoutInflater.inflate(R.layout.view_discover_shows_in_genre_item, parent, false);
-            return new ShowSummaryViewHolder(itemView, listener);
+        private final Listener listener;
+
+        static ShowSummaryViewHolder inflate(LayoutInflater layoutInflater, ViewGroup parent, Listener listener) {
+            View itemView = layoutInflater.inflate(R.layout.view_discover_shows_in_genre_item, parent, false);
+            ImageView posterImageView = (ImageView) itemView.findViewById(R.id.discover_shows_in_genre_item_image_poster);
+            TextView showNameTextView = (TextView) itemView.findViewById(R.id.discover_shows_in_genre_item_text_show_name);
+            View trackToggleView = itemView.findViewById(R.id.discover_shows_in_genre_item_view_track_toggle);
+            return new ShowSummaryViewHolder(itemView, posterImageView, showNameTextView, trackToggleView, listener);
         }
 
-        private ShowSummaryViewHolder(ShowSummaryView itemView, OnShowClickListener listener) {
+        private ShowSummaryViewHolder(View itemView, ImageView posterImageView, TextView showNameTextView, View trackToggleView, Listener listener) {
             super(itemView);
             this.itemView = itemView;
+            this.posterImageView = posterImageView;
+            this.showNameTextView = showNameTextView;
+            this.trackToggleView = trackToggleView;
             this.listener = listener;
         }
 
         void update(final ShowSummary showSummary) {
-            itemView.setPoster(showSummary.getPosterUri());
-            itemView.setTitle(showSummary.getName());
+//            posterImageView.setImageBitmap(null);
+//            Glide.with(posterImageView.getContext())
+//                    .load(showSummary.getPosterUri().toString())
+//                    .into(posterImageView);
+
+//            showNameTextView.setText(showSummary.getName());
+            trackToggleView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    listener.onClickToggleTrackedStatus(showSummary.getId());
+                }
+
+            });
             itemView.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -74,6 +99,14 @@ class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowS
                 }
 
             });
+        }
+
+        public interface Listener {
+
+            void onClick(ShowSummary showSummary);
+
+            void onClickToggleTrackedStatus(ShowId showId);
+
         }
 
     }

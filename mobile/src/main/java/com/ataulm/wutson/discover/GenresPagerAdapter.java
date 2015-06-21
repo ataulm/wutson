@@ -16,11 +16,11 @@ import java.util.List;
 class GenresPagerAdapter extends ViewPagerAdapter {
 
     private final LayoutInflater layoutInflater;
-    private final OnShowClickListener listener;
+    private final ShowsInGenreAdapter.ShowSummaryViewHolder.Listener listener;
 
     private List<ShowsInGenre> showsInGenres;
 
-    GenresPagerAdapter(LayoutInflater layoutInflater, OnShowClickListener listener) {
+    GenresPagerAdapter(LayoutInflater layoutInflater, ShowsInGenreAdapter.ShowSummaryViewHolder.Listener listener) {
         this.layoutInflater = layoutInflater;
         this.listener = listener;
         this.showsInGenres = Collections.emptyList();

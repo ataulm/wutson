@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.model.ShowsInGenre;
 import com.ataulm.wutson.model.TrackedStatus;
@@ -19,7 +20,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowClickListener {
+public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowClickListener, ShowsInGenreAdapter.ShowSummaryViewHolder.Listener {
 
     private Subscription discoverShowsSubscription;
     private ViewPager viewPager;
@@ -82,6 +83,11 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
     @Override
     public void onClickTrack(ShowSummary showSummary) {
         Jabber.dataRepository().setTrackedStatus(showSummary.getId(), TrackedStatus.TRACKED);
+    }
+
+    @Override
+    public void onClickToggleTrackedStatus(ShowId showId) {
+
     }
 
     private class Observer extends LoggingObserver<List<ShowsInGenre>> {
