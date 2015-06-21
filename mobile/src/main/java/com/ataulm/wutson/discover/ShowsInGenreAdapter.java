@@ -28,8 +28,7 @@ class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowS
 
     @Override
     public ShowSummaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ShowSummaryView view = (ShowSummaryView) layoutInflater.inflate(R.layout.view_discover_shows_in_genre_item, parent, false);
-        return new ShowSummaryViewHolder(view, listener);
+        return ShowSummaryViewHolder.inflate(layoutInflater, parent, listener);
     }
 
     @Override
@@ -48,21 +47,26 @@ class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowS
         return showsInGenre.size();
     }
 
-    static class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
+    static final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
 
-        private final ShowSummaryView showSummaryView;
+        private final ShowSummaryView itemView;
         private final OnShowClickListener listener;
 
-        ShowSummaryViewHolder(ShowSummaryView itemView, OnShowClickListener listener) {
+        static ShowSummaryViewHolder inflate(LayoutInflater layoutInflater, ViewGroup parent, OnShowClickListener listener) {
+            ShowSummaryView itemView = (ShowSummaryView) layoutInflater.inflate(R.layout.view_discover_shows_in_genre_item, parent, false);
+            return new ShowSummaryViewHolder(itemView, listener);
+        }
+
+        private ShowSummaryViewHolder(ShowSummaryView itemView, OnShowClickListener listener) {
             super(itemView);
-            this.showSummaryView = itemView;
+            this.itemView = itemView;
             this.listener = listener;
         }
 
         void update(final ShowSummary showSummary) {
-            showSummaryView.setPoster(showSummary.getPosterUri());
-            showSummaryView.setTitle(showSummary.getName());
-            showSummaryView.setOnClickListener(new View.OnClickListener() {
+            itemView.setPoster(showSummary.getPosterUri());
+            itemView.setTitle(showSummary.getName());
+            itemView.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
