@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.Episode;
+import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.navigation.WutsonActivity;
@@ -84,7 +84,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
 
     @Override
     public void onClick(Episode episode) {
-        navigate().toEpisodeDetails(showId, episode.getSeasonNumber(), episode.getEpisodeNumber());
+        navigate().toEpisodeDetails(showId, episode.getEpisodeNumber());
     }
 
     private class Observer extends LoggingObserver<Seasons> {

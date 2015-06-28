@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.DeveloperError;
-import com.ataulm.wutson.model.Episode;
+import com.ataulm.wutson.episodes.Episode;
 
 class WatchlistAdapter extends RecyclerView.Adapter<WatchlistItemViewHolder> {
 

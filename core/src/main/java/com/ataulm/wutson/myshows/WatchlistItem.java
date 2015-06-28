@@ -1,6 +1,6 @@
 package com.ataulm.wutson.myshows;
 
-import com.ataulm.wutson.model.Episode;
+import com.ataulm.wutson.episodes.Episode;
 
 public final class WatchlistItem<T> {
 

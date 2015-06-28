@@ -1,10 +1,12 @@
 package com.ataulm.wutson.model;
 
+import com.ataulm.wutson.episodes.Episode;
+
 import java.net.URI;
 import java.util.Iterator;
 import java.util.List;
 
-public class Season implements Iterable<Episode>, Comparable<Season> {
+public class Season implements Iterable<com.ataulm.wutson.episodes.Episode>, Comparable<Season> {
 
     private final SimpleDate airDate;
     private final int seasonNumber;

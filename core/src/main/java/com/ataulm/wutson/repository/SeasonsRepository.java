@@ -1,11 +1,12 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.model.Episode;
+import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.model.Season;
 import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.model.Show;
 import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.model.SimpleDate;
+import com.ataulm.wutson.episodes.EpisodeNumber;
 import com.ataulm.wutson.repository.persistence.LocalDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.Configuration;
@@ -118,8 +119,7 @@ public class SeasonsRepository {
                 for (GsonSeason.Episodes.Episode gsonEpisode : gsonSeason.episodes) {
                     episodes.add(new Episode(
                             SimpleDate.from(gsonEpisode.airDate),
-                            gsonSeason.seasonNumber,
-                            gsonEpisode.episodeNumber,
+                            new EpisodeNumber(gsonSeason.seasonNumber, gsonEpisode.episodeNumber),
                             gsonEpisode.name,
                             gsonEpisode.overview,
                             gsonEpisode.stillPath == null ? URI.create("") :configuration.completeStill(gsonEpisode.stillPath),

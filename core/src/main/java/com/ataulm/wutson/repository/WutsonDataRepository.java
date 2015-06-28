@@ -2,8 +2,8 @@ package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.DataRepository;
 import com.ataulm.wutson.model.Actor;
-import com.ataulm.wutson.model.Episode;
-import com.ataulm.wutson.model.Episodes;
+import com.ataulm.wutson.episodes.Episode;
+import com.ataulm.wutson.episodes.Episodes;
 import com.ataulm.wutson.model.Season;
 import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.model.Show;

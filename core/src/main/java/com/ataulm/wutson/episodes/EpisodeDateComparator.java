@@ -1,10 +1,8 @@
-package com.ataulm.wutson.repository;
-
-import com.ataulm.wutson.model.Episode;
+package com.ataulm.wutson.episodes;
 
 import java.util.Comparator;
 
-class EpisodeDateComparator implements Comparator<Episode> {
+public class EpisodeDateComparator implements Comparator<Episode> {
 
     @Override
     public int compare(Episode lhs, Episode rhs) {

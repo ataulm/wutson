@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.Episode;
+import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.view.UpcomingEpisodeWidget;
 
 class UpcomingEpisodeViewHolder extends WatchlistItemViewHolder {
@@ -22,7 +22,7 @@ class UpcomingEpisodeViewHolder extends WatchlistItemViewHolder {
 
     void bind(Episode episode) {
         ((UpcomingEpisodeWidget) itemView).setShowName(episode.getShowName());
-        ((UpcomingEpisodeWidget) itemView).setEpisodeNumber("Season " + episode.getSeasonNumber() + " Episode " + episode.getEpisodeNumber());
+        ((UpcomingEpisodeWidget) itemView).setEpisodeNumber(episode.getEpisodeNumber().toString());
         ((UpcomingEpisodeWidget) itemView).setAirDate(episode.getAirDate().toString());
         ((UpcomingEpisodeWidget) itemView).setPoster(episode.getStillPath());
     }

@@ -19,7 +19,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class EpisodeDetailsActivity extends WutsonActivity {
+public class EpisodesActivity extends WutsonActivity {
 
     private static final String KEY_RESET_PAGE_POSITION = BuildConfig.APPLICATION_ID + ".KEY_RESET_PAGE_POSITION";
     private static final int URI_PATH_SEGMENT_SHOW_ID_INDEX = 1;
@@ -39,7 +39,7 @@ public class EpisodeDetailsActivity extends WutsonActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_episode_details);
+        setContentView(R.layout.activity_episodes);
 
         Uri data = getIntent().getData();
         showId = new ShowId(data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID_INDEX));
