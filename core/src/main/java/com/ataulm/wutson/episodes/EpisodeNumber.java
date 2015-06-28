@@ -12,7 +12,7 @@ public class EpisodeNumber {
 
     @Override
     public String toString() {
-        return "S" + seasonNumber + "E" + episodeNumber;
+        return "S" + String.format("%02d", seasonNumber) + "E" + String.format("%02d", episodeNumber);
     }
 
     public int getSeason() {
@@ -22,4 +22,5 @@ public class EpisodeNumber {
     public int getEpisode() {
         return episodeNumber;
     }
+
 }
