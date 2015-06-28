@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.model.ShowsInGenre;
+import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.shows.discover.ShowsInGenre;
 import com.bumptech.glide.Glide;
 
 public class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapter.ShowSummaryViewHolder> {

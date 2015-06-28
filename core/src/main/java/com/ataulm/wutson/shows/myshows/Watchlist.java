@@ -1,4 +1,4 @@
-package com.ataulm.wutson.myshows;
+package com.ataulm.wutson.shows.myshows;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ public class Watchlist {
         this.items = items;
     }
 
-    WatchlistItem get(int position) {
+    public WatchlistItem get(int position) {
         return items.get(position);
     }
 
-    int size() {
+    public int size() {
         return items.size();
     }
 

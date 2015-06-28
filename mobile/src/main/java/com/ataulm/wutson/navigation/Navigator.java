@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.ataulm.wutson.discover.DiscoverActivity;
-import com.ataulm.wutson.model.ShowId;
+import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.episodes.EpisodeNumber;
 import com.ataulm.wutson.myshows.MyShowsActivity;
 import com.ataulm.wutson.settings.SettingsActivity;

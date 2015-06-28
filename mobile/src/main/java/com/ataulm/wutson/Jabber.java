@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.ataulm.wutson.repository.ConfigurationRepository;
+import com.ataulm.wutson.repository.DataRepository;
 import com.ataulm.wutson.repository.GenresRepository;
 import com.ataulm.wutson.repository.SeasonsRepository;
 import com.ataulm.wutson.repository.ShowRepository;

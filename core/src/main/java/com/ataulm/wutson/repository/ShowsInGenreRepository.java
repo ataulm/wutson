@@ -1,11 +1,11 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.model.ShowId;
+import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.repository.persistence.LocalDataRepository;
 import com.ataulm.wutson.tmdb.Configuration;
-import com.ataulm.wutson.model.Genre;
-import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.model.ShowsInGenre;
+import com.ataulm.wutson.shows.Genre;
+import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.shows.discover.ShowsInGenre;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonDiscoverTv;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;

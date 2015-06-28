@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.discover.OnShowClickListener;
-import com.ataulm.wutson.model.ShowSummaries;
+import com.ataulm.wutson.shows.ShowSummaries;
 
 class TrackedShowsAdapter extends RecyclerView.Adapter<ShowSummaryViewHolder> {
 

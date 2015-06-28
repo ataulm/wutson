@@ -11,7 +11,7 @@ import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.episodes.Episode;
-import com.ataulm.wutson.model.ShowId;
+import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 import com.novoda.landingstrip.LandingStrip;

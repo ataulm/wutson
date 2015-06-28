@@ -1,6 +1,6 @@
 package com.ataulm.wutson.episodes;
 
-import com.ataulm.wutson.model.SimpleDate;
+import com.ataulm.wutson.shows.SimpleDate;
 
 import java.net.URI;
 

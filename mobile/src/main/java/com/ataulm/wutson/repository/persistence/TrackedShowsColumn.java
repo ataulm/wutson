@@ -3,7 +3,7 @@ package com.ataulm.wutson.repository.persistence;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.ataulm.wutson.model.ShowId;
+import com.ataulm.wutson.shows.ShowId;
 
 import java.util.Locale;
 

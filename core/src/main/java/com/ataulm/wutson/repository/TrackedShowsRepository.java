@@ -1,9 +1,9 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.model.ShowId;
-import com.ataulm.wutson.model.ShowSummaries;
-import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.model.TrackedStatus;
+import com.ataulm.wutson.shows.ShowId;
+import com.ataulm.wutson.shows.ShowSummaries;
+import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.shows.TrackedStatus;
 import com.ataulm.wutson.repository.persistence.LocalDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.Configuration;

@@ -1,4 +1,7 @@
-package com.ataulm.wutson.model;
+package com.ataulm.wutson.shows.discover;
+
+import com.ataulm.wutson.shows.Genre;
+import com.ataulm.wutson.shows.ShowSummary;
 
 import java.util.Iterator;
 import java.util.List;

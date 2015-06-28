@@ -1,6 +1,6 @@
 package com.ataulm.wutson.discover;
 
-import com.ataulm.wutson.model.ShowSummary;
+import com.ataulm.wutson.shows.ShowSummary;
 
 public interface OnShowClickListener {
 

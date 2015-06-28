@@ -1,20 +1,19 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.DataRepository;
-import com.ataulm.wutson.model.Actor;
+import com.ataulm.wutson.shows.Actor;
 import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.episodes.Episodes;
 import com.ataulm.wutson.seasons.Season;
 import com.ataulm.wutson.seasons.Seasons;
-import com.ataulm.wutson.model.Show;
-import com.ataulm.wutson.model.ShowId;
-import com.ataulm.wutson.model.ShowSummaries;
-import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.model.ShowsInGenre;
-import com.ataulm.wutson.model.TrackedStatus;
-import com.ataulm.wutson.model.WatchedStatus;
-import com.ataulm.wutson.myshows.Watchlist;
-import com.ataulm.wutson.myshows.WatchlistItem;
+import com.ataulm.wutson.shows.Show;
+import com.ataulm.wutson.shows.ShowId;
+import com.ataulm.wutson.shows.ShowSummaries;
+import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.shows.TrackedStatus;
+import com.ataulm.wutson.shows.WatchedStatus;
+import com.ataulm.wutson.shows.discover.ShowsInGenre;
+import com.ataulm.wutson.shows.myshows.Watchlist;
+import com.ataulm.wutson.shows.myshows.WatchlistItem;
 import com.ataulm.wutson.rx.Function;
 
 import java.util.ArrayList;

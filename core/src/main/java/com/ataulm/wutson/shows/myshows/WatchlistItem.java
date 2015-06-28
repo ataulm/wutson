@@ -1,4 +1,4 @@
-package com.ataulm.wutson.myshows;
+package com.ataulm.wutson.shows.myshows;
 
 import com.ataulm.wutson.episodes.Episode;
 
@@ -20,15 +20,15 @@ public final class WatchlistItem<T> {
         this.item = item;
     }
 
-    boolean isShow() {
+    public boolean isShow() {
         return type == Type.SHOW;
     }
 
-    boolean isEpisode() {
+    public boolean isEpisode() {
         return type == Type.EPISODE;
     }
 
-    T getItem() {
+    public T getItem() {
         return item;
     }
 

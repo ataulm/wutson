@@ -5,10 +5,11 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.episodes.Episode;
+import com.ataulm.wutson.shows.myshows.Watchlist;
 
 class WatchlistAdapter extends RecyclerView.Adapter<WatchlistItemViewHolder> {
 
-    private Watchlist watchlist;
+    private com.ataulm.wutson.shows.myshows.Watchlist watchlist;
 
     @Override
     public WatchlistItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,7 +42,7 @@ class WatchlistAdapter extends RecyclerView.Adapter<WatchlistItemViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        WatchlistItem item = watchlist.get(position);
+        com.ataulm.wutson.shows.myshows.WatchlistItem item = watchlist.get(position);
         return item.isShow() ? ViewType.SHOW_NAME.ordinal() : ViewType.EPISODE.ordinal();
     }
 

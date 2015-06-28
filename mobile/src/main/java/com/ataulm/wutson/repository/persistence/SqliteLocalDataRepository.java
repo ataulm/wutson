@@ -4,7 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.ataulm.wutson.model.ShowId;
+import com.ataulm.wutson.shows.ShowId;
 
 import java.util.ArrayList;
 import java.util.Collections;

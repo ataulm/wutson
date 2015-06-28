@@ -1,23 +1,21 @@
 package com.ataulm.wutson.seasons;
 
-import com.ataulm.wutson.model.*;
-
 import java.util.Iterator;
 import java.util.List;
 
 public class Seasons implements Iterable<Season> {
 
-    private final ShowId showId;
+    private final com.ataulm.wutson.shows.ShowId showId;
     private final String showName;
     private final List<Season> seasons;
 
-    public Seasons(ShowId showId, String showName, List<Season> seasons) {
+    public Seasons(com.ataulm.wutson.shows.ShowId showId, String showName, List<Season> seasons) {
         this.showId = showId;
         this.showName = showName;
         this.seasons = seasons;
     }
 
-    public ShowId getShowId() {
+    public com.ataulm.wutson.shows.ShowId getShowId() {
         return showId;
     }
 

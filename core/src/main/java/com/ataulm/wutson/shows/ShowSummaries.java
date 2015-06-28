@@ -1,4 +1,4 @@
-package com.ataulm.wutson.model;
+package com.ataulm.wutson.shows;
 
 import java.util.Collections;
 import java.util.Iterator;

@@ -10,9 +10,9 @@ import android.support.v4.view.ViewPager;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
-import com.ataulm.wutson.model.ShowSummaries;
-import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.model.TrackedStatus;
+import com.ataulm.wutson.shows.ShowSummaries;
+import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.shows.TrackedStatus;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
@@ -134,14 +134,14 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
     }
 
-    private class WatchlistObserver extends LoggingObserver<Watchlist> {
+    private class WatchlistObserver extends LoggingObserver<com.ataulm.wutson.shows.myshows.Watchlist> {
 
         private WatchlistObserver() {
             super(Jabber.log());
         }
 
         @Override
-        public void onNext(Watchlist episodes) {
+        public void onNext(com.ataulm.wutson.shows.myshows.Watchlist episodes) {
             super.onNext(episodes);
             watchlistAdapter.update(episodes);
         }

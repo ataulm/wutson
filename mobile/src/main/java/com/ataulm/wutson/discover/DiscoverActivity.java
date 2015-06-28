@@ -5,10 +5,10 @@ import android.support.v4.view.ViewPager;
 
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.ShowId;
-import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.model.ShowsInGenre;
-import com.ataulm.wutson.model.TrackedStatus;
+import com.ataulm.wutson.shows.ShowId;
+import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.shows.discover.ShowsInGenre;
+import com.ataulm.wutson.shows.TrackedStatus;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;

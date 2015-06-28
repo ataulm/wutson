@@ -1,7 +1,7 @@
 package com.ataulm.wutson.seasons;
 
 import com.ataulm.wutson.episodes.Episode;
-import com.ataulm.wutson.model.SimpleDate;
+import com.ataulm.wutson.shows.SimpleDate;
 
 import java.net.URI;
 import java.util.Iterator;

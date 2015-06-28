@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.Show;
+import com.ataulm.wutson.shows.Show;
 
 import java.net.URI;
 import java.util.Collections;

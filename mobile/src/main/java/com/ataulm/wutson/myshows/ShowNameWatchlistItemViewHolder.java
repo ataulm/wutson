@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.ShowSummary;
 
 class ShowNameWatchlistItemViewHolder extends WatchlistItemViewHolder {
 

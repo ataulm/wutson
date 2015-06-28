@@ -1,6 +1,6 @@
 package com.ataulm.wutson.repository.persistence;
 
-import com.ataulm.wutson.model.ShowId;
+import com.ataulm.wutson.shows.ShowId;
 
 import java.util.List;
 
