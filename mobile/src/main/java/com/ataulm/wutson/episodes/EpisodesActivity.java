@@ -13,7 +13,7 @@ import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
-import com.ataulm.wutson.model.Season;
+import com.ataulm.wutson.seasons.Season;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

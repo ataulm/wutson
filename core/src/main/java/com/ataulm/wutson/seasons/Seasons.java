@@ -1,16 +1,28 @@
-package com.ataulm.wutson.model;
+package com.ataulm.wutson.seasons;
+
+import com.ataulm.wutson.model.*;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class Seasons implements Iterable<Season> {
 
-    private final Show show;
+    private final ShowId showId;
+    private final String showName;
     private final List<Season> seasons;
 
-    public Seasons(Show show, List<Season> seasons) {
-        this.show = show;
+    public Seasons(ShowId showId, String showName, List<Season> seasons) {
+        this.showId = showId;
+        this.showName = showName;
         this.seasons = seasons;
+    }
+
+    public ShowId getShowId() {
+        return showId;
+    }
+
+    public String getShowName() {
+        return showName;
     }
 
     @Override
@@ -24,13 +36,5 @@ public class Seasons implements Iterable<Season> {
 
     public int size() {
         return seasons.size();
-    }
-
-    public ShowId getShowId() {
-        return show.getId();
-    }
-
-    public String getShowName() {
-        return show.getName();
     }
 }

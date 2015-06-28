@@ -1,8 +1,8 @@
 package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.episodes.Episode;
-import com.ataulm.wutson.model.Season;
-import com.ataulm.wutson.model.Seasons;
+import com.ataulm.wutson.seasons.Season;
+import com.ataulm.wutson.seasons.Seasons;
 import com.ataulm.wutson.model.Show;
 import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.model.SimpleDate;
@@ -141,7 +141,7 @@ public class SeasonsRepository {
 
             @Override
             public Seasons call(Show show, List<Season> seasons) {
-                return new Seasons(show, seasons);
+                return new Seasons(show.getId(), show.getName(), seasons);
             }
 
         };
