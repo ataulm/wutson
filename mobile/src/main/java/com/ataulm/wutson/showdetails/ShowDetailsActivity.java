@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ataulm.wutson.BuildConfig;
+import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.model.Show;
 import com.ataulm.wutson.model.ShowId;
@@ -128,6 +129,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         private final MenuItem item;
 
         TrackingShowObserver(MenuItem item) {
+            super(Jabber.log());
             this.item = item;
         }
 
@@ -154,6 +156,10 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     }
 
     private class ShowObserver extends LoggingObserver<Show> {
+
+        private ShowObserver() {
+            super(Jabber.log());
+        }
 
         @Override
         public void onNext(Show show) {

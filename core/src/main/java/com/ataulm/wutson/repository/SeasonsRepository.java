@@ -6,7 +6,7 @@ import com.ataulm.wutson.model.Seasons;
 import com.ataulm.wutson.model.Show;
 import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.model.SimpleDate;
-import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
+import com.ataulm.wutson.repository.persistence.LocalDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.tmdb.TmdbApi;
@@ -30,14 +30,14 @@ import static com.ataulm.wutson.rx.Function.jsonTo;
 public class SeasonsRepository {
 
     private final TmdbApi api;
-    private final PersistentDataRepository persistentDataRepository;
+    private final LocalDataRepository localDataRepository;
     private final ConfigurationRepository configurationRepository;
     private final ShowRepository showRepository;
     private final Gson gson;
 
-    public SeasonsRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, ConfigurationRepository configurationRepository, ShowRepository showRepository, Gson gson) {
+    public SeasonsRepository(TmdbApi api, LocalDataRepository localDataRepository, ConfigurationRepository configurationRepository, ShowRepository showRepository, Gson gson) {
         this.api = api;
-        this.persistentDataRepository = persistentDataRepository;
+        this.localDataRepository = localDataRepository;
         this.configurationRepository = configurationRepository;
         this.showRepository = showRepository;
         this.gson = gson;
@@ -48,7 +48,7 @@ public class SeasonsRepository {
 
         Observable<Season> seasonObservable = showObservable
                 .flatMap(extractSeasonSummaries())
-                .flatMap(fetchCompleteSeasonFrom(persistentDataRepository, api, configurationRepository, gson));
+                .flatMap(fetchCompleteSeasonFrom(localDataRepository, api, configurationRepository, gson));
 
         return Observable.combineLatest(showObservable, seasonObservable.toSortedList(), asSeasons());
     }
@@ -65,7 +65,7 @@ public class SeasonsRepository {
         };
     }
 
-    private static Observable<String> fetchJsonSeasonFrom(final PersistentDataRepository repository, final ShowId showId, final int seasonNumber) {
+    private static Observable<String> fetchJsonSeasonFrom(final LocalDataRepository repository, final ShowId showId, final int seasonNumber) {
         return Observable.create(new Observable.OnSubscribe<String>() {
 
             @Override
@@ -77,29 +77,29 @@ public class SeasonsRepository {
         });
     }
 
-    private static Action1<GsonSeason> saveTo(final PersistentDataRepository persistentDataRepository, final Gson gson, final ShowId tmdbShowId, final int seasonNumber) {
+    private static Action1<GsonSeason> saveTo(final LocalDataRepository localDataRepository, final Gson gson, final ShowId tmdbShowId, final int seasonNumber) {
         return new Action1<GsonSeason>() {
 
             @Override
             public void call(GsonSeason gsonSeason) {
                 String json = gson.toJson(gsonSeason, GsonSeason.class);
-                persistentDataRepository.writeJsonSeason(tmdbShowId, seasonNumber, json);
+                localDataRepository.writeJsonSeason(tmdbShowId, seasonNumber, json);
             }
 
         };
     }
 
-    private static Func1<Show.SeasonSummary, Observable<Season>> fetchCompleteSeasonFrom(final PersistentDataRepository persistentDataRepository, final TmdbApi api, final ConfigurationRepository configurationRepository, final Gson gson) {
+    private static Func1<Show.SeasonSummary, Observable<Season>> fetchCompleteSeasonFrom(final LocalDataRepository localDataRepository, final TmdbApi api, final ConfigurationRepository configurationRepository, final Gson gson) {
         return new Func1<Show.SeasonSummary, Observable<Season>>() {
             @Override
             public Observable<Season> call(Show.SeasonSummary seasonSummary) {
                 ShowId showId = seasonSummary.getShowId();
                 int seasonNumber = seasonSummary.getSeasonNumber();
 
-                Observable<GsonSeason> season = fetchJsonSeasonFrom(persistentDataRepository, showId, seasonNumber)
+                Observable<GsonSeason> season = fetchJsonSeasonFrom(localDataRepository, showId, seasonNumber)
                         .filter(ignoreEmptyStrings())
                         .map(jsonTo(GsonSeason.class, gson))
-                        .switchIfEmpty(api.getSeason(showId.toString(), seasonNumber).doOnNext(saveTo(persistentDataRepository, gson, showId, seasonNumber)));
+                        .switchIfEmpty(api.getSeason(showId.toString(), seasonNumber).doOnNext(saveTo(localDataRepository, gson, showId, seasonNumber)));
 
                 return Observable.zip(
                         configurationRepository.getConfiguration().first(),

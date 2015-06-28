@@ -95,6 +95,10 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
 
     private class Observer extends LoggingObserver<List<ShowsInGenre>> {
 
+        private Observer() {
+            super(Jabber.log());
+        }
+
         @Override
         public void onNext(List<ShowsInGenre> showsSeparateByGenre) {
             super.onNext(showsSeparateByGenre);

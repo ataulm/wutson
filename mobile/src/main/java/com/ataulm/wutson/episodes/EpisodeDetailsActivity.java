@@ -83,6 +83,10 @@ public class EpisodeDetailsActivity extends WutsonActivity {
 
     private class Observer extends LoggingObserver<Season> {
 
+        private Observer() {
+            super(Jabber.log());
+        }
+
         @Override
         public void onNext(Season season) {
             adapter.update(season);

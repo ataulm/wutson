@@ -12,6 +12,9 @@ def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword 
 dependencies {
     compile project(":core")
 
+    compile 'io.reactivex:rxandroid:0.24.0'
+    compile 'com.novoda:sqlite-provider:1.0.5'
+
     compile 'com.android.support:recyclerview-v7:22.2.0'
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:support-v4:22.2.0'

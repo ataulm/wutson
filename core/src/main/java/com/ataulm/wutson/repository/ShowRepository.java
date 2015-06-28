@@ -1,11 +1,11 @@
 package com.ataulm.wutson.repository;
 
+import com.ataulm.wutson.repository.persistence.LocalDataRepository;
 import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.model.*;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonCredits;
 import com.ataulm.wutson.tmdb.gson.GsonTvShow;
-import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.google.gson.Gson;
 
 import java.lang.*;
@@ -24,40 +24,40 @@ import static com.ataulm.wutson.rx.Function.jsonTo;
 public class ShowRepository {
 
     private final TmdbApi api;
-    private final PersistentDataRepository persistentDataRepository;
+    private final LocalDataRepository localDataRepository;
     private final ConfigurationRepository configurationRepository;
     private final Gson gson;
 
-    public ShowRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, ConfigurationRepository configurationRepository, Gson gson) {
+    public ShowRepository(TmdbApi api, LocalDataRepository localDataRepository, ConfigurationRepository configurationRepository, Gson gson) {
         this.api = api;
-        this.persistentDataRepository = persistentDataRepository;
+        this.localDataRepository = localDataRepository;
         this.configurationRepository = configurationRepository;
         this.gson = gson;
     }
 
     public Observable<Show> getShowDetails(ShowId showId) {
         Observable<Configuration> configurationObservable = configurationRepository.getConfiguration();
-        Observable<GsonTvShow> gsonTvShowObservable = fetchJsonTvShowFrom(persistentDataRepository, showId)
+        Observable<GsonTvShow> gsonTvShowObservable = fetchJsonTvShowFrom(localDataRepository, showId)
                 .filter(ignoreEmptyStrings())
                 .map(jsonTo(GsonTvShow.class, gson))
-                .switchIfEmpty(api.getTvShow(showId.toString()).doOnNext(saveTo(persistentDataRepository, gson, showId)));
+                .switchIfEmpty(api.getTvShow(showId.toString()).doOnNext(saveTo(localDataRepository, gson, showId)));
 
         return Observable.zip(configurationObservable, gsonTvShowObservable, asShow(showId));
     }
 
-    private static Action1<GsonTvShow> saveTo(final PersistentDataRepository persistentDataRepository, final Gson gson, final ShowId tmdbShowId) {
+    private static Action1<GsonTvShow> saveTo(final LocalDataRepository localDataRepository, final Gson gson, final ShowId tmdbShowId) {
         return new Action1<GsonTvShow>() {
 
             @Override
             public void call(GsonTvShow gsonTvShow) {
                 String json = gson.toJson(gsonTvShow, GsonTvShow.class);
-                persistentDataRepository.writeJsonShowDetails(tmdbShowId, json);
+                localDataRepository.writeJsonShowDetails(tmdbShowId, json);
             }
 
         };
     }
 
-    private static Observable<String> fetchJsonTvShowFrom(final PersistentDataRepository repository, final ShowId showId) {
+    private static Observable<String> fetchJsonTvShowFrom(final LocalDataRepository repository, final ShowId showId) {
         return Observable.create(new Observable.OnSubscribe<String>() {
 
             @Override

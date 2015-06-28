@@ -97,6 +97,10 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
         private boolean firstLoad = true;
 
+        private TrackedShowsObserver() {
+            super(Jabber.log());
+        }
+
         @Override
         public void onNext(ShowSummaries showSummaries) {
             super.onNext(showSummaries);
@@ -131,6 +135,10 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
     }
 
     private class WatchlistObserver extends LoggingObserver<Watchlist> {
+
+        private WatchlistObserver() {
+            super(Jabber.log());
+        }
 
         @Override
         public void onNext(Watchlist episodes) {

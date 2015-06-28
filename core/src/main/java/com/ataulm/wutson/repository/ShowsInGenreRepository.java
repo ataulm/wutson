@@ -1,6 +1,7 @@
 package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.model.ShowId;
+import com.ataulm.wutson.repository.persistence.LocalDataRepository;
 import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.model.Genre;
 import com.ataulm.wutson.model.ShowSummary;
@@ -8,7 +9,6 @@ import com.ataulm.wutson.model.ShowsInGenre;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonDiscoverTv;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
-import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.google.gson.Gson;
 
@@ -30,16 +30,16 @@ import static com.ataulm.wutson.rx.Function.jsonTo;
 public class ShowsInGenreRepository {
 
     private final TmdbApi api;
-    private final PersistentDataRepository persistentDataRepository;
+    private final LocalDataRepository localDataRepository;
     private final ConfigurationRepository configurationRepository;
     private final GenresRepository genresRepository;
     private final Gson gson;
 
     private final BehaviorSubject<List<ShowsInGenre>> subject;
 
-    public ShowsInGenreRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, ConfigurationRepository configurationRepository, GenresRepository genresRepository, Gson gson) {
+    public ShowsInGenreRepository(TmdbApi api, LocalDataRepository localDataRepository, ConfigurationRepository configurationRepository, GenresRepository genresRepository, Gson gson) {
         this.api = api;
-        this.persistentDataRepository = persistentDataRepository;
+        this.localDataRepository = localDataRepository;
         this.configurationRepository = configurationRepository;
         this.genresRepository = genresRepository;
         this.gson = gson;
@@ -70,23 +70,23 @@ public class ShowsInGenreRepository {
 
             @Override
             public Observable<GsonGenreAndGsonDiscoverTvShows> call(GsonGenres.Genre genre) {
-                return fetchJsonShowSummariesFrom(persistentDataRepository, genre.id)
+                return fetchJsonShowSummariesFrom(localDataRepository, genre.id)
                         .filter(ignoreEmptyStrings())
                         .map(jsonTo(GsonDiscoverTv.class, gson))
-                        .switchIfEmpty(api.getShowsMatchingGenre(genre.id).doOnNext(saveTo(persistentDataRepository, gson, genre.id)))
+                        .switchIfEmpty(api.getShowsMatchingGenre(genre.id).doOnNext(saveTo(localDataRepository, gson, genre.id)))
                         .map(asGsonGenreAndGsonDiscoverTvShows(genre));
             }
 
         };
     }
 
-    private static Action1<? super GsonDiscoverTv> saveTo(final PersistentDataRepository persistentDataRepository, final Gson gson, final String tmdbGenreId) {
+    private static Action1<? super GsonDiscoverTv> saveTo(final LocalDataRepository localDataRepository, final Gson gson, final String tmdbGenreId) {
         return new Action1<GsonDiscoverTv>() {
 
             @Override
             public void call(GsonDiscoverTv gsonDiscoverTv) {
                 String json = gson.toJson(gsonDiscoverTv, GsonDiscoverTv.class);
-                persistentDataRepository.writeJsonShowSummary(tmdbGenreId, json);
+                localDataRepository.writeJsonShowSummary(tmdbGenreId, json);
             }
 
         };
@@ -103,7 +103,7 @@ public class ShowsInGenreRepository {
         };
     }
 
-    private static Observable<String> fetchJsonShowSummariesFrom(final PersistentDataRepository repository, final String tmdbGenreId) {
+    private static Observable<String> fetchJsonShowSummariesFrom(final LocalDataRepository repository, final String tmdbGenreId) {
         return Observable.create(new Observable.OnSubscribe<String>() {
 
             @Override

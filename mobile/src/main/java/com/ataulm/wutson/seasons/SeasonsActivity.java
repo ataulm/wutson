@@ -89,6 +89,10 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
 
     private class Observer extends LoggingObserver<Seasons> {
 
+        private Observer() {
+            super(Jabber.log());
+        }
+
         @Override
         public void onNext(Seasons seasons) {
             SeasonsPagerAdapter adapter = new SeasonsPagerAdapter(seasons, SeasonsActivity.this, getLayoutInflater(), getResources());

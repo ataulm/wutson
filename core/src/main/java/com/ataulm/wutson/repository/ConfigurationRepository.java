@@ -1,7 +1,7 @@
 package com.ataulm.wutson.repository;
 
+import com.ataulm.wutson.repository.persistence.LocalDataRepository;
 import com.ataulm.wutson.tmdb.Configuration;
-import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
@@ -20,14 +20,14 @@ import static com.ataulm.wutson.rx.Function.jsonTo;
 public class ConfigurationRepository {
 
     private final TmdbApi api;
-    private final PersistentDataRepository persistentDataRepository;
+    private final LocalDataRepository localDataRepository;
     private final Gson gson;
 
     private final BehaviorSubject<Configuration> subject;
 
-    public ConfigurationRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson) {
+    public ConfigurationRepository(TmdbApi api, LocalDataRepository localDataRepository, Gson gson) {
         this.api = api;
-        this.persistentDataRepository = persistentDataRepository;
+        this.localDataRepository = localDataRepository;
         this.gson = gson;
 
         this.subject = BehaviorSubject.create();
@@ -41,10 +41,10 @@ public class ConfigurationRepository {
     }
 
     private void refreshConfiguration() {
-        fetchJsonConfigurationFrom(persistentDataRepository)
+        fetchJsonConfigurationFrom(localDataRepository)
                 .filter(ignoreEmptyStrings())
                 .map(jsonTo(GsonConfiguration.class, gson))
-                .switchIfEmpty(api.getConfiguration().doOnNext(saveTo(persistentDataRepository, gson)))
+                .switchIfEmpty(api.getConfiguration().doOnNext(saveTo(localDataRepository, gson)))
                 .map(asTmdbConfiguration())
                 .lift(Function.<Configuration>swallowOnCompleteEvents())
                 .subscribeOn(Schedulers.io())
@@ -68,7 +68,7 @@ public class ConfigurationRepository {
         };
     }
 
-    private static Observable<String> fetchJsonConfigurationFrom(final PersistentDataRepository repository) {
+    private static Observable<String> fetchJsonConfigurationFrom(final LocalDataRepository repository) {
         return Observable.create(new Observable.OnSubscribe<String>() {
 
             @Override
@@ -80,13 +80,13 @@ public class ConfigurationRepository {
         });
     }
 
-    private static Action1<GsonConfiguration> saveTo(final PersistentDataRepository persistentDataRepository, final Gson gson) {
+    private static Action1<GsonConfiguration> saveTo(final LocalDataRepository localDataRepository, final Gson gson) {
         return new Action1<GsonConfiguration>() {
 
             @Override
             public void call(GsonConfiguration gsonConfiguration) {
                 String json = gson.toJson(gsonConfiguration, GsonConfiguration.class);
-                persistentDataRepository.writeJsonConfiguration(json);
+                localDataRepository.writeJsonConfiguration(json);
             }
 
         };

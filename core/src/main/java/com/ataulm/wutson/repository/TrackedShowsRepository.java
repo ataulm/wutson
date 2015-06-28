@@ -4,7 +4,7 @@ import com.ataulm.wutson.model.ShowId;
 import com.ataulm.wutson.model.ShowSummaries;
 import com.ataulm.wutson.model.ShowSummary;
 import com.ataulm.wutson.model.TrackedStatus;
-import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
+import com.ataulm.wutson.repository.persistence.LocalDataRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.tmdb.gson.GsonTvShow;
@@ -24,14 +24,14 @@ import static com.ataulm.wutson.rx.Function.jsonTo;
 
 public final class TrackedShowsRepository {
 
-    private final PersistentDataRepository persistentDataRepository;
+    private final LocalDataRepository localDataRepository;
     private final ConfigurationRepository configurationRepo;
     private final Gson gson;
 
     private final BehaviorSubject<ShowSummaries> subject;
 
-    public TrackedShowsRepository(PersistentDataRepository persistentDataRepository, ConfigurationRepository configurationRepo, Gson gson) {
-        this.persistentDataRepository = persistentDataRepository;
+    public TrackedShowsRepository(LocalDataRepository localDataRepository, ConfigurationRepository configurationRepo, Gson gson) {
+        this.localDataRepository = localDataRepository;
         this.configurationRepo = configurationRepo;
         this.gson = gson;
 
@@ -49,7 +49,7 @@ public final class TrackedShowsRepository {
         Observable<Configuration> repeatingConfigurationObservable = configurationRepo.getConfiguration().first().repeat();
         Observable<GsonTvShow> gsonTvShowsObservable = getTrackedShowIds()
                 .flatMap(Function.<ShowId>emitEachElement())
-                .flatMap(fetchShowDetailsJsonFrom(persistentDataRepository))
+                .flatMap(fetchShowDetailsJsonFrom(localDataRepository))
                 .filter(ignoreEmptyStrings())
                 .map(jsonTo(GsonTvShow.class, gson));
 
@@ -62,7 +62,7 @@ public final class TrackedShowsRepository {
     }
 
     public Observable<List<ShowId>> getTrackedShowIds() {
-        return fetchListOfMyShowIdsFrom(persistentDataRepository);
+        return fetchListOfMyShowIdsFrom(localDataRepository);
     }
 
     public void toggleTrackedStatus(final ShowId showId) {
@@ -70,7 +70,7 @@ public final class TrackedShowsRepository {
 
             @Override
             public void call(Subscriber<? super Void> subscriber) {
-                boolean currentlyTracked = persistentDataRepository.isShowTracked(showId);
+                boolean currentlyTracked = localDataRepository.isShowTracked(showId);
                 if (currentlyTracked) {
                     setTrackedStatus(showId, TrackedStatus.NOT_TRACKED);
                 } else {
@@ -90,9 +90,9 @@ public final class TrackedShowsRepository {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
                 if (trackedStatus == TrackedStatus.TRACKED) {
-                    persistentDataRepository.addToTrackedShows(showId);
+                    localDataRepository.addToTrackedShows(showId);
                 } else {
-                    persistentDataRepository.deleteFromTrackedShows(showId);
+                    localDataRepository.deleteFromTrackedShows(showId);
                 }
                 refreshTrackedShows();
                 subscriber.onCompleted();
@@ -102,12 +102,12 @@ public final class TrackedShowsRepository {
                 .subscribe();
     }
 
-    private static Observable<List<ShowId>> fetchListOfMyShowIdsFrom(final PersistentDataRepository persistentDataRepository) {
+    private static Observable<List<ShowId>> fetchListOfMyShowIdsFrom(final LocalDataRepository localDataRepository) {
         return Observable.create(new Observable.OnSubscribe<List<ShowId>>() {
 
             @Override
             public void call(Subscriber<? super List<ShowId>> subscriber) {
-                subscriber.onNext(persistentDataRepository.getListOfTmdbShowIdsFromAllTrackedShows());
+                subscriber.onNext(localDataRepository.getListOfTmdbShowIdsFromAllTrackedShows());
                 subscriber.onCompleted();
             }
 
@@ -130,7 +130,7 @@ public final class TrackedShowsRepository {
         };
     }
 
-    private static Func1<ShowId, Observable<String>> fetchShowDetailsJsonFrom(final PersistentDataRepository repository) {
+    private static Func1<ShowId, Observable<String>> fetchShowDetailsJsonFrom(final LocalDataRepository repository) {
         return new Func1<ShowId, Observable<String>>() {
 
             @Override

@@ -1,6 +1,6 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.repository.persistence.PersistentDataRepository;
+import com.ataulm.wutson.repository.persistence.LocalDataRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
 import com.google.gson.Gson;
@@ -16,24 +16,24 @@ import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
 public class GenresRepository {
 
     private final TmdbApi api;
-    private final PersistentDataRepository persistentDataRepository;
+    private final LocalDataRepository localDataRepository;
     private final Gson gson;
 
-    public GenresRepository(TmdbApi api, PersistentDataRepository persistentDataRepository, Gson gson) {
+    public GenresRepository(TmdbApi api, LocalDataRepository localDataRepository, Gson gson) {
         this.api = api;
-        this.persistentDataRepository = persistentDataRepository;
+        this.localDataRepository = localDataRepository;
         this.gson = gson;
     }
 
     Observable<GsonGenres> getGenres() {
-        return fetchJsonGenresFrom(persistentDataRepository)
+        return fetchJsonGenresFrom(localDataRepository)
                 .filter(ignoreEmptyStrings())
                 .map(jsonTo(GsonGenres.class, gson))
-                .switchIfEmpty(api.getGenres().doOnNext(saveTo(persistentDataRepository, gson)))
+                .switchIfEmpty(api.getGenres().doOnNext(saveTo(localDataRepository, gson)))
                 .subscribeOn(Schedulers.io());
     }
 
-    private static Observable<String> fetchJsonGenresFrom(final PersistentDataRepository repository) {
+    private static Observable<String> fetchJsonGenresFrom(final LocalDataRepository repository) {
         return Observable.create(new Observable.OnSubscribe<String>() {
 
             @Override
@@ -45,13 +45,13 @@ public class GenresRepository {
         });
     }
 
-    private static Action1<GsonGenres> saveTo(final PersistentDataRepository persistentDataRepository, final Gson gson) {
+    private static Action1<GsonGenres> saveTo(final LocalDataRepository localDataRepository, final Gson gson) {
         return new Action1<GsonGenres>() {
 
             @Override
             public void call(GsonGenres gsonGenres) {
                 String json = gson.toJson(gsonGenres, GsonGenres.class);
-                persistentDataRepository.writeJsonGenres(json);
+                localDataRepository.writeJsonGenres(json);
             }
 
         };
