@@ -2,6 +2,8 @@ package com.ataulm.wutson.episodes;
 
 public class EpisodeNumber {
 
+    private static final String FORMAT_LEADING_ZEROES = "%02d";
+
     private final int seasonNumber;
     private final int episodeNumber;
 
@@ -12,7 +14,7 @@ public class EpisodeNumber {
 
     @Override
     public String toString() {
-        return "S" + String.format("%02d", seasonNumber) + "E" + String.format("%02d", episodeNumber);
+        return "S" + String.format(FORMAT_LEADING_ZEROES, seasonNumber) + "E" + String.format(FORMAT_LEADING_ZEROES, episodeNumber);
     }
 
     public int getSeason() {
