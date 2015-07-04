@@ -74,23 +74,38 @@ public class WutsonDataRepository implements DataRepository {
 
     @Override
     public Observable<Watchlist> getWatchlist() {
-        return getMyShows().take(1)
+        return getMyShows().first()
                 .flatMap(Function.<ShowSummary>emitEachElement())
-                .flatMap(getListOfSeasonsForThatShow())
-                .flatMap(Function.<Season>emitEachElement())
-                .flatMap(Function.<Episode>emitEachElement())
-                .filter(onlyUnwatchedEpisodes())
-                .groupBy(showName())
-                .flatMap(asEpisodeListCappedAt(5))
+                .flatMap(new Func1<ShowSummary, Observable<WatchlistItem>>() {
+                    @Override
+                    public Observable<WatchlistItem> call(ShowSummary showSummary) {
+                        return getSeasons(showSummary.getId())
+                                .concatMap(Function.<Season>emitEachElement())
+                                .concatMap(Function.<Episode>emitEachElement())
+                                .filter(onlyUnwatchedEpisodes())
+                                .take(5)
+                                .toList()
+                                .map(asWatchListItem());
+                    }
+                })
                 .toList()
                 .map(asWatchlist());
     }
 
-    private Func1<ShowSummary, Observable<Seasons>> getListOfSeasonsForThatShow() {
-        return new Func1<ShowSummary, Observable<Seasons>>() {
+    private static Func1<List<WatchlistItem>, Watchlist> asWatchlist() {
+        return new Func1<List<WatchlistItem>, Watchlist>() {
             @Override
-            public Observable<Seasons> call(ShowSummary showSummary) {
-                return getSeasons(showSummary.getId());
+            public Watchlist call(List<WatchlistItem> watchlistItems) {
+                return new Watchlist(watchlistItems);
+            }
+        };
+    }
+
+    private static Func1<List<Episode>, WatchlistItem> asWatchListItem() {
+        return new Func1<List<Episode>, WatchlistItem>() {
+            @Override
+            public WatchlistItem call(List<Episode> episodes) {
+                return new WatchlistItem(episodes.get(0).getShowName(), new Episodes(episodes));
             }
         };
     }
@@ -102,43 +117,6 @@ public class WutsonDataRepository implements DataRepository {
                 // TODO: if the episode has been marked as watched, return false!
                 return true;
             }
-        };
-    }
-
-    private static Func1<Episode, String> showName() {
-        return new Func1<Episode, String>() {
-            @Override
-            public String call(Episode episode) {
-                return episode.getShowName();
-            }
-        };
-    }
-
-    private static Func1<GroupedObservable<String, Episode>, Observable<List<Episode>>> asEpisodeListCappedAt(final int maxEpisodes) {
-        return new Func1<GroupedObservable<String, Episode>, Observable<List<Episode>>>() {
-            @Override
-            public Observable<List<Episode>> call(GroupedObservable<String, Episode> episodesFromSingleShow) {
-                return episodesFromSingleShow.take(maxEpisodes).toList();
-            }
-        };
-    }
-
-    private static Func1<List<List<Episode>>, Watchlist> asWatchlist() {
-        return new Func1<List<List<Episode>>, Watchlist>() {
-
-            @Override
-            public Watchlist call(List<List<Episode>> lists) {
-                List<WatchlistItem> watchlistItems = new ArrayList<>();
-                for (List<Episode> list : lists) {
-                    String showName = list.get(0).getShowName();
-                    watchlistItems.add(WatchlistItem.from(showName));
-                    for (Episode episode : list) {
-                        watchlistItems.add(WatchlistItem.from(episode));
-                    }
-                }
-                return new Watchlist(watchlistItems);
-            }
-
         };
     }
 

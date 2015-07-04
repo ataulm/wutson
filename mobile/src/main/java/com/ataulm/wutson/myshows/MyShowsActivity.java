@@ -10,12 +10,13 @@ import android.support.v4.view.ViewPager;
 import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
-import com.ataulm.wutson.shows.ShowSummaries;
-import com.ataulm.wutson.shows.ShowSummary;
-import com.ataulm.wutson.shows.TrackedStatus;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.ataulm.wutson.shows.ShowSummaries;
+import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.shows.TrackedStatus;
+import com.ataulm.wutson.shows.myshows.Watchlist;
 import com.novoda.landingstrip.LandingStrip;
 
 import java.util.Set;
@@ -42,7 +43,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         trackedShowsAdapter = new TrackedShowsAdapter(this, Jabber.toastDisplayer());
         trackedShowsAdapter.setHasStableIds(true);
 
-        watchlistAdapter = new WatchlistAdapter();
+        watchlistAdapter = new WatchlistAdapter(getLayoutInflater());
         watchlistAdapter.setHasStableIds(true);
 
         PagerAdapter pagerAdapter = new MyShowsPagerAdapter(this, getResources(), getLayoutInflater(), trackedShowsAdapter, watchlistAdapter);
@@ -134,14 +135,14 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
     }
 
-    private class WatchlistObserver extends LoggingObserver<com.ataulm.wutson.shows.myshows.Watchlist> {
+    private class WatchlistObserver extends LoggingObserver<Watchlist> {
 
         private WatchlistObserver() {
             super(Jabber.log());
         }
 
         @Override
-        public void onNext(com.ataulm.wutson.shows.myshows.Watchlist episodes) {
+        public void onNext(Watchlist episodes) {
             super.onNext(episodes);
             watchlistAdapter.update(episodes);
         }

@@ -1,49 +1,35 @@
 package com.ataulm.wutson.myshows;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.ataulm.wutson.DeveloperError;
-import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.shows.myshows.Watchlist;
 
 class WatchlistAdapter extends RecyclerView.Adapter<WatchlistItemViewHolder> {
 
-    private com.ataulm.wutson.shows.myshows.Watchlist watchlist;
+    private final LayoutInflater layoutInflater;
+
+    private Watchlist watchlist;
+
+    WatchlistAdapter(LayoutInflater layoutInflater) {
+        this.layoutInflater = layoutInflater;
+        setHasStableIds(true);
+    }
 
     @Override
     public WatchlistItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (ViewType.values()[viewType]) {
-            case SHOW_NAME:
-                return ShowNameWatchlistItemViewHolder.inflate(parent);
-            case EPISODE:
-                return UpcomingEpisodeViewHolder.inflate(parent);
-            default:
-                throw DeveloperError.because("unknown view type: " + viewType);
-        }
+        return WatchlistItemViewHolder.inflate(parent, layoutInflater);
     }
 
     @Override
     public void onBindViewHolder(WatchlistItemViewHolder holder, int position) {
-        ViewType viewType = ViewType.values()[getItemViewType(position)];
-        switch (viewType) {
-            case SHOW_NAME:
-                String showName = (String) watchlist.get(position).getItem();
-                ((ShowNameWatchlistItemViewHolder) holder).bind(showName);
-                break;
-            case EPISODE:
-                Episode episode = (Episode) watchlist.get(position).getItem();
-                ((UpcomingEpisodeViewHolder) holder).bind(episode);
-                break;
-            default:
-                throw new RuntimeException();
-        }
+        holder.bind(watchlist.get(position));
     }
 
     @Override
-    public int getItemViewType(int position) {
-        com.ataulm.wutson.shows.myshows.WatchlistItem item = watchlist.get(position);
-        return item.isShow() ? ViewType.SHOW_NAME.ordinal() : ViewType.EPISODE.ordinal();
+    public long getItemId(int position) {
+        return watchlist.get(position).getShowName().hashCode();
     }
 
     @Override
@@ -57,11 +43,6 @@ class WatchlistAdapter extends RecyclerView.Adapter<WatchlistItemViewHolder> {
     public void update(Watchlist watchlist) {
         this.watchlist = watchlist;
         notifyDataSetChanged();
-    }
-
-    private enum ViewType {
-        SHOW_NAME,
-        EPISODE
     }
 
 }

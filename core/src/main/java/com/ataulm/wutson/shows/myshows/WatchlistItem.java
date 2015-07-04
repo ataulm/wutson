@@ -1,40 +1,23 @@
 package com.ataulm.wutson.shows.myshows;
 
-import com.ataulm.wutson.episodes.Episode;
+import com.ataulm.wutson.episodes.Episodes;
 
-public final class WatchlistItem<T> {
+public final class WatchlistItem {
 
-    private final Type type;
-    private final T item;
+    private final String showName;
+    private final Episodes episodes;
 
-    public static WatchlistItem<String> from(String showName) {
-        return new WatchlistItem<>(Type.SHOW, showName);
+    public WatchlistItem(String showName, Episodes episodes) {
+        this.showName = showName;
+        this.episodes = episodes;
     }
 
-    public static WatchlistItem<Episode> from(Episode episode) {
-        return new WatchlistItem<>(Type.EPISODE, episode);
+    public String getShowName() {
+        return showName;
     }
 
-    private WatchlistItem(Type type, T item) {
-        this.type = type;
-        this.item = item;
-    }
-
-    public boolean isShow() {
-        return type == Type.SHOW;
-    }
-
-    public boolean isEpisode() {
-        return type == Type.EPISODE;
-    }
-
-    public T getItem() {
-        return item;
-    }
-
-    private enum Type {
-        SHOW,
-        EPISODE
+    public Episodes getEpisodes() {
+        return episodes;
     }
 
 }
