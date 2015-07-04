@@ -34,9 +34,9 @@ class GenresRepository {
     public Observable<GsonGenres> getGenres() {
         if (!subject.hasValue()) {
             Observable.concat(genresFromDisk(), genresFromNetwork())
+                    .first()
                     .lift(Function.<GsonGenres>swallowOnCompleteEvents())
                     .subscribeOn(Schedulers.io())
-                    .first()
                     .subscribe(subject);
         }
         return subject;
