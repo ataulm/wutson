@@ -2,6 +2,7 @@ package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.repository.persistence.LocalDataRepository;
+import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.shows.Genre;
 import com.ataulm.wutson.shows.ShowSummary;
@@ -135,7 +136,7 @@ public class ShowsInGenreRepository {
 
                     showSummaries.add(new ShowSummary(id, name, posterUri, backdropUri));
                 }
-                return new ShowsInGenre(genre, showSummaries);
+                return new ShowsInGenre(genre, new ShowSummaries(showSummaries));
             }
 
         };

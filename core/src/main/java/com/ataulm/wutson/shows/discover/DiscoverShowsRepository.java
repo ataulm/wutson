@@ -1,14 +1,18 @@
 package com.ataulm.wutson.shows.discover;
 
+import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.repository.persistence.LocalDataRepository;
 import com.ataulm.wutson.rx.Function;
+import com.ataulm.wutson.shows.Genre;
+import com.ataulm.wutson.shows.ShowId;
+import com.ataulm.wutson.shows.ShowSummaries;
+import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonDiscoverTv;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
 import com.google.gson.Gson;
 
-import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -25,14 +29,16 @@ import static com.ataulm.wutson.rx.Function.jsonTo;
 public class DiscoverShowsRepository {
 
     private final TmdbApi api;
+    private final ConfigurationRepository configurationRepository;
     private final LocalDataRepository localDataRepository;
     private final Gson gson;
 
     private final GenresRepository genresRepository;
     private final BehaviorSubject<List<ShowsInGenre>> subject;
 
-    public DiscoverShowsRepository(TmdbApi api, LocalDataRepository localDataRepository, Gson gson) {
+    public DiscoverShowsRepository(TmdbApi api, ConfigurationRepository configurationRepository, LocalDataRepository localDataRepository, Gson gson) {
         this.api = api;
+        this.configurationRepository = configurationRepository;
         this.localDataRepository = localDataRepository;
         this.gson = gson;
 
@@ -40,71 +46,57 @@ public class DiscoverShowsRepository {
         this.subject = BehaviorSubject.create();
     }
 
-    public Observable<List<ShowsInGenre>> getShowsInGenre() {
+    public Observable<List<ShowsInGenre>> getListOfShowsInGenre() {
         if (!subject.hasValue()) {
-            // TODO: fetch configuration
-            Observable<Configuration> configuration = Observable.empty();
-            Observable<GsonDiscoverTvShows> gsonDiscoverTvShows =
-                    Observable.concat(gsonDiscoverTvShowsFromDisk(), gsonDiscoverTvShowsFromNetwork())
-                            .first();
-
-            Observable.zip(configuration, gsonDiscoverTvShows, asShowsInGenreList())
-                    .lift(Function.<List<ShowsInGenre>>swallowOnCompleteEvents())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(subject);
+            refreshListOfShowsInGenre();
         }
         return subject;
     }
 
-    private static Func2<Configuration, GsonDiscoverTvShows, List<ShowsInGenre>> asShowsInGenreList() {
-        return new Func2<Configuration, GsonDiscoverTvShows, List<ShowsInGenre>>() {
-            @Override
-            public List<ShowsInGenre> call(Configuration configuration, GsonDiscoverTvShows gsonDiscoverTvShows) {
-                // TODO: convert to ShowsInGenre
-                return Collections.emptyList();
-            }
-        };
+    private void refreshListOfShowsInGenre() {
+        Observable<List<GsonShowsInGenre>> gsonShowsInGenre = getGsonShowsInGenre();
+        Observable<Configuration> configuration = configurationRepository.getConfiguration();
+
+        Observable.combineLatest(configuration, gsonShowsInGenre, asListOfShowsInGenre())
+                .lift(Function.<List<ShowsInGenre>>swallowOnCompleteEvents())
+                .subscribeOn(Schedulers.io())
+                .subscribe(subject);
     }
 
-    private Observable<GsonDiscoverTvShows> gsonDiscoverTvShowsFromDisk() {
+    private Observable<List<GsonShowsInGenre>> getGsonShowsInGenre() {
+        return Observable
+                .concat(gsonDiscoverTvShowsFromDisk(), gsonDiscoverTvShowsFromNetwork())
+                .first();
+    }
+
+    private Observable<List<GsonShowsInGenre>> gsonDiscoverTvShowsFromDisk() {
+        // TODO: read from disk
         return Observable.empty();
     }
 
-    private Observable<GsonDiscoverTvShows> gsonDiscoverTvShowsFromNetwork() {
-        // TODO: persist to disk
+    private Observable<List<GsonShowsInGenre>> gsonDiscoverTvShowsFromNetwork() {
         return genresRepository.getGenres()
                 .flatMap(Function.<GsonGenres.Genre>emitEachElement())
-                .flatMap(fetchDiscoverTvShows())
-                .toList().map(new Func1<List<Pair<GsonGenres.Genre, GsonDiscoverTv>>, GsonDiscoverTvShows>() {
+                .flatMap(fetchGsonShowsInGenre())
+                .doOnNext(new Action1<GsonShowsInGenre>() {
                     @Override
-                    public GsonDiscoverTvShows call(List<Pair<GsonGenres.Genre, GsonDiscoverTv>> pairs) {
-                        GsonGenres.Genre genre = pairs.get(0).a;
-                        List<GsonDiscoverTv> discoverShows = Observable.from(pairs)
-                                .map(new Func1<Pair<GsonGenres.Genre, GsonDiscoverTv>, GsonDiscoverTv>() {
-                                    @Override
-                                    public GsonDiscoverTv call(Pair<GsonGenres.Genre, GsonDiscoverTv> genreGsonDiscoverTvPair) {
-                                        return genreGsonDiscoverTvPair.b;
-                                    }
-                                })
-                                .toList()
-                                .toBlocking()
-                                .first();
-
-                        return new GsonDiscoverTvShows(genre, discoverShows);
+                    public void call(GsonShowsInGenre gsonShowsInGenre) {
+                        // TODO: persist to disk
                     }
-                });
+                })
+                .toList();
     }
 
-    private Func1<GsonGenres.Genre, Observable<Pair<GsonGenres.Genre, GsonDiscoverTv>>> fetchDiscoverTvShows() {
-        return new Func1<GsonGenres.Genre, Observable<Pair<GsonGenres.Genre, GsonDiscoverTv>>>() {
+    private Func1<GsonGenres.Genre, Observable<GsonShowsInGenre>> fetchGsonShowsInGenre() {
+        return new Func1<GsonGenres.Genre, Observable<GsonShowsInGenre>>() {
 
             @Override
-            public Observable<Pair<GsonGenres.Genre, GsonDiscoverTv>> call(GsonGenres.Genre genre) {
+            public Observable<GsonShowsInGenre> call(GsonGenres.Genre genre) {
                 return fetchJsonShowSummariesFrom(localDataRepository, genre.id)
                         .filter(ignoreEmptyStrings())
                         .map(jsonTo(GsonDiscoverTv.class, gson))
                         .switchIfEmpty(api.getShowsMatchingGenre(genre.id).doOnNext(saveTo(localDataRepository, gson, genre.id)))
-                        .map(asGsonGenreAndGsonDiscoverTvShows(genre));
+                        .map(asGsonDiscoverTvByGenre(genre));
             }
 
         };
@@ -135,14 +127,63 @@ public class DiscoverShowsRepository {
         };
     }
 
-    private static Func1<GsonDiscoverTv, Pair<GsonGenres.Genre, GsonDiscoverTv>> asGsonGenreAndGsonDiscoverTvShows(final GsonGenres.Genre genre) {
-        return new Func1<GsonDiscoverTv, Pair<GsonGenres.Genre, GsonDiscoverTv>>() {
+    private static Func1<GsonDiscoverTv, GsonShowsInGenre> asGsonDiscoverTvByGenre(final GsonGenres.Genre genre) {
+        return new Func1<GsonDiscoverTv, GsonShowsInGenre>() {
 
             @Override
-            public Pair<GsonGenres.Genre, GsonDiscoverTv> call(GsonDiscoverTv gsonDiscoverTv) {
-                return new Pair<>(genre, gsonDiscoverTv);
+            public GsonShowsInGenre call(GsonDiscoverTv gsonDiscoverTv) {
+                return new GsonShowsInGenre(genre, gsonDiscoverTv);
             }
 
+        };
+    }
+
+    private static Func2<Configuration, List<GsonShowsInGenre>, List<ShowsInGenre>> asListOfShowsInGenre() {
+        return new Func2<Configuration, List<GsonShowsInGenre>, List<ShowsInGenre>>() {
+
+            @Override
+            public List<ShowsInGenre> call(final Configuration configuration, List<GsonShowsInGenre> shows) {
+                return Observable.from(shows)
+                        .flatMap(createShowsInGenreByMergingWith(configuration))
+                        .toList().toBlocking().first();
+            }
+
+        };
+    }
+
+    private static Func1<GsonShowsInGenre, Observable<ShowsInGenre>> createShowsInGenreByMergingWith(final Configuration configuration) {
+        return new Func1<GsonShowsInGenre, Observable<ShowsInGenre>>() {
+            @Override
+            public Observable<ShowsInGenre> call(GsonShowsInGenre gsonShowsInGenre) {
+                final Genre genre = new Genre(gsonShowsInGenre.getGenre().id, gsonShowsInGenre.getGenre().name);
+                return Observable.from(gsonShowsInGenre.getShows())
+                        .map(
+                                new Func1<GsonDiscoverTv.Show, ShowSummary>() {
+                                    @Override
+                                    public ShowSummary call(GsonDiscoverTv.Show show) {
+                                        return new ShowSummary(new ShowId(show.id),
+                                                show.name,
+                                                configuration.completePoster(show.posterPath),
+                                                configuration.completeBackdrop(show.backdropPath));
+                                    }
+                                }
+                        )
+                        .toList()
+                        .map(
+                                new Func1<List<ShowSummary>, ShowSummaries>() {
+                                    @Override
+                                    public ShowSummaries call(List<ShowSummary> showSummaries) {
+                                        return new ShowSummaries(showSummaries);
+                                    }
+                                }
+                        )
+                        .map(new Func1<ShowSummaries, ShowsInGenre>() {
+                            @Override
+                            public ShowsInGenre call(ShowSummaries showSummaries) {
+                                return new ShowsInGenre(genre, showSummaries);
+                            }
+                        });
+            }
         };
     }
 
