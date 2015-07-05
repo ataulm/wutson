@@ -57,7 +57,7 @@ public class DiscoverShowsRepository {
         Observable<List<GsonShowsInGenre>> gsonShowsInGenre = getGsonShowsInGenre();
         Observable<Configuration> configuration = configurationRepository.getConfiguration();
 
-        Observable.combineLatest(configuration, gsonShowsInGenre, asListOfShowsInGenre())
+        Observable.combineLatest(gsonShowsInGenre, configuration, asListOfShowsInGenre())
                 .lift(Function.<List<ShowsInGenre>>swallowOnCompleteEvents())
                 .subscribeOn(Schedulers.io())
                 .subscribe(subject);
@@ -138,11 +138,11 @@ public class DiscoverShowsRepository {
         };
     }
 
-    private static Func2<Configuration, List<GsonShowsInGenre>, List<ShowsInGenre>> asListOfShowsInGenre() {
-        return new Func2<Configuration, List<GsonShowsInGenre>, List<ShowsInGenre>>() {
+    private static Func2<List<GsonShowsInGenre>, Configuration, List<ShowsInGenre>> asListOfShowsInGenre() {
+        return new Func2<List<GsonShowsInGenre>, Configuration, List<ShowsInGenre>>() {
 
             @Override
-            public List<ShowsInGenre> call(final Configuration configuration, List<GsonShowsInGenre> shows) {
+            public List<ShowsInGenre> call(List<GsonShowsInGenre> shows, Configuration configuration) {
                 return Observable.from(shows)
                         .flatMap(createShowsInGenreByMergingWith(configuration))
                         .toList().toBlocking().first();
@@ -155,34 +155,42 @@ public class DiscoverShowsRepository {
         return new Func1<GsonShowsInGenre, Observable<ShowsInGenre>>() {
             @Override
             public Observable<ShowsInGenre> call(GsonShowsInGenre gsonShowsInGenre) {
-                final Genre genre = new Genre(gsonShowsInGenre.getGenre().id, gsonShowsInGenre.getGenre().name);
+                Genre genre = new Genre(gsonShowsInGenre.getGenre().id, gsonShowsInGenre.getGenre().name);
                 return Observable.from(gsonShowsInGenre.getShows())
-                        .map(
-                                new Func1<GsonDiscoverTv.Show, ShowSummary>() {
-                                    @Override
-                                    public ShowSummary call(GsonDiscoverTv.Show show) {
-                                        return new ShowSummary(new ShowId(show.id),
-                                                show.name,
-                                                configuration.completePoster(show.posterPath),
-                                                configuration.completeBackdrop(show.backdropPath));
-                                    }
-                                }
-                        )
+                        .map(asShowSummary(configuration))
                         .toList()
-                        .map(
-                                new Func1<List<ShowSummary>, ShowSummaries>() {
-                                    @Override
-                                    public ShowSummaries call(List<ShowSummary> showSummaries) {
-                                        return new ShowSummaries(showSummaries);
-                                    }
-                                }
-                        )
-                        .map(new Func1<ShowSummaries, ShowsInGenre>() {
-                            @Override
-                            public ShowsInGenre call(ShowSummaries showSummaries) {
-                                return new ShowsInGenre(genre, showSummaries);
-                            }
-                        });
+                        .map(asShowSummaries())
+                        .map(asShowsIn(genre));
+            }
+        };
+    }
+
+    private static Func1<GsonDiscoverTv.Show, ShowSummary> asShowSummary(final Configuration configuration) {
+        return new Func1<GsonDiscoverTv.Show, ShowSummary>() {
+            @Override
+            public ShowSummary call(GsonDiscoverTv.Show show) {
+                return new ShowSummary(new ShowId(show.id),
+                        show.name,
+                        configuration.completePoster(show.posterPath),
+                        configuration.completeBackdrop(show.backdropPath));
+            }
+        };
+    }
+
+    private static Func1<List<ShowSummary>, ShowSummaries> asShowSummaries() {
+        return new Func1<List<ShowSummary>, ShowSummaries>() {
+            @Override
+            public ShowSummaries call(List<ShowSummary> showSummaries) {
+                return new ShowSummaries(showSummaries);
+            }
+        };
+    }
+
+    private static Func1<ShowSummaries, ShowsInGenre> asShowsIn(final Genre genre) {
+        return new Func1<ShowSummaries, ShowsInGenre>() {
+            @Override
+            public ShowsInGenre call(ShowSummaries showSummaries) {
+                return new ShowsInGenre(genre, showSummaries);
             }
         };
     }
