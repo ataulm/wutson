@@ -58,7 +58,6 @@ public class DiscoverShowsRepository {
         Observable<Configuration> configuration = configurationRepository.getConfiguration();
 
         Observable.combineLatest(gsonShowsInGenre, configuration, asListOfShowsInGenre())
-                .lift(Function.<List<ShowsInGenre>>swallowOnCompleteEvents())
                 .subscribeOn(Schedulers.io())
                 .subscribe(subject);
     }

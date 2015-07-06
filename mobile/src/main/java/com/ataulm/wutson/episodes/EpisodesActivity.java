@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import com.ataulm.wutson.BuildConfig;
-import com.ataulm.wutson.Jabber;
+import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.navigation.WutsonActivity;

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.ataulm.wutson.Jabber;
+import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
@@ -56,11 +56,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
                 Jabber.dataRepository().getMyShows()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
-                        .subscribe(new TrackedShowsObserver()),
-                Jabber.dataRepository().getWatchlist()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe(new WatchlistObserver())
+                        .subscribe(new TrackedShowsObserver())
         );
     }
 

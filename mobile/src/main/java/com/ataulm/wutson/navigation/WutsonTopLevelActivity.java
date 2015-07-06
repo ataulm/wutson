@@ -7,7 +7,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-import com.ataulm.wutson.Jabber;
+import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.R;
 
 public abstract class WutsonTopLevelActivity extends WutsonActivity {

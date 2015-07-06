@@ -1,21 +1,16 @@
-package com.ataulm.wutson;
+package com.ataulm.wutson.jabber;
 
 import android.app.Application;
 import android.content.Context;
 
-import com.ataulm.wutson.repository.ConfigurationRepository;
+import com.ataulm.wutson.AndroidLog;
+import com.ataulm.wutson.BuildConfig;
+import com.ataulm.wutson.Log;
+import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.repository.DataRepository;
-import com.ataulm.wutson.repository.GenresRepository;
-import com.ataulm.wutson.repository.SeasonsRepository;
-import com.ataulm.wutson.repository.ShowRepository;
-import com.ataulm.wutson.repository.ShowsInGenreRepository;
-import com.ataulm.wutson.repository.TrackedShowsRepository;
-import com.ataulm.wutson.repository.WutsonDataRepository;
-import com.ataulm.wutson.repository.persistence.LocalDataRepository;
-import com.ataulm.wutson.repository.persistence.SqliteLocalDataRepository;
+import com.ataulm.wutson.shows.discover.DiscoverShowsRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.TmdbApiFactory;
-import com.google.gson.Gson;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -33,7 +28,7 @@ public final class Jabber {
     private final Context context;
     private final String tmdbApiKey;
 
-    private WutsonDataRepository dataRepository;
+    private Repositories repositories;
     private ToastDisplayer toastDisplayer;
     private Log log;
 
@@ -46,21 +41,20 @@ public final class Jabber {
         this.tmdbApiKey = tmdbApiKey;
     }
 
-    public static DataRepository dataRepository() {
-        if (instance.dataRepository == null) {
-            TmdbApi api = newApi(instance.tmdbApiKey, log());
-            Gson gson = new Gson();
-            LocalDataRepository persistentDataRepo = new SqliteLocalDataRepository(instance.context.getContentResolver());
-            ConfigurationRepository configurationRepo = new ConfigurationRepository(api, persistentDataRepo, gson);
-            TrackedShowsRepository trackedShowsRepo = new TrackedShowsRepository(persistentDataRepo, configurationRepo, gson);
-            GenresRepository genresRepo = new GenresRepository(api, persistentDataRepo, gson);
-            ShowsInGenreRepository showsInGenreRepo = new ShowsInGenreRepository(api, persistentDataRepo, configurationRepo, genresRepo, gson);
-            ShowRepository showRepo = new ShowRepository(api, persistentDataRepo, configurationRepo, gson);
-            SeasonsRepository seasonsRepo = new SeasonsRepository(api, persistentDataRepo, configurationRepo, showRepo, gson);
-
-            instance.dataRepository = new WutsonDataRepository(trackedShowsRepo, showsInGenreRepo, showRepo, seasonsRepo);
+    private static Repositories repositories() {
+        if (instance.repositories == null) {
+            TmdbApi tmdbApi = newApi(instance.tmdbApiKey, log());
+            instance.repositories = Repositories.newInstance(instance.context, tmdbApi);
         }
-        return instance.dataRepository;
+        return instance.repositories;
+    }
+
+    public static DataRepository dataRepository() {
+        return repositories().dataRepository();
+    }
+
+    public static DiscoverShowsRepository discoverShowsRepository() {
+        return repositories().discoverShows();
     }
 
     private static TmdbApi newApi(String tmdbApiKey, Log log) {

@@ -26,14 +26,11 @@ import rx.observables.GroupedObservable;
 public class WutsonDataRepository implements DataRepository {
 
     private final TrackedShowsRepository trackedShowsRepo;
-    private final ShowsInGenreRepository showsInGenreRepo;
     private final ShowRepository showRepo;
     private final SeasonsRepository seasonsRepo;
 
-    public WutsonDataRepository(TrackedShowsRepository trackedShowsRepo, ShowsInGenreRepository showsInGenreRepo, ShowRepository showRepo,
-                                SeasonsRepository seasonsRepo) {
+    public WutsonDataRepository(TrackedShowsRepository trackedShowsRepo, ShowRepository showRepo, SeasonsRepository seasonsRepo) {
         this.trackedShowsRepo = trackedShowsRepo;
-        this.showsInGenreRepo = showsInGenreRepo;
         this.showRepo = showRepo;
         this.seasonsRepo = seasonsRepo;
     }
@@ -118,11 +115,6 @@ public class WutsonDataRepository implements DataRepository {
                 return true;
             }
         };
-    }
-
-    @Override
-    public Observable<List<ShowsInGenre>> getDiscoverShows() {
-        return showsInGenreRepo.getDiscoverShowsList();
     }
 
     @Override

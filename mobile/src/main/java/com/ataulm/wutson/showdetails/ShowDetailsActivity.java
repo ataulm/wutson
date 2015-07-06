@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ataulm.wutson.BuildConfig;
-import com.ataulm.wutson.Jabber;
+import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.shows.Show;
 import com.ataulm.wutson.shows.ShowId;
@@ -24,7 +24,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.ataulm.wutson.Jabber.dataRepository;
+import static com.ataulm.wutson.jabber.Jabber.dataRepository;
 
 public class ShowDetailsActivity extends WutsonActivity implements OnClickSeasonListener {
 

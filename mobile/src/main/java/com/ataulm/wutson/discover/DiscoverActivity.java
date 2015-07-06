@@ -3,15 +3,15 @@ package com.ataulm.wutson.discover;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
-import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.shows.ShowId;
-import com.ataulm.wutson.shows.ShowSummary;
-import com.ataulm.wutson.shows.discover.ShowsInGenre;
-import com.ataulm.wutson.shows.TrackedStatus;
+import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.ataulm.wutson.shows.ShowId;
+import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.shows.TrackedStatus;
+import com.ataulm.wutson.shows.discover.ShowsInGenre;
 import com.novoda.landingstrip.LandingStrip;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.ataulm.wutson.Jabber.dataRepository;
+import static com.ataulm.wutson.jabber.Jabber.dataRepository;
 
 public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowClickListener, OnClickShowSummaryListener {
 
@@ -46,7 +46,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
 
         ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);
 
-        discoverShowsSubscription = Jabber.dataRepository().getDiscoverShows()
+        discoverShowsSubscription = Jabber.discoverShowsRepository().getListOfShowsInGenre()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
