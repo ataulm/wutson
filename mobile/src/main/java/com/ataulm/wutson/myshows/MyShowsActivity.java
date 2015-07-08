@@ -4,12 +4,16 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
+import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
@@ -62,6 +66,22 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
     private void hideTitleWhileWeCheckForTrackedShows() {
         setTitle(null);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.my_shows, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.my_shows_menu_item_search) {
+            ((SearchView) MenuItemCompat.getActionView(item)).setIconified(false);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
