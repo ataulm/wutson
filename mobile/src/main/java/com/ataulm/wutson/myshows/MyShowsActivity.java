@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.ataulm.rv.SpacesItemDecoration;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.jabber.Jabber;
@@ -20,8 +21,6 @@ import com.ataulm.wutson.rx.LoggingObserver;
 import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.shows.TrackedStatus;
-import com.ataulm.wutson.shows.myshows.Watchlist;
-import com.novoda.landingstrip.LandingStrip;
 
 import java.util.Set;
 
@@ -32,7 +31,6 @@ import rx.subscriptions.CompositeSubscription;
 public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowClickListener {
 
     private TrackedShowsAdapter trackedShowsAdapter;
-    private WatchlistAdapter watchlistAdapter;
 
     private CompositeSubscription subscriptions;
 
@@ -42,19 +40,14 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         hideTitleWhileWeCheckForTrackedShows();
         setContentView(R.layout.activity_my_shows);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.my_shows_pager);
-
         trackedShowsAdapter = new TrackedShowsAdapter(this, Jabber.toastDisplayer());
         trackedShowsAdapter.setHasStableIds(true);
-
-        watchlistAdapter = new WatchlistAdapter(getLayoutInflater());
-        watchlistAdapter.setHasStableIds(true);
-
-        PagerAdapter pagerAdapter = new MyShowsPagerAdapter(this, getResources(), getLayoutInflater(), trackedShowsAdapter, watchlistAdapter);
-        viewPager.setAdapter(pagerAdapter);
-
-        LandingStrip tabStrip = (LandingStrip) findViewById(R.id.tab_strip);
-        tabStrip.attach(viewPager);
+        RecyclerView showsListView = (RecyclerView) findViewById(R.id.my_shows_list);
+        int spanCount = getResources().getInteger(R.integer.my_shows_span_count);
+        showsListView.setLayoutManager(new GridLayoutManager(this, spanCount));
+        int spacing = getResources().getDimensionPixelSize(R.dimen.my_shows_item_spacing);
+        showsListView.addItemDecoration(SpacesItemDecoration.newInstance(spacing, spacing, spanCount));
+        showsListView.setAdapter(trackedShowsAdapter);
 
         subscriptions = new CompositeSubscription(
                 Jabber.dataRepository().getMyShows()
@@ -147,20 +140,6 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         private boolean categoryLeanbackLauncherIsIn(Set<String> categories) {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && categories.contains(Intent.CATEGORY_LEANBACK_LAUNCHER);
-        }
-
-    }
-
-    private class WatchlistObserver extends LoggingObserver<Watchlist> {
-
-        private WatchlistObserver() {
-            super(Jabber.log());
-        }
-
-        @Override
-        public void onNext(Watchlist episodes) {
-            super.onNext(episodes);
-            watchlistAdapter.update(episodes);
         }
 
     }
