@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.ataulm.rv.SpacesItemDecoration;
 import com.ataulm.wutson.R;
@@ -70,7 +71,8 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.my_shows_menu_item_search) {
-            ((SearchView) MenuItemCompat.getActionView(item)).setIconified(false);
+            SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+            searchView.setIconified(false);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
