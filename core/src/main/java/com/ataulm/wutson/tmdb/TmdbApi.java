@@ -1,9 +1,10 @@
 package com.ataulm.wutson.tmdb;
 
-import com.ataulm.wutson.tmdb.gson.GsonSeason;
 import com.ataulm.wutson.tmdb.gson.GsonConfiguration;
 import com.ataulm.wutson.tmdb.gson.GsonDiscoverTv;
 import com.ataulm.wutson.tmdb.gson.GsonGenres;
+import com.ataulm.wutson.tmdb.gson.GsonSearchTvResults;
+import com.ataulm.wutson.tmdb.gson.GsonSeason;
 import com.ataulm.wutson.tmdb.gson.GsonTvShow;
 
 import retrofit.http.GET;
@@ -27,5 +28,8 @@ public interface TmdbApi {
 
     @GET("/tv/{id}/season/{season_number}")
     Observable<GsonSeason> getSeason(@Path("id") String showId, @Path("season_number") int seasonNumber);
+
+    @GET("/search/tv/")
+    Observable<GsonSearchTvResults> getSearchTvResults(@Query("query") String searchQuery);
 
 }
