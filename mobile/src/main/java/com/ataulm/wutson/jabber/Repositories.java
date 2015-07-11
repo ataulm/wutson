@@ -12,6 +12,7 @@ import com.ataulm.wutson.repository.WutsonDataRepository;
 import com.ataulm.wutson.repository.persistence.LocalDataRepository;
 import com.ataulm.wutson.repository.persistence.SqliteLocalDataRepository;
 import com.ataulm.wutson.shows.discover.DiscoverShowsRepository;
+import com.ataulm.wutson.shows.myshows.SearchRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.google.gson.Gson;
 
@@ -21,6 +22,7 @@ final class Repositories {
     private final TmdbApi tmdbApi;
 
     private WutsonDataRepository dataRepository;
+    private SearchRepository searchRepository;
     private DiscoverShowsRepository discoverShows;
     private ConfigurationRepository configuration;
     private LocalDataRepository localData;
@@ -50,6 +52,13 @@ final class Repositories {
             configuration = new ConfigurationRepository(tmdbApi, localData(), gson());
         }
         return configuration;
+    }
+
+    public SearchRepository search() {
+        if (searchRepository == null) {
+            searchRepository = new SearchRepository(tmdbApi, configuration());
+        }
+        return searchRepository;
     }
 
     private LocalDataRepository localData() {

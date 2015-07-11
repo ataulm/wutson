@@ -9,6 +9,7 @@ import com.ataulm.wutson.Log;
 import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.repository.DataRepository;
 import com.ataulm.wutson.shows.discover.DiscoverShowsRepository;
+import com.ataulm.wutson.shows.myshows.SearchRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.TmdbApiFactory;
 import com.squareup.okhttp.Cache;
@@ -55,6 +56,10 @@ public final class Jabber {
 
     public static DiscoverShowsRepository discoverShowsRepository() {
         return repositories().discoverShows();
+    }
+
+    public static SearchRepository searchRepository() {
+        return repositories().search();
     }
 
     private static TmdbApi newApi(String tmdbApiKey, Log log) {
