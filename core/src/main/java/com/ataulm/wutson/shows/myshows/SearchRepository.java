@@ -24,8 +24,9 @@ public class SearchRepository {
     }
 
     public Observable<SearchTvResults> searchFor(String query) {
-        Observable<Configuration> configuration = configurationRepository.getConfiguration();
-        Observable<GsonSearchTvResult> gsonSearchTvResult = api.getSearchTvResults(query).flatMap(Function.<GsonSearchTvResult>emitEachElement());
+        Observable<Configuration> configuration = configurationRepository.getConfiguration().first();
+        Observable<GsonSearchTvResult> gsonSearchTvResult = api.getSearchTvResults(query)
+                .flatMap(Function.<GsonSearchTvResult>emitEachElement());
 
         return searchTvResultFrom(configuration, gsonSearchTvResult)
                 .toList()

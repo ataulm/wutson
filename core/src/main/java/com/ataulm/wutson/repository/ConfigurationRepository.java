@@ -23,6 +23,7 @@ public class ConfigurationRepository {
     private final LocalDataRepository localDataRepository;
     private final Gson gson;
 
+    // TODO: maybe I want a publishSubject here so when people subscribe, they get the last Configuration?
     private final BehaviorSubject<Configuration> subject;
 
     public ConfigurationRepository(TmdbApi api, LocalDataRepository localDataRepository, Gson gson) {
