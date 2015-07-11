@@ -10,13 +10,11 @@ import com.ataulm.wutson.shows.ShowSummaries;
 class TrackedShowsAdapter extends RecyclerView.Adapter<ShowSummaryViewHolder> {
 
     private final OnShowClickListener listener;
-    private final ToastDisplayer toaster;
 
     private ShowSummaries showSummaries;
 
-    TrackedShowsAdapter(OnShowClickListener listener, ToastDisplayer toaster) {
+    TrackedShowsAdapter(OnShowClickListener listener) {
         this.listener = listener;
-        this.toaster = toaster;
     }
 
     void update(ShowSummaries showSummaries) {

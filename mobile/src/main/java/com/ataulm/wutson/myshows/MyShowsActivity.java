@@ -4,24 +4,19 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.ataulm.rv.SpacesItemDecoration;
-import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.discover.OnShowClickListener;
+import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.shows.TrackedStatus;
-import com.ataulm.wutson.shows.myshows.Watchlist;
-import com.novoda.landingstrip.LandingStrip;
 
 import java.util.Set;
 
@@ -41,7 +36,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         hideTitleWhileWeCheckForTrackedShows();
         setContentView(R.layout.activity_my_shows);
 
-        trackedShowsAdapter = new TrackedShowsAdapter(this, Jabber.toastDisplayer());
+        trackedShowsAdapter = new TrackedShowsAdapter(this);
         trackedShowsAdapter.setHasStableIds(true);
         RecyclerView showsListView = (RecyclerView) findViewById(R.id.my_shows_list);
         int spanCount = getResources().getInteger(R.integer.my_shows_span_count);
