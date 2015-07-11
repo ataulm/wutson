@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="show_summary_overflow_content_description">@string/more_options_button</string>
+
+</resources>
