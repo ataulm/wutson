@@ -63,7 +63,7 @@
 
     <activity android:name="com.ataulm.wutson.settings.SoftwareLicensesActivity" />
 
-    <activity android:name="com.ataulm.wutson.myshows.SearchableActivity"
+    <activity android:name=".myshows.SearchActivity"
       android:launchMode="singleTop">
       <intent-filter>
         <action android:name="android.intent.action.SEARCH" />
@@ -75,7 +75,7 @@
 
     <meta-data
       android:name="android.app.default_searchable"
-      android:value="com.ataulm.wutson.myshows.SearchableActivity" />
+      android:value="com.ataulm.wutson.myshows.SearchActivity" />
 
     <activity-alias
       android:name="activity.primary_launcher"
