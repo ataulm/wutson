@@ -36,8 +36,12 @@ public abstract class WutsonActivity extends ActionBarActivity {
     }
 
     protected void setAppBar(Toolbar toolbar) {
-        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationIcon(getNavigationIcon());
         super.setSupportActionBar(toolbar);
+    }
+
+    protected int getNavigationIcon() {
+        return R.drawable.abc_ic_ab_back_mtrl_am_alpha;
     }
 
     protected Toolbar getToolbar() {

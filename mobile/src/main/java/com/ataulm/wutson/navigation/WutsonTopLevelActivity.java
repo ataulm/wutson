@@ -29,9 +29,15 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
         populateNavigationDrawer();
     }
 
+    @Override
+    protected int getNavigationIcon() {
+        return R.drawable.ic_action_drawer;
+    }
+
     private void populateNavigationDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_drawer_open_content_description, R.string.nav_drawer_close_content_description);
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
         final NavigationDrawerView navigationDrawerView = (NavigationDrawerView) drawerLayout.findViewById(R.id.drawer_list);
@@ -78,7 +84,8 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+        if (item.getItemId() == android.R.id.home) {
+            drawerLayout.openDrawer(DRAWER_GRAVITY);
             return true;
         }
         throw new IllegalArgumentException("Item id not implemented");
