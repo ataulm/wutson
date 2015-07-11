@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ataulm.rv.SpacesItemDecoration;
 import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.shows.discover.ShowsInGenre;
@@ -43,6 +44,8 @@ class GenresPagerAdapter extends ViewPagerAdapter {
         RecyclerView showSummaryRecyclerView = (RecyclerView) layoutInflater.inflate(R.layout.view_discover_genres_page, parent, false);
         int spanCount = parent.getResources().getInteger(R.integer.discover_genres_page_span_count);
         showSummaryRecyclerView.setLayoutManager(new GridLayoutManager(parent.getContext(), spanCount));
+        int spacing = parent.getResources().getDimensionPixelSize(R.dimen.discover_shows_in_genre_item_margin);
+        showSummaryRecyclerView.addItemDecoration(SpacesItemDecoration.newInstance(spacing, spacing, spanCount));
 
         return showSummaryRecyclerView;
     }

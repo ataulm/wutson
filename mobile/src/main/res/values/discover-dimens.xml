@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <dimen name="discover_shows_in_genre_item_margin">2dp</dimen>
+  <dimen name="discover_shows_in_genre_item_margin">4dp</dimen>
+  <dimen name="discover_genres_page_padding_left">@dimen/discover_shows_in_genre_item_margin</dimen>
+  <dimen name="discover_genres_page_padding_right">@dimen/discover_shows_in_genre_item_margin</dimen>
 
 </resources>
