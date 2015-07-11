@@ -15,7 +15,9 @@
     <android.support.v7.widget.RecyclerView
       android:id="@+id/my_shows_list"
       android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+      android:layout_height="match_parent"
+      android:paddingLeft="@dimen/my_shows_list_padding_left"
+      android:paddingRight="@dimen/my_shows_list_padding_left" />
 
     <View style="@style/AppBarShadow" />
 

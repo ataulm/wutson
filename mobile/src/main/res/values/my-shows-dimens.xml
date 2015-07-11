@@ -2,6 +2,9 @@
 <resources>
 
   <dimen name="my_shows_item_spacing">4dp</dimen>
+  <dimen name="my_shows_list_padding_left">@dimen/my_shows_item_spacing</dimen>
+  <dimen name="my_shows_list_padding_right">@dimen/my_shows_item_spacing</dimen>
+  
   <dimen name="my_shows_item_overflow_margin_top">8dp</dimen>
 
 </resources>
