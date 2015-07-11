@@ -30,21 +30,21 @@ public class ShowSummaryView extends FrameLayout {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int desiredHeight = (int) (width * HEIGHT_BY_WIDTH_RATIO + HALF_PIXEL);
-
-        int desiredHeightMeasureSpec = MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY);
-        super.onMeasure(widthMeasureSpec, desiredHeightMeasureSpec);
-    }
-
-    @Override
     protected void onFinishInflate() {
         View.inflate(getContext(), R.layout.merge_show_summary, this);
 
         posterImageView = (ImageView) findViewById(R.id.show_summary_image_poster);
         titleTextView = (TextView) findViewById(R.id.show_summary_text_title);
         overflowButtonView = findViewById(R.id.show_summary_button_overflow);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int desiredHeight = (int) (width * HEIGHT_BY_WIDTH_RATIO + HALF_PIXEL);
+
+        int desiredHeightMeasureSpec = MeasureSpec.makeMeasureSpec(desiredHeight, MeasureSpec.EXACTLY);
+        super.onMeasure(widthMeasureSpec, desiredHeightMeasureSpec);
     }
 
     public void setPopupMenu(@MenuRes int menuResId, final OnMenuItemClickListener onMenuItemClickListener) {
