@@ -41,7 +41,7 @@ public abstract class WutsonActivity extends ActionBarActivity {
     }
 
     protected int getNavigationIcon() {
-        return R.drawable.abc_ic_ab_back_mtrl_am_alpha;
+        return R.drawable.ic_action_back;
     }
 
     protected Toolbar getToolbar() {
