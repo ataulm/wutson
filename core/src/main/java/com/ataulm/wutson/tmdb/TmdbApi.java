@@ -29,7 +29,7 @@ public interface TmdbApi {
     @GET("/tv/{id}/season/{season_number}")
     Observable<GsonSeason> getSeason(@Path("id") String showId, @Path("season_number") int seasonNumber);
 
-    @GET("/search/tv/")
+    @GET("/search/tv")
     Observable<GsonSearchTvResults> getSearchTvResults(@Query("query") String searchQuery);
 
 }
