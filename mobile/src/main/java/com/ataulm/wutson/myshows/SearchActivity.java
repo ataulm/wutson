@@ -15,6 +15,7 @@ import com.ataulm.wutson.R;
 import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.ataulm.wutson.search.OnClickSearchTvResult;
 import com.ataulm.wutson.shows.myshows.SearchTvResult;
 import com.ataulm.wutson.shows.myshows.SearchTvResults;
 
@@ -37,11 +38,20 @@ public class SearchActivity extends WutsonActivity {
         RecyclerView searchResultsListView = (RecyclerView) findViewById(R.id.search_results_list);
         searchResultsListView.setLayoutManager(new LinearLayoutManager(this));
         dataSet = new SearchResultsDataSet();
-        searchResultsAdapter = new SearchResultsAdapter(dataSet, getLayoutInflater());
+        searchResultsAdapter = new SearchResultsAdapter(dataSet, new OnClick(), getLayoutInflater());
         searchResultsAdapter.setHasStableIds(true);
         searchResultsListView.setAdapter(searchResultsAdapter);
 
         handleIntent(getIntent());
+    }
+
+    private class OnClick implements OnClickSearchTvResult {
+
+        @Override
+        public void onClick(SearchTvResult searchTvResult) {
+            navigate().toShowDetails(searchTvResult.getId(), searchTvResult.getName(), searchTvResult.getBackdropUri().toString());
+        }
+
     }
 
     @Override
@@ -103,10 +113,12 @@ public class SearchActivity extends WutsonActivity {
     private static class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsViewHolder> {
 
         private final DataSet<SearchTvResult> dataSet;
+        private final OnClickSearchTvResult listener;
         private final LayoutInflater layoutInflater;
 
-        SearchResultsAdapter(DataSet<SearchTvResult> dataSet, LayoutInflater layoutInflater) {
+        SearchResultsAdapter(DataSet<SearchTvResult> dataSet, OnClickSearchTvResult listener, LayoutInflater layoutInflater) {
             this.dataSet = dataSet;
+            this.listener = listener;
             this.layoutInflater = layoutInflater;
         }
 
@@ -118,7 +130,7 @@ public class SearchActivity extends WutsonActivity {
         @Override
         public void onBindViewHolder(SearchResultsViewHolder holder, int position) {
             SearchTvResult item = dataSet.getItem(position);
-            holder.bind(item);
+            holder.bind(item, listener);
         }
 
         @Override
@@ -148,7 +160,13 @@ public class SearchActivity extends WutsonActivity {
             this.nameTextView = nameTextView;
         }
 
-        void bind(SearchTvResult searchTvResult) {
+        void bind(final SearchTvResult searchTvResult, final OnClickSearchTvResult listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClick(searchTvResult);
+                }
+            });
             nameTextView.setText(searchTvResult.getName());
         }
 

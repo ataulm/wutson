@@ -8,6 +8,7 @@
     android:id="@+id/search_result_text_name"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="48dp"
     android:textColor="@color/white" />
 
 </LinearLayout>
