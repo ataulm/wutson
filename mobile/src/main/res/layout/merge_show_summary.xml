@@ -31,7 +31,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignParentRight="true"
-      android:layout_marginTop="@dimen/my_shows_item_overflow_margin_top"
+      android:layout_marginTop="@dimen/show_summary_overflow_margin_top"
+      android:layout_marginRight="@dimen/show_summary_overflow_margin_right"
       android:src="@drawable/ic_overflow"
       android:visibility="gone"
       android:contentDescription="@string/show_summary_overflow_content_description" />
