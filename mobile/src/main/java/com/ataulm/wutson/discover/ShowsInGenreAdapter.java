@@ -90,6 +90,9 @@ public class ShowsInGenreAdapter extends RecyclerView.Adapter<ShowsInGenreAdapte
                 }
 
             });
+            // TODO: this should change depending on whether show is tracked
+            String trackToggleContentDescription = trackToggleView.getResources().getString(R.string.discover_show_summary_start_track_show_content_description, showSummary.getName());
+            trackToggleView.setContentDescription(trackToggleContentDescription);
             itemView.setOnClickListener(new View.OnClickListener() {
 
                 @Override

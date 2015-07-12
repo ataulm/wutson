@@ -9,30 +9,24 @@
 
   <ImageView
     android:id="@+id/discover_shows_in_genre_item_image_poster"
+    style="@style/Discover.ShowSummary.Poster"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scaleType="centerCrop" />
+    android:contentDescription="@null" />
 
   <LinearLayout
+    style="@style/Discover.ShowSummary.Overlay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="72dp"
     android:layout_gravity="bottom"
-    android:background="@color/black_87pc"
     android:orientation="horizontal">
 
     <com.ataulm.wutson.view.WutsonTextView
       android:id="@+id/discover_shows_in_genre_item_text_show_name"
+      style="@style/Discover.ShowSummary.Name"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_weight="100"
-      android:layout_marginLeft="16dp"
-      android:layout_marginTop="16dp"
-      android:layout_marginRight="16dp"
-      android:layout_marginBottom="16dp"
-      android:textSize="16sp"
-      android:textColor="@color/white_87pc"
-      app:textFont="robotoRegular" />
+      android:layout_weight="100" />
 
     <FrameLayout
       android:id="@+id/discover_shows_in_genre_item_view_track_toggle"
@@ -44,7 +38,8 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_action_star" />
+        android:src="@drawable/ic_action_star"
+        android:contentDescription="@null" />
     </FrameLayout>
 
   </LinearLayout>
