@@ -29,6 +29,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
     private TrackedShowsAdapter trackedShowsAdapter;
 
     private CompositeSubscription subscriptions;
+    private RecyclerView showsListView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,14 +37,11 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         hideTitleWhileWeCheckForTrackedShows();
         setContentView(R.layout.activity_my_shows);
 
-        trackedShowsAdapter = new TrackedShowsAdapter(this);
-        trackedShowsAdapter.setHasStableIds(true);
-        RecyclerView showsListView = (RecyclerView) findViewById(R.id.my_shows_list);
+        showsListView = (RecyclerView) findViewById(R.id.my_shows_list);
         int spanCount = getResources().getInteger(R.integer.my_shows_span_count);
         showsListView.setLayoutManager(new GridLayoutManager(this, spanCount));
         int spacing = getResources().getDimensionPixelSize(R.dimen.my_shows_item_spacing);
         showsListView.addItemDecoration(SpacesItemDecoration.newInstance(spacing, spacing, spanCount));
-        showsListView.setAdapter(trackedShowsAdapter);
 
         subscriptions = new CompositeSubscription(
                 Jabber.dataRepository().getMyShows()
@@ -100,6 +98,17 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
                 // TODO this is broken - open with no shows -> discover, backs into this activity (should close app)
                 firstLoad = false;
                 setTitle(R.string.my_shows_label);
+                updateList(showSummaries);
+            }
+        }
+
+        private void updateList(ShowSummaries showSummaries) {
+            if (showsListView.getAdapter() == null) {
+                trackedShowsAdapter = new TrackedShowsAdapter(MyShowsActivity.this);
+                trackedShowsAdapter.setHasStableIds(true);
+                trackedShowsAdapter.update(showSummaries);
+                showsListView.setAdapter(trackedShowsAdapter);
+            } else {
                 trackedShowsAdapter.update(showSummaries);
             }
         }
