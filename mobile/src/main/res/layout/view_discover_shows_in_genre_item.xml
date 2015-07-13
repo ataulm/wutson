@@ -15,6 +15,7 @@
     android:contentDescription="@null" />
 
   <LinearLayout
+    android:id="@+id/discover_shows_in_genre_item_overlay"
     style="@style/Discover.ShowSummary.Overlay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

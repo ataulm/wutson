@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <item name="app_bar" type="id" />
+  <item name="shows_in_genre_show_id" type="id" />
 </resources>
