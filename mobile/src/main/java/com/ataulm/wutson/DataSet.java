@@ -1,6 +1,6 @@
-package com.ataulm.wutson.discover;
+package com.ataulm.wutson;
 
-interface DataSet<T> {
+public interface DataSet<T> {
 
     int getItemCount();
 

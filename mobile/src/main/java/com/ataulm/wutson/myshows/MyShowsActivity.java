@@ -26,7 +26,8 @@ import rx.subscriptions.CompositeSubscription;
 
 public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowClickListener {
 
-    private TrackedShowsAdapter trackedShowsAdapter;
+    private MyShowsAdapter myShowsAdapter;
+    private MyShowsDataSet myShowsDataSet;
 
     private CompositeSubscription subscriptions;
     private RecyclerView showsListView;
@@ -37,6 +38,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         hideTitleWhileWeCheckForTrackedShows();
         setContentView(R.layout.activity_my_shows);
 
+        myShowsDataSet = new MyShowsDataSet();
         showsListView = (RecyclerView) findViewById(R.id.my_shows_list);
         int spanCount = getResources().getInteger(R.integer.my_shows_span_count);
         showsListView.setLayoutManager(new GridLayoutManager(this, spanCount));
@@ -102,17 +104,6 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
             }
         }
 
-        private void updateList(ShowSummaries showSummaries) {
-            if (showsListView.getAdapter() == null) {
-                trackedShowsAdapter = new TrackedShowsAdapter(MyShowsActivity.this);
-                trackedShowsAdapter.setHasStableIds(true);
-                trackedShowsAdapter.update(showSummaries);
-                showsListView.setAdapter(trackedShowsAdapter);
-            } else {
-                trackedShowsAdapter.update(showSummaries);
-            }
-        }
-
         private boolean nothingToSeeHere(ShowSummaries showSummaries) {
             return showSummaries.size() == 0 && activityWasOpenedFromLauncher() && firstLoad;
         }
@@ -129,6 +120,22 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         private boolean categoryLeanbackLauncherIsIn(Set<String> categories) {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && categories.contains(Intent.CATEGORY_LEANBACK_LAUNCHER);
+        }
+
+        private void updateList(ShowSummaries showSummaries) {
+            if (showsListView.getAdapter() == null) {
+                setNewAdapter(showSummaries);
+            } else {
+                myShowsDataSet.update(showSummaries);
+                myShowsAdapter.notifyDataSetChanged();
+            }
+        }
+
+        private void setNewAdapter(ShowSummaries showSummaries) {
+            myShowsDataSet.update(showSummaries);
+            myShowsAdapter = new MyShowsAdapter(myShowsDataSet, MyShowsActivity.this, getLayoutInflater());
+            myShowsAdapter.setHasStableIds(true);
+            showsListView.setAdapter(myShowsAdapter);
         }
 
     }

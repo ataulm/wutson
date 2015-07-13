@@ -1,5 +1,6 @@
 package com.ataulm.wutson.discover;
 
+import com.ataulm.wutson.DataSet;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.shows.discover.ShowsInGenre;

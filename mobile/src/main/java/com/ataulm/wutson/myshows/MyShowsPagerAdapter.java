@@ -21,14 +21,14 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
     private final Context context;
     private final Resources resources;
     private final LayoutInflater layoutInflater;
-    private final TrackedShowsAdapter trackedShowsAdapter;
+    private final MyShowsAdapter myShowsAdapter;
     private final WatchlistAdapter watchlistAdapter;
 
-    MyShowsPagerAdapter(Context context, Resources resources, LayoutInflater layoutInflater, TrackedShowsAdapter trackedShowsAdapter, WatchlistAdapter watchlistAdapter) {
+    MyShowsPagerAdapter(Context context, Resources resources, LayoutInflater layoutInflater, MyShowsAdapter myShowsAdapter, WatchlistAdapter watchlistAdapter) {
         this.context = context;
         this.resources = resources;
         this.layoutInflater = layoutInflater;
-        this.trackedShowsAdapter = trackedShowsAdapter;
+        this.myShowsAdapter = myShowsAdapter;
         this.watchlistAdapter = watchlistAdapter;
     }
 
@@ -52,7 +52,7 @@ final class MyShowsPagerAdapter extends ViewPagerAdapter {
         int spacing = resources.getDimensionPixelSize(R.dimen.my_shows_item_spacing);
         view.setLayoutManager(new GridLayoutManager(context, spanCount));
         view.addItemDecoration(SpacesItemDecoration.newInstance(spacing, spacing, spanCount));
-        view.setAdapter(trackedShowsAdapter);
+        view.setAdapter(myShowsAdapter);
         return view;
     }
 

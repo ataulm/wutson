@@ -14,8 +14,7 @@ import com.ataulm.wutson.view.ShowSummaryView;
 
 final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
 
-    static ShowSummaryViewHolder inflate(ViewGroup parent) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+    static ShowSummaryViewHolder inflate(ViewGroup parent, LayoutInflater layoutInflater) {
         View view = layoutInflater.inflate(R.layout.view_tracked_shows_item, parent, false);
         return new ShowSummaryViewHolder(view);
     }
