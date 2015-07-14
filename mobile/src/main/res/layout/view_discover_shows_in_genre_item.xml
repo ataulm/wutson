@@ -33,7 +33,8 @@
       android:id="@+id/discover_shows_in_genre_item_view_track_toggle"
       android:layout_width="48dp"
       android:layout_height="48dp"
-      android:layout_gravity="center">
+      android:layout_gravity="center"
+      android:visibility="gone">
 
       <ImageView
         android:layout_width="24dp"
