@@ -21,3 +21,9 @@
     **[] $VALUES;
     public *;
 }
+
+# Support libraries
+-dontwarn android.support.**
+-keep class android.support.** { *; }
+-keep interface android.support.** { *; }
+-keep public class * extends android.support.**

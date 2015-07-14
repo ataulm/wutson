@@ -39,7 +39,7 @@ android {
         applicationId "com.ataulm.wutson2"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 14
+        versionCode 16
         versionName '_dog-food'
 
         Calendar instance = Calendar.getInstance()
