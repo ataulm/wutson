@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.ataulm.wutson.discover.DiscoverActivity;
-import com.ataulm.wutson.myshows.SearchActivity;
-import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.episodes.EpisodeNumber;
 import com.ataulm.wutson.myshows.MyShowsActivity;
+import com.ataulm.wutson.search.SearchActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
 import com.ataulm.wutson.showdetails.ShowDetailsActivity;
+import com.ataulm.wutson.shows.ShowId;
 
 public class Navigator {
 
@@ -77,7 +77,6 @@ public class Navigator {
         activity.startActivity(intent);
         activity.overridePendingTransition(0, 0);
     }
-
 
     public void toSettings() {
         Intent intent = new Intent(activity, SettingsActivity.class);

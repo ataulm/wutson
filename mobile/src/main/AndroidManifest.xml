@@ -63,7 +63,7 @@
 
     <activity android:name="com.ataulm.wutson.settings.SoftwareLicensesActivity" />
 
-    <activity android:name=".myshows.SearchActivity"
+    <activity android:name="com.ataulm.wutson.search.SearchActivity"
       android:launchMode="singleTop">
       <intent-filter>
         <action android:name="android.intent.action.SEARCH" />
