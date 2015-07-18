@@ -14,12 +14,14 @@ import com.ataulm.wutson.repository.persistence.SqliteLocalDataRepository;
 import com.ataulm.wutson.shows.discover.DiscoverShowsRepository;
 import com.ataulm.wutson.shows.myshows.SearchRepository;
 import com.ataulm.wutson.tmdb.TmdbApi;
+import com.ataulm.wutson.trakt.TraktApi;
 import com.google.gson.Gson;
 
 final class Repositories {
 
     private final Context context;
     private final TmdbApi tmdbApi;
+    private final TraktApi traktApi;
 
     private WutsonDataRepository dataRepository;
     private SearchRepository searchRepository;
@@ -28,13 +30,14 @@ final class Repositories {
     private LocalDataRepository localData;
     private Gson gson;
 
-    static Repositories newInstance(Context context, TmdbApi tmdbApi) {
-        return new Repositories(context.getApplicationContext(), tmdbApi);
+    static Repositories newInstance(Context context, TmdbApi tmdbApi, TraktApi traktApi) {
+        return new Repositories(context.getApplicationContext(), tmdbApi, traktApi);
     }
 
-    private Repositories(Context context, TmdbApi tmdbApi) {
+    private Repositories(Context context, TmdbApi tmdbApi, TraktApi traktApi) {
         this.context = context;
         this.tmdbApi = tmdbApi;
+        this.traktApi = traktApi;
     }
 
     public DiscoverShowsRepository discoverShows() {
