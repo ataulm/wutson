@@ -93,9 +93,8 @@ public class SearchOverlay extends FrameLayout {
             }
 
             private boolean isSubmitAction(int actionId, KeyEvent event) {
-                return event.getAction() == KeyEvent.ACTION_DOWN
-                        && event.getKeyCode() != KeyEvent.KEYCODE_ENTER
-                        || actionId != EditorInfo.IME_ACTION_SEARCH;
+                return actionId == EditorInfo.IME_ACTION_SEARCH
+                        || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER;
             }
         });
 
