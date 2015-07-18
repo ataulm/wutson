@@ -1,15 +1,11 @@
 package com.ataulm.wutson.myshows;
 
 import android.annotation.TargetApi;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,8 +24,6 @@ import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.shows.TrackedStatus;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -77,61 +71,30 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         searchOverlay.update(dummySearchSuggestions(), new SearchOverlay.SearchListener() {
             @Override
             public void onQueryUpdated(String query) {
-                Jabber.toastDisplayer().display("update: " + query);
+                // TODO: filter search suggestions to ones that match query
             }
 
             @Override
             public void onQuerySubmitted(String query) {
-                Jabber.toastDisplayer().display("submit: " + query);
+                navigate().toSearchFor(query);
+                searchOverlay.setVisibility(View.GONE);
             }
         });
     }
 
     private SearchSuggestions dummySearchSuggestions() {
-        return new ListSearchSuggestions();
-    }
+        // TODO: here we can show search history
+        return new SearchSuggestions() {
+            @Override
+            public SearchSuggestion getItem(int position) {
+                return null;
+            }
 
-    private static class ListSearchSuggestions implements SearchSuggestions {
-
-        private static List<SearchSuggestion> HISTORY_SUGGESTIONS = Arrays.asList(
-                searchSuggestionFrom("Arrow", SearchSuggestion.Type.HISTORY),
-                searchSuggestionFrom("Modern Family", SearchSuggestion.Type.HISTORY),
-                searchSuggestionFrom("Doctor Who", SearchSuggestion.Type.HISTORY),
-                searchSuggestionFrom("Flash", SearchSuggestion.Type.HISTORY)
-        );
-
-        private static List<SearchSuggestion> DOC_SUGGESTIONS = Arrays.asList(
-                searchSuggestionFrom("Doctor Who", SearchSuggestion.Type.HISTORY),
-                searchSuggestionFrom("Doc", SearchSuggestion.Type.API_KNOWN_RESULT),
-                searchSuggestionFrom("Doc Corkie", SearchSuggestion.Type.API_KNOWN_RESULT),
-                searchSuggestionFrom("Doctor", SearchSuggestion.Type.WORD_COMPLETION),
-                searchSuggestionFrom("Doctors", SearchSuggestion.Type.API_KNOWN_RESULT)
-        );
-
-        private static SearchSuggestion searchSuggestionFrom(final String name, final SearchSuggestion.Type type) {
-            return new SearchSuggestion() {
-                @Override
-                public String getName() {
-                    return name;
-                }
-
-                @Override
-                public Type getType() {
-                    return type;
-                }
-            };
-        }
-
-        @Override
-        public SearchSuggestion getItem(int position) {
-            return HISTORY_SUGGESTIONS.get(position);
-        }
-
-        @Override
-        public int getItemCount() {
-            return HISTORY_SUGGESTIONS.size();
-        }
-
+            @Override
+            public int getItemCount() {
+                return 0;
+            }
+        };
     }
 
     @Override

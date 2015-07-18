@@ -1,10 +1,12 @@
 package com.ataulm.wutson.navigation;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 
 import com.ataulm.wutson.discover.DiscoverActivity;
+import com.ataulm.wutson.myshows.SearchActivity;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.episodes.EpisodeNumber;
 import com.ataulm.wutson.myshows.MyShowsActivity;
@@ -67,6 +69,15 @@ public class Navigator {
 
         start(view(uri, MIME_TYPE_EPISODES_DIR));
     }
+
+    public void toSearchFor(String query) {
+        Intent intent = new Intent(activity, SearchActivity.class)
+                .setAction(Intent.ACTION_SEARCH)
+                .putExtra(SearchManager.QUERY, query);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
+    }
+
 
     public void toSettings() {
         Intent intent = new Intent(activity, SettingsActivity.class);
