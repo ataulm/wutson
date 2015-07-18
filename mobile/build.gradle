@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
 
 def tmdbApiKey = hasProperty('tmdbApiKey') ? tmdbApiKey : 'provide this in gradle.properties'
+def traktApiKey = hasProperty('traktApiKey') ? traktApiKey : 'provide this in gradle.properties'
+def traktApiSecret = hasProperty('traktApiSecret') ? traktApiSecret : 'provide this in gradle.properties'
 def crashlyticsApiKey = project.hasProperty('crashlyticsApiKey') ? crashlyticsApiKey : System.env.crashlyticsApiKey
 def crashlyticsApiSecret = project.hasProperty('crashlyticsApiSecret') ? crashlyticsApiSecret : System.env.crashlyticsApiSecret
 def signingStoreFile = hasProperty('signingStoreFile') ? signingStoreFile : 'provide this in gradle.properties'
@@ -47,6 +49,8 @@ android {
         def buildTime = instance.getTime()
         buildConfigField "String", "BUILD_TIME", "\"$buildTime\""
         buildConfigField "String", "TMDB_API_KEY", "\"$tmdbApiKey\""
+        buildConfigField "String", "TRAKT_API_KEY", "\"$traktApiKey\""
+        buildConfigField "String", "TRAKT_API_SECRET", "\"$traktApiSecret\""
     }
 
     signingConfigs {
