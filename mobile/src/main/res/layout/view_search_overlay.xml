@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:orientation="horizontal"
+    android:background="@android:color/holo_blue_dark">
+
+    <ImageView
+      android:id="@+id/search_overlay_dismiss"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:src="@drawable/ic_search_dismiss" />
+
+    <EditText
+      android:id="@+id/search_overlay_input"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="100"
+      android:imeOptions="actionSearch"
+      android:inputType="text"
+      android:singleLine="true" />
+
+    <ImageView
+      android:id="@+id/search_overlay_clear_text"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:src="@drawable/ic_search_clear" />
+
+  </LinearLayout>
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/search_overlay_list_suggestions"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="56dp" />
+
+</merge>

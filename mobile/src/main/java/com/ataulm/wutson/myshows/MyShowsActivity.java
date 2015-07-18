@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.ataulm.rv.SpacesItemDecoration;
 import com.ataulm.wutson.R;
@@ -20,10 +21,15 @@ import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.ataulm.wutson.search.SearchOverlay;
+import com.ataulm.wutson.search.SearchSuggestion;
+import com.ataulm.wutson.search.SearchSuggestions;
 import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.shows.TrackedStatus;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -37,12 +43,15 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
     private CompositeSubscription subscriptions;
     private RecyclerView showsListView;
+    private SearchOverlay searchOverlay;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideTitleWhileWeCheckForTrackedShows();
         setContentView(R.layout.activity_my_shows);
+
+        onCreateSearchOverlay();
 
         myShowsDataSet = new MyShowsDataSet();
         showsListView = (RecyclerView) findViewById(R.id.my_shows_list);
@@ -63,22 +72,78 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
         setTitle(null);
     }
 
+    private void onCreateSearchOverlay() {
+        searchOverlay = ((SearchOverlay) findViewById(R.id.search_overlay));
+        searchOverlay.update(dummySearchSuggestions(), new SearchOverlay.SearchListener() {
+            @Override
+            public void onQueryUpdated(String query) {
+                Jabber.toastDisplayer().display("update: " + query);
+            }
+
+            @Override
+            public void onQuerySubmitted(String query) {
+                Jabber.toastDisplayer().display("submit: " + query);
+            }
+        });
+    }
+
+    private SearchSuggestions dummySearchSuggestions() {
+        return new ListSearchSuggestions();
+    }
+
+    private static class ListSearchSuggestions implements SearchSuggestions {
+
+        private static List<SearchSuggestion> HISTORY_SUGGESTIONS = Arrays.asList(
+                searchSuggestionFrom("Arrow", SearchSuggestion.Type.HISTORY),
+                searchSuggestionFrom("Modern Family", SearchSuggestion.Type.HISTORY),
+                searchSuggestionFrom("Doctor Who", SearchSuggestion.Type.HISTORY),
+                searchSuggestionFrom("Flash", SearchSuggestion.Type.HISTORY)
+        );
+
+        private static List<SearchSuggestion> DOC_SUGGESTIONS = Arrays.asList(
+                searchSuggestionFrom("Doctor Who", SearchSuggestion.Type.HISTORY),
+                searchSuggestionFrom("Doc", SearchSuggestion.Type.API_KNOWN_RESULT),
+                searchSuggestionFrom("Doc Corkie", SearchSuggestion.Type.API_KNOWN_RESULT),
+                searchSuggestionFrom("Doctor", SearchSuggestion.Type.WORD_COMPLETION),
+                searchSuggestionFrom("Doctors", SearchSuggestion.Type.API_KNOWN_RESULT)
+        );
+
+        private static SearchSuggestion searchSuggestionFrom(final String name, final SearchSuggestion.Type type) {
+            return new SearchSuggestion() {
+                @Override
+                public String getName() {
+                    return name;
+                }
+
+                @Override
+                public Type getType() {
+                    return type;
+                }
+            };
+        }
+
+        @Override
+        public SearchSuggestion getItem(int position) {
+            return HISTORY_SUGGESTIONS.get(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return HISTORY_SUGGESTIONS.size();
+        }
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.my_shows, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.my_shows_menu_item_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.my_shows_menu_item_search) {
-            SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-            searchView.setIconified(false);
+            searchOverlay.setVisibility(View.VISIBLE);
             return true;
         } else {
             return super.onOptionsItemSelected(item);

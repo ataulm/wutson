@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
+  android:layout_height="match_parent">
 
-  <com.ataulm.wutson.view.AppBarWidget
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-  <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <android.support.v7.widget.RecyclerView
-      android:id="@+id/my_shows_list"
+    <com.ataulm.wutson.view.AppBarWidget
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:paddingLeft="@dimen/my_shows_list_padding_left"
-      android:paddingRight="@dimen/my_shows_list_padding_left" />
+      android:layout_height="wrap_content" />
 
-    <View style="@style/AppBarShadow" />
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-  </FrameLayout>
+      <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_shows_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/my_shows_list_padding_left"
+        android:paddingRight="@dimen/my_shows_list_padding_left" />
 
-</LinearLayout>
+      <View style="@style/AppBarShadow" />
+
+    </FrameLayout>
+  </LinearLayout>
+
+  <com.ataulm.wutson.search.SearchOverlay
+    android:id="@+id/search_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:visibility="gone" />
+
+</merge>
