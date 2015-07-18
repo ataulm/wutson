@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,6 +18,9 @@ import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 import com.ataulm.wutson.search.OnClickSearchTvResult;
+import com.ataulm.wutson.search.SearchOverlay;
+import com.ataulm.wutson.search.SearchSuggestion;
+import com.ataulm.wutson.search.SearchSuggestions;
 import com.ataulm.wutson.shows.myshows.SearchTvResult;
 import com.ataulm.wutson.shows.myshows.SearchTvResults;
 
@@ -29,11 +34,14 @@ public class SearchActivity extends WutsonActivity {
     private Subscription subscription;
     private RecyclerView.Adapter searchResultsAdapter;
     private SearchResultsDataSet dataSet;
+    private SearchOverlay searchOverlay;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        onCreateSearchOverlay();
 
         RecyclerView searchResultsListView = (RecyclerView) findViewById(R.id.search_results_list);
         searchResultsListView.setLayoutManager(new LinearLayoutManager(this));
@@ -43,6 +51,53 @@ public class SearchActivity extends WutsonActivity {
         searchResultsListView.setAdapter(searchResultsAdapter);
 
         handleIntent(getIntent());
+    }
+
+    private void onCreateSearchOverlay() {
+        searchOverlay = ((SearchOverlay) findViewById(R.id.search_overlay));
+        searchOverlay.update(dummySearchSuggestions(), new SearchOverlay.SearchListener() {
+            @Override
+            public void onQueryUpdated(String query) {
+                // TODO: filter search suggestions to ones that match query
+            }
+
+            @Override
+            public void onQuerySubmitted(String query) {
+                navigate().toSearchFor(query);
+                searchOverlay.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private SearchSuggestions dummySearchSuggestions() {
+        // TODO: here we can show search history
+        return new SearchSuggestions() {
+            @Override
+            public SearchSuggestion getItem(int position) {
+                return null;
+            }
+
+            @Override
+            public int getItemCount() {
+                return 0;
+            }
+        };
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.search_menu_item_search) {
+            searchOverlay.setVisibility(View.VISIBLE);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private class OnClick implements OnClickSearchTvResult {
@@ -68,6 +123,7 @@ public class SearchActivity extends WutsonActivity {
     }
 
     private void searchFor(String query) {
+        setTitle(query);
         Observable<SearchTvResults> searchTvResultsObservable = Jabber.searchRepository().searchFor(query);
         subscription = searchTvResultsObservable
                 .subscribeOn(Schedulers.io())

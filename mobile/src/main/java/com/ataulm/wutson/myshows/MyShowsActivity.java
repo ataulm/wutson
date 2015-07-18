@@ -99,7 +99,7 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.my_shows, menu);
+        getMenuInflater().inflate(R.menu.menu_my_shows, menu);
         return true;
     }
 

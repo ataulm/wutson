@@ -83,7 +83,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.show_details, menu);
+        getMenuInflater().inflate(R.menu.menu_show_details, menu);
 
         MenuItem trackMenuItem = menu.findItem(R.id.show_details_menu_item_toggle_track);
         trackedStatusSubscription = dataRepository().getTrackedStatus(getShowId())
