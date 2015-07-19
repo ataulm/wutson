@@ -9,7 +9,7 @@ import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.trakt.GsonShowDetails;
 import com.ataulm.wutson.trakt.GsonShowSeason;
-import com.ataulm.wutson.trakt.GsonShowSeasonsList;
+import com.ataulm.wutson.trakt.GsonShowSeasonList;
 import com.ataulm.wutson.trakt.TraktApi;
 import com.google.gson.Gson;
 
@@ -42,7 +42,7 @@ public class ShowRepository {
         Observable<GsonShowDetails> gsonShowDetailsObservable = Observable.concat(gsonShowDetailsFromDisk(showId), gsonShowDetailsFromNetwork(showId))
                 .first();
 
-        Observable<GsonShowSeasonsList> gsonShowSeasonsObservable = Observable.concat(gsonShowSeasonsFromDisk(showId), gsonShowSeasonsFromNetwork(showId))
+        Observable<GsonShowSeasonList> gsonShowSeasonsObservable = Observable.concat(gsonShowSeasonsFromDisk(showId), gsonShowSeasonsFromNetwork(showId))
                 .first();
 
         return Observable.zip(gsonShowDetailsObservable, gsonShowSeasonsObservable, asShow());
@@ -83,13 +83,13 @@ public class ShowRepository {
         };
     }
 
-    private Observable<GsonShowSeasonsList> gsonShowSeasonsFromDisk(ShowId showId) {
+    private Observable<GsonShowSeasonList> gsonShowSeasonsFromDisk(ShowId showId) {
         return fetchJsonShowSeasonsFrom(jsonRepository, showId)
                 .filter(ignoreEmptyStrings())
-                .map(jsonTo(GsonShowSeasonsList.class, gson));
+                .map(jsonTo(GsonShowSeasonList.class, gson));
     }
 
-    private Observable<GsonShowSeasonsList> gsonShowSeasonsFromNetwork(ShowId showId) {
+    private Observable<GsonShowSeasonList> gsonShowSeasonsFromNetwork(ShowId showId) {
         return traktApi.getShowSeasons(showId.toString())
                 .doOnNext(saveShowSeasonsAsJsonTo(jsonRepository, showId, gson));
     }
@@ -106,29 +106,29 @@ public class ShowRepository {
         });
     }
 
-    private static Action1<GsonShowSeasonsList> saveShowSeasonsAsJsonTo(final JsonRepository jsonRepository, final ShowId showId, final Gson gson) {
-        return new Action1<GsonShowSeasonsList>() {
+    private static Action1<GsonShowSeasonList> saveShowSeasonsAsJsonTo(final JsonRepository jsonRepository, final ShowId showId, final Gson gson) {
+        return new Action1<GsonShowSeasonList>() {
 
             @Override
-            public void call(GsonShowSeasonsList gsonShowSeasonsList) {
-                String json = gson.toJson(gsonShowSeasonsList, GsonShowSeasonsList.class);
+            public void call(GsonShowSeasonList gsonShowSeasonList) {
+                String json = gson.toJson(gsonShowSeasonList, GsonShowSeasonList.class);
                 jsonRepository.writeShowDetails(showId, json);
             }
 
         };
     }
 
-    private static Func2<GsonShowDetails, GsonShowSeasonsList, Show> asShow() {
-        return new Func2<GsonShowDetails, GsonShowSeasonsList, Show>() {
+    private static Func2<GsonShowDetails, GsonShowSeasonList, Show> asShow() {
+        return new Func2<GsonShowDetails, GsonShowSeasonList, Show>() {
             @Override
-            public Show call(GsonShowDetails gsonShowDetails, GsonShowSeasonsList gsonShowSeasonsList) {
+            public Show call(GsonShowDetails gsonShowDetails, GsonShowSeasonList gsonShowSeasonList) {
                 ShowId id = new ShowId(gsonShowDetails.ids.trakt);
                 String title = gsonShowDetails.title;
 
                 URI posterUri = URI.create(gsonShowDetails.images.poster.thumb);
                 URI backdropUri = URI.create(gsonShowDetails.images.poster.medium);
-                List<Show.SeasonSummary> seasonSummaries = new ArrayList<>(gsonShowSeasonsList.size());
-                for (GsonShowSeason gsonShowSeason : gsonShowSeasonsList) {
+                List<Show.SeasonSummary> seasonSummaries = new ArrayList<>(gsonShowSeasonList.size());
+                for (GsonShowSeason gsonShowSeason : gsonShowSeasonList) {
                     Show.SeasonSummary seasonSummary = new Show.SeasonSummary(
                             gsonShowSeason.ids.trakt,
                             id,

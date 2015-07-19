@@ -4,9 +4,11 @@ import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.trakt.GsonPopularShowList;
+import com.ataulm.wutson.trakt.GsonTrendingShowList;
 import com.ataulm.wutson.trakt.TraktApi;
-import com.ataulm.wutson.trakt.gson.GsonTrendingShow;
 import com.ataulm.wutson.trakt.gson.GsonShowSummary;
+import com.ataulm.wutson.trakt.gson.GsonTrendingShow;
 
 import java.net.URI;
 import java.util.List;
@@ -45,7 +47,7 @@ public class DiscoverShowsRepository {
         // TODO: paginate, persist, at least see why BehaviourSubject isn't working
     }
 
-    private static Observable<ShowSummaries> showSummariesFromPopularShowsList(Observable<List<GsonShowSummary>> shows) {
+    private static Observable<ShowSummaries> showSummariesFromPopularShowsList(Observable<GsonPopularShowList> shows) {
         return shows
                 .flatMap(Function.<GsonShowSummary>emitEachElement())
                 .map(asShowSummary())
@@ -53,7 +55,7 @@ public class DiscoverShowsRepository {
                 .map(asShowSummaries());
     }
 
-    private static Observable<ShowSummaries> showSummariesFromTrendingShowsList(Observable<List<GsonTrendingShow>> shows) {
+    private static Observable<ShowSummaries> showSummariesFromTrendingShowsList(Observable<GsonTrendingShowList> shows) {
         return shows
                 .flatMap(Function.<GsonTrendingShow>emitEachElement())
                 .map(extractGsonShowSummary())
