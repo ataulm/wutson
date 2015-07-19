@@ -55,12 +55,7 @@ public class DiscoverShowsRepository {
     private static Observable<ShowSummaries> showSummariesFromTrendingShowsList(Observable<List<GsonTrendingShow>> shows) {
         return shows
                 .flatMap(Function.<GsonTrendingShow>emitEachElement())
-                .map(new Func1<GsonTrendingShow, GsonShow>() {
-                    @Override
-                    public GsonShow call(GsonTrendingShow gsonTrendingShow) {
-                        return gsonTrendingShow.show;
-                    }
-                })
+                .map(extractGsonShowSummary())
                 .map(asShowSummary())
                 .toList()
                 .map(asShowSummaries());
