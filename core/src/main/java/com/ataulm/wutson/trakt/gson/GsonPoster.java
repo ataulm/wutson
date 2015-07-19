@@ -7,7 +7,7 @@ public class GsonPoster {
     @SerializedName("full")
     public final String full;
 
-    @SerializedName("full")
+    @SerializedName("medium")
     public final String medium;
 
     @SerializedName("thumb")

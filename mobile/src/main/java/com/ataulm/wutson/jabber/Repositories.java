@@ -45,7 +45,7 @@ final class Repositories {
             ConfigurationRepository configuration = configuration();
             LocalDataRepository localData = localData();
             Gson gson = gson();
-            discoverShows = new DiscoverShowsRepository(tmdbApi, configuration, localData, gson);
+            discoverShows = new DiscoverShowsRepository(traktApi);
         }
         return discoverShows;
     }

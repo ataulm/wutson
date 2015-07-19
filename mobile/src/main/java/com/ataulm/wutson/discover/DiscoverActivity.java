@@ -11,10 +11,8 @@ import com.ataulm.wutson.rx.LoggingObserver;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.shows.TrackedStatus;
-import com.ataulm.wutson.shows.discover.ShowsInGenre;
+import com.ataulm.wutson.shows.discover.DiscoverShows;
 import com.novoda.landingstrip.LandingStrip;
-
-import java.util.List;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -24,10 +22,9 @@ import static com.ataulm.wutson.jabber.Jabber.dataRepository;
 
 public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowClickListener, OnClickShowSummaryListener {
 
-    private Subscription discoverShowsSubscription;
+    private Subscription subscription;
     private ViewPager viewPager;
-
-    private GenresPagerAdapter adapter;
+    private DiscoverShowsPagerAdapter adapter;
 
     @Override
     protected NavigationDrawerItem getNavigationDrawerItem() {
@@ -40,13 +37,9 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         setTitle(R.string.discover_label);
 
         setContentView(R.layout.activity_discover);
-
         viewPager = (ViewPager) findViewById(R.id.discover_pager_genres);
-        viewPager.setAdapter(adapter = new GenresPagerAdapter(getLayoutInflater(), this));
 
-        ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);
-
-        discoverShowsSubscription = Jabber.discoverShowsRepository().getListOfShowsInGenre()
+        subscription = Jabber.discoverShowsRepository().getDiscoverShows()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
@@ -66,8 +59,8 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
 
     @Override
     protected void onDestroy() {
-        if (!discoverShowsSubscription.isUnsubscribed()) {
-            discoverShowsSubscription.unsubscribe();
+        if (!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
         }
         super.onDestroy();
     }
@@ -93,16 +86,23 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         // TODO: ensure changes like this kick off an onNext to cause the UI to update
     }
 
-    private class Observer extends LoggingObserver<List<ShowsInGenre>> {
+    private class Observer extends LoggingObserver<DiscoverShows> {
 
         private Observer() {
             super(Jabber.log());
         }
 
         @Override
-        public void onNext(List<ShowsInGenre> showsSeparateByGenre) {
-            super.onNext(showsSeparateByGenre);
-            adapter.update(showsSeparateByGenre);
+        public void onNext(DiscoverShows discoverShows) {
+            super.onNext(discoverShows);
+            if (viewPager.getAdapter() == null) {
+                adapter = new DiscoverShowsPagerAdapter(getLayoutInflater());
+                adapter.update(discoverShows);
+                viewPager.setAdapter(adapter);
+                ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);
+            } else {
+                adapter.update(discoverShows);
+            }
         }
 
     }
