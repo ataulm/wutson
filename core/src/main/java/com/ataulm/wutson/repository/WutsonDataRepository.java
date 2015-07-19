@@ -1,38 +1,33 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.shows.Actor;
 import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.episodes.Episodes;
+import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.seasons.Season;
 import com.ataulm.wutson.seasons.Seasons;
+import com.ataulm.wutson.shows.Actor;
 import com.ataulm.wutson.shows.Show;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.shows.TrackedStatus;
 import com.ataulm.wutson.shows.WatchedStatus;
-import com.ataulm.wutson.shows.discover.ShowsInGenre;
 import com.ataulm.wutson.shows.myshows.Watchlist;
 import com.ataulm.wutson.shows.myshows.WatchlistItem;
-import com.ataulm.wutson.rx.Function;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
 import rx.functions.Func1;
-import rx.observables.GroupedObservable;
 
 public class WutsonDataRepository implements DataRepository {
 
     private final TrackedShowsRepository trackedShowsRepo;
     private final ShowRepository showRepo;
-    private final SeasonsRepository seasonsRepo;
 
-    public WutsonDataRepository(TrackedShowsRepository trackedShowsRepo, ShowRepository showRepo, SeasonsRepository seasonsRepo) {
+    public WutsonDataRepository(TrackedShowsRepository trackedShowsRepo, ShowRepository showRepo) {
         this.trackedShowsRepo = trackedShowsRepo;
         this.showRepo = showRepo;
-        this.seasonsRepo = seasonsRepo;
     }
 
     @Override
@@ -139,12 +134,12 @@ public class WutsonDataRepository implements DataRepository {
 
     @Override
     public Observable<Season> getSeason(ShowId showId, int seasonNumber) {
-        return seasonsRepo.getSeason(showId, seasonNumber);
+        return Observable.empty();
     }
 
     @Override
     public Observable<Seasons> getSeasons(ShowId showId) {
-        return seasonsRepo.getSeasons(showId);
+        return showRepo.getSeasons(showId);
     }
 
     @Override

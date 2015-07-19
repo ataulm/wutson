@@ -6,8 +6,7 @@ import android.database.Cursor;
 
 import com.ataulm.wutson.shows.ShowId;
 
-import static com.ataulm.wutson.repository.persistence.DatabaseTable.SEASONS;
-import static com.ataulm.wutson.repository.persistence.DatabaseTable.SHOW_DETAILS;
+import static com.ataulm.wutson.repository.persistence.DatabaseTable.*;
 
 public class SqliteJsonRepository implements JsonRepository {
 
@@ -15,6 +14,44 @@ public class SqliteJsonRepository implements JsonRepository {
 
     public SqliteJsonRepository(ContentResolver contentResolver) {
         this.contentResolver = contentResolver;
+    }
+
+    @Override
+    public String readTrendingShowsList() {
+        String[] projection = {TrendingShowsColumn.JSON.columnName()};
+        Cursor cursor = contentResolver.query(TRENDING_SHOWS.uri(), projection, null, null, null);
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return "";
+        }
+        String json = TrendingShowsColumn.readJsonFrom(cursor);
+        cursor.close();
+        return json;
+    }
+
+    @Override
+    public void writeTrendingShowsList(String json) {
+        ContentValues contentValues = TrendingShowsColumn.write(Timestamp.now().asLong(), json);
+        contentResolver.insert(TRENDING_SHOWS.uri(), contentValues);
+    }
+
+    @Override
+    public String readPopularShowsList() {
+        String[] projection = {PopularShowsColumn.JSON.columnName()};
+        Cursor cursor = contentResolver.query(POPULAR_SHOWS.uri(), projection, null, null, null);
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return "";
+        }
+        String json = PopularShowsColumn.readJsonFrom(cursor);
+        cursor.close();
+        return json;
+    }
+
+    @Override
+    public void writePopularShowsList(String json) {
+        ContentValues contentValues = PopularShowsColumn.write(Timestamp.now().asLong(), json);
+        contentResolver.insert(POPULAR_SHOWS.uri(), contentValues);
     }
 
     @Override

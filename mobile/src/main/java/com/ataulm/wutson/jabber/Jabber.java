@@ -10,8 +10,6 @@ import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.repository.DataRepository;
 import com.ataulm.wutson.shows.discover.DiscoverShowsRepository;
 import com.ataulm.wutson.shows.myshows.SearchRepository;
-import com.ataulm.wutson.tmdb.TmdbApi;
-import com.ataulm.wutson.tmdb.TmdbApiFactory;
 import com.ataulm.wutson.trakt.TraktApi;
 import com.ataulm.wutson.trakt.TraktApiFactory;
 import com.squareup.okhttp.Cache;
@@ -49,9 +47,8 @@ public final class Jabber {
     private static Repositories repositories() {
         if (instance.repositories == null) {
             Client client = newClient();
-            TmdbApi tmdbApi = newTmdbApi(instance.tmdbApiKey, log(), client);
             TraktApi traktApi = newTraktApi(instance.traktApiKey, log(), client);
-            instance.repositories = Repositories.newInstance(instance.context, tmdbApi, traktApi);
+            instance.repositories = Repositories.newInstance(instance.context, traktApi);
         }
         return instance.repositories;
     }
@@ -66,12 +63,6 @@ public final class Jabber {
 
     public static SearchRepository searchRepository() {
         return repositories().search();
-    }
-
-    private static TmdbApi newTmdbApi(String tmdbApiKey, Log log, Client client) {
-        boolean enableLogs = BuildConfig.DEBUG;
-        TmdbApiFactory tmdbApiFactory = TmdbApiFactory.newInstance(tmdbApiKey, client, enableLogs, log);
-        return tmdbApiFactory.createApi();
     }
 
     private static TraktApi newTraktApi(String traktApiKey, Log log, Client client) {

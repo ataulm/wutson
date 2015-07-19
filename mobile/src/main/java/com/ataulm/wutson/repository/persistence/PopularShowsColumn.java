@@ -5,26 +5,20 @@ import android.database.Cursor;
 
 import java.util.Locale;
 
-enum ShowSummariesColumn {
+enum PopularShowsColumn {
 
     CREATED,
-    TMDB_GENRE_ID,
     JSON;
 
-    static ContentValues write(long updatedTimestamp, String tmdbGenreId, String configurationJson) {
+    static ContentValues write(long updatedTimestamp, String json) {
         ContentValues contentValues = new ContentValues(values().length);
         contentValues.put(CREATED.columnName(), updatedTimestamp);
-        contentValues.put(TMDB_GENRE_ID.columnName(), tmdbGenreId);
-        contentValues.put(JSON.columnName(), configurationJson);
+        contentValues.put(JSON.columnName(), json);
         return contentValues;
     }
 
     static long readCreatedFrom(Cursor cursor) {
         return cursor.getLong(cursor.getColumnIndex(CREATED.columnName()));
-    }
-
-    static String readTmdbGenreIdFrom(Cursor cursor) {
-        return cursor.getString(cursor.getColumnIndex(TMDB_GENRE_ID.columnName()));
     }
 
     static String readJsonFrom(Cursor cursor) {

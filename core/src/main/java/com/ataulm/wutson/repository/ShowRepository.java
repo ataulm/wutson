@@ -1,12 +1,11 @@
 package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.repository.persistence.JsonRepository;
-import com.ataulm.wutson.repository.persistence.LocalDataRepository;
+import com.ataulm.wutson.seasons.Seasons;
 import com.ataulm.wutson.shows.Cast;
 import com.ataulm.wutson.shows.Character;
 import com.ataulm.wutson.shows.Show;
 import com.ataulm.wutson.shows.ShowId;
-import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.trakt.GsonShowDetails;
 import com.ataulm.wutson.trakt.GsonShowSeason;
 import com.ataulm.wutson.trakt.GsonShowSeasonList;
@@ -32,7 +31,7 @@ public class ShowRepository {
     private final JsonRepository jsonRepository;
     private final Gson gson;
 
-    public ShowRepository(TraktApi traktApi, JsonRepository jsonRepository, TmdbApi api, LocalDataRepository localDataRepository, ConfigurationRepository configurationRepository, Gson gson) {
+    public ShowRepository(TraktApi traktApi, JsonRepository jsonRepository, Gson gson) {
         this.traktApi = traktApi;
         this.jsonRepository = jsonRepository;
         this.gson = gson;
@@ -150,6 +149,10 @@ public class ShowRepository {
                 );
             }
         };
+    }
+
+    public Observable<Seasons> getSeasons(ShowId showId) {
+        return Observable.empty();
     }
 
 }

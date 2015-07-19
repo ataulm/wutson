@@ -6,9 +6,8 @@ import java.util.Locale;
 
 enum DatabaseTable {
 
-    CONFIGURATION,
-    GENRES,
-    SHOW_SUMMARIES,
+    TRENDING_SHOWS,
+    POPULAR_SHOWS,
     TRACKED_SHOWS,
     SHOW_DETAILS,
     SEASONS;

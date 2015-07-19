@@ -5,15 +5,15 @@ import android.database.Cursor;
 
 import java.util.Locale;
 
-enum ConfigurationColumn {
+enum TrendingShowsColumn {
 
     CREATED,
     JSON;
 
-    static ContentValues write(long updatedTimestamp, String configurationJson) {
+    static ContentValues write(long updatedTimestamp, String json) {
         ContentValues contentValues = new ContentValues(values().length);
         contentValues.put(CREATED.columnName(), updatedTimestamp);
-        contentValues.put(JSON.columnName(), configurationJson);
+        contentValues.put(JSON.columnName(), json);
         return contentValues;
     }
 
@@ -25,7 +25,7 @@ enum ConfigurationColumn {
         return cursor.getString(cursor.getColumnIndex(JSON.columnName()));
     }
 
-    private String columnName() {
+    String columnName() {
         return name().toLowerCase(Locale.UK);
     }
 
