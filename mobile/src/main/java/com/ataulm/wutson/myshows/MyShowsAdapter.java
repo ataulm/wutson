@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.DataSet;
-import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.shows.ShowSummary;
 
 class MyShowsAdapter extends RecyclerView.Adapter<ShowSummaryViewHolder> {

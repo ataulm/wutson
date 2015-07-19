@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName;
 public class GsonTrendingShow {
 
     @SerializedName("show")
-    public final GsonShow show;
+    public final GsonShowSummary show;
 
     @SerializedName("watching")
     public final int watching;
 
-    private GsonTrendingShow(GsonShow show, int watching) {
+    private GsonTrendingShow(GsonShowSummary show, int watching) {
         this.show = show;
         this.watching = watching;
     }

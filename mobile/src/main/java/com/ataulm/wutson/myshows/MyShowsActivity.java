@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.ataulm.rv.SpacesItemDecoration;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;

@@ -1,11 +1,12 @@
 package com.ataulm.wutson.trakt;
 
-import com.ataulm.wutson.trakt.gson.GsonShow;
+import com.ataulm.wutson.trakt.gson.GsonShowSummary;
 import com.ataulm.wutson.trakt.gson.GsonTrendingShow;
 
 import java.util.List;
 
 import retrofit.http.GET;
+import retrofit.http.Path;
 import rx.Observable;
 
 public interface TraktApi {
@@ -14,6 +15,12 @@ public interface TraktApi {
     Observable<List<GsonTrendingShow>> getTrendingShows();
 
     @GET("/shows/popular?extended=images")
-    Observable<List<GsonShow>> getPopularShows();
+    Observable<List<GsonShowSummary>> getPopularShows();
+
+    @GET("/shows/{id}?extended=images,full")
+    Observable<GsonShowDetails> getShowDetails(@Path("id") String showId);
+
+    @GET("/shows/{id}/seasons?extended=images,full")
+    Observable<List<GsonShowSeason>> getShowSeasons(@Path("id") String showId);
 
 }

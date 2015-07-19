@@ -86,7 +86,7 @@ final class Repositories {
 
             TrackedShowsRepository trackedShowsRepo = new TrackedShowsRepository(persistentDataRepo, configurationRepo, gson);
             GenresRepository genresRepo = new GenresRepository(tmdbApi, persistentDataRepo, gson);
-            ShowRepository showRepo = new ShowRepository(tmdbApi, persistentDataRepo, configurationRepo, gson);
+            ShowRepository showRepo = new ShowRepository(traktApi, tmdbApi, persistentDataRepo, configurationRepo, gson);
             SeasonsRepository seasonsRepo = new SeasonsRepository(tmdbApi, persistentDataRepo, configurationRepo, showRepo, gson);
 
             dataRepository = new WutsonDataRepository(trackedShowsRepo, showRepo, seasonsRepo);

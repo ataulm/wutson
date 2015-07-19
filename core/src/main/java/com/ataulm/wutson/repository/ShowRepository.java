@@ -1,16 +1,22 @@
 package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.repository.persistence.LocalDataRepository;
+import com.ataulm.wutson.shows.Cast;
 import com.ataulm.wutson.shows.Character;
+import com.ataulm.wutson.shows.Show;
+import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.tmdb.Configuration;
 import com.ataulm.wutson.tmdb.TmdbApi;
 import com.ataulm.wutson.tmdb.gson.GsonCredits;
 import com.ataulm.wutson.tmdb.gson.GsonTvShow;
+import com.ataulm.wutson.trakt.GsonShowDetails;
+import com.ataulm.wutson.trakt.GsonShowSeason;
+import com.ataulm.wutson.trakt.TraktApi;
 import com.google.gson.Gson;
 
-import java.lang.*;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -18,31 +24,62 @@ import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func2;
 
-import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
-import static com.ataulm.wutson.rx.Function.jsonTo;
-
 public class ShowRepository {
 
+    private final TraktApi traktApi;
     private final TmdbApi api;
     private final LocalDataRepository localDataRepository;
     private final ConfigurationRepository configurationRepository;
     private final Gson gson;
 
-    public ShowRepository(TmdbApi api, LocalDataRepository localDataRepository, ConfigurationRepository configurationRepository, Gson gson) {
+    public ShowRepository(TraktApi traktApi, TmdbApi api, LocalDataRepository localDataRepository, ConfigurationRepository configurationRepository, Gson gson) {
+        this.traktApi = traktApi;
         this.api = api;
         this.localDataRepository = localDataRepository;
         this.configurationRepository = configurationRepository;
         this.gson = gson;
     }
 
-    public Observable<com.ataulm.wutson.shows.Show> getShowDetails(com.ataulm.wutson.shows.ShowId showId) {
-        Observable<Configuration> configurationObservable = configurationRepository.getConfiguration();
-        Observable<GsonTvShow> gsonTvShowObservable = fetchJsonTvShowFrom(localDataRepository, showId)
-                .filter(ignoreEmptyStrings())
-                .map(jsonTo(GsonTvShow.class, gson))
-                .switchIfEmpty(api.getTvShow(showId.toString()).doOnNext(saveTo(localDataRepository, gson, showId)));
+    public Observable<Show> getShowDetails(ShowId showId) {
+        Observable<GsonShowDetails> gsonShowDetailsObservable = traktApi.getShowDetails(showId.toString());
+        Observable<List<GsonShowSeason>> gsonShowSeasonsObservable = traktApi.getShowSeasons(showId.toString());
 
-        return Observable.zip(configurationObservable, gsonTvShowObservable, asShow(showId));
+        // TODO: persist!
+        return Observable.zip(gsonShowDetailsObservable, gsonShowSeasonsObservable, asShow());
+    }
+
+    private static Func2<GsonShowDetails, List<GsonShowSeason>, Show> asShow() {
+        return new Func2<GsonShowDetails, List<GsonShowSeason>, Show>() {
+            @Override
+            public Show call(GsonShowDetails gsonShowDetails, List<GsonShowSeason> gsonShowSeasonList) {
+                ShowId id = new ShowId(gsonShowDetails.ids.trakt);
+                String title = gsonShowDetails.title;
+
+                URI posterUri = URI.create(gsonShowDetails.images.poster.thumb);
+                URI backdropUri = URI.create(gsonShowDetails.images.poster.medium);
+                List<Show.SeasonSummary> seasonSummaries = new ArrayList<>(gsonShowSeasonList.size());
+                for (GsonShowSeason gsonShowSeason : gsonShowSeasonList) {
+                    Show.SeasonSummary seasonSummary = new Show.SeasonSummary(
+                            gsonShowSeason.ids.trakt,
+                            id,
+                            title,
+                            gsonShowSeason.number,
+                            gsonShowSeason.episodeCount,
+                            URI.create(gsonShowDetails.images.poster.medium));
+                    seasonSummaries.add(seasonSummary);
+                }
+
+                return new Show(
+                        id,
+                        title,
+                        gsonShowDetails.overview,
+                        posterUri,
+                        backdropUri,
+                        new Cast(Collections.<Character>emptyList()),
+                        seasonSummaries
+                );
+            }
+        };
     }
 
     private static Action1<GsonTvShow> saveTo(final LocalDataRepository localDataRepository, final Gson gson, final com.ataulm.wutson.shows.ShowId tmdbShowId) {

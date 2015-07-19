@@ -16,11 +16,13 @@ class DiscoverShowsPagerAdapter extends ViewPagerAdapter {
     private static final int SPAN_COUNT = 2;
 
     private final LayoutInflater layoutInflater;
+    private final DiscoverShowSummaryInteractionListener listener;
 
     private DiscoverShows discoverShows;
 
-    DiscoverShowsPagerAdapter(LayoutInflater layoutInflater) {
+    DiscoverShowsPagerAdapter(LayoutInflater layoutInflater, DiscoverShowSummaryInteractionListener listener) {
         this.layoutInflater = layoutInflater;
+        this.listener = listener;
     }
 
     public void update(DiscoverShows discoverShows) {
@@ -34,7 +36,7 @@ class DiscoverShowsPagerAdapter extends ViewPagerAdapter {
         recyclerView.setLayoutManager(new GridLayoutManager(viewGroup.getContext(), SPAN_COUNT));
 
         ShowSummaries showSummaries = discoverShows.getShowSummaries(position);
-        recyclerView.setAdapter(new DiscoverShowAdapter(showSummaries));
+        recyclerView.setAdapter(new DiscoverShowAdapter(showSummaries, listener));
         return recyclerView;
     }
 

@@ -10,9 +10,11 @@ import com.ataulm.wutson.shows.ShowSummaries;
 class DiscoverShowAdapter extends RecyclerView.Adapter<DiscoverShowViewHolder> {
 
     private final ShowSummaries showSummaries;
+    private final DiscoverShowSummaryInteractionListener listener;
 
-    DiscoverShowAdapter(ShowSummaries showSummaries) {
+    DiscoverShowAdapter(ShowSummaries showSummaries, DiscoverShowSummaryInteractionListener listener) {
         this.showSummaries = showSummaries;
+        this.listener = listener;
         super.setHasStableIds(true);
     }
 
@@ -24,7 +26,7 @@ class DiscoverShowAdapter extends RecyclerView.Adapter<DiscoverShowViewHolder> {
     @Override
     public DiscoverShowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        return DiscoverShowViewHolder.inflate(layoutInflater, parent);
+        return DiscoverShowViewHolder.inflate(layoutInflater, parent, listener);
     }
 
     @Override

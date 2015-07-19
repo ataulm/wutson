@@ -6,7 +6,7 @@ import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.trakt.TraktApi;
 import com.ataulm.wutson.trakt.gson.GsonTrendingShow;
-import com.ataulm.wutson.trakt.gson.GsonShow;
+import com.ataulm.wutson.trakt.gson.GsonShowSummary;
 
 import java.net.URI;
 import java.util.List;
@@ -42,11 +42,12 @@ public class DiscoverShowsRepository {
         Observable.zip(popularShowsObservable, trendingShowsObservable, asDiscoverShows())
                 .subscribeOn(Schedulers.io())
                 .subscribe(subject);
+        // TODO: paginate, persist, at least see why BehaviourSubject isn't working
     }
 
-    private static Observable<ShowSummaries> showSummariesFromPopularShowsList(Observable<List<GsonShow>> shows) {
+    private static Observable<ShowSummaries> showSummariesFromPopularShowsList(Observable<List<GsonShowSummary>> shows) {
         return shows
-                .flatMap(Function.<GsonShow>emitEachElement())
+                .flatMap(Function.<GsonShowSummary>emitEachElement())
                 .map(asShowSummary())
                 .toList()
                 .map(asShowSummaries());
@@ -61,23 +62,23 @@ public class DiscoverShowsRepository {
                 .map(asShowSummaries());
     }
 
-    private static Func1<GsonTrendingShow, GsonShow> extractGsonShowSummary() {
-        return new Func1<GsonTrendingShow, GsonShow>() {
+    private static Func1<GsonTrendingShow, GsonShowSummary> extractGsonShowSummary() {
+        return new Func1<GsonTrendingShow, GsonShowSummary>() {
             @Override
-            public GsonShow call(GsonTrendingShow gsonTrendingShow) {
+            public GsonShowSummary call(GsonTrendingShow gsonTrendingShow) {
                 return gsonTrendingShow.show;
             }
         };
     }
 
-    private static Func1<GsonShow, ShowSummary> asShowSummary() {
-        return new Func1<GsonShow, ShowSummary>() {
+    private static Func1<GsonShowSummary, ShowSummary> asShowSummary() {
+        return new Func1<GsonShowSummary, ShowSummary>() {
             @Override
-            public ShowSummary call(GsonShow gsonShow) {
-                ShowId id = new ShowId(gsonShow.ids.trakt);
-                URI posterUri = URI.create(gsonShow.images.poster.thumb);
-                URI backdropUri = URI.create(gsonShow.images.poster.medium);
-                return new ShowSummary(id, gsonShow.title, posterUri, backdropUri);
+            public ShowSummary call(GsonShowSummary gsonShowSummary) {
+                ShowId id = new ShowId(gsonShowSummary.ids.trakt);
+                URI posterUri = URI.create(gsonShowSummary.images.poster.thumb);
+                URI backdropUri = URI.create(gsonShowSummary.images.poster.medium);
+                return new ShowSummary(id, gsonShowSummary.title, posterUri, backdropUri);
             }
         };
     }

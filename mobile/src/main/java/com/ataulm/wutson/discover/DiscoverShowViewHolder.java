@@ -11,18 +11,27 @@ import com.ataulm.wutson.view.ShowSummaryView;
 
 class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
 
-    static DiscoverShowViewHolder inflate(LayoutInflater layoutInflater, ViewGroup parent) {
+    private final DiscoverShowSummaryInteractionListener listener;
+
+    static DiscoverShowViewHolder inflate(LayoutInflater layoutInflater, ViewGroup parent, DiscoverShowSummaryInteractionListener listener) {
         View view = layoutInflater.inflate(R.layout.view_discover_show, parent, false);
-        return new DiscoverShowViewHolder(view);
+        return new DiscoverShowViewHolder(view, listener);
     }
 
-    private DiscoverShowViewHolder(View itemView) {
+    private DiscoverShowViewHolder(View itemView, DiscoverShowSummaryInteractionListener listener) {
         super(itemView);
+        this.listener = listener;
     }
 
-    public void bind(ShowSummary showSummary) {
+    public void bind(final ShowSummary showSummary) {
         ((ShowSummaryView) itemView).setTitle(showSummary.getName());
         ((ShowSummaryView) itemView).setPoster(showSummary.getPosterUri());
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(showSummary);
+            }
+        });
     }
 
 }

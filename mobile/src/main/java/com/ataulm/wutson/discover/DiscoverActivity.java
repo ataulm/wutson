@@ -8,9 +8,7 @@ import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
-import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.ShowSummary;
-import com.ataulm.wutson.shows.TrackedStatus;
 import com.ataulm.wutson.shows.discover.DiscoverShows;
 import com.novoda.landingstrip.LandingStrip;
 
@@ -18,11 +16,10 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.ataulm.wutson.jabber.Jabber.dataRepository;
-
-public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowClickListener, OnClickShowSummaryListener {
+public class DiscoverActivity extends WutsonTopLevelActivity {
 
     private Subscription subscription;
+
     private ViewPager viewPager;
     private DiscoverShowsPagerAdapter adapter;
 
@@ -65,25 +62,13 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         super.onDestroy();
     }
 
-    @Override
-    public void onClick(ShowSummary showSummary) {
-        navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
-    }
+    private class ClickListener implements DiscoverShowSummaryInteractionListener {
 
-    @Override
-    public void onClickStopTracking(ShowSummary showSummary) {
-        Jabber.dataRepository().setTrackedStatus(showSummary.getId(), TrackedStatus.NOT_TRACKED);
-    }
+        @Override
+        public void onClick(ShowSummary showSummary) {
+            navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
+        }
 
-    @Override
-    public void onClickTrack(ShowSummary showSummary) {
-        Jabber.dataRepository().setTrackedStatus(showSummary.getId(), TrackedStatus.TRACKED);
-    }
-
-    @Override
-    public void onClickToggleTrackedStatus(ShowId showId) {
-        dataRepository().toggleTrackedStatus(showId);
-        // TODO: ensure changes like this kick off an onNext to cause the UI to update
     }
 
     private class Observer extends LoggingObserver<DiscoverShows> {
@@ -96,7 +81,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         public void onNext(DiscoverShows discoverShows) {
             super.onNext(discoverShows);
             if (viewPager.getAdapter() == null) {
-                adapter = new DiscoverShowsPagerAdapter(getLayoutInflater());
+                adapter = new DiscoverShowsPagerAdapter(getLayoutInflater(), new ClickListener());
                 adapter.update(discoverShows);
                 viewPager.setAdapter(adapter);
                 ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);

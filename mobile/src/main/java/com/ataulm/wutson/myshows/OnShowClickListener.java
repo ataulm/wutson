@@ -1,4 +1,4 @@
-package com.ataulm.wutson.discover;
+package com.ataulm.wutson.myshows;
 
 import com.ataulm.wutson.shows.ShowSummary;
 

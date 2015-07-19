@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.discover.OnShowClickListener;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.view.ShowSummaryView;
 

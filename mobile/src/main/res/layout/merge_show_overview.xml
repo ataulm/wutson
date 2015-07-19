@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
+<!--TODO: change to recyclerview-->
       <LinearLayout
         android:id="@+id/show_view_cast"
         style="@style/ShowDetails.Cast.View"
