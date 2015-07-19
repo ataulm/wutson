@@ -4,12 +4,13 @@ import android.content.Context;
 
 import com.ataulm.wutson.repository.ConfigurationRepository;
 import com.ataulm.wutson.repository.DataRepository;
-import com.ataulm.wutson.repository.GenresRepository;
 import com.ataulm.wutson.repository.SeasonsRepository;
 import com.ataulm.wutson.repository.ShowRepository;
 import com.ataulm.wutson.repository.TrackedShowsRepository;
 import com.ataulm.wutson.repository.WutsonDataRepository;
+import com.ataulm.wutson.repository.persistence.JsonRepository;
 import com.ataulm.wutson.repository.persistence.LocalDataRepository;
+import com.ataulm.wutson.repository.persistence.SqliteJsonRepository;
 import com.ataulm.wutson.repository.persistence.SqliteLocalDataRepository;
 import com.ataulm.wutson.shows.discover.DiscoverShowsRepository;
 import com.ataulm.wutson.shows.myshows.SearchRepository;
@@ -28,6 +29,7 @@ final class Repositories {
     private DiscoverShowsRepository discoverShows;
     private ConfigurationRepository configuration;
     private LocalDataRepository localData;
+    private JsonRepository jsonRepository;
     private Gson gson;
 
     static Repositories newInstance(Context context, TmdbApi tmdbApi, TraktApi traktApi) {
@@ -42,9 +44,6 @@ final class Repositories {
 
     public DiscoverShowsRepository discoverShows() {
         if (discoverShows == null) {
-            ConfigurationRepository configuration = configuration();
-            LocalDataRepository localData = localData();
-            Gson gson = gson();
             discoverShows = new DiscoverShowsRepository(traktApi);
         }
         return discoverShows;
@@ -71,6 +70,13 @@ final class Repositories {
         return localData;
     }
 
+    private JsonRepository jsonRepository() {
+        if (jsonRepository == null) {
+            jsonRepository = new SqliteJsonRepository(context.getContentResolver());
+        }
+        return jsonRepository;
+    }
+
     private Gson gson() {
         if (gson == null) {
             gson = new Gson();
@@ -82,11 +88,11 @@ final class Repositories {
         if (dataRepository == null) {
             Gson gson = gson();
             LocalDataRepository persistentDataRepo = localData();
+            JsonRepository jsonRepository = jsonRepository();
             ConfigurationRepository configurationRepo = configuration();
 
             TrackedShowsRepository trackedShowsRepo = new TrackedShowsRepository(persistentDataRepo, configurationRepo, gson);
-            GenresRepository genresRepo = new GenresRepository(tmdbApi, persistentDataRepo, gson);
-            ShowRepository showRepo = new ShowRepository(traktApi, tmdbApi, persistentDataRepo, configurationRepo, gson);
+            ShowRepository showRepo = new ShowRepository(traktApi, jsonRepository, tmdbApi, persistentDataRepo, configurationRepo, gson);
             SeasonsRepository seasonsRepo = new SeasonsRepository(tmdbApi, persistentDataRepo, configurationRepo, showRepo, gson);
 
             dataRepository = new WutsonDataRepository(trackedShowsRepo, showRepo, seasonsRepo);

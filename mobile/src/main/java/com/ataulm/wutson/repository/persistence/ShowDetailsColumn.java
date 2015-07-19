@@ -8,14 +8,14 @@ import java.util.Locale;
 enum ShowDetailsColumn {
 
     CREATED,
-    TMDB_SHOW_ID,
+    TRAKT_SHOW_ID,
     JSON;
 
-    static ContentValues write(long updatedTimestamp, String tmdbShowId, String showDetailsJson) {
+    static ContentValues write(long updatedTimestamp, String traktShowId, String json) {
         ContentValues contentValues = new ContentValues(values().length);
         contentValues.put(CREATED.columnName(), updatedTimestamp);
-        contentValues.put(TMDB_SHOW_ID.columnName(), tmdbShowId);
-        contentValues.put(JSON.columnName(), showDetailsJson);
+        contentValues.put(TRAKT_SHOW_ID.columnName(), traktShowId);
+        contentValues.put(JSON.columnName(), json);
         return contentValues;
     }
 

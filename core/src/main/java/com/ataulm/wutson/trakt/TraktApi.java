@@ -20,7 +20,7 @@ public interface TraktApi {
     @GET("/shows/{id}?extended=images,full")
     Observable<GsonShowDetails> getShowDetails(@Path("id") String showId);
 
-    @GET("/shows/{id}/seasons?extended=images,full")
-    Observable<List<GsonShowSeason>> getShowSeasons(@Path("id") String showId);
+    @GET("/shows/{id}/seasons?extended=images,episodes,full")
+    Observable<GsonShowSeasonsList> getShowSeasons(@Path("id") String showId);
 
 }

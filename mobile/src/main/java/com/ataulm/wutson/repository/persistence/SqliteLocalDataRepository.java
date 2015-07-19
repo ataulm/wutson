@@ -104,8 +104,8 @@ public class SqliteLocalDataRepository implements LocalDataRepository {
     @Override
     public String readJsonSeason(ShowId tmdbShowId, int seasonNumber) {
         String[] projection = {SeasonColumn.JSON.columnName()};
-        String selection = SeasonColumn.TMDB_SHOW_ID.columnName() + "=? AND " + SeasonColumn.SEASON_NUMBER.columnName() + "=?";
-        String[] selectionArgs = {tmdbShowId.toString(), String.valueOf(seasonNumber)};
+        String selection = SeasonColumn.TRAKT_SHOW_ID.columnName() + "=?";
+        String[] selectionArgs = {tmdbShowId.toString()};
         Cursor cursor = contentResolver.query(SEASONS.uri(), projection, selection, selectionArgs, null);
 
         if (!cursor.moveToFirst()) {
@@ -119,14 +119,14 @@ public class SqliteLocalDataRepository implements LocalDataRepository {
 
     @Override
     public void writeJsonSeason(ShowId tmdbShowId, int seasonNumber, String json) {
-        ContentValues contentValues = SeasonColumn.write(Timestamp.now().asLong(), tmdbShowId.toString(), seasonNumber, json);
+        ContentValues contentValues = SeasonColumn.write(Timestamp.now().asLong(), tmdbShowId.toString(), json);
         contentResolver.insert(SEASONS.uri(), contentValues);
     }
 
     @Override
     public String readJsonShowDetails(ShowId tmdbShowId) {
         String[] projection = {ShowDetailsColumn.JSON.columnName()};
-        String selection = ShowDetailsColumn.TMDB_SHOW_ID.columnName() + "=?";
+        String selection = ShowDetailsColumn.TRAKT_SHOW_ID.columnName() + "=?";
         String[] selectionArgs = {tmdbShowId.toString()};
         Cursor cursor = contentResolver.query(SHOW_DETAILS.uri(), projection, selection, selectionArgs, null);
 

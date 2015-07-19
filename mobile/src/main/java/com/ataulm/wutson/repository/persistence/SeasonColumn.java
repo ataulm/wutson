@@ -8,16 +8,14 @@ import java.util.Locale;
 enum SeasonColumn {
 
     CREATED,
-    TMDB_SHOW_ID,
-    SEASON_NUMBER,
+    TRAKT_SHOW_ID,
     JSON;
 
-    static ContentValues write(long updatedTimestamp, String tmdbShowId, int seasonNumber, String showDetailsJson) {
+    static ContentValues write(long updatedTimestamp, String showId, String json) {
         ContentValues contentValues = new ContentValues(values().length);
         contentValues.put(CREATED.columnName(), updatedTimestamp);
-        contentValues.put(TMDB_SHOW_ID.columnName(), tmdbShowId);
-        contentValues.put(SEASON_NUMBER.columnName(), seasonNumber);
-        contentValues.put(JSON.columnName(), showDetailsJson);
+        contentValues.put(TRAKT_SHOW_ID.columnName(), showId);
+        contentValues.put(JSON.columnName(), json);
         return contentValues;
     }
 
