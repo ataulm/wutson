@@ -8,8 +8,7 @@ public interface SearchSuggestion {
 
     enum Type {
         HISTORY,
-        WORD_COMPLETION,
-        API_KNOWN_RESULT
+        API
     }
 
 }

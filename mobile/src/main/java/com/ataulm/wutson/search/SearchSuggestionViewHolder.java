@@ -32,9 +32,10 @@ final class SearchSuggestionViewHolder extends RecyclerView.ViewHolder {
     void bind(SearchSuggestion searchSuggestion) {
         if (searchSuggestion.getType() == SearchSuggestion.Type.HISTORY) {
             typeImageView.setImageResource(R.drawable.ic_search_history);
-            typeImageView.setVisibility(View.VISIBLE);
+//            typeImageView.setVisibility(View.VISIBLE);
         } else {
-            typeImageView.setVisibility(View.GONE);
+            typeImageView.setImageResource(R.drawable.ic_action_star);
+//            typeImageView.setVisibility(View.GONE);
         }
         nameTextView.setText(searchSuggestion.getName());
     }

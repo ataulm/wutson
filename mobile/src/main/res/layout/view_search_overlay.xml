@@ -25,10 +25,17 @@
       android:singleLine="true" />
 
     <ImageView
+      android:id="@+id/search_overlay_voice_search"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:src="@drawable/ic_search_voice" />
+
+    <ImageView
       android:id="@+id/search_overlay_clear_text"
       android:layout_width="48dp"
       android:layout_height="48dp"
-      android:src="@drawable/ic_search_clear" />
+      android:src="@drawable/ic_search_clear"
+      android:visibility="gone" />
 
   </LinearLayout>
 

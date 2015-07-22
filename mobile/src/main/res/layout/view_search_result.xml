@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="200dp"
+  android:foreground="@drawable/search_result_foreground"
+  android:focusable="true">
 
-  <com.ataulm.wutson.view.WutsonTextView
-    android:id="@+id/search_result_text_name"
+  <ImageView
+    android:id="@+id/search_result_image_poster"
+    android:layout_width="match_parent"
+    android:layout_height="152dp"
+    android:background="@drawable/wire_img_search_result_poster_background" />
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="48dp"
-    android:textColor="@color/white" />
+    android:layout_gravity="bottom"
+    android:background="@android:color/white"
+    android:orientation="horizontal">
 
-</LinearLayout>
+    <com.ataulm.wutson.view.WutsonTextView
+      android:id="@+id/search_result_text_name"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="100"
+      android:minHeight="48dp"
+      android:textColor="@color/black" />
+
+    <ImageView
+      android:id="@+id/search_result_button_track"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:background="@drawable/wire_ic_track" />
+  </LinearLayout>
+
+</FrameLayout>

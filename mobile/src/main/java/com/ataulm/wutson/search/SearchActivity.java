@@ -3,6 +3,7 @@ package com.ataulm.wutson.search;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -37,7 +38,7 @@ public class SearchActivity extends WutsonActivity {
         onCreateSearchOverlay();
 
         searchResultsView = (RecyclerView) findViewById(R.id.search_results_list);
-        searchResultsView.setLayoutManager(new LinearLayoutManager(this));
+        searchResultsView.setLayoutManager(new GridLayoutManager(this, 2));
 
         handleIntent(getIntent());
     }
@@ -51,7 +52,7 @@ public class SearchActivity extends WutsonActivity {
 
     private void onCreateSearchOverlay() {
         searchOverlay = ((SearchOverlay) findViewById(R.id.search_overlay));
-        searchOverlay.update(dummySearchSuggestions(), new SearchOverlay.SearchListener() {
+        searchOverlay.setSearchListener(new SearchOverlay.SearchListener() {
             @Override
             public void onQueryUpdated(String query) {
                 // TODO: filter search suggestions to ones that match query
@@ -112,7 +113,7 @@ public class SearchActivity extends WutsonActivity {
     }
 
     private void searchFor(String query) {
-        setTitle(query);
+        setTitle("\"" + query + "\"");
         Observable<SearchTvResults> searchTvResultsObservable = Jabber.searchRepository().searchFor(query);
         subscription = searchTvResultsObservable
                 .subscribeOn(Schedulers.io())
