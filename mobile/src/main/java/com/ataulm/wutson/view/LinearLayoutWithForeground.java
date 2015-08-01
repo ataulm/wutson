@@ -7,9 +7,10 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.ataulm.wutson.R;
-
 public class LinearLayoutWithForeground extends LinearLayout {
+
+    private static final int[] EXPECTED_ATTRS = {android.R.attr.foreground};
+    private static final int INDEX_ANDROID_FOREGROUND = 0;
 
     private static final int INVALID_FOREGROUND_ID = 0;
 
@@ -21,12 +22,9 @@ public class LinearLayoutWithForeground extends LinearLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LayoutWithForeground);
-        if (a == null) {
-            return;
-        }
+        TypedArray a = context.obtainStyledAttributes(attrs, EXPECTED_ATTRS);
         try {
-            int resourceId = a.getResourceId(R.styleable.LayoutWithForeground_foreground, INVALID_FOREGROUND_ID);
+            int resourceId = a.getResourceId(INDEX_ANDROID_FOREGROUND, INVALID_FOREGROUND_ID);
             if (resourceId == INVALID_FOREGROUND_ID) {
                 return;
             }

@@ -24,8 +24,4 @@
 
   <attr name="aspectRatio" format="string" />
 
-  <declare-styleable name="LayoutWithForeground">
-    <attr name="foreground" format="reference" />
-  </declare-styleable>
-
 </resources>
