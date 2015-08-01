@@ -81,7 +81,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
         public void onNext(DiscoverShows discoverShows) {
             super.onNext(discoverShows);
             if (viewPager.getAdapter() == null) {
-                adapter = new DiscoverShowsPagerAdapter(getLayoutInflater(), new ClickListener());
+                adapter = DiscoverShowsPagerAdapter.newInstance(DiscoverActivity.this, new ClickListener());
                 adapter.update(discoverShows);
                 viewPager.setAdapter(adapter);
                 ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);
