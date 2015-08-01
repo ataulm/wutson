@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="200dp"
+  android:layout_height="wrap_content"
   android:foreground="@drawable/search_result_foreground"
+  android:background="@android:color/holo_orange_light"
   android:focusable="true">
 
-  <ImageView
+  <com.ataulm.wutson.view.AspectRatioImageView
     android:id="@+id/search_result_image_poster"
     android:layout_width="match_parent"
-    android:layout_height="152dp"
-    android:background="@drawable/wire_img_search_result_poster_background" />
+    android:layout_height="wrap_content"
+    app:aspectRatio="174:154"
+    android:scaleType="centerCrop" />
 
   <LinearLayout
+    android:id="@+id/search_result_overlay"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:background="@android:color/white"
+    android:layout_height="72dp"
+    android:background="@android:color/black"
     android:orientation="horizontal">
 
     <com.ataulm.wutson.view.WutsonTextView
       android:id="@+id/search_result_text_name"
       android:layout_width="0dp"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="16dp"
       android:layout_weight="100"
-      android:minHeight="48dp"
-      android:textColor="@color/black" />
+      android:textSize="16sp"
+      app:textFont="robotoRegular"
+      android:textColor="#deffffff"/>
 
     <ImageView
       android:id="@+id/search_result_button_track"
       android:layout_width="48dp"
       android:layout_height="48dp"
-      android:background="@drawable/wire_ic_track" />
+      android:layout_gravity="center_vertical"
+      android:src="@drawable/ic_search_results_star_empty" />
   </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

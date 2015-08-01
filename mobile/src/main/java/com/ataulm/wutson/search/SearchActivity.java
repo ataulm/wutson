@@ -9,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import com.ataulm.rv.SpacesItemDecoration;
 import com.ataulm.wutson.Log;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.jabber.Jabber;
@@ -29,6 +31,7 @@ public class SearchActivity extends WutsonActivity {
     private SearchResultsAdapter searchResultsAdapter;
     private SearchOverlay searchOverlay;
     private RecyclerView searchResultsView;
+    private TextView titleView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,9 +41,16 @@ public class SearchActivity extends WutsonActivity {
         onCreateSearchOverlay();
 
         searchResultsView = (RecyclerView) findViewById(R.id.search_results_list);
+        titleView = (TextView) findViewById(R.id.search_title);
         searchResultsView.setLayoutManager(new GridLayoutManager(this, 2));
+        searchResultsView.addItemDecoration(SpacesItemDecoration.newInstance(4, 4, 2));
 
         handleIntent(getIntent());
+    }
+
+    @Override
+    protected boolean hasNoAppBar() {
+        return true;
     }
 
     private void handleIntent(Intent intent) {
@@ -113,7 +123,7 @@ public class SearchActivity extends WutsonActivity {
     }
 
     private void searchFor(String query) {
-        setTitle("\"" + query + "\"");
+        titleView.setText(query);
         Observable<SearchTvResults> searchTvResultsObservable = Jabber.searchRepository().searchFor(query);
         subscription = searchTvResultsObservable
                 .subscribeOn(Schedulers.io())

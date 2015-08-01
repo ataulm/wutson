@@ -23,6 +23,9 @@ public abstract class WutsonActivity extends ActionBarActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        if (hasNoAppBar()) {
+            return;
+        }
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         if (toolbar == null) {
@@ -36,6 +39,9 @@ public abstract class WutsonActivity extends ActionBarActivity {
     }
 
     protected void setAppBar(Toolbar toolbar) {
+        if (hasNoAppBar()) {
+            return;
+        }
         toolbar.setNavigationIcon(getNavigationIcon());
         super.setSupportActionBar(toolbar);
     }
@@ -66,6 +72,10 @@ public abstract class WutsonActivity extends ActionBarActivity {
     @Override
     public ActionBar getActionBar() {
         throw new IllegalStateException("I thought we were using support android.support.v7.widget.Toolbar");
+    }
+
+    protected boolean hasNoAppBar() {
+        return false;
     }
 
 }
