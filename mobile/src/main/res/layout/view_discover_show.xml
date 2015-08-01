@@ -10,7 +10,7 @@
 
   <com.ataulm.wutson.view.AspectRatioImageView
     android:id="@+id/discover_show_image_poster"
-    style="Discover.Show.Poster"
+    style="@style/Discover.Show.Poster"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 
