@@ -1,7 +1,7 @@
 package com.ataulm.wutson.discover;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,13 +18,13 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
 
-    // TODO: migrate to resources
-    private static final int DEFAULT_OVERLAY_BACKGROUND_COLOR = Color.BLACK;
-
     private final View itemView;
     private final TextView nameTextView;
     private final ImageView posterImageView;
     private final View overlay;
+
+    @ColorInt
+    private final int defaultOverlayBackgroundColor;
 
     private final DiscoverShowSummaryInteractionListener listener;
 
@@ -34,16 +34,21 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView = (TextView) view.findViewById(R.id.discover_show_text_name);
         ImageView posterImageView = (ImageView) view.findViewById(R.id.discover_show_image_poster);
         View overlay = view.findViewById(R.id.discover_show_overlay);
-        return new DiscoverShowViewHolder(view, nameTextView, posterImageView, overlay, listener);
+
+        int defaultOverlayBackgroundColor = parent.getResources().getColor(R.color.discover_show_overlay_background);
+        return new DiscoverShowViewHolder(view, nameTextView, posterImageView, overlay, defaultOverlayBackgroundColor, listener);
     }
 
-    private DiscoverShowViewHolder(View itemView, TextView nameTextView, ImageView posterImageView, View overlay, DiscoverShowSummaryInteractionListener listener) {
+    private DiscoverShowViewHolder(View itemView, TextView nameTextView, ImageView posterImageView, View overlay,
+                                   @ColorInt int defaultOverlayBackgroundColor,
+                                   DiscoverShowSummaryInteractionListener listener) {
         super(itemView);
         this.itemView = itemView;
         this.nameTextView = nameTextView;
         this.posterImageView = posterImageView;
         this.overlay = overlay;
 
+        this.defaultOverlayBackgroundColor = defaultOverlayBackgroundColor;
         this.listener = listener;
     }
 
@@ -60,7 +65,7 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void loadImage(final ShowSummary showSummary) {
-        overlay.setBackgroundColor(DEFAULT_OVERLAY_BACKGROUND_COLOR);
+        overlay.setBackgroundColor(defaultOverlayBackgroundColor);
         overlay.setTag(R.id.discover_show_view_tag, showSummary.getId());
 
         posterImageView.setImageBitmap(null);
@@ -92,7 +97,7 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
             if (showIdHasChanged()) {
                 return;
             }
-            int fallbackColor = DEFAULT_OVERLAY_BACKGROUND_COLOR;
+            int fallbackColor = defaultOverlayBackgroundColor;
             int generatedColor = palette.getDarkMutedColor(fallbackColor);
             overlay.setBackgroundColor(generatedColor);
         }

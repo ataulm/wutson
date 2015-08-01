@@ -5,4 +5,6 @@
   <color name="discover_show_foreground_focused">@color/black_25pc</color>
   <color name="discover_show_foreground_default">@color/transparent</color>
 
+  <color name="discover_show_overlay_background">@color/black</color>
+
 </resources>

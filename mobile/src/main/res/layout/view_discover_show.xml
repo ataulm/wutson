@@ -18,7 +18,7 @@
     android:id="@+id/discover_show_overlay"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:background="@android:color/black"
+    android:background="@color/discover_show_overlay_background"
     android:orientation="horizontal">
 
     <com.ataulm.wutson.view.WutsonTextView
