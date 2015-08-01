@@ -18,11 +18,13 @@ final class Repositories {
     private final Context context;
     private final TraktApi traktApi;
 
-    private WutsonDataRepository dataRepository;
-    private SearchRepository searchRepository;
     private DiscoverShowsRepository discoverShows;
+    private SearchRepository searchRepository;
     private JsonRepository jsonRepository;
     private Gson gson;
+
+    @Deprecated // TODO no more super repo! Aim to get rid of this in favour of a more specific repos - MyShowsRepository, TraktRepo?
+    private WutsonDataRepository dataRepository;
 
     static Repositories newInstance(Context context, TraktApi traktApi) {
         return new Repositories(context.getApplicationContext(), traktApi);
