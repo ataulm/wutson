@@ -50,7 +50,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
         if (viewPager.getCurrentItem() != 0) {
             viewPager.setCurrentItem(0);
         } else {
-            navigate().toMyShows();
+            super.onBackPressed();
         }
     }
 

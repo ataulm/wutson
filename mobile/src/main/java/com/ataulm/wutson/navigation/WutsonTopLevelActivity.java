@@ -1,18 +1,18 @@
 package com.ataulm.wutson.navigation;
 
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.jabber.Jabber;
 
 public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
-    private static final int DRAWER_GRAVITY = Gravity.START;
+    private static final int DRAWER_GRAVITY = GravityCompat.START;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -51,9 +51,6 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
                 }
 
                 switch (item) {
-                    case MY_SHOWS:
-                        navigate().toMyShows();
-                        break;
                     case DISCOVER_SHOWS:
                         navigate().toDiscover();
                         break;
@@ -102,6 +99,7 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
     /**
      * Closes the navigation drawer if it's open.
+     *
      * @return true if navigation drawer was successfully closed, false if it wasn't open anyway
      */
     protected boolean closeNavigationDrawer() {

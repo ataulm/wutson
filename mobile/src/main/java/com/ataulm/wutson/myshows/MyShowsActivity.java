@@ -194,7 +194,8 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
     @Override
     protected NavigationDrawerItem getNavigationDrawerItem() {
-        return NavigationDrawerItem.MY_SHOWS;
+        // TODO: replace with NavDrawerItem when it's back in
+        return null;
     }
 
     @Override
