@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#eeeeee">
 
-    <com.ataulm.wutson.view.AppBarWidget
+    <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="56dp"
+      android:orientation="horizontal"
+      >
+
+      <ImageView
+        android:id="@+id/search_overlay_dismiss"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="4dp"
+        android:src="@drawable/ic_search_back" />
+
+      <com.ataulm.wutson.view.WutsonTextView
+        android:id="@+id/search_title"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="100"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        android:background="@null"
+        app:textFont="robotoRegular"
+        android:textColor="@color/black"
+        android:ellipsize="end"
+        android:singleLine="true" />
+
+      <ImageView
+        android:id="@+id/search_overlay_clear_text"
+        android:layout_width="48dp"
+        android:layout_margin="4dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_search_clear" />
+
+    </LinearLayout>
 
     <FrameLayout
       android:layout_width="match_parent"
@@ -19,7 +53,10 @@
       <android.support.v7.widget.RecyclerView
         android:id="@+id/search_results_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingLeft="4dp"
+        android:paddingTop="8dp"
+        android:paddingRight="4dp"/>
 
       <View style="@style/AppBarShadow" />
 

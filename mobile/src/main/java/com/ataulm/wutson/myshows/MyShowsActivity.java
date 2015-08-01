@@ -23,6 +23,10 @@ import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.shows.TrackedStatus;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,6 +35,27 @@ import rx.subscriptions.CompositeSubscription;
 
 public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowClickListener {
 
+    private static final List<String> SEARCH_HISTORY = Arrays.asList("lost", "arrow", "modern family", "suits", "lost in oz");
+    private static final List<String> API_MATCHES = Arrays.asList(
+            "Lost",
+            "Lost Girl",
+            "Lost in Oz",
+            "The Lost Soul",
+            "The Lost World",
+            "Lost in Space",
+            "The Lost Treasure of Aquila",
+            "Lost Universe",
+            "Lost Christmas",
+            "Edens Lost",
+            "Lost Highway",
+            "Lost Souls",
+            "Get Lost!",
+            "Lost Tapes",
+            "Paradise Lost",
+            "Lost Worlds",
+            "Heaven's Lost Property",
+            "Lost in Austen");
+    private static final SearchSuggestions SEARCH_SUGGESTIONS_FROM_DUMMY_HISTORY = createSearchSuggestionsFrom(SEARCH_HISTORY, SearchSuggestion.Type.HISTORY);
     private MyShowsAdapter myShowsAdapter;
     private MyShowsDataSet myShowsDataSet;
 
@@ -67,31 +92,80 @@ public class MyShowsActivity extends WutsonTopLevelActivity implements OnShowCli
 
     private void onCreateSearchOverlay() {
         searchOverlay = ((SearchOverlay) findViewById(R.id.search_overlay));
-        searchOverlay.update(dummySearchSuggestions(), new SearchOverlay.SearchListener() {
+        searchOverlay.update(SEARCH_SUGGESTIONS_FROM_DUMMY_HISTORY);
+        searchOverlay.setSearchListener(new SearchOverlay.SearchListener() {
             @Override
             public void onQueryUpdated(String query) {
-                // TODO: filter search suggestions to ones that match query
+                if (query.isEmpty()) {
+                    searchOverlay.update(searchHistoryFilteredBy(query, SEARCH_HISTORY, SearchSuggestion.Type.HISTORY));
+                } else {
+                    SearchSuggestions searchSuggestions = searchHistoryFilteredBy(query, SEARCH_HISTORY, SearchSuggestion.Type.HISTORY);
+                    SearchSuggestions apiSearchSuggestions = searchHistoryFilteredBy(query, API_MATCHES, SearchSuggestion.Type.API);
+                    searchOverlay.update(concat(searchSuggestions, apiSearchSuggestions));
+                }
             }
 
             @Override
             public void onQuerySubmitted(String query) {
                 navigate().toSearchFor(query);
                 searchOverlay.setVisibility(View.GONE);
+                Jabber.toastDisplayer().display("onQuerySubmit");
             }
         });
     }
 
-    private SearchSuggestions dummySearchSuggestions() {
-        // TODO: here we can show search history
+    private SearchSuggestions searchHistoryFilteredBy(String query, List<String> searchTerms, SearchSuggestion.Type type) {
+        final List<String> filteredList = new ArrayList<>();
+        for (String suggestion : searchTerms) {
+            if (suggestion.toLowerCase(Locale.UK).contains(query.toLowerCase(Locale.UK))) {
+                filteredList.add(suggestion);
+            }
+        }
+        return createSearchSuggestionsFrom(filteredList, type);
+    }
+
+    private SearchSuggestions concat(SearchSuggestions... searchSuggestionses) {
+        final List<SearchSuggestion> searchSuggestions = new ArrayList<>();
+        for (SearchSuggestions s : searchSuggestionses) {
+            for (int i = 0; i < s.getItemCount(); i++) {
+                SearchSuggestion item = s.getItem(i);
+                searchSuggestions.add(item);
+            }
+        }
         return new SearchSuggestions() {
             @Override
             public SearchSuggestion getItem(int position) {
-                return null;
+                return searchSuggestions.get(position);
             }
 
             @Override
             public int getItemCount() {
-                return 0;
+                return searchSuggestions.size();
+            }
+        };
+    }
+
+    private static SearchSuggestions createSearchSuggestionsFrom(final List<String> filteredList, final SearchSuggestion.Type type) {
+        return new SearchSuggestions() {
+            @Override
+            public SearchSuggestion getItem(final int position) {
+                return new SearchSuggestion() {
+                    @Override
+                    public String getName() {
+                        return filteredList.get(position);
+                    }
+
+                    @Override
+                    public Type getType() {
+                        return type;
+                    }
+                };
+
+            }
+
+            @Override
+            public int getItemCount() {
+                return filteredList.size();
             }
         };
     }

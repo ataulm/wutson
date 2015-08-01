@@ -14,12 +14,15 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.jabber.Jabber;
 
 public class SearchOverlay extends FrameLayout {
 
     private EditText inputEditText;
     private RecyclerView searchSuggestionsRecyclerView;
     private SearchSuggestionAdapter suggestionsAdapter;
+    private View voiceSearchButton;
+    private View clearTextButton;
 
     public SearchOverlay(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -38,14 +41,23 @@ public class SearchOverlay extends FrameLayout {
             @Override
             public void onClick(View v) {
                 dismissSearchOverlay();
+                Jabber.toastDisplayer().display("onDismissSearchOverlay");
             }
         });
         inputEditText = (EditText) findViewById(R.id.search_overlay_input);
-        View clearTextButton = findViewById(R.id.search_overlay_clear_text);
+        clearTextButton = findViewById(R.id.search_overlay_clear_text);
+        voiceSearchButton = findViewById(R.id.search_overlay_voice_search);
+        voiceSearchButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Jabber.toastDisplayer().display("onVoiceSearch click");
+            }
+        });
         clearTextButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 clearQuery();
+                Jabber.toastDisplayer().display("onClearQuery click");
             }
         });
         searchSuggestionsRecyclerView = (RecyclerView) findViewById(R.id.search_overlay_list_suggestions);
@@ -61,6 +73,24 @@ public class SearchOverlay extends FrameLayout {
         clearQuery();
     }
 
+    private void displayClearTextInsteadOfVoiceSearch() {
+        showVoiceSearch(false);
+    }
+
+    private void displayVoiceSearchInsteadOfClearText() {
+        showVoiceSearch(true);
+    }
+
+    private void showVoiceSearch(boolean showVoiceSearch) {
+        if (showVoiceSearch) {
+            voiceSearchButton.setVisibility(VISIBLE);
+            clearTextButton.setVisibility(GONE);
+        } else {
+            clearTextButton.setVisibility(VISIBLE);
+            voiceSearchButton.setVisibility(GONE);
+        }
+    }
+
     private void clearQuery() {
         inputEditText.setText(null);
     }
@@ -73,11 +103,17 @@ public class SearchOverlay extends FrameLayout {
         }
     }
 
-    public void update(SearchSuggestions searchSuggestions, final SearchListener listener) {
+    public void setSearchListener(final SearchListener listener) {
         inputEditText.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable text) {
-                listener.onQueryUpdated(text.toString());
+                String query = text.toString().trim();
+                if (query.length() > 0) {
+                    displayClearTextInsteadOfVoiceSearch();
+                } else {
+                    displayVoiceSearchInsteadOfClearText();
+                }
+                listener.onQueryUpdated(query);
             }
         });
 
@@ -97,14 +133,20 @@ public class SearchOverlay extends FrameLayout {
                         || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER;
             }
         });
+    }
 
+    public void update(SearchSuggestions searchSuggestions) {
         if (searchSuggestionsRecyclerView.getAdapter() == null) {
-            suggestionsAdapter = new SearchSuggestionAdapter(layoutInflater());
-            suggestionsAdapter.update(searchSuggestions);
-            searchSuggestionsRecyclerView.setAdapter(suggestionsAdapter);
+            setNewAdapter(searchSuggestions);
         } else {
             suggestionsAdapter.update(searchSuggestions);
         }
+    }
+
+    private void setNewAdapter(SearchSuggestions searchSuggestions) {
+        suggestionsAdapter = new SearchSuggestionAdapter(layoutInflater());
+        suggestionsAdapter.update(searchSuggestions);
+        searchSuggestionsRecyclerView.setAdapter(suggestionsAdapter);
     }
 
     public interface SearchListener {

@@ -3,12 +3,15 @@ package com.ataulm.wutson.search;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import com.ataulm.rv.SpacesItemDecoration;
 import com.ataulm.wutson.Log;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.jabber.Jabber;
@@ -28,6 +31,7 @@ public class SearchActivity extends WutsonActivity {
     private SearchResultsAdapter searchResultsAdapter;
     private SearchOverlay searchOverlay;
     private RecyclerView searchResultsView;
+    private TextView titleView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,9 +41,16 @@ public class SearchActivity extends WutsonActivity {
         onCreateSearchOverlay();
 
         searchResultsView = (RecyclerView) findViewById(R.id.search_results_list);
-        searchResultsView.setLayoutManager(new LinearLayoutManager(this));
+        titleView = (TextView) findViewById(R.id.search_title);
+        searchResultsView.setLayoutManager(new GridLayoutManager(this, 2));
+        searchResultsView.addItemDecoration(SpacesItemDecoration.newInstance(4, 4, 2));
 
         handleIntent(getIntent());
+    }
+
+    @Override
+    protected boolean hasNoAppBar() {
+        return true;
     }
 
     private void handleIntent(Intent intent) {
@@ -51,7 +62,7 @@ public class SearchActivity extends WutsonActivity {
 
     private void onCreateSearchOverlay() {
         searchOverlay = ((SearchOverlay) findViewById(R.id.search_overlay));
-        searchOverlay.update(dummySearchSuggestions(), new SearchOverlay.SearchListener() {
+        searchOverlay.setSearchListener(new SearchOverlay.SearchListener() {
             @Override
             public void onQueryUpdated(String query) {
                 // TODO: filter search suggestions to ones that match query
@@ -112,7 +123,7 @@ public class SearchActivity extends WutsonActivity {
     }
 
     private void searchFor(String query) {
-        setTitle(query);
+        titleView.setText(query);
         Observable<SearchTvResults> searchTvResultsObservable = Jabber.searchRepository().searchFor(query);
         subscription = searchTvResultsObservable
                 .subscribeOn(Schedulers.io())
