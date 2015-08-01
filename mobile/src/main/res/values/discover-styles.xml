@@ -3,6 +3,13 @@
 
   <style name="Discover" />
 
+  <style name="Discover.Shows" />
+
+  <style name="Discover.Shows.Page">
+    <item name="android:paddingLeft">@dimen/discover_shows_page_padding_left</item>
+    <item name="android:paddingRight">@dimen/discover_shows_page_padding_right</item>
+  </style>
+
   <style name="Discover.Show" />
 
   <style name="Discover.Show.View">
