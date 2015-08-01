@@ -2,4 +2,5 @@
 <resources>
   <item name="app_bar" type="id" />
   <item name="shows_in_genre_show_id" type="id" />
+  <item name="discover_show_view_tag" type="id" />
 </resources>

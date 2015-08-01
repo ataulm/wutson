@@ -1,37 +1,107 @@
 package com.ataulm.wutson.discover;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.ShowSummary;
-import com.ataulm.wutson.view.ShowSummaryView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
+
+    // TODO: migrate to resources
+    private static final int DEFAULT_OVERLAY_BACKGROUND_COLOR = Color.BLACK;
+
+    private final View itemView;
+    private final TextView nameTextView;
+    private final ImageView posterImageView;
+    private final View trackButton;
+    private final View overlay;
 
     private final DiscoverShowSummaryInteractionListener listener;
 
     static DiscoverShowViewHolder inflate(LayoutInflater layoutInflater, ViewGroup parent, DiscoverShowSummaryInteractionListener listener) {
         View view = layoutInflater.inflate(R.layout.view_discover_show, parent, false);
-        return new DiscoverShowViewHolder(view, listener);
+        TextView nameTextView = (TextView) view.findViewById(R.id.discover_show_text_name);
+        ImageView posterImageView = (ImageView) view.findViewById(R.id.discover_show_image_poster);
+        View trackButton = view.findViewById(R.id.discover_show_button_track);
+        View overlay = view.findViewById(R.id.discover_show_overlay);
+        return new DiscoverShowViewHolder(view, nameTextView, posterImageView, trackButton, overlay, listener);
     }
 
-    private DiscoverShowViewHolder(View itemView, DiscoverShowSummaryInteractionListener listener) {
+    private DiscoverShowViewHolder(View itemView, TextView nameTextView, ImageView posterImageView, View trackButton, View overlay, DiscoverShowSummaryInteractionListener listener) {
         super(itemView);
+        this.itemView = itemView;
+        this.nameTextView = nameTextView;
+        this.posterImageView = posterImageView;
+        this.trackButton = trackButton;
+        this.overlay = overlay;
         this.listener = listener;
     }
 
     public void bind(final ShowSummary showSummary) {
-        ((ShowSummaryView) itemView).setTitle(showSummary.getName());
-        ((ShowSummaryView) itemView).setPoster(showSummary.getPosterUri());
+        nameTextView.setText(showSummary.getName());
+        loadImage(showSummary);
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onClick(showSummary);
             }
         });
+    }
+
+    private void loadImage(final ShowSummary showSummary) {
+        overlay.setBackgroundColor(DEFAULT_OVERLAY_BACKGROUND_COLOR);
+        overlay.setTag(R.id.discover_show_view_tag, showSummary.getId());
+
+        posterImageView.setImageBitmap(null);
+        Glide.with(posterImageView.getContext())
+                .load(showSummary.getPosterUri().toString())
+                .asBitmap()
+                .placeholder(R.drawable.ic_brand_placeholder)
+                .into(
+                        new BitmapImageViewTarget(posterImageView) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                super.setResource(resource);
+                                Palette.from(resource).generate(new OnPaletteGeneratedListener(showSummary.getId()));
+                            }
+                        }
+                );
+    }
+
+    private class OnPaletteGeneratedListener implements Palette.PaletteAsyncListener {
+
+        private final ShowId id;
+
+        public OnPaletteGeneratedListener(ShowId id) {
+            this.id = id;
+        }
+
+        @Override
+        public void onGenerated(Palette palette) {
+            if (showIdHasChanged()) {
+                return;
+            }
+            int fallbackColor = DEFAULT_OVERLAY_BACKGROUND_COLOR;
+            int generatedColor = palette.getDarkMutedColor(fallbackColor);
+            overlay.setBackgroundColor(generatedColor);
+        }
+
+        private boolean showIdHasChanged() {
+            return !id.equals(overlay.getTag(R.id.discover_show_view_tag));
+        }
+
     }
 
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <color name="discover_show_foreground_pressed">@color/black_54pc</color>
+  <color name="discover_show_foreground_focused">@color/black_25pc</color>
+  <color name="discover_show_foreground_default">@color/transparent</color>
+
+</resources>
