@@ -24,27 +24,26 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
     private final View itemView;
     private final TextView nameTextView;
     private final ImageView posterImageView;
-    private final View trackButton;
     private final View overlay;
 
     private final DiscoverShowSummaryInteractionListener listener;
 
     static DiscoverShowViewHolder inflate(LayoutInflater layoutInflater, ViewGroup parent, DiscoverShowSummaryInteractionListener listener) {
         View view = layoutInflater.inflate(R.layout.view_discover_show, parent, false);
+
         TextView nameTextView = (TextView) view.findViewById(R.id.discover_show_text_name);
         ImageView posterImageView = (ImageView) view.findViewById(R.id.discover_show_image_poster);
-        View trackButton = view.findViewById(R.id.discover_show_button_track);
         View overlay = view.findViewById(R.id.discover_show_overlay);
-        return new DiscoverShowViewHolder(view, nameTextView, posterImageView, trackButton, overlay, listener);
+        return new DiscoverShowViewHolder(view, nameTextView, posterImageView, overlay, listener);
     }
 
-    private DiscoverShowViewHolder(View itemView, TextView nameTextView, ImageView posterImageView, View trackButton, View overlay, DiscoverShowSummaryInteractionListener listener) {
+    private DiscoverShowViewHolder(View itemView, TextView nameTextView, ImageView posterImageView, View overlay, DiscoverShowSummaryInteractionListener listener) {
         super(itemView);
         this.itemView = itemView;
         this.nameTextView = nameTextView;
         this.posterImageView = posterImageView;
-        this.trackButton = trackButton;
         this.overlay = overlay;
+
         this.listener = listener;
     }
 

@@ -5,7 +5,6 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:foreground="@drawable/discover_show_foreground"
-  android:background="@android:color/holo_orange_light"
   android:focusable="true">
 
   <com.ataulm.wutson.view.AspectRatioImageView
@@ -32,12 +31,6 @@
       app:textFont="robotoRegular"
       android:textColor="#deffffff"/>
 
-    <ImageView
-      android:id="@+id/discover_show_button_track"
-      android:layout_width="48dp"
-      android:layout_height="48dp"
-      android:layout_gravity="center_vertical"
-      android:src="@drawable/ic_star_empty" />
   </LinearLayout>
 
 </LinearLayout>
