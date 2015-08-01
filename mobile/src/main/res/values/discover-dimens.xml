@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <dimen name="discover_shows_in_genre_item_margin">4dp</dimen>
-  <dimen name="discover_genres_page_padding_left">@dimen/discover_shows_in_genre_item_margin</dimen>
-  <dimen name="discover_genres_page_padding_right">@dimen/discover_shows_in_genre_item_margin</dimen>
+  <dimen name="discover_show_overlay_height">72dp</dimen>
+
+  <dimen name="discover_show_name_margin_left">16dp</dimen>
+  <dimen name="discover_show_name_margin_top">16dp</dimen>
+  <dimen name="discover_show_name_margin_right">16dp</dimen>
+  <dimen name="discover_show_name_margin_bottom">16dp</dimen>
+  <dimen name="discover_show_name_text">16sp</dimen>
 
 </resources>

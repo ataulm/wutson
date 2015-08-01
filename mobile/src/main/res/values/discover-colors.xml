@@ -6,5 +6,6 @@
   <color name="discover_show_foreground_default">@color/transparent</color>
 
   <color name="discover_show_overlay_background">@color/black</color>
+  <color name="discover_show_name_text">@color/white_87pc</color>
 
 </resources>

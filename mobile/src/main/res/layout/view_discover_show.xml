@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
+  style="Discover.Show.View"
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:foreground="@drawable/discover_show_foreground"
   android:focusable="true">
 
   <com.ataulm.wutson.view.AspectRatioImageView
     android:id="@+id/discover_show_image_poster"
+    style="Discover.Show.Poster"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:aspectRatio="174:154"
-    android:scaleType="centerCrop" />
+    android:layout_height="wrap_content" />
 
   <LinearLayout
     android:id="@+id/discover_show_overlay"
+    style="@style/Discover.Show.Overlay"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
-    android:background="@color/discover_show_overlay_background"
+    android:layout_height="@dimen/discover_show_overlay_height"
     android:orientation="horizontal">
 
     <com.ataulm.wutson.view.WutsonTextView
       android:id="@+id/discover_show_text_name"
+      style="@style/Discover.Show.Name"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_margin="16dp"
       android:layout_weight="100"
-      android:textSize="16sp"
-      app:textFont="robotoRegular"
-      android:textColor="#deffffff"/>
+      android:layout_marginLeft="@dimen/discover_show_name_margin_left"
+      android:layout_marginTop="@dimen/discover_show_name_margin_top"
+      android:layout_marginRight="@dimen/discover_show_name_margin_right"
+      android:layout_marginBottom="@dimen/discover_show_name_margin_bottom" />
 
   </LinearLayout>
 

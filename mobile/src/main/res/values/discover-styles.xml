@@ -3,8 +3,25 @@
 
   <style name="Discover" />
 
-  <style name="Discover.ShowsInGenreItem">
-    <item name="android:foreground">@drawable/card_foreground</item>
+  <style name="Discover.Show" />
+
+  <style name="Discover.Show.View">
+    <item name="android:foreground">@drawable/discover_show_foreground</item>
+  </style>
+
+  <style name="Discover.Show.Poster">
+    <item name="android:scaleType">centerCrop</item>
+    <item name="aspectRatio">174:154</item>
+  </style>
+
+  <style name="Discover.Show.Overlay">
+    <item name="android:background">@color/discover_show_overlay_background</item>
+  </style>
+
+  <style name="Discover.Show.Name">
+    <item name="android:textColor">@color/discover_show_name_text</item>
+    <item name="android:textSize">@dimen/discover_show_name_text</item>
+    <item name="textFont">robotoRegular</item>
   </style>
 
 </resources>
