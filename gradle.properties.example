@@ -1,6 +1,3 @@
-# https://www.themoviedb.org/account > API
-tmdbApiKey=1a2b3c4d5e6f7g8h9i0j6f7g8h9i0j
-
 # https://trakt.tv/oauth/applications/new
 traktApiKey=1a2b3c4d5e6f7g8h9i0j6f7g8h9i0j
 traktApiSecret=1a2b3c4d5e6f7g8h9i0j6f7g8h9i0j

@@ -27,20 +27,18 @@ public final class Jabber {
     private static Jabber instance;
 
     private final Context context;
-    private final String tmdbApiKey;
     private final String traktApiKey;
 
     private Repositories repositories;
     private ToastDisplayer toastDisplayer;
     private Log log;
 
-    public static void init(Application application, String tmdbApiKey, String traktApiKey) {
-        instance = new Jabber(application.getApplicationContext(), tmdbApiKey, traktApiKey);
+    public static void init(Application application, String traktApiKey) {
+        instance = new Jabber(application.getApplicationContext(), traktApiKey);
     }
 
-    private Jabber(Context context, String tmdbApiKey, String traktApiKey) {
+    private Jabber(Context context, String traktApiKey) {
         this.context = context;
-        this.tmdbApiKey = tmdbApiKey;
         this.traktApiKey = traktApiKey;
     }
 
