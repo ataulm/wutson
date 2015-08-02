@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <color name="discover_show_foreground_pressed">@color/white_50pc</color>
-  <color name="discover_show_foreground_focused">@color/white_25pc</color>
-  <color name="discover_show_foreground_default">@color/transparent</color>
+  <color name="discover_show_foreground_ripple">@color/card_foreground_ripple</color>
+  <color name="discover_show_foreground_pressed">@color/card_foreground_pressed</color>
+  <color name="discover_show_foreground_focused">@color/card_foreground_focused</color>
+  <color name="discover_show_foreground_default">@color/card_foreground_default</color>
 
   <color name="discover_show_overlay_background">@color/black</color>
   <color name="discover_show_name_text">@color/white_87pc</color>

@@ -19,6 +19,7 @@
   <color name="tab_background_focused">@color/white_25pc</color>
   <color name="tab_background_default">@color/transparent</color>
 
+  <color name="card_foreground_ripple">@color/white_30pc</color>
   <color name="card_foreground_pressed">@color/white_50pc</color>
   <color name="card_foreground_focused">@color/white_25pc</color>
   <color name="card_foreground_default">@color/transparent</color>
