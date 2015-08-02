@@ -1,10 +1,13 @@
 package com.ataulm.wutson.discover;
 
+import android.annotation.TargetApi;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.view.LinearLayoutWithForeground;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
@@ -56,11 +60,31 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
         nameTextView.setText(showSummary.getName());
         loadImage(showSummary);
 
+        setRippleHotspotOnLollipop();
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onClick(showSummary);
             }
+        });
+    }
+
+    private void setRippleHotspotOnLollipop() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
+        }
+
+        itemView.setOnTouchListener(new View.OnTouchListener() {
+
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((LinearLayoutWithForeground) itemView).getForeground()
+                        .setHotspot(event.getX(), event.getY());
+                return (false);
+            }
+
         });
     }
 
