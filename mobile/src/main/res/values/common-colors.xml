@@ -4,6 +4,12 @@
   <color name="app_bar_shadow_start">@color/black_30pc</color>
   <color name="app_bar_shadow_end">@color/transparent</color>
 
+  <color name="app_bar_action_background_pressed">@color/white_50pc</color>
+  <color name="app_bar_action_background_focused">@color/white_25pc</color>
+  <color name="app_bar_action_background_default">@color/transparent</color>
+
+  <color name="app_bar_action_background_ripple">@color/white_30pc</color>
+
   <color name="tab_strip_indicator">@color/white</color>
 
   <color name="tab_text_selected">@color/white</color>
@@ -13,8 +19,8 @@
   <color name="tab_background_focused">@color/white_25pc</color>
   <color name="tab_background_default">@color/transparent</color>
   
-  <color name="card_foreground_pressed">@color/white_59pc</color>
-  <color name="card_foreground_focused">@color/white_30pc</color>
+  <color name="card_foreground_pressed">@color/white_50pc</color>
+  <color name="card_foreground_focused">@color/white_25pc</color>
   <color name="card_foreground_default">@color/transparent</color>
 
 </resources>
