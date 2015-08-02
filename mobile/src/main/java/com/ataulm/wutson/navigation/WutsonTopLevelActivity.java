@@ -5,6 +5,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
@@ -16,15 +17,16 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private ViewGroup content;
 
     protected abstract NavigationDrawerItem getNavigationDrawerItem();
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(R.layout.activity_top_level);
-        ViewGroup container = (ViewGroup) findViewById(R.id.top_level_container_activity_layout);
-        container.removeAllViews();
-        getLayoutInflater().inflate(layoutResID, container);
+        content = (ViewGroup) findViewById(R.id.top_level_container_activity_layout);
+        content.removeAllViews();
+        getLayoutInflater().inflate(layoutResID, content);
 
         populateNavigationDrawer();
     }
@@ -38,7 +40,32 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_drawer_open_content_description, R.string.nav_drawer_close_content_description);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                actionBarDrawerToggle.onDrawerSlide(drawerView, slideOffset);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                actionBarDrawerToggle.onDrawerOpened(drawerView);
+                content.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                actionBarDrawerToggle.onDrawerClosed(drawerView);
+                content.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+                getToolbar().requestFocus();
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                actionBarDrawerToggle.onDrawerStateChanged(newState);
+            }
+
+        });
 
         final NavigationDrawerView navigationDrawerView = (NavigationDrawerView) drawerLayout.findViewById(R.id.drawer_list);
         navigationDrawerView.setupDrawerWith(new NavigationDrawerView.OnNavigationClickListener() {
