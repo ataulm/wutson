@@ -15,8 +15,6 @@ import com.ataulm.wutson.trakt.TraktApiFactory;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
-import java.io.IOException;
-
 import retrofit.client.Client;
 import retrofit.client.OkClient;
 
@@ -71,12 +69,8 @@ public final class Jabber {
 
     private static Client newClient() {
         OkHttpClient client = new OkHttpClient();
-        try {
-            Cache cache = new Cache(instance.context.getCacheDir(), MAX_CACHE_SIZE_BYTES);
-            return new OkClient(client.setCache(cache));
-        } catch (IOException e) {
-            return new OkClient(client);
-        }
+        Cache cache = new Cache(instance.context.getCacheDir(), MAX_CACHE_SIZE_BYTES);
+        return new OkClient(client.setCache(cache));
     }
 
     public static ToastDisplayer toastDisplayer() {
