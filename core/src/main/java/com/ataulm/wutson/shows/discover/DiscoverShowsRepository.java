@@ -150,8 +150,8 @@ public class DiscoverShowsRepository {
             @Override
             public ShowSummary call(GsonShowSummary gsonShowSummary) {
                 ShowId id = new ShowId(gsonShowSummary.ids.trakt);
-                URI posterUri = URI.create(gsonShowSummary.images.poster.thumb);
-                URI backdropUri = URI.create(gsonShowSummary.images.poster.medium);
+                URI posterUri = gsonShowSummary.images.poster.thumb == null ? URI.create("") : URI.create(gsonShowSummary.images.poster.thumb);
+                URI backdropUri = gsonShowSummary.images.poster.medium == null ? URI.create("") : URI.create(gsonShowSummary.images.poster.medium);
                 return new ShowSummary(id, gsonShowSummary.title, posterUri, backdropUri);
             }
         };
