@@ -60,8 +60,8 @@ final class DiscoverShowsPagerAdapter extends ViewPagerAdapter {
         }
 
         @Override
-        public void addView(View child) {
-            super.addView(child);
+        public void addView(View child, int index) {
+            super.addView(child, index);
             child.setOnKeyListener(
                     new View.OnKeyListener() {
                         @Override
@@ -70,12 +70,20 @@ final class DiscoverShowsPagerAdapter extends ViewPagerAdapter {
                                 return false;
                             }
 
-                            if (isDpadRight(keyCode) && isInLastColumn(v) ||
-                                    isDpadLeft(keyCode) && isInFirstColumn(v)) {
+                            if (isDpadLeft(keyCode) && isInFirstColumn(v) || isDpadRight(keyCode) && isInLastColumn(v)) {
                                 return true;
+                            } else {
+                                return false;
                             }
+                        }
 
-                            return false;
+                        private boolean isDpadLeft(int keyCode) {
+                            return keyCode == KeyEvent.KEYCODE_DPAD_LEFT;
+                        }
+
+                        private boolean isInFirstColumn(View v) {
+                            int position = getPosition(v);
+                            return getSpanSizeLookup().getSpanIndex(position, getSpanCount()) == 0;
                         }
 
                         private boolean isDpadRight(int keyCode) {
@@ -87,15 +95,6 @@ final class DiscoverShowsPagerAdapter extends ViewPagerAdapter {
                             int spanIndex = getSpanSizeLookup().getSpanIndex(position, getSpanCount());
                             int spanSize = getSpanSizeLookup().getSpanSize(position);
                             return spanIndex + spanSize == getSpanCount();
-                        }
-
-                        private boolean isDpadLeft(int keyCode) {
-                            return keyCode == KeyEvent.KEYCODE_DPAD_LEFT;
-                        }
-
-                        private boolean isInFirstColumn(View v) {
-                            int position = getPosition(v);
-                            return getSpanSizeLookup().getSpanIndex(position, getSpanCount()) == 0;
                         }
 
                     }
