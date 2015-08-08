@@ -18,6 +18,7 @@
 
   <style name="Discover.Show.Poster">
     <item name="android:scaleType">centerCrop</item>
+    <item name="android:background">@color/discover_show_poster_background</item>
     <item name="aspectRatio">174:154</item>
   </style>
 

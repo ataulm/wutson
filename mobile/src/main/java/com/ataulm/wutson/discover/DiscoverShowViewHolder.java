@@ -96,7 +96,7 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
         Glide.with(posterImageView.getContext())
                 .load(showSummary.getPosterUri().toString())
                 .asBitmap()
-                .placeholder(R.drawable.ic_brand_placeholder)
+                .error(R.drawable.ic_brand_placeholder)
                 .into(
                         new BitmapImageViewTarget(posterImageView) {
                             @Override

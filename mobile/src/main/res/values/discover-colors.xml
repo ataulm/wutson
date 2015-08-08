@@ -6,6 +6,7 @@
   <color name="discover_show_foreground_focused">@color/card_foreground_focused</color>
   <color name="discover_show_foreground_default">@color/card_foreground_default</color>
 
+  <color name="discover_show_poster_background">@color/black</color>
   <color name="discover_show_overlay_background">@color/black</color>
   <color name="discover_show_name_text">@color/white_87pc</color>
 
