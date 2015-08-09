@@ -11,7 +11,7 @@ import com.ataulm.wutson.R;
 final class OverviewViewHolder extends DetailsViewHolder {
 
     public static OverviewViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
-        View view = layoutInflater.inflate(R.layout.view_show_details_overview, parent, false);
+        View view = layoutInflater.inflate(R.layout.view_show_details_item_overview, parent, false);
         return new OverviewViewHolder(view);
     }
 

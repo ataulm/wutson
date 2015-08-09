@@ -9,7 +9,7 @@ import com.ataulm.wutson.R;
 final class HeaderSpaceDetailsViewHolder extends DetailsViewHolder {
 
     public static HeaderSpaceDetailsViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
-        View view = layoutInflater.inflate(R.layout.view_show_details_header_space_details, parent, false);
+        View view = layoutInflater.inflate(R.layout.view_show_details_item_header_space, parent, false);
         return new HeaderSpaceDetailsViewHolder(view);
     }
 
