@@ -7,8 +7,7 @@
   <dimen name="show_details_overview_padding_right">16dp</dimen>
   <dimen name="show_details_overview_padding_bottom">16dp</dimen>
   <dimen name="show_details_overview_text">14sp</dimen>
-  <!--TODO: need linespacing for the ShowDetails overview-->
-  <dimen name="show_details_overview_line_spacing_extra">0sp</dimen>
+  <dimen name="show_details_overview_line_spacing_extra">6sp</dimen>
 
   <dimen name="show_details_seasons_list_padding_left">0dp</dimen>
   <dimen name="show_details_seasons_list_padding_top">6dp</dimen>
