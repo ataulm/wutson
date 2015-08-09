@@ -1,6 +1,5 @@
 package com.ataulm.wutson.showdetails;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.AttributeSet;
@@ -12,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ataulm.wutson.*;
+import com.ataulm.wutson.R;
 import com.ataulm.wutson.shows.Cast;
 import com.ataulm.wutson.shows.Character;
 import com.bumptech.glide.Glide;
@@ -22,9 +21,7 @@ import java.net.URI;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-// not a problem - https://code.google.com/p/android/issues/detail?id=67434
-@SuppressLint("Instantiatable")
-class ShowOverviewView extends FrameLayout {
+public class ShowOverviewView extends FrameLayout {
 
     private final LayoutInflater layoutInflater;
 
