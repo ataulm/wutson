@@ -134,7 +134,7 @@ public class ShowRepository {
                             title,
                             gsonShowSeason.number,
                             gsonShowSeason.episodes.size(),
-                            URI.create(gsonShowDetails.images.poster.medium));
+                            URI.create(gsonShowSeason.images.poster.medium));
                     seasonSummaries.add(seasonSummary);
                 }
 
