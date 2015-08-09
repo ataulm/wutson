@@ -22,9 +22,6 @@
     <!--TODO: Character styles-->
   </style>
 
-
-
-
   <style name="ShowDetails.SeasonsList">
     <item name="android:paddingLeft">@dimen/show_details_seasons_list_padding_left</item>
     <item name="android:paddingTop">@dimen/show_details_seasons_list_padding_top</item>

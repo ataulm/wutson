@@ -10,26 +10,6 @@
   <!--TODO: need linespacing for the ShowDetails overview-->
   <dimen name="show_details_overview_line_spacing_extra">0sp</dimen>
 
-
-
-
-
-
-
-
-  <dimen name="cast_padding_left">16dp</dimen>
-  <dimen name="cast_padding_top">16dp</dimen>
-  <dimen name="cast_padding_right">16dp</dimen>
-  <dimen name="cast_padding_bottom">16dp</dimen>
-  
-  <dimen name="character_margin_left">0dp</dimen>
-  <dimen name="character_margin_top">16dp</dimen>
-  <dimen name="character_margin_right">0dp</dimen>
-  <dimen name="character_margin_bottom">0dp</dimen>
-
-  <dimen name="character_image_profile">40dp</dimen>
-  <dimen name="character_names_margin_left">16dp</dimen>
-
   <dimen name="show_details_seasons_list_padding_left">0dp</dimen>
   <dimen name="show_details_seasons_list_padding_top">6dp</dimen>
   <dimen name="show_details_seasons_list_padding_right">0dp</dimen>
