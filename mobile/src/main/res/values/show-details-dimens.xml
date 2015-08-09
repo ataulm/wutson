@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <dimen name="show_details_tabs_indicator_height">4dp</dimen>
+  <dimen name="show_details_header_space_height">202dp</dimen>
 
-  <dimen name="show_details_padding_top">240dp</dimen>
+
+
+
+
+
+
 
   <dimen name="cast_padding_left">16dp</dimen>
   <dimen name="cast_padding_top">16dp</dimen>
