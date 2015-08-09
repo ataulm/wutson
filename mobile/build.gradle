@@ -40,8 +40,8 @@ android {
         applicationId "com.ataulm.wutson2"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 16
-        versionName '_dog-food'
+        versionCode 17
+        versionName 'pre-release'
 
         Calendar instance = Calendar.getInstance()
         instance.setTimeInMillis(System.currentTimeMillis())
