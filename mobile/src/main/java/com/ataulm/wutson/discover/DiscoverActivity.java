@@ -1,6 +1,7 @@
 package com.ataulm.wutson.discover;
 
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewPager;
 
 import com.ataulm.wutson.R;
@@ -65,8 +66,8 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
     private class ClickListener implements DiscoverShowSummaryInteractionListener {
 
         @Override
-        public void onClick(ShowSummary showSummary) {
-            navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
+        public void onClick(ShowSummary showSummary, @ColorInt int accentColor) {
+            navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString(), accentColor);
         }
 
     }

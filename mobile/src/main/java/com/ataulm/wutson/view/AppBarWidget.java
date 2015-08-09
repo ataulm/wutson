@@ -23,20 +23,22 @@ public class AppBarWidget extends AppBarLayout {
     private void applyCustomAttributes(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AppBarWidget);
         int mergeLayoutId = typedArray.getResourceId(R.styleable.AppBarWidget_mergeLayoutId, R.layout.merge_app_bar_default);
+        View.inflate(getContext(), mergeLayoutId, this);
+
         int backgroundColor = typedArray.getColor(R.styleable.AppBarWidget_appBarBackgroundColor, getResources().getColor(R.color.transparent));
+        setBackgroundColor(backgroundColor);
         typedArray.recycle();
 
-        setBackgroundColor(backgroundColor);
-        View.inflate(getContext(), mergeLayoutId, this);
+        setId(R.id.app_bar);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar = (Toolbar) findViewById(R.id.app_bar_tool_bar);
         if (toolbar == null) {
-            throw DeveloperError.because("Custom app bar layouts must contain a Toolbar with id='@id/app_bar'");
+            throw DeveloperError.because("Custom app bar layouts must contain a Toolbar with id='@id/app_bar_tool_bar'");
         }
     }
 

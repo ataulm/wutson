@@ -8,11 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.view.AppBarWidget;
 
 public abstract class WutsonActivity extends ActionBarActivity {
 
+    private AppBarWidget appBarWidget;
     private Navigator navigator;
-    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,15 +28,19 @@ public abstract class WutsonActivity extends ActionBarActivity {
             return;
         }
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
-        if (toolbar == null) {
-            throw new IllegalStateException("Toolbar expected in layout with id: R.id.app_bar");
+        appBarWidget = (AppBarWidget) findViewById(R.id.app_bar);
+        if (appBarWidget == null) {
+            throw new IllegalStateException("AppBarWidget expected in layout with id: R.id.app_bar");
         }
-        setAppBar(toolbar);
+        setAppBar(appBarWidget.getToolbar());
     }
 
     protected Navigator navigate() {
         return navigator;
+    }
+
+    protected AppBarWidget getAppBarWidget() {
+        return appBarWidget;
     }
 
     protected void setAppBar(Toolbar toolbar) {
@@ -51,7 +56,7 @@ public abstract class WutsonActivity extends ActionBarActivity {
     }
 
     protected Toolbar getToolbar() {
-        return toolbar;
+        return appBarWidget.getToolbar();
     }
 
     @Override

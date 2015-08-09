@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
     public static final String EXTRA_SHOW_TITLE = BuildConfig.APPLICATION_ID + ".show_title";
     public static final String EXTRA_SHOW_BACKDROP = BuildConfig.APPLICATION_ID + ".show_backdrop";
+    public static final String EXTRA_SHOW_ACCENT_COLOR = BuildConfig.APPLICATION_ID + ".show_accent_color";
 
     private Subscription trackedStatusSubscription;
     private Subscription showDetailsSubscription;
@@ -58,11 +60,18 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
         super.onPostCreate(savedInstanceState);
         applyTitleFromIntentExtras();
         applyColorFilterToAppBarIcons();
+        getAppBarWidget().setBackgroundColor(getAccentColor());
 
         showDetailsSubscription = dataRepository().getShow(getShowId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ShowObserver());
+    }
+
+    @ColorInt
+    private int getAccentColor() {
+        Bundle extras = getIntent().getExtras();
+        return extras.getInt(EXTRA_SHOW_ACCENT_COLOR, getResources().getColor(R.color.show_details_app_bar_background));
     }
 
     private void applyTitleFromIntentExtras() {

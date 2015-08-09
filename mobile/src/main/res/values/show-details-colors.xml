@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <color name="show_details_app_bar_background">@color/black</color>
   <color name="show_details_seasons_list_background">@color/grey</color>
 
 </resources>

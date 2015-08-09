@@ -32,6 +32,9 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
 
     private final DiscoverShowSummaryInteractionListener listener;
 
+    @ColorInt
+    private int accentColor;
+
     static DiscoverShowViewHolder inflate(LayoutInflater layoutInflater, ViewGroup parent, DiscoverShowSummaryInteractionListener listener) {
         View view = layoutInflater.inflate(R.layout.view_discover_show, parent, false);
 
@@ -54,6 +57,8 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
 
         this.defaultOverlayBackgroundColor = defaultOverlayBackgroundColor;
         this.listener = listener;
+
+        this.accentColor = defaultOverlayBackgroundColor;
     }
 
     public void bind(final ShowSummary showSummary) {
@@ -65,7 +70,7 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClick(showSummary);
+                listener.onClick(showSummary, accentColor);
             }
         });
     }
@@ -82,7 +87,7 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
             public boolean onTouch(View v, MotionEvent event) {
                 ((LinearLayoutWithForeground) itemView).getForeground()
                         .setHotspot(event.getX(), event.getY());
-                return (false);
+                return false;
             }
 
         });
@@ -122,8 +127,8 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
                 return;
             }
             int fallbackColor = defaultOverlayBackgroundColor;
-            int generatedColor = palette.getDarkMutedColor(fallbackColor);
-            overlay.setBackgroundColor(generatedColor);
+            accentColor = palette.getDarkMutedColor(fallbackColor);
+            overlay.setBackgroundColor(accentColor);
         }
 
         private boolean showIdHasChanged() {

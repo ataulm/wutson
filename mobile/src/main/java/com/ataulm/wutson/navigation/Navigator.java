@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.ColorInt;
 
 import com.ataulm.wutson.discover.DiscoverActivity;
 import com.ataulm.wutson.episodes.EpisodeNumber;
@@ -42,13 +43,18 @@ public class Navigator {
     }
 
     public void toShowDetails(ShowId showId, String showTitle, String showBackdropUri) {
+        toShowDetails(showId, showTitle, showBackdropUri, 0);
+    }
+
+    public void toShowDetails(ShowId showId, String showTitle, String showBackdropUri, @ColorInt int accentColor) {
         Uri uri = BASE_URI.buildUpon()
                 .appendPath("show").appendPath(showId.toString())
                 .build();
 
         start(view(uri, MIME_TYPE_SHOW_ITEM)
                 .putExtra(ShowDetailsActivity.EXTRA_SHOW_TITLE, showTitle)
-                .putExtra(ShowDetailsActivity.EXTRA_SHOW_BACKDROP, showBackdropUri));
+                .putExtra(ShowDetailsActivity.EXTRA_SHOW_BACKDROP, showBackdropUri)
+                .putExtra(ShowDetailsActivity.EXTRA_SHOW_ACCENT_COLOR, accentColor));
     }
 
     public void toSeason(ShowId showId, int seasonNumber) {

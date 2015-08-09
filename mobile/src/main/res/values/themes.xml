@@ -16,9 +16,13 @@
 
   <style name="Wutson.Theme.MyShows" />
 
-  <style name="Wutson.Theme.Discover" />
+  <style name="Wutson.Theme.Discover">
+    <item name="appBarBackgroundColor">@color/discover_show_app_bar_background</item>
+  </style>
 
-  <style name="Wutson.Theme.ShowDetails" />
+  <style name="Wutson.Theme.ShowDetails">
+    <item name="appBarBackgroundColor">@color/show_details_app_bar_background</item>
+  </style>
 
   <style name="Wutson.Theme.Seasons">
     <item name="android:windowBackground">@color/seasons_background</item>
