@@ -11,6 +11,10 @@ public class Details {
 
     private final List<Detail> details;
 
+    public static Details empty() {
+        return new Details(Collections.<Detail>emptyList());
+    }
+
     public static Details from(Show show) {
         List<Detail> details = new ArrayList<>();
 
@@ -32,10 +36,6 @@ public class Details {
 
     Details(List<Detail> details) {
         this.details = details;
-    }
-
-    public Details() {
-        this.details = Collections.emptyList();
     }
 
     Type getType(int position) {

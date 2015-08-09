@@ -13,11 +13,8 @@ import android.widget.ImageView;
 import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.showdetails.OnClickSeasonListener;
-import com.ataulm.wutson.showdetails.SeasonsAdapter;
 import com.ataulm.wutson.showdetails.view.Details;
 import com.ataulm.wutson.showdetails.view.DetailsAdapter;
-import com.ataulm.wutson.showdetails.view.DetailsViewHolder;
 import com.ataulm.wutson.shows.Show;
 import com.bumptech.glide.Glide;
 
@@ -79,9 +76,9 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
                 .into(backdropImageView);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.show_details_about_recycler);
-        LinearLayoutManager layout = new LinearLayoutManager(recyclerView.getContext());
-        layout.setStackFromEnd(true);
-        recyclerView.setLayoutManager(layout);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(recyclerView.getContext());
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(new DetailsAdapter(getDetails(), layoutInflater));
         recyclerView.scrollToPosition(0);
         return view;
@@ -89,7 +86,7 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
 
     private Details getDetails() {
         if (show == null) {
-            return new Details();
+            return Details.empty();
         } else {
             return Details.from(show);
         }
