@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+
+// FIXME: there's a race condition in here which results in Show != null, but no data shown
 class ShowDetailsPagerAdapter extends ViewPagerAdapter {
 
     private final Resources resources;
