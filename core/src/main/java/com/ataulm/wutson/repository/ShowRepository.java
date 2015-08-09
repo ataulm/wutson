@@ -128,13 +128,7 @@ public class ShowRepository {
                 URI backdropUri = URI.create(gsonShowDetails.images.poster.medium);
                 List<Show.SeasonSummary> seasonSummaries = new ArrayList<>(gsonShowSeasonList.size());
                 for (GsonShowSeason gsonShowSeason : gsonShowSeasonList) {
-                    Show.SeasonSummary seasonSummary = new Show.SeasonSummary(
-                            gsonShowSeason.ids.trakt,
-                            id,
-                            title,
-                            gsonShowSeason.number,
-                            gsonShowSeason.episodes == null ? 0 : gsonShowSeason.episodes.size(),
-                            getSeasonPosterFrom(gsonShowSeason));
+                    Show.SeasonSummary seasonSummary = getSeasonSummary(id, title, gsonShowSeason);
                     seasonSummaries.add(seasonSummary);
                 }
 
@@ -149,8 +143,14 @@ public class ShowRepository {
                 );
             }
 
-            private URI getSeasonPosterFrom(GsonShowSeason gsonShowSeason) {
-                return gsonShowSeason.images.poster.medium == null ? URI.create("") : URI.create(gsonShowSeason.images.poster.medium);
+            private Show.SeasonSummary getSeasonSummary(ShowId id, String title, GsonShowSeason gsonShowSeason) {
+                return new Show.SeasonSummary(
+                        gsonShowSeason.ids.trakt,
+                        id,
+                        title,
+                        gsonShowSeason.number,
+                        gsonShowSeason.episodes == null ? 0 : gsonShowSeason.episodes.size(),
+                        gsonShowSeason.images.poster.medium == null ? URI.create("") : URI.create(gsonShowSeason.images.poster.medium));
             }
 
         };
