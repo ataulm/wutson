@@ -135,7 +135,7 @@ public class ShowRepository {
                 return new Show(
                         id,
                         title,
-                        gsonShowDetails.overview,
+                        gsonShowDetails.overview == null ? "" : gsonShowDetails.overview.trim(),
                         posterUri,
                         backdropUri,
                         new Cast(Collections.<Character>emptyList()),

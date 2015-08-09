@@ -10,13 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ataulm.wutson.BuildConfig;
-import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.jabber.Jabber;
+import com.ataulm.wutson.navigation.WutsonActivity;
+import com.ataulm.wutson.rx.LoggingObserver;
 import com.ataulm.wutson.shows.Show;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.TrackedStatus;
-import com.ataulm.wutson.navigation.WutsonActivity;
-import com.ataulm.wutson.rx.LoggingObserver;
 import com.novoda.landingstrip.LandingStrip;
 
 import java.net.URI;

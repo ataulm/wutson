@@ -8,11 +8,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.showdetails.OnClickSeasonListener;
+import com.ataulm.wutson.showdetails.SeasonsAdapter;
+import com.ataulm.wutson.showdetails.view.Details;
+import com.ataulm.wutson.showdetails.view.DetailsAdapter;
+import com.ataulm.wutson.showdetails.view.DetailsViewHolder;
 import com.ataulm.wutson.shows.Show;
+import com.bumptech.glide.Glide;
 
 import java.net.URI;
 import java.util.Collections;
@@ -65,15 +72,27 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
     }
 
     private View getShowView(ViewGroup container) {
-        ShowOverviewView view = (ShowOverviewView) layoutInflater.inflate(Page.OVERVIEW.getLayoutResId(), container, false);
-        if (show != null) {
-            view.setBackdrop(show.getBackdropUri());
-            view.setCast(show.getCast());
-            view.setOverview(show.getOverview());
-        } else {
-            view.setBackdrop(showBackdropUri);
-        }
+        View view = layoutInflater.inflate(Page.OVERVIEW.getLayoutResId(), container, false);
+        ImageView backdropImageView = (ImageView) view.findViewById(R.id.show_details_about_image_backdrop);
+        Glide.with(backdropImageView.getContext())
+                .load(showBackdropUri.toString())
+                .into(backdropImageView);
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.show_details_about_recycler);
+        LinearLayoutManager layout = new LinearLayoutManager(recyclerView.getContext());
+        layout.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layout);
+        recyclerView.setAdapter(new DetailsAdapter(getDetails(), layoutInflater));
+        recyclerView.scrollToPosition(0);
         return view;
+    }
+
+    private Details getDetails() {
+        if (show == null) {
+            return new Details();
+        } else {
+            return Details.from(show);
+        }
     }
 
     private View getShowSeasonsView(ViewGroup container) {
