@@ -89,6 +89,10 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
     }
 
     private void updateOverview() {
+        if (overviewRecyclerView == null) {
+            return;
+        }
+
         if (overviewRecyclerView.getAdapter() == null) {
             overviewRecyclerView.setAdapter(new DetailsAdapter(layoutInflater));
         } else {
@@ -113,6 +117,10 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
     }
 
     private void updateSeasons() {
+        if (seasonsRecyclerView == null) {
+            return;
+        }
+
         if (seasonsRecyclerView.getAdapter() == null) {
             RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, onSeasonClickListener);
             seasonsAdapter.setHasStableIds(true);
