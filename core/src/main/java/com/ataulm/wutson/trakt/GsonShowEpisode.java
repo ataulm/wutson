@@ -2,7 +2,7 @@ package com.ataulm.wutson.trakt;
 
 import com.google.gson.annotations.SerializedName;
 
-class GsonShowEpisode {
+public class GsonShowEpisode {
 
     @SerializedName("ids")
     public GsonEpisodeIds ids;
