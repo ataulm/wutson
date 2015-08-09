@@ -2,6 +2,13 @@
 <resources>
 
   <dimen name="show_details_header_space_height">202dp</dimen>
+  <dimen name="show_details_overview_padding_left">16dp</dimen>
+  <dimen name="show_details_overview_padding_top">16dp</dimen>
+  <dimen name="show_details_overview_padding_right">16dp</dimen>
+  <dimen name="show_details_overview_padding_bottom">16dp</dimen>
+  <dimen name="show_details_overview_text">14sp</dimen>
+  <!--TODO: need linespacing for the ShowDetails overview-->
+  <dimen name="show_details_overview_line_spacing_extra">0sp</dimen>
 
 
 

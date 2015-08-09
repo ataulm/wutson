@@ -3,6 +3,23 @@
 
   <style name="ShowDetails" />
 
+  <style name="ShowDetails.Overview">
+    <item name="android:paddingLeft">@dimen/show_details_overview_padding_left</item>
+    <item name="android:paddingTop">@dimen/show_details_overview_padding_top</item>
+    <item name="android:paddingRight">@dimen/show_details_overview_padding_right</item>
+    <item name="android:paddingBottom">@dimen/show_details_overview_padding_bottom</item>
+    <item name="android:textColor">@color/show_details_overview_text</item>
+    <item name="android:textSize">@dimen/show_details_overview_text</item>
+    <item name="android:lineSpacingExtra">@dimen/show_details_overview_line_spacing_extra</item>
+    <item name="textFont">robotoRegular</item>
+  </style>
+
+
+
+
+
+
+
   <style name="ShowDetails.ShowHeader">
     <item name="android:paddingLeft">16dp</item>
     <item name="android:paddingTop">16dp</item>

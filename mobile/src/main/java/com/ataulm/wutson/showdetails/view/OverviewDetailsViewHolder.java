@@ -1,6 +1,5 @@
 package com.ataulm.wutson.showdetails.view;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +20,12 @@ final class OverviewDetailsViewHolder extends DetailsViewHolder {
 
     @Override
     public void bind(Detail detail) {
+        // TODO: this shouldn't be necessary - someone is messing with the R.color.white somewhere in the app so it makes it black
+        int backgroundColor = itemView.getResources().getColor(R.color.show_details_overview_background);
+        itemView.setBackgroundColor(backgroundColor);
+
         String overview = ((OverviewDetail) detail).getOverview();
         ((TextView) itemView).setText(overview);
-        itemView.setBackgroundColor(Color.WHITE);
     }
 
 }
