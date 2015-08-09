@@ -32,7 +32,7 @@ public interface DataRepository {
 
     Observable<Season> getSeason(ShowId showId, int seasonNumber);
 
-    Observable<Seasons> getSeasons(ShowId showId);
+    Observable<Seasons> getSeasons(ShowId showId, String showName);
 
     Observable<Actor> getActor(String id);
 

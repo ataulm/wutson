@@ -71,7 +71,7 @@ public class WutsonDataRepository implements DataRepository {
                 .flatMap(new Func1<ShowSummary, Observable<WatchlistItem>>() {
                     @Override
                     public Observable<WatchlistItem> call(ShowSummary showSummary) {
-                        return getSeasons(showSummary.getId())
+                        return getSeasons(showSummary.getId(), showSummary.getName())
                                 .concatMap(Function.<Season>emitEachElement())
                                 .concatMap(Function.<Episode>emitEachElement())
                                 .filter(onlyUnwatchedEpisodes())
@@ -138,8 +138,8 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public Observable<Seasons> getSeasons(ShowId showId) {
-        return showRepo.getSeasons(showId);
+    public Observable<Seasons> getSeasons(ShowId showId, String showName) {
+        return showRepo.getSeasons(showId, showName);
     }
 
     @Override

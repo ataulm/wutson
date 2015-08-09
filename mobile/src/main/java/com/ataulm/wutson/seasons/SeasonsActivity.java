@@ -57,7 +57,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
         super.onPostCreate(savedInstanceState);
         customiseShowDetailsToolbar();
 
-        seasonSubscription = Jabber.dataRepository().getSeasons(showId)
+        seasonSubscription = Jabber.dataRepository().getSeasons(showId, getShowTitle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());

@@ -163,22 +163,16 @@ public class ShowRepository {
         };
     }
 
-    public Observable<Seasons> getSeasons(final ShowId showId) {
+    public Observable<Seasons> getSeasons(ShowId showId, String showName) {
         return Observable.concat(gsonShowSeasonsFromDisk(showId), gsonShowSeasonsFromNetwork(showId))
                 .first()
-                .doOnNext(new Action1<GsonShowSeasonList>() {
-                    @Override
-                    public void call(GsonShowSeasonList gsonShowSeasons) {
-                        System.out.println("foo");
-                    }
-                })
                 .flatMap(Function.<GsonShowSeason>emitEachElement())
-                .map(asSeason())
+                .map(asSeason(showName))
                 .toList()
                 .map(asSeasons());
     }
 
-    private static Func1<GsonShowSeason, Season> asSeason() {
+    private static Func1<GsonShowSeason, Season> asSeason(final String showName) {
         return new Func1<GsonShowSeason, Season>() {
             @Override
             public Season call(GsonShowSeason gsonShowSeason) {
@@ -199,8 +193,6 @@ public class ShowRepository {
 
             private Episode episodeFrom(GsonShowEpisode gsonShowEpisode) {
                 SimpleDate airDate = SimpleDate.from(gsonShowEpisode.firstAiredDate);
-                String showName = "Foo";
-
                 return new Episode(
                         airDate,
                         new EpisodeNumber(gsonShowEpisode.season, gsonShowEpisode.number),
