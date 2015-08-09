@@ -8,12 +8,17 @@ import com.ataulm.wutson.DeveloperError;
 
 public class DetailsAdapter extends RecyclerView.Adapter<DetailsViewHolder> {
 
-    private final Details details;
     private final LayoutInflater layoutInflater;
 
-    public DetailsAdapter(Details details, LayoutInflater layoutInflater) {
-        this.details = details;
+    private Details details;
+
+    public DetailsAdapter(LayoutInflater layoutInflater) {
         this.layoutInflater = layoutInflater;
+    }
+
+    public void update(Details details) {
+        this.details = details;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -41,6 +46,9 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsViewHolder> {
 
     @Override
     public int getItemCount() {
+        if (details == null) {
+            return 0;
+        }
         return details.size();
     }
 

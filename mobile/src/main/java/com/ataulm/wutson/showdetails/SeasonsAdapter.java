@@ -13,13 +13,18 @@ import java.util.List;
 class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.SeasonViewHolder> {
 
     private final LayoutInflater inflater;
-    private final List<Show.SeasonSummary> seasonSummaries;
     private final OnClickSeasonListener listener;
 
-    SeasonsAdapter(LayoutInflater inflater, List<Show.SeasonSummary> seasonSummaries, OnClickSeasonListener listener) {
+    private List<Show.SeasonSummary> seasonSummaries;
+
+    SeasonsAdapter(LayoutInflater inflater, OnClickSeasonListener listener) {
         this.inflater = inflater;
-        this.seasonSummaries = seasonSummaries;
         this.listener = listener;
+    }
+
+    void update(List<Show.SeasonSummary> seasonSummaries) {
+        this.seasonSummaries = seasonSummaries;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -41,6 +46,9 @@ class SeasonsAdapter extends RecyclerView.Adapter<SeasonsAdapter.SeasonViewHolde
 
     @Override
     public int getItemCount() {
+        if (seasonSummaries == null) {
+            return 0;
+        }
         return seasonSummaries.size();
     }
 

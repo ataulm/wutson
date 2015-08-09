@@ -30,6 +30,9 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
     private final LayoutInflater layoutInflater;
     private final URI showBackdropUri;
 
+    private RecyclerView overviewRecyclerView;
+    private RecyclerView seasonsRecyclerView;
+
     private Show show;
 
     ShowDetailsPagerAdapter(Resources resources, OnClickSeasonListener onSeasonClickListener, LayoutInflater layoutInflater, URI showBackdropUri) {
@@ -41,7 +44,8 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
 
     void update(Show show) {
         this.show = show;
-        notifyDataSetChanged();
+        updateOverview();
+        updateSeasons();
     }
 
     @Override
@@ -75,13 +79,22 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
                 .load(showBackdropUri.toString())
                 .into(backdropImageView);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.show_details_about_recycler);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(recyclerView.getContext());
+        overviewRecyclerView = (RecyclerView) view.findViewById(R.id.show_details_about_recycler);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(overviewRecyclerView.getContext());
         linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new DetailsAdapter(getDetails(), layoutInflater));
-        recyclerView.scrollToPosition(0);
+        overviewRecyclerView.setLayoutManager(linearLayoutManager);
+
+        updateOverview();
         return view;
+    }
+
+    private void updateOverview() {
+        if (overviewRecyclerView.getAdapter() == null) {
+            overviewRecyclerView.setAdapter(new DetailsAdapter(layoutInflater));
+        } else {
+            ((DetailsAdapter) overviewRecyclerView.getAdapter()).update(getDetails());
+        }
+        overviewRecyclerView.scrollToPosition(0);
     }
 
     private Details getDetails() {
@@ -93,19 +106,28 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
     }
 
     private View getShowSeasonsView(ViewGroup container) {
-        List<Show.SeasonSummary> seasonSummaries;
-        if (show == null) {
-            seasonSummaries = Collections.emptyList();
-        } else {
-            seasonSummaries = show.getSeasonSummaries();
-        }
+        seasonsRecyclerView = (RecyclerView) layoutInflater.inflate(Page.SEASONS.getLayoutResId(), container, false);
+        seasonsRecyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        updateSeasons();
+        return seasonsRecyclerView;
+    }
 
-        RecyclerView view = (RecyclerView) layoutInflater.inflate(Page.SEASONS.getLayoutResId(), container, false);
-        RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, seasonSummaries, onSeasonClickListener);
-        seasonsAdapter.setHasStableIds(true);
-        view.setLayoutManager(new LinearLayoutManager(container.getContext()));
-        view.setAdapter(seasonsAdapter);
-        return view;
+    private void updateSeasons() {
+        if (seasonsRecyclerView.getAdapter() == null) {
+            RecyclerView.Adapter seasonsAdapter = new SeasonsAdapter(layoutInflater, onSeasonClickListener);
+            seasonsAdapter.setHasStableIds(true);
+            seasonsRecyclerView.setAdapter(seasonsAdapter);
+        } else {
+            ((SeasonsAdapter) seasonsRecyclerView.getAdapter()).update(getSeasonSummaries());
+        }
+    }
+
+    private List<Show.SeasonSummary> getSeasonSummaries() {
+        if (show == null) {
+            return Collections.emptyList();
+        } else {
+            return show.getSeasonSummaries();
+        }
     }
 
     private enum Page {
