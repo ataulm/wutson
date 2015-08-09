@@ -23,11 +23,11 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsViewHolder> {
             case HEADER_SPACE:
                 return HeaderSpaceDetailsViewHolder.newInstance(layoutInflater, parent);
             case OVERVIEW:
-                return OverviewViewHolder.newInstance(layoutInflater, parent);
+                return OverviewDetailsViewHolder.newInstance(layoutInflater, parent);
             case CAST_TITLE:
-                return CastTitleViewHolder.newInstance(layoutInflater, parent);
+                return CastTitleDetailsViewHolder.newInstance(layoutInflater, parent);
             case CHARACTER:
-                return CharacterViewHolder.newInstance(layoutInflater, parent);
+                return CharacterDetailsViewHolder.newInstance(layoutInflater, parent);
             default:
                 throw DeveloperError.because("no viewholder for: " + type);
         }

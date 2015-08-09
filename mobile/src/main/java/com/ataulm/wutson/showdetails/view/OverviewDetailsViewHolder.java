@@ -8,14 +8,14 @@ import android.widget.TextView;
 
 import com.ataulm.wutson.R;
 
-final class OverviewViewHolder extends DetailsViewHolder {
+final class OverviewDetailsViewHolder extends DetailsViewHolder {
 
-    public static OverviewViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
+    public static OverviewDetailsViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
         View view = layoutInflater.inflate(R.layout.view_show_details_item_overview, parent, false);
-        return new OverviewViewHolder(view);
+        return new OverviewDetailsViewHolder(view);
     }
 
-    private OverviewViewHolder(View itemView) {
+    private OverviewDetailsViewHolder(View itemView) {
         super(itemView);
     }
 

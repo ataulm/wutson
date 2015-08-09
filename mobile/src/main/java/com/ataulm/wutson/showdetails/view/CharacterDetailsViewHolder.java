@@ -6,14 +6,14 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
 
-public final class CharacterViewHolder extends DetailsViewHolder {
+public final class CharacterDetailsViewHolder extends DetailsViewHolder {
 
-    public static CharacterViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
+    public static CharacterDetailsViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
         View view = layoutInflater.inflate(R.layout.view_show_details_item_character, parent, false);
-        return new CharacterViewHolder(view);
+        return new CharacterDetailsViewHolder(view);
     }
 
-    private CharacterViewHolder(View itemView) {
+    private CharacterDetailsViewHolder(View itemView) {
         super(itemView);
     }
 
