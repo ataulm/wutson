@@ -133,7 +133,7 @@ public class ShowRepository {
                             id,
                             title,
                             gsonShowSeason.number,
-                            gsonShowSeason.episodes.size(),
+                            gsonShowSeason.episodes == null ? 0 : gsonShowSeason.episodes.size(),
                             getSeasonPosterFrom(gsonShowSeason));
                     seasonSummaries.add(seasonSummary);
                 }
@@ -152,7 +152,7 @@ public class ShowRepository {
             private URI getSeasonPosterFrom(GsonShowSeason gsonShowSeason) {
                 return gsonShowSeason.images.poster.medium == null ? URI.create("") : URI.create(gsonShowSeason.images.poster.medium);
             }
-            
+
         };
     }
 
