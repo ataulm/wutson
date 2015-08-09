@@ -10,6 +10,7 @@ import com.ataulm.wutson.discover.DiscoverActivity;
 import com.ataulm.wutson.episodes.EpisodeNumber;
 import com.ataulm.wutson.myshows.MyShowsActivity;
 import com.ataulm.wutson.search.SearchActivity;
+import com.ataulm.wutson.seasons.SeasonsActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
 import com.ataulm.wutson.showdetails.ShowDetailsActivity;
 import com.ataulm.wutson.shows.ShowId;
@@ -57,13 +58,14 @@ public class Navigator {
                 .putExtra(ShowDetailsActivity.EXTRA_SHOW_ACCENT_COLOR, accentColor));
     }
 
-    public void toSeason(ShowId showId, int seasonNumber) {
+    public void toSeason(ShowId showId, String showTitle, int seasonNumber) {
         Uri uri = BASE_URI.buildUpon()
                 .appendPath("show").appendPath(showId.toString())
                 .appendPath("season").appendPath(String.valueOf(seasonNumber))
                 .build();
 
-        start(view(uri, MIME_TYPE_SEASON_DIR));
+        start(view(uri, MIME_TYPE_SEASON_DIR)
+                .putExtra(SeasonsActivity.EXTRA_SHOW_TITLE, showTitle));
     }
 
     public void toEpisodeDetails(ShowId showId, EpisodeNumber episodeNumber) {

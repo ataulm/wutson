@@ -1,12 +1,18 @@
 package com.ataulm.wutson.repository;
 
+import com.ataulm.wutson.episodes.Episode;
+import com.ataulm.wutson.episodes.EpisodeNumber;
 import com.ataulm.wutson.repository.persistence.JsonRepository;
+import com.ataulm.wutson.rx.Function;
+import com.ataulm.wutson.seasons.Season;
 import com.ataulm.wutson.seasons.Seasons;
 import com.ataulm.wutson.shows.Cast;
 import com.ataulm.wutson.shows.Character;
 import com.ataulm.wutson.shows.Show;
 import com.ataulm.wutson.shows.ShowId;
+import com.ataulm.wutson.shows.SimpleDate;
 import com.ataulm.wutson.trakt.GsonShowDetails;
+import com.ataulm.wutson.trakt.GsonShowEpisode;
 import com.ataulm.wutson.trakt.GsonShowSeason;
 import com.ataulm.wutson.trakt.GsonShowSeasonList;
 import com.ataulm.wutson.trakt.TraktApi;
@@ -20,6 +26,7 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.functions.Func2;
 
 import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
@@ -156,8 +163,63 @@ public class ShowRepository {
         };
     }
 
-    public Observable<Seasons> getSeasons(ShowId showId) {
-        return Observable.empty();
+    public Observable<Seasons> getSeasons(final ShowId showId) {
+        return Observable.concat(gsonShowSeasonsFromDisk(showId), gsonShowSeasonsFromNetwork(showId))
+                .first()
+                .doOnNext(new Action1<GsonShowSeasonList>() {
+                    @Override
+                    public void call(GsonShowSeasonList gsonShowSeasons) {
+                        System.out.println("foo");
+                    }
+                })
+                .flatMap(Function.<GsonShowSeason>emitEachElement())
+                .map(asSeason())
+                .toList()
+                .map(asSeasons());
+    }
+
+    private static Func1<GsonShowSeason, Season> asSeason() {
+        return new Func1<GsonShowSeason, Season>() {
+            @Override
+            public Season call(GsonShowSeason gsonShowSeason) {
+                return new Season(gsonShowSeason.number, episodesListFrom(gsonShowSeason));
+            }
+
+            private List<Episode> episodesListFrom(GsonShowSeason gsonShowSeason) {
+                if (gsonShowSeason.episodes == null) {
+                    return Collections.emptyList();
+                }
+                List<Episode> episodes = new ArrayList<>(gsonShowSeason.episodes.size());
+                for (GsonShowEpisode gsonShowEpisode : gsonShowSeason.episodes) {
+                    Episode episode = episodeFrom(gsonShowEpisode);
+                    episodes.add(episode);
+                }
+                return episodes;
+            }
+
+            private Episode episodeFrom(GsonShowEpisode gsonShowEpisode) {
+                SimpleDate airDate = SimpleDate.from(gsonShowEpisode.firstAiredDate);
+                String showName = "Foo";
+
+                return new Episode(
+                        airDate,
+                        new EpisodeNumber(gsonShowEpisode.season, gsonShowEpisode.number),
+                        gsonShowEpisode.title,
+                        gsonShowEpisode.overview,
+                        gsonShowEpisode.images.screenshot.medium == null ? URI.create("") : URI.create(gsonShowEpisode.images.screenshot.medium),
+                        showName
+                );
+            }
+        };
+    }
+
+    private static Func1<List<Season>, Seasons> asSeasons() {
+        return new Func1<List<Season>, Seasons>() {
+            @Override
+            public Seasons call(List<Season> seasons) {
+                return new Seasons(seasons);
+            }
+        };
     }
 
 }

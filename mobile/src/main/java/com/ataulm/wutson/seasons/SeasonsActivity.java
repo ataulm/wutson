@@ -20,7 +20,11 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.ataulm.wutson.jabber.Jabber.dataRepository;
+
 public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeListener {
+
+    public static final String EXTRA_SHOW_TITLE = BuildConfig.APPLICATION_ID + ".seasons_show_title";
 
     private static final String KEY_RESET_PAGE_POSITION = BuildConfig.APPLICATION_ID + ".KEY_RESET_PAGE_POSITION";
     private static final int URI_PATH_SEGMENT_SHOW_ID_INDEX = 1;
@@ -60,11 +64,25 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
     }
 
     private void customiseShowDetailsToolbar() {
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        applyTitleFromIntentExtras();
         Drawable navigationIcon = getToolbar().getNavigationIcon();
         if (navigationIcon != null) {
             navigationIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         }
+    }
+
+    private void applyTitleFromIntentExtras() {
+        String showTitle = getShowTitle();
+        setTitle(showTitle);
+    }
+
+    private String getShowTitle() {
+        // TODO: seasons activity label
+        return getExtras().getString(EXTRA_SHOW_TITLE, getString(R.string.app_name));
+    }
+
+    private Bundle getExtras() {
+        return getIntent().getExtras() != null ? getIntent().getExtras() : Bundle.EMPTY;
     }
 
     @Override
@@ -101,9 +119,6 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
                 shouldResetPagePosition = false;
                 pager.setCurrentItem(adapter.positionOfSeasonNumber(seasonNumber));
             }
-
-            setTitle(seasons.getShowName());
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
 
     }

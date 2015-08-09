@@ -65,8 +65,12 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
     }
 
     private void applyTitleFromIntentExtras() {
-        String showTitle = getExtras().getString(EXTRA_SHOW_TITLE, getString(R.string.show_details_label));
+        String showTitle = getShowTitle();
         setTitle(showTitle);
+    }
+
+    private String getShowTitle() {
+        return getExtras().getString(EXTRA_SHOW_TITLE, getString(R.string.show_details_label));
     }
 
     private void applyColorFilterToAppBarIcons() {
@@ -96,7 +100,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
     @Override
     public void onClick(Show.SeasonSummary seasonSummary) {
-        navigate().toSeason(getShowId(), seasonSummary.getSeasonNumber());
+        navigate().toSeason(getShowId(), getShowTitle(), seasonSummary.getSeasonNumber());
     }
 
     private class ShowObserver extends LoggingObserver<Show> {
