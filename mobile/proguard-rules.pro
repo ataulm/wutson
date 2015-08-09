@@ -27,3 +27,7 @@
 -keep class android.support.** { *; }
 -keep interface android.support.** { *; }
 -keep public class * extends android.support.**
+
+-keep public class com.ataulm.wutson.view.AppBarWidget$** {
+    public *;
+}
