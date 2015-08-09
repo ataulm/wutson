@@ -98,7 +98,7 @@ public class ShowRepository {
 
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext(jsonRepository.readShowDetails(showId));
+                subscriber.onNext(jsonRepository.readSeasons(showId));
                 subscriber.onCompleted();
             }
 
@@ -111,7 +111,7 @@ public class ShowRepository {
             @Override
             public void call(GsonShowSeasonList gsonShowSeasonList) {
                 String json = gson.toJson(gsonShowSeasonList, GsonShowSeasonList.class);
-                jsonRepository.writeShowDetails(showId, json);
+                jsonRepository.writeSeasons(showId, json);
             }
 
         };
