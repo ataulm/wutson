@@ -40,6 +40,10 @@ public final class SimpleDate {
         this.date = date;
     }
 
+    public boolean isValid() {
+        return !equals(UNKNOWN);
+    }
+
     @Override
     public String toString() {
         return NAMED_DAY_MONTH_DAY_YEAR.format(date);

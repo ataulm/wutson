@@ -39,12 +39,25 @@ public class EpisodeSummaryView extends RelativeLayout {
 
         });
 
+        updateStillPoster(episode);
+        updateAirDate(episode);
+    }
+
+    private void updateStillPoster(Episode episode) {
         Glide.with(getContext())
                 .load(episode.getStillPath().toString())
                 .centerCrop()
                 .into(posterImageView);
         episodeNameTextView.setText(episode.getName());
-        episodeNumberTextView.setText(episode.getAirDate().toString());
+    }
+
+    private void updateAirDate(Episode episode) {
+        if (episode.getAirDate().isValid()) {
+            episodeNumberTextView.setText(episode.getAirDate().toString());
+            episodeNumberTextView.setVisibility(VISIBLE);
+        } else {
+            episodeNumberTextView.setVisibility(GONE);
+        }
     }
 
 }
