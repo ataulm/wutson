@@ -5,7 +5,6 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
@@ -39,8 +38,8 @@ public class UpcomingEpisodeWidget extends CardView {
         Glide.with(getContext())
                 .load(uri.toString())
                 .crossFade()
-                .placeholder(R.drawable.ic_episode_placeholder)
-                .error(R.drawable.ic_episode_placeholder)
+                .placeholder(R.drawable.ic_season_or_episode_placeholder)
+                .error(R.drawable.ic_season_or_episode_placeholder)
                 .into(posterImageView);
     }
 
