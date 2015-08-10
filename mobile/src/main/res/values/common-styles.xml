@@ -30,4 +30,28 @@
     <item name="textFont">robotoMedium</item>
   </style>
 
+  <style name="Wutson.CardView" parent="CardView">
+    <item name="android:foreground">@drawable/card_view_foreground</item>
+    <item name="elevation">@dimen/card_view_elevation</item>
+    <item name="contentPadding">0dp</item>
+    <item name="cardCornerRadius">@dimen/card_view_corner_radius</item>
+    <item name="cardUseCompatPadding">true</item>
+    <item name="cardPreventCornerOverlap">false</item>
+  </style>
+
+  <!-- TODO: pick correct card foregrounds with Qi -->
+  <color name="card_view_foreground_ripple">#BBBBBB</color>
+  <color name="card_view_foreground_pressed">#66A09C9D</color>
+  <color name="card_view_foreground_focused">#66757575</color>
+  <color name="card_view_foreground_default">@color/transparent</color>
+  <color name="card_view_background">#F0F0F0</color>
+
+  <dimen name="card_view_corner_radius">2dp</dimen>
+  <dimen name="card_view_elevation">2dp</dimen>
+  <!-- selector insets for pre-v21 cards so selector covers only card content -->
+  <dimen name="card_view_inset_left">@dimen/card_view_elevation</dimen>
+  <dimen name="card_view_inset_top">3dp</dimen>
+  <dimen name="card_view_inset_right">@dimen/card_view_elevation</dimen>
+  <dimen name="card_view_inset_bottom">3dp</dimen>
+
 </resources>

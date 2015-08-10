@@ -8,4 +8,5 @@
   android:layout_marginTop="@dimen/show_details_seasons_list_item_margin_top"
   android:layout_marginRight="@dimen/show_details_seasons_list_item_margin_right"
   android:layout_marginBottom="@dimen/show_details_seasons_list_item_margin_bottom"
+  android:focusable="true"
   tools:ignore="RtlHardcoded" />

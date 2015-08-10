@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+  android:insetLeft="@dimen/card_view_inset_left"
+  android:insetTop="@dimen/card_view_inset_top"
+  android:insetRight="@dimen/card_view_inset_right"
+  android:insetBottom="@dimen/card_view_inset_bottom">
+
+  <shape>
+    <solid android:color="@color/card_view_foreground_pressed" />
+    <corners android:radius="@dimen/card_view_corner_radius" />
+  </shape>
+</inset>

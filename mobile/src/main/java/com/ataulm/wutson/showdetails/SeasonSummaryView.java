@@ -1,16 +1,16 @@
 package com.ataulm.wutson.showdetails;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
 import com.bumptech.glide.Glide;
 
-public class SeasonSummaryView extends RelativeLayout {
+public class SeasonSummaryView extends CardView {
 
     private ImageView posterImageView;
     private TextView seasonNumberTextView;
@@ -22,6 +22,7 @@ public class SeasonSummaryView extends RelativeLayout {
 
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
         View.inflate(getContext(), R.layout.merge_season_summary, this);
         posterImageView = (ImageView) findViewById(R.id.season_summary_image_poster);
         seasonNumberTextView = (TextView) findViewById(R.id.season_summary_text_season_number);
@@ -31,7 +32,6 @@ public class SeasonSummaryView extends RelativeLayout {
     void setPoster(String uri) {
         posterImageView.setImageBitmap(null);
 
-        // FIXME: The CrossfadeRoundedLeftImageView is causing the purple. Replace SeasonSummaryView with CardView and CrossfadeImageView.
         Glide.with(getContext())
                 .load(uri.toString())
                 .asBitmap()
