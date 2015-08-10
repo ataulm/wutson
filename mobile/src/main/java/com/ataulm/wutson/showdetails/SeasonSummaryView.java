@@ -31,7 +31,7 @@ public class SeasonSummaryView extends RelativeLayout {
     void setPoster(String uri) {
         posterImageView.setImageBitmap(null);
 
-        // FIXME: why is the placeholder/error purple??
+        // FIXME: The CrossfadeRoundedLeftImageView is causing the purple. Replace SeasonSummaryView with CardView and CrossfadeImageView.
         Glide.with(getContext())
                 .load(uri.toString())
                 .asBitmap()
