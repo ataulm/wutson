@@ -95,11 +95,6 @@ public class ShowRepository {
                 .map(jsonTo(GsonShowSeasonList.class, gson));
     }
 
-    private Observable<GsonShowSeasonList> gsonShowSeasonsFromNetwork(ShowId showId) {
-        return traktApi.getShowSeasons(showId.toString())
-                .doOnNext(saveShowSeasonsAsJsonTo(jsonRepository, showId, gson));
-    }
-
     private static Observable<String> fetchJsonShowSeasonsFrom(final JsonRepository jsonRepository, final ShowId showId) {
         return Observable.create(new Observable.OnSubscribe<String>() {
 
@@ -110,6 +105,35 @@ public class ShowRepository {
             }
 
         });
+    }
+
+    private Observable<GsonShowSeasonList> gsonShowSeasonsFromNetwork(ShowId showId) {
+        return traktApi.getShowSeasons(showId.toString())
+                .flatMap(Function.<GsonShowSeason>emitEachElement())
+                .filter(onlySeasonsWithEpisodes())
+                .toList()
+                .map(asGsonShowSeasonList())
+                .doOnNext(saveShowSeasonsAsJsonTo(jsonRepository, showId, gson));
+    }
+
+    private static Func1<List<GsonShowSeason>, GsonShowSeasonList> asGsonShowSeasonList() {
+        return new Func1<List<GsonShowSeason>, GsonShowSeasonList>() {
+            @Override
+            public GsonShowSeasonList call(List<GsonShowSeason> gsonShowSeasons) {
+                GsonShowSeasonList list = new GsonShowSeasonList();
+                list.addAll(gsonShowSeasons);
+                return list;
+            }
+        };
+    }
+
+    private static Func1<GsonShowSeason, Boolean> onlySeasonsWithEpisodes() {
+        return new Func1<GsonShowSeason, Boolean>() {
+            @Override
+            public Boolean call(GsonShowSeason gsonShowSeason) {
+                return gsonShowSeason.episodes != null && gsonShowSeason.episodes.size() > 0;
+            }
+        };
     }
 
     private static Action1<GsonShowSeasonList> saveShowSeasonsAsJsonTo(final JsonRepository jsonRepository, final ShowId showId, final Gson gson) {
