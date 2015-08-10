@@ -1,6 +1,5 @@
 package com.ataulm.wutson.showdetails;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,9 +10,7 @@ import android.widget.TextView;
 import com.ataulm.wutson.R;
 import com.bumptech.glide.Glide;
 
-// not a problem - https://code.google.com/p/android/issues/detail?id=67434
-@SuppressLint("Instantiatable")
-class SeasonSummaryView extends RelativeLayout {
+public class SeasonSummaryView extends RelativeLayout {
 
     private ImageView posterImageView;
     private TextView seasonNumberTextView;
@@ -34,10 +31,12 @@ class SeasonSummaryView extends RelativeLayout {
     void setPoster(String uri) {
         posterImageView.setImageBitmap(null);
 
+        // FIXME: why is the placeholder/error purple??
         Glide.with(getContext())
-                .load(uri)
+                .load(uri.toString())
                 .asBitmap()
                 .centerCrop()
+                .error(R.drawable.ic_season_or_episode_placeholder)
                 .into(posterImageView);
     }
 
