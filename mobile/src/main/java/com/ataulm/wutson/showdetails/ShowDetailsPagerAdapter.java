@@ -79,6 +79,7 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
         ImageView backdropImageView = (ImageView) view.findViewById(R.id.show_details_about_image_backdrop);
         Glide.with(backdropImageView.getContext())
                 .load(showBackdropUri.toString())
+                .error(R.drawable.ic_hero_image_placeholder)
                 .into(backdropImageView);
 
         overviewRecyclerView = (RecyclerView) view.findViewById(R.id.show_details_about_recycler);
