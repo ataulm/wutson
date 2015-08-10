@@ -59,13 +59,18 @@ public class Navigator {
     }
 
     public void toSeason(ShowId showId, String showTitle, int seasonNumber) {
+        toSeason(showId, showTitle, seasonNumber, 0);
+    }
+
+    public void toSeason(ShowId showId, String showTitle, int seasonNumber, @ColorInt int accentColor) {
         Uri uri = BASE_URI.buildUpon()
                 .appendPath("show").appendPath(showId.toString())
                 .appendPath("season").appendPath(String.valueOf(seasonNumber))
                 .build();
 
         start(view(uri, MIME_TYPE_SEASON_DIR)
-                .putExtra(SeasonsActivity.EXTRA_SHOW_TITLE, showTitle));
+                .putExtra(SeasonsActivity.EXTRA_SHOW_TITLE, showTitle)
+                .putExtra(SeasonsActivity.EXTRA_SHOW_ACCENT_COLOR, accentColor));
     }
 
     public void toEpisodeDetails(ShowId showId, EpisodeNumber episodeNumber) {

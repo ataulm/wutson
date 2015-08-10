@@ -5,26 +5,26 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewPager;
 
 import com.ataulm.wutson.BuildConfig;
-import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.episodes.Episode;
-import com.ataulm.wutson.shows.ShowId;
+import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.ataulm.wutson.shows.ShowId;
 import com.novoda.landingstrip.LandingStrip;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.ataulm.wutson.jabber.Jabber.dataRepository;
-
 public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeListener {
 
     public static final String EXTRA_SHOW_TITLE = BuildConfig.APPLICATION_ID + ".seasons_show_title";
+    public static final String EXTRA_SHOW_ACCENT_COLOR = BuildConfig.APPLICATION_ID + ".show_accent_color";
 
     private static final String KEY_RESET_PAGE_POSITION = BuildConfig.APPLICATION_ID + ".KEY_RESET_PAGE_POSITION";
     private static final int URI_PATH_SEGMENT_SHOW_ID_INDEX = 1;
@@ -65,6 +65,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
 
     private void customiseShowDetailsToolbar() {
         applyTitleFromIntentExtras();
+        getAppBarWidget().setBackgroundColor(getAccentColor());
         Drawable navigationIcon = getToolbar().getNavigationIcon();
         if (navigationIcon != null) {
             navigationIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
@@ -79,6 +80,12 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
     private String getShowTitle() {
         // TODO: seasons activity label
         return getExtras().getString(EXTRA_SHOW_TITLE, getString(R.string.app_name));
+    }
+
+    @ColorInt
+    private int getAccentColor() {
+        int fallbackColor = getResources().getColor(R.color.show_details_app_bar_background);
+        return getExtras().getInt(EXTRA_SHOW_ACCENT_COLOR, fallbackColor);
     }
 
     private Bundle getExtras() {

@@ -100,7 +100,7 @@ public class ShowDetailsActivity extends WutsonActivity implements OnClickSeason
 
     @Override
     public void onClick(Show.SeasonSummary seasonSummary) {
-        navigate().toSeason(getShowId(), getShowTitle(), seasonSummary.getSeasonNumber());
+        navigate().toSeason(getShowId(), getShowTitle(), seasonSummary.getSeasonNumber(), getAccentColor());
     }
 
     private class ShowObserver extends LoggingObserver<Show> {
