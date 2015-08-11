@@ -23,22 +23,14 @@ public class EpisodeSummaryView extends RelativeLayout {
 
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
         View.inflate(getContext(), R.layout.merge_episode_summary, this);
         posterImageView = (ImageView) findViewById(R.id.episode_summary_image_poster);
         episodeNameTextView = (TextView) findViewById(R.id.episode_summary_text_episode_name);
         episodeNumberTextView = (TextView) findViewById(R.id.episode_summary_text_episode_air_date);
     }
 
-    void display(final Episode episode, final OnClickEpisodeListener listener) {
-        setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                listener.onClick(episode);
-            }
-
-        });
-
+    void display(Episode episode) {
         updateStillPoster(episode);
         updateAirDate(episode);
     }

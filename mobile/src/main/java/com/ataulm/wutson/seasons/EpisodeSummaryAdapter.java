@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.episodes.Episode;
 
-class EpisodeSummaryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class EpisodeSummaryAdapter extends RecyclerView.Adapter<EpisodeSummaryAdapter.EpisodeSummaryViewHolder> {
 
     private final Season season;
     private final OnClickEpisodeListener listener;
@@ -21,14 +21,15 @@ class EpisodeSummaryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.view_season_item, parent, false));
+    public EpisodeSummaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.view_season_item, parent, false);
+        return new EpisodeSummaryViewHolder(view, listener);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Episode item = season.get(position);
-        ((EpisodeSummaryView) holder.itemView).display(item, listener);
+    public void onBindViewHolder(EpisodeSummaryViewHolder viewHolder, int position) {
+        Episode episode = season.get(position);
+        viewHolder.display(episode);
     }
 
     @Override
@@ -41,10 +42,25 @@ class EpisodeSummaryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return season.size();
     }
 
-    private static class ViewHolder extends RecyclerView.ViewHolder {
+    static class EpisodeSummaryViewHolder extends RecyclerView.ViewHolder {
 
-        ViewHolder(View itemView) {
+        private final OnClickEpisodeListener listener;
+
+        EpisodeSummaryViewHolder(View itemView, OnClickEpisodeListener listener) {
             super(itemView);
+            this.listener = listener;
+        }
+
+        void display(final Episode episode) {
+            ((EpisodeSummaryView) itemView).display(episode);
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    listener.onClick(episode);
+                }
+
+            });
         }
 
     }
