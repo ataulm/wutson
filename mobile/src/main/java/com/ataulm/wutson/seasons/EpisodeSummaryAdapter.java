@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.episodes.Episode;
 
-class SeasonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class EpisodeSummaryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Season season;
     private final OnClickEpisodeListener listener;
     private final LayoutInflater inflater;
 
-    SeasonAdapter(Season season, OnClickEpisodeListener listener, LayoutInflater inflater) {
+    EpisodeSummaryAdapter(Season season, OnClickEpisodeListener listener, LayoutInflater inflater) {
         this.season = season;
         this.listener = listener;
         this.inflater = inflater;
