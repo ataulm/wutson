@@ -9,11 +9,12 @@
     <item name="android:paddingRight">@dimen/seasons_padding_right</item>
     <item name="android:paddingBottom">@dimen/seasons_padding_bottom</item>
     <item name="android:clipToPadding">false</item>
+    <item name="android:descendantFocusability">afterDescendants</item>
   </style>
 
   <style name="Seasons.Episode" />
 
-  <style name="Seasons.Episode.View">
+  <style name="Seasons.ListItem" parent="Wutson.CardView">
     <item name="android:paddingLeft">@dimen/seasons_episode_item_padding_left</item>
     <item name="android:paddingTop">@dimen/seasons_episode_item_padding_top</item>
     <item name="android:paddingRight">@dimen/seasons_episode_item_padding_right</item>

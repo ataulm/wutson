@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.ataulm.wutson.seasons.EpisodeSummaryView xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/Seasons.Episode.View"
+  xmlns:tools="http://schemas.android.com/tools"
+  style="@style/Seasons.ListItem"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:layout_marginLeft="@dimen/seasons_episode_item_margin_left"
-  android:layout_marginTop="@dimen/seasons_episode_item_margin_top"
-  android:layout_marginRight="@dimen/seasons_episode_item_margin_right"
-  android:layout_marginBottom="@dimen/seasons_episode_item_margin_bottom" />
+  android:layout_height="wrap_content"
+  android:layout_marginLeft="@dimen/show_details_seasons_list_item_margin_left"
+  android:layout_marginTop="@dimen/show_details_seasons_list_item_margin_top"
+  android:layout_marginRight="@dimen/show_details_seasons_list_item_margin_right"
+  android:layout_marginBottom="@dimen/show_details_seasons_list_item_margin_bottom"
+  android:focusable="true"
+  tools:ignore="RtlHardcoded" />
+  <!--TODO: should not be using margins! use SpacesItemDecoration-->

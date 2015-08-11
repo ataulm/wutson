@@ -1,6 +1,7 @@
 package com.ataulm.wutson.seasons;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +12,7 @@ import com.ataulm.wutson.R;
 import com.ataulm.wutson.episodes.Episode;
 import com.bumptech.glide.Glide;
 
-public class EpisodeSummaryView extends RelativeLayout {
+public class EpisodeSummaryView extends CardView {
 
     private ImageView posterImageView;
     private TextView episodeNameTextView;
