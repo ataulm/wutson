@@ -9,10 +9,12 @@
   <dimen name="show_details_overview_text">14sp</dimen>
   <dimen name="show_details_overview_line_spacing_extra">6sp</dimen>
 
-  <dimen name="show_details_seasons_list_padding_left">0dp</dimen>
-  <dimen name="show_details_seasons_list_padding_top">6dp</dimen>
-  <dimen name="show_details_seasons_list_padding_right">0dp</dimen>
-  <dimen name="show_details_seasons_list_padding_bottom">6dp</dimen>
+  <dimen name="show_details_seasons_list_horizontal_spacing">4dp</dimen>
+  <dimen name="show_details_seasons_list_vertical_spacing">4dp</dimen>
+  <dimen name="show_details_seasons_list_padding_left">8dp</dimen>
+  <dimen name="show_details_seasons_list_padding_top">4dp</dimen>
+  <dimen name="show_details_seasons_list_padding_right">8dp</dimen>
+  <dimen name="show_details_seasons_list_padding_bottom">4dp</dimen>
   
   <dimen name="show_seasons_item_background_top_right_radius">@dimen/card_corner_radius</dimen>
   <dimen name="show_seasons_item_background_bottom_right_radius">@dimen/card_corner_radius</dimen>

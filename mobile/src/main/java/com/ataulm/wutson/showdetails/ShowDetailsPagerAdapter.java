@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.ataulm.rv.SpacesItemDecoration;
 import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.R;
@@ -111,6 +112,14 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
     private View createSeasonsView(ViewGroup container) {
         seasonsRecyclerView = (RecyclerView) layoutInflater.inflate(Page.SEASONS.getLayoutResId(), container, false);
         seasonsRecyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        int spanCount = 1;
+        seasonsRecyclerView.addItemDecoration(
+                SpacesItemDecoration.newInstance(
+                        resources.getDimensionPixelSize(R.dimen.show_details_seasons_list_horizontal_spacing),
+                        resources.getDimensionPixelSize(R.dimen.show_details_seasons_list_vertical_spacing),
+                        spanCount
+                )
+        );
         return seasonsRecyclerView;
     }
 
