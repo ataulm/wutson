@@ -39,6 +39,7 @@ public class EpisodeSummaryView extends RelativeLayout {
         Glide.with(getContext())
                 .load(episode.getStillPath().toString())
                 .centerCrop()
+                .error(R.drawable.ic_season_or_episode_placeholder)
                 .into(posterImageView);
         episodeNameTextView.setText(episode.getName());
     }
