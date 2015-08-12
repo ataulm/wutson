@@ -55,6 +55,7 @@ public class EpisodesActivity extends WutsonActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         setTitle(getShowName() + " - Season " + seasonNumber);
         Drawable navigationIcon = getToolbar().getNavigationIcon();
         if (navigationIcon != null) {
@@ -97,7 +98,7 @@ public class EpisodesActivity extends WutsonActivity {
             adapter.update(season);
             if (shouldResetPagePosition) {
                 shouldResetPagePosition = false;
-                pager.setCurrentItem(adapter.positionOfEpisodeNumber(episodeNumber));
+                pager.setCurrentItem(adapter.positionOfEpisodeNumber(episodeNumber), false);
             }
         }
 

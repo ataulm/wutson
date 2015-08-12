@@ -43,7 +43,7 @@ public abstract class WutsonActivity extends ActionBarActivity {
         return appBarWidget;
     }
 
-    protected void setAppBar(Toolbar toolbar) {
+    private void setAppBar(Toolbar toolbar) {
         if (hasNoAppBar()) {
             return;
         }

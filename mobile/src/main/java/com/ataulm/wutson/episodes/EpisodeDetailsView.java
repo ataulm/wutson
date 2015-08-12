@@ -21,10 +21,13 @@ public class EpisodeDetailsView extends ScrollView {
 
     public EpisodeDetailsView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setFillViewport(true);
     }
 
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
+
         View.inflate(getContext(), R.layout.merge_episode_details, this);
         episodePosterView = (ImageView) findViewById(R.id.episode_details_image_episode_poster);
         episodeNameTextView = (TextView) findViewById(R.id.episode_details_text_episode_name);
@@ -41,6 +44,7 @@ public class EpisodeDetailsView extends ScrollView {
 
         Glide.with(getContext())
                 .load(uri.toString())
+                .error(R.drawable.ic_hero_image_placeholder)
                 .into(episodePosterView);
     }
 
