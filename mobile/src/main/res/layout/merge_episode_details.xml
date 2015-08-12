@@ -12,10 +12,10 @@
     android:orientation="vertical">
 
     <LinearLayout
+      android:id="@+id/episode_details_viewgroup_info"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:background="#2C93B3">
+      android:orientation="vertical">
 
       <com.ataulm.wutson.view.CrossfadeImageView
         android:id="@+id/episode_details_image_episode_poster"
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="72dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginRight="16dp"
         android:textColor="@color/white"
         android:textSize="24sp"

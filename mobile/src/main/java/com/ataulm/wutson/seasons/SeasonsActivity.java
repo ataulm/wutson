@@ -108,7 +108,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
 
     @Override
     public void onClick(Episode episode) {
-        navigate().toEpisodeDetails(showId, episode.getEpisodeNumber());
+        navigate().toEpisodeDetails(showId, getShowTitle(), episode.getEpisodeNumber(), getAccentColor());
     }
 
     private class Observer extends LoggingObserver<Seasons> {

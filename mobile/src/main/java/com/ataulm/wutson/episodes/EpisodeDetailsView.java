@@ -1,6 +1,7 @@
 package com.ataulm.wutson.episodes;
 
 import android.content.Context;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ public class EpisodeDetailsView extends ScrollView {
     private TextView episodeNameTextView;
     private TextView episodeNumberTextView;
     private TextView episodeDescriptionTextView;
+    private View infoView;
 
     public EpisodeDetailsView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -33,6 +35,7 @@ public class EpisodeDetailsView extends ScrollView {
         episodeNameTextView = (TextView) findViewById(R.id.episode_details_text_episode_name);
         episodeNumberTextView = (TextView) findViewById(R.id.episode_details_text_episode_number);
         episodeDescriptionTextView = (TextView) findViewById(R.id.episode_details_text_episode_description);
+        infoView = findViewById(R.id.episode_details_viewgroup_info);
     }
 
     void setEpisodeName(String episodeName) {
@@ -48,6 +51,10 @@ public class EpisodeDetailsView extends ScrollView {
                 .into(episodePosterView);
     }
 
+    public void setAccentColor(@ColorInt int accentColor) {
+        infoView.setBackgroundColor(accentColor);
+    }
+
     public void setEpisodeDescription(String overview) {
         episodeDescriptionTextView.setText(overview);
     }
@@ -55,5 +62,4 @@ public class EpisodeDetailsView extends ScrollView {
     public void setEpisodeNumber(int seasonNumber, int episodeNumber) {
         episodeNumberTextView.setText("Series " + seasonNumber + " Episode " + episodeNumber);
     }
-
 }

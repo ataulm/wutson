@@ -58,10 +58,6 @@ public class Navigator {
                 .putExtra(ShowDetailsActivity.EXTRA_SHOW_ACCENT_COLOR, accentColor));
     }
 
-    public void toSeason(ShowId showId, String showTitle, int seasonNumber) {
-        toSeason(showId, showTitle, seasonNumber, 0);
-    }
-
     public void toSeason(ShowId showId, String showTitle, int seasonNumber, @ColorInt int accentColor) {
         Uri uri = BASE_URI.buildUpon()
                 .appendPath("show").appendPath(showId.toString())
@@ -74,13 +70,19 @@ public class Navigator {
     }
 
     public void toEpisodeDetails(ShowId showId, EpisodeNumber episodeNumber) {
+        toEpisodeDetails(showId, "", episodeNumber, 0);
+    }
+
+    public void toEpisodeDetails(ShowId showId, String showTitle, EpisodeNumber episodeNumber, @ColorInt int accentColor) {
         Uri uri = BASE_URI.buildUpon()
                 .appendPath("show").appendPath(showId.toString())
                 .appendPath("season").appendPath(String.valueOf(episodeNumber.getSeason()))
                 .appendPath("episode").appendPath(String.valueOf(episodeNumber.getEpisode()))
                 .build();
 
-        start(view(uri, MIME_TYPE_EPISODES_DIR));
+        start(view(uri, MIME_TYPE_EPISODES_DIR)
+                .putExtra(ShowDetailsActivity.EXTRA_SHOW_TITLE, showTitle)
+                .putExtra(ShowDetailsActivity.EXTRA_SHOW_ACCENT_COLOR, accentColor));
     }
 
     public void toSearchFor(String query) {
