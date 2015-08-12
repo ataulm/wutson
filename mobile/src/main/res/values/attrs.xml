@@ -11,7 +11,7 @@
 
   <declare-styleable name="AppBarWidget">
     <attr name="mergeLayoutId" format="reference" />
-    <attr name="appBarBackgroundColor" format="color" />
+    <attr name="appBarBackground" format="reference" />
   </declare-styleable>
 
   <declare-styleable name="AspectRatioImageView">

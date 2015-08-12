@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <color name="episode_details_app_bar_background">@color/black</color>
+  <color name="episode_app_bar_background_start">@color/black_30pc</color>
+  <color name="episode_app_bar_background_end">@color/transparent</color>
 
 </resources>

@@ -3,8 +3,4 @@
 
   <style name="Episodes" />
 
-  <style name="Episodes.AppBar">
-    <item name="android:background">@color/episode_details_app_bar_background</item>
-  </style>
-
 </resources>
