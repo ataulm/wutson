@@ -5,34 +5,40 @@
   android:layout_height="wrap_content"
   tools:ignore="RtlHardcoded">
 
-  <com.ataulm.wutson.view.CrossfadeRoundedLeftImageView
-    android:id="@+id/episode_summary_image_poster"
-    style="@style/EpisodeSummary.Poster"
-    android:layout_width="@dimen/episode_summary_poster_width"
-    android:layout_height="@dimen/episode_summary_poster_height"
-    android:contentDescription="@null" />
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-  <TextView
-    android:id="@+id/episode_summary_text_episode_name"
-    style="@style/EpisodeSummary.EpisodeName"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/episode_summary_episode_name_margin_left"
-    android:layout_marginTop="@dimen/episode_summary_episode_name_margin_top"
-    android:layout_marginRight="@dimen/episode_summary_episode_name_margin_right"
-    android:layout_marginBottom="@dimen/episode_summary_episode_name_margin_bottom"
-    android:layout_toRightOf="@id/episode_summary_image_poster" />
+    <com.ataulm.wutson.view.CrossfadeImageView
+      android:id="@+id/episode_summary_image_poster"
+      style="@style/EpisodeSummary.Poster"
+      android:layout_width="@dimen/episode_summary_poster_width"
+      android:layout_height="@dimen/episode_summary_poster_height"
+      android:contentDescription="@null" />
 
-  <TextView
-    android:id="@+id/episode_summary_text_episode_air_date"
-    style="@style/EpisodeSummary.EpisodeAirDate"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/episode_summary_episode_air_date_margin_left"
-    android:layout_marginTop="@dimen/episode_summary_episode_air_date_margin_top"
-    android:layout_marginRight="@dimen/episode_summary_episode_air_date_margin_right"
-    android:layout_marginBottom="@dimen/episode_summary_episode_air_date_margin_bottom"
-    android:layout_alignLeft="@id/episode_summary_text_episode_name"
-    android:layout_below="@id/episode_summary_text_episode_name" />
+    <TextView
+      android:id="@+id/episode_summary_text_episode_name"
+      style="@style/EpisodeSummary.EpisodeName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/episode_summary_episode_name_margin_left"
+      android:layout_marginTop="@dimen/episode_summary_episode_name_margin_top"
+      android:layout_marginRight="@dimen/episode_summary_episode_name_margin_right"
+      android:layout_marginBottom="@dimen/episode_summary_episode_name_margin_bottom"
+      android:layout_toRightOf="@id/episode_summary_image_poster" />
+
+    <TextView
+      android:id="@+id/episode_summary_text_episode_air_date"
+      style="@style/EpisodeSummary.EpisodeAirDate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/episode_summary_episode_air_date_margin_left"
+      android:layout_marginTop="@dimen/episode_summary_episode_air_date_margin_top"
+      android:layout_marginRight="@dimen/episode_summary_episode_air_date_margin_right"
+      android:layout_marginBottom="@dimen/episode_summary_episode_air_date_margin_bottom"
+      android:layout_alignLeft="@id/episode_summary_text_episode_name"
+      android:layout_below="@id/episode_summary_text_episode_name" />
+
+  </RelativeLayout>
 
 </merge>

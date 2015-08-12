@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ataulm.wutson.view.LinearLayoutWithForeground xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  style="@style/Discover.Show.View"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:focusable="true"
+  tools:ignore="RtlHardcoded">
+
+  <com.ataulm.wutson.view.AspectRatioImageView
+    android:id="@+id/discover_show_image_poster"
+    style="@style/Discover.Show.Poster"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+  <LinearLayout
+    android:id="@+id/discover_show_overlay"
+    style="@style/Discover.Show.Overlay"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/discover_show_overlay_height"
+    android:orientation="horizontal">
+
+    <com.ataulm.wutson.view.WutsonTextView
+      android:id="@+id/discover_show_text_name"
+      style="@style/Discover.Show.Name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="100"
+      android:layout_marginLeft="@dimen/discover_show_name_margin_left"
+      android:layout_marginTop="@dimen/discover_show_name_margin_top"
+      android:layout_marginRight="@dimen/discover_show_name_margin_right"
+      android:layout_marginBottom="@dimen/discover_show_name_margin_bottom" />
+
+  </LinearLayout>
+
+</com.ataulm.wutson.view.LinearLayoutWithForeground>

@@ -11,15 +11,6 @@
     android:label="@string/app_name"
     android:theme="@style/Wutson.Theme">
 
-    <!--TODO: Activity launch modes/behaviour-->
-    <!--MyShows (single instance, back should go to first tab, 2nd back should finish())-->
-    <!--Discover (single instance, back should go to first tab, 2nd back should return to MyShows)-->
-    <!--Settings (up should finish())-->
-
-    <!--ShowDetails (up should finish() if opened internally, else up to MyShows())-->
-    <!--Seasons (up should go to ShowDetails)-->
-    <!--Episode (up to Seasons)-->
-
     <activity
       android:name="com.ataulm.wutson.myshows.MyShowsActivity"
       android:label="@string/my_shows_label"
@@ -55,7 +46,7 @@
     </activity>
 
     <activity
-      android:name=".episodes.EpisodeDetailsActivity"
+      android:name=".episodes.EpisodesActivity"
       android:parentActivityName="com.ataulm.wutson.seasons.SeasonsActivity"
       android:theme="@style/Wutson.Theme.Episodes">
       <intent-filter>
@@ -72,10 +63,24 @@
 
     <activity android:name="com.ataulm.wutson.settings.SoftwareLicensesActivity" />
 
+    <activity android:name="com.ataulm.wutson.search.SearchActivity"
+      android:launchMode="singleTop">
+      <intent-filter>
+        <action android:name="android.intent.action.SEARCH" />
+      </intent-filter>
+      <meta-data
+        android:name="android.app.searchable"
+        android:resource="@xml/searchable" />
+    </activity>
+
+    <meta-data
+      android:name="android.app.default_searchable"
+      android:value="com.ataulm.wutson.myshows.SearchActivity" />
+
     <activity-alias
       android:name="activity.primary_launcher"
       android:label="@string/app_name"
-      android:targetActivity="com.ataulm.wutson.myshows.MyShowsActivity">
+      android:targetActivity="com.ataulm.wutson.discover.DiscoverActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

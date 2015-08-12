@@ -3,62 +3,23 @@
 
   <style name="ShowDetails" />
 
-  <style name="ShowDetails.ShowHeader">
-    <item name="android:paddingLeft">16dp</item>
-    <item name="android:paddingTop">16dp</item>
-    <item name="android:paddingRight">16dp</item>
-    <item name="android:paddingBottom">16dp</item>
-    <item name="android:background">@color/white</item>
-    <item name="android:textAppearance">@style/ShowDetails.ShowHeader.TextAppearance.Overview</item>
+  <style name="ShowDetails.Overview">
+    <item name="android:paddingLeft">@dimen/show_details_overview_padding_left</item>
+    <item name="android:paddingTop">@dimen/show_details_overview_padding_top</item>
+    <item name="android:paddingRight">@dimen/show_details_overview_padding_right</item>
+    <item name="android:paddingBottom">@dimen/show_details_overview_padding_bottom</item>
+    <item name="android:textColor">@color/show_details_overview_text</item>
+    <item name="android:textSize">@dimen/show_details_overview_text</item>
+    <item name="android:lineSpacingExtra">@dimen/show_details_overview_line_spacing_extra</item>
+    <item name="textFont">robotoRegular</item>
   </style>
 
-  <style name="ShowDetails.ShowHeader.Name">
-    <item name="android:textAppearance">@style/ShowDetails.ShowHeader.TextAppearance.Name</item>
+  <style name="ShowDetails.CastTitle">
+    <!--TODO: CastTitle styles-->
   </style>
 
-  <style name="ShowDetails.ShowHeader.TextAppearance">
-    <item name="android:textColor">#666666</item>
-  </style>
-
-  <style name="ShowDetails.ShowHeader.TextAppearance.Name">
-    <item name="android:textSize">24sp</item>
-  </style>
-
-  <style name="ShowDetails.ShowHeader.TextAppearance.Overview">
-    <item name="android:textSize">16sp</item>
-  </style>
-
-  <style name="ShowDetails.Cast" />
-
-  <style name="ShowDetails.Cast.View">
-    <item name="android:paddingLeft">@dimen/cast_padding_left</item>
-    <item name="android:paddingTop">@dimen/cast_padding_top</item>
-    <item name="android:paddingRight">@dimen/cast_padding_right</item>
-    <item name="android:paddingBottom">@dimen/cast_padding_bottom</item>
-  </style>
-
-  <style name="ShowDetails.Cast.Title">
-    <item name="android:textAppearance">@style/ShowDetails.Cast.Title.TextAppearance</item>
-  </style>
-
-  <style name="ShowDetails.Cast.Title.TextAppearance">
-    <item name="android:textSize">16sp</item>
-  </style>
-
-  <style name="ShowDetails.Cast.Character" />
-
-  <style name="ShowDetails.Cast.Character.View" />
-
-  <style name="ShowDetails.Cast.Character.Profile">
-    <item name="android:scaleType">centerCrop</item>
-  </style>
-
-  <style name="ShowDetails.Cast.Character.Name">
-    <item name="android:gravity">bottom</item>
-  </style>
-
-  <style name="ShowDetails.Cast.Character.Actor">
-    <item name="android:gravity">top</item>
+  <style name="ShowDetails.Character">
+    <!--TODO: Character styles-->
   </style>
 
   <style name="ShowDetails.SeasonsList">
@@ -68,15 +29,14 @@
     <item name="android:paddingBottom">@dimen/show_details_seasons_list_padding_bottom</item>
     <item name="android:background">@color/show_details_seasons_list_background</item>
     <item name="android:clipToPadding">false</item>
+    <item name="android:descendantFocusability">afterDescendants</item>
   </style>
 
-  <style name="ShowDetails.SeasonsListItem">
+  <style name="ShowDetails.SeasonsListItem" parent="Wutson.CardView">
     <item name="android:paddingLeft">@dimen/show_details_seasons_list_item_padding_left</item>
     <item name="android:paddingTop">@dimen/show_details_seasons_list_item_padding_top</item>
     <item name="android:paddingRight">@dimen/show_details_seasons_list_item_padding_right</item>
     <item name="android:paddingBottom">@dimen/show_details_seasons_list_item_padding_bottom</item>
-    <item name="android:background">@drawable/card_background</item>
-    <item name="android:focusable">true</item>
   </style>
 
 </resources>

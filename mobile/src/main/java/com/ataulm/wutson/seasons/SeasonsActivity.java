@@ -5,15 +5,16 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewPager;
 
 import com.ataulm.wutson.BuildConfig;
-import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.Episode;
-import com.ataulm.wutson.model.Seasons;
+import com.ataulm.wutson.episodes.Episode;
+import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.ataulm.wutson.shows.ShowId;
 import com.novoda.landingstrip.LandingStrip;
 
 import rx.Subscription;
@@ -22,11 +23,14 @@ import rx.schedulers.Schedulers;
 
 public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeListener {
 
+    public static final String EXTRA_SHOW_TITLE = BuildConfig.APPLICATION_ID + ".seasons_show_title";
+    public static final String EXTRA_SHOW_ACCENT_COLOR = BuildConfig.APPLICATION_ID + ".show_accent_color";
+
     private static final String KEY_RESET_PAGE_POSITION = BuildConfig.APPLICATION_ID + ".KEY_RESET_PAGE_POSITION";
     private static final int URI_PATH_SEGMENT_SHOW_ID_INDEX = 1;
 
     private Subscription seasonSubscription;
-    private String showId;
+    private ShowId showId;
     private int seasonNumber;
     private ViewPager pager;
     private LandingStrip tabs;
@@ -39,7 +43,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
         setContentView(R.layout.activity_seasons);
 
         Uri data = getIntent().getData();
-        showId = data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID_INDEX);
+        showId = new ShowId(data.getPathSegments().get(URI_PATH_SEGMENT_SHOW_ID_INDEX));
         seasonNumber = Integer.parseInt(data.getLastPathSegment());
 
         tabs = (LandingStrip) findViewById(R.id.tab_strip);
@@ -53,18 +57,39 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
         super.onPostCreate(savedInstanceState);
         customiseShowDetailsToolbar();
 
-        seasonSubscription = Jabber.dataRepository().getSeasons(showId)
+        seasonSubscription = Jabber.dataRepository().getSeasons(showId, getShowTitle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
     }
 
     private void customiseShowDetailsToolbar() {
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        applyTitleFromIntentExtras();
+        getAppBarWidget().setBackgroundColor(getAccentColor());
         Drawable navigationIcon = getToolbar().getNavigationIcon();
         if (navigationIcon != null) {
             navigationIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         }
+    }
+
+    private void applyTitleFromIntentExtras() {
+        String showTitle = getShowTitle();
+        setTitle(showTitle);
+    }
+
+    private String getShowTitle() {
+        // TODO: seasons activity label
+        return getExtras().getString(EXTRA_SHOW_TITLE, getString(R.string.app_name));
+    }
+
+    @ColorInt
+    private int getAccentColor() {
+        int fallbackColor = getResources().getColor(R.color.show_details_app_bar_background);
+        return getExtras().getInt(EXTRA_SHOW_ACCENT_COLOR, fallbackColor);
+    }
+
+    private Bundle getExtras() {
+        return getIntent().getExtras() != null ? getIntent().getExtras() : Bundle.EMPTY;
     }
 
     @Override
@@ -83,10 +108,14 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
 
     @Override
     public void onClick(Episode episode) {
-        navigate().toEpisodeDetails(showId, episode.getSeasonNumber(), episode.getEpisodeNumber());
+        navigate().toEpisodeDetails(showId, episode.getEpisodeNumber());
     }
 
     private class Observer extends LoggingObserver<Seasons> {
+
+        private Observer() {
+            super(Jabber.log());
+        }
 
         @Override
         public void onNext(Seasons seasons) {
@@ -97,9 +126,6 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
                 shouldResetPagePosition = false;
                 pager.setCurrentItem(adapter.positionOfSeasonNumber(seasonNumber));
             }
-
-            setTitle(seasons.getShowName());
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
 
     }

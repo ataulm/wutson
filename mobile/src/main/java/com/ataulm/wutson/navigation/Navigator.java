@@ -1,13 +1,19 @@
 package com.ataulm.wutson.navigation;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.ColorInt;
 
 import com.ataulm.wutson.discover.DiscoverActivity;
+import com.ataulm.wutson.episodes.EpisodeNumber;
 import com.ataulm.wutson.myshows.MyShowsActivity;
+import com.ataulm.wutson.search.SearchActivity;
+import com.ataulm.wutson.seasons.SeasonsActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
 import com.ataulm.wutson.showdetails.ShowDetailsActivity;
+import com.ataulm.wutson.shows.ShowId;
 
 public class Navigator {
 
@@ -37,33 +43,52 @@ public class Navigator {
         activity.overridePendingTransition(0, 0);
     }
 
-    public void toShowDetails(String showId, String showTitle, String showBackdropUri) {
+    public void toShowDetails(ShowId showId, String showTitle, String showBackdropUri) {
+        toShowDetails(showId, showTitle, showBackdropUri, 0);
+    }
+
+    public void toShowDetails(ShowId showId, String showTitle, String showBackdropUri, @ColorInt int accentColor) {
         Uri uri = BASE_URI.buildUpon()
-                .appendPath("show").appendPath(showId)
+                .appendPath("show").appendPath(showId.toString())
                 .build();
 
         start(view(uri, MIME_TYPE_SHOW_ITEM)
                 .putExtra(ShowDetailsActivity.EXTRA_SHOW_TITLE, showTitle)
-                .putExtra(ShowDetailsActivity.EXTRA_SHOW_BACKDROP, showBackdropUri));
+                .putExtra(ShowDetailsActivity.EXTRA_SHOW_BACKDROP, showBackdropUri)
+                .putExtra(ShowDetailsActivity.EXTRA_SHOW_ACCENT_COLOR, accentColor));
     }
 
-    public void toSeason(String showId, int seasonNumber) {
+    public void toSeason(ShowId showId, String showTitle, int seasonNumber) {
+        toSeason(showId, showTitle, seasonNumber, 0);
+    }
+
+    public void toSeason(ShowId showId, String showTitle, int seasonNumber, @ColorInt int accentColor) {
         Uri uri = BASE_URI.buildUpon()
-                .appendPath("show").appendPath(showId)
+                .appendPath("show").appendPath(showId.toString())
                 .appendPath("season").appendPath(String.valueOf(seasonNumber))
                 .build();
 
-        start(view(uri, MIME_TYPE_SEASON_DIR));
+        start(view(uri, MIME_TYPE_SEASON_DIR)
+                .putExtra(SeasonsActivity.EXTRA_SHOW_TITLE, showTitle)
+                .putExtra(SeasonsActivity.EXTRA_SHOW_ACCENT_COLOR, accentColor));
     }
 
-    public void toEpisodeDetails(String showId, int seasonNumber, int episodeNumber) {
+    public void toEpisodeDetails(ShowId showId, EpisodeNumber episodeNumber) {
         Uri uri = BASE_URI.buildUpon()
-                .appendPath("show").appendPath(showId)
-                .appendPath("season").appendPath(String.valueOf(seasonNumber))
-                .appendPath("episode").appendPath(String.valueOf(episodeNumber))
+                .appendPath("show").appendPath(showId.toString())
+                .appendPath("season").appendPath(String.valueOf(episodeNumber.getSeason()))
+                .appendPath("episode").appendPath(String.valueOf(episodeNumber.getEpisode()))
                 .build();
 
         start(view(uri, MIME_TYPE_EPISODES_DIR));
+    }
+
+    public void toSearchFor(String query) {
+        Intent intent = new Intent(activity, SearchActivity.class)
+                .setAction(Intent.ACTION_SEARCH)
+                .putExtra(SearchManager.QUERY, query);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
     }
 
     public void toSettings() {

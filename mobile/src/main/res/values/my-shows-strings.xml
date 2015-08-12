@@ -2,5 +2,7 @@
 <resources>
 
   <string name="my_shows_label">@string/my_shows</string>
+  <string name="my_shows_page_all">@string/all</string>
+  <string name="my_shows_page_watchlist">@string/watchlist</string>
 
 </resources>

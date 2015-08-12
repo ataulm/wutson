@@ -15,7 +15,6 @@
   <style name="NavigationDrawer.Item" />
 
   <style name="NavigationDrawer.Item.View">
-    <item name="android:focusable">true</item>
     <item name="android:paddingLeft">@dimen/navigation_drawer_item_padding_left</item>
     <item name="android:paddingTop">@dimen/navigation_drawer_item_padding_top</item>
     <item name="android:paddingRight">@dimen/navigation_drawer_item_padding_right</item>

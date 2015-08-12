@@ -1,29 +1,28 @@
 package com.ataulm.wutson.discover;
 
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewPager;
 
-import com.ataulm.wutson.Jabber;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.model.ShowsInGenre;
+import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.shows.discover.DiscoverShows;
 import com.novoda.landingstrip.LandingStrip;
-
-import java.util.List;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowClickListener {
+public class DiscoverActivity extends WutsonTopLevelActivity {
 
-    private Subscription discoverShowsSubscription;
+    private Subscription subscription;
+
     private ViewPager viewPager;
-
-    private GenresPagerAdapter adapter;
+    private DiscoverShowsPagerAdapter adapter;
 
     @Override
     protected NavigationDrawerItem getNavigationDrawerItem() {
@@ -36,18 +35,12 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         setTitle(R.string.discover_label);
 
         setContentView(R.layout.activity_discover);
-
         viewPager = (ViewPager) findViewById(R.id.discover_pager_genres);
-        viewPager.setAdapter(adapter = new GenresPagerAdapter(getLayoutInflater(), this));
 
-        ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);
-
-        discoverShowsSubscription = Jabber.dataRepository().getDiscoverShows()
+        subscription = Jabber.discoverShowsRepository().getDiscoverShows()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
-
-        navigate().toEpisodeDetails("1396", 1, 2);
     }
 
     @Override
@@ -58,29 +51,44 @@ public class DiscoverActivity extends WutsonTopLevelActivity implements OnShowCl
         if (viewPager.getCurrentItem() != 0) {
             viewPager.setCurrentItem(0);
         } else {
-            navigate().toMyShows();
+            super.onBackPressed();
         }
     }
 
     @Override
     protected void onDestroy() {
-        if (!discoverShowsSubscription.isUnsubscribed()) {
-            discoverShowsSubscription.unsubscribe();
+        if (!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
         }
         super.onDestroy();
     }
 
-    @Override
-    public void onClick(ShowSummary showSummary) {
-        navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString());
-    }
-
-    private class Observer extends LoggingObserver<List<ShowsInGenre>> {
+    private class ClickListener implements DiscoverShowSummaryInteractionListener {
 
         @Override
-        public void onNext(List<ShowsInGenre> showsSeparateByGenre) {
-            super.onNext(showsSeparateByGenre);
-            adapter.update(showsSeparateByGenre);
+        public void onClick(ShowSummary showSummary, @ColorInt int accentColor) {
+            navigate().toShowDetails(showSummary.getId(), showSummary.getName(), showSummary.getBackdropUri().toString(), accentColor);
+        }
+
+    }
+
+    private class Observer extends LoggingObserver<DiscoverShows> {
+
+        private Observer() {
+            super(Jabber.log());
+        }
+
+        @Override
+        public void onNext(DiscoverShows discoverShows) {
+            super.onNext(discoverShows);
+            if (viewPager.getAdapter() == null) {
+                adapter = DiscoverShowsPagerAdapter.newInstance(DiscoverActivity.this, new ClickListener());
+                adapter.update(discoverShows);
+                viewPager.setAdapter(adapter);
+                ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);
+            } else {
+                adapter.update(discoverShows);
+            }
         }
 
     }

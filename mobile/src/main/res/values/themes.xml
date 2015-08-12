@@ -4,28 +4,32 @@
   <style name="Wutson" />
 
   <style name="Wutson.Theme" parent="Theme.AppCompat.NoActionBar">
-    <item name="android:windowBackground">@color/black</item>
+    <item name="android:windowBackground">@color/mineshaft</item>
     <item name="colorPrimary">@color/white</item>
+    <item name="toolbarNavigationButtonStyle">@style/Wutson.ToolbarNavigationButton</item>
+    <item name="appBarBackgroundColor">@color/black</item>
+  </style>
+
+  <style name="Wutson.ToolbarNavigationButton" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+    <item name="android:background">@drawable/app_bar_action_background</item>
   </style>
 
   <style name="Wutson.Theme.MyShows" />
 
   <style name="Wutson.Theme.Discover">
-    <item name="colorPrimary">@color/white</item>
+    <item name="appBarBackgroundColor">@color/discover_show_app_bar_background</item>
   </style>
 
-  <style name="Wutson.Theme.ShowDetails" />
+  <style name="Wutson.Theme.ShowDetails">
+    <item name="appBarBackgroundColor">@color/show_details_app_bar_background</item>
+  </style>
 
   <style name="Wutson.Theme.Seasons">
     <item name="android:windowBackground">@color/seasons_background</item>
-    <item name="appBarBackgroundColor">@color/black</item>
-    <item name="colorPrimary">@color/white</item>
   </style>
 
   <style name="Wutson.Theme.Episodes">
     <item name="android:windowBackground">@color/white</item>
-    <item name="appBarBackgroundColor">@color/black</item>
-    <item name="colorPrimary">@color/white</item>
   </style>
 
   <style name="Wutson.Theme.Settings" />

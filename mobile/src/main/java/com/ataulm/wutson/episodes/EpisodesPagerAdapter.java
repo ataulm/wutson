@@ -5,9 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.vpa.ViewPagerAdapter;
-import com.ataulm.wutson.model.Episode;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.Season;
+import com.ataulm.wutson.seasons.Season;
 
 class EpisodesPagerAdapter extends ViewPagerAdapter {
 
@@ -28,9 +27,10 @@ class EpisodesPagerAdapter extends ViewPagerAdapter {
     protected View getView(ViewGroup container, int position) {
         EpisodeDetailsView view = (EpisodeDetailsView) layoutInflater.inflate(R.layout.view_episode_details_page, container, false);
         Episode episode = season.get(position);
+
         view.setEpisodeName(episode.getName());
         view.setEpisodePoster(episode.getStillPath());
-        view.setEpisodeNumber(episode.getSeasonNumber(), episode.getEpisodeNumber());
+        view.setEpisodeNumber(episode.getEpisodeNumber().getSeason(), episode.getEpisodeNumber().getEpisode());
         view.setEpisodeDescription(episode.getOverview());
         return view;
     }
@@ -45,7 +45,7 @@ class EpisodesPagerAdapter extends ViewPagerAdapter {
 
     int positionOfEpisodeNumber(int episodeNumber) {
         for (int i = 0; i < season.size(); i++) {
-            if (season.get(i).getEpisodeNumber() == episodeNumber) {
+            if (season.get(i).getEpisodeNumber().getEpisode() == episodeNumber) {
                 return i;
             }
         }

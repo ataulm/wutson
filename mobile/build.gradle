@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
 
-def tmdbApiKey = hasProperty('tmdbApiKey') ? tmdbApiKey : 'provide this in gradle.properties'
+def traktApiKey = hasProperty('traktApiKey') ? traktApiKey : 'provide this in gradle.properties'
+def traktApiSecret = hasProperty('traktApiSecret') ? traktApiSecret : 'provide this in gradle.properties'
 def crashlyticsApiKey = project.hasProperty('crashlyticsApiKey') ? crashlyticsApiKey : System.env.crashlyticsApiKey
 def crashlyticsApiSecret = project.hasProperty('crashlyticsApiSecret') ? crashlyticsApiSecret : System.env.crashlyticsApiSecret
 def signingStoreFile = hasProperty('signingStoreFile') ? signingStoreFile : 'provide this in gradle.properties'
@@ -12,15 +13,21 @@ def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword 
 dependencies {
     compile project(":core")
 
-    compile 'com.android.support:recyclerview-v7:22.1.1'
-    compile "com.android.support:appcompat-v7:22.1.1"
-    compile 'com.android.support:support-v4:22.1.1'
+    compile 'io.reactivex:rxandroid:0.24.0'
+    compile 'com.novoda:sqlite-provider:1.0.5'
 
-    compile 'com.github.bumptech.glide:glide:3.5.2'
-    compile 'com.novoda:landing-strip:0.0.8'
+    compile 'com.android.support:palette-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:support-v4:22.2.1'
+    compile 'com.android.support:cardview-v7:22.2.1'
+    compile 'com.android.support:design:22.2.1'
+
+    compile 'com.github.bumptech.glide:glide:3.6.0'
+    compile 'com.novoda:landing-strip:0.0.10'
     compile 'de.hdodenhof:circleimageview:1.2.2'
     compile 'com.ataulm:rv-tools:0.0.3'
-    compile 'com.ataulm:view-pager-adapter:0.0.1'
+    compile 'com.ataulm:view-pager-adapter:0.0.2'
 
     compile 'com.crashlytics.android:crashlytics:1.1.13'
 }
@@ -33,14 +40,15 @@ android {
         applicationId "com.ataulm.wutson2"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 14
-        versionName '_dog-food'
+        versionCode 17
+        versionName 'pre-release'
 
         Calendar instance = Calendar.getInstance()
         instance.setTimeInMillis(System.currentTimeMillis())
         def buildTime = instance.getTime()
         buildConfigField "String", "BUILD_TIME", "\"$buildTime\""
-        buildConfigField "String", "TMDB_API_KEY", "\"$tmdbApiKey\""
+        buildConfigField "String", "TRAKT_API_KEY", "\"$traktApiKey\""
+        buildConfigField "String", "TRAKT_API_SECRET", "\"$traktApiSecret\""
     }
 
     signingConfigs {

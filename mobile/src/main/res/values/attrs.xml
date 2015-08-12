@@ -14,4 +14,14 @@
     <attr name="appBarBackgroundColor" format="color" />
   </declare-styleable>
 
+  <declare-styleable name="AspectRatioImageView">
+    <attr name="aspectRatio" />
+  </declare-styleable>
+
+  <declare-styleable name="AspectRatioFrameLayout">
+    <attr name="aspectRatio" />
+  </declare-styleable>
+
+  <attr name="aspectRatio" format="string" />
+
 </resources>

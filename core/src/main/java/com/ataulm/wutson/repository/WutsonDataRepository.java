@@ -1,17 +1,19 @@
 package com.ataulm.wutson.repository;
 
-import com.ataulm.wutson.DataRepository;
-import com.ataulm.wutson.model.Actor;
-import com.ataulm.wutson.model.Episode;
-import com.ataulm.wutson.model.Episodes;
-import com.ataulm.wutson.model.GroupedShowSummaries;
-import com.ataulm.wutson.model.ShowSummaries;
-import com.ataulm.wutson.model.ShowsInGenre;
-import com.ataulm.wutson.model.Season;
-import com.ataulm.wutson.model.Seasons;
-import com.ataulm.wutson.model.Show;
-import com.ataulm.wutson.model.TrackedStatus;
-import com.ataulm.wutson.model.WatchedStatus;
+import com.ataulm.wutson.episodes.Episode;
+import com.ataulm.wutson.episodes.Episodes;
+import com.ataulm.wutson.rx.Function;
+import com.ataulm.wutson.seasons.Season;
+import com.ataulm.wutson.seasons.Seasons;
+import com.ataulm.wutson.shows.Actor;
+import com.ataulm.wutson.shows.Show;
+import com.ataulm.wutson.shows.ShowId;
+import com.ataulm.wutson.shows.ShowSummaries;
+import com.ataulm.wutson.shows.ShowSummary;
+import com.ataulm.wutson.shows.TrackedStatus;
+import com.ataulm.wutson.shows.WatchedStatus;
+import com.ataulm.wutson.shows.myshows.Watchlist;
+import com.ataulm.wutson.shows.myshows.WatchlistItem;
 
 import java.util.List;
 
@@ -21,16 +23,11 @@ import rx.functions.Func1;
 public class WutsonDataRepository implements DataRepository {
 
     private final TrackedShowsRepository trackedShowsRepo;
-    private final ShowsInGenreRepository showsInGenreRepo;
     private final ShowRepository showRepo;
-    private final SeasonsRepository seasonsRepo;
 
-    public WutsonDataRepository(TrackedShowsRepository trackedShowsRepo, ShowsInGenreRepository showsInGenreRepo, ShowRepository showRepo,
-                                SeasonsRepository seasonsRepo) {
+    public WutsonDataRepository(TrackedShowsRepository trackedShowsRepo, ShowRepository showRepo) {
         this.trackedShowsRepo = trackedShowsRepo;
-        this.showsInGenreRepo = showsInGenreRepo;
         this.showRepo = showRepo;
-        this.seasonsRepo = seasonsRepo;
     }
 
     @Override
@@ -39,11 +36,11 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public Observable<TrackedStatus> getTrackedStatus(final String showId) {
+    public Observable<TrackedStatus> getTrackedStatus(ShowId showId) {
         return getMyShows().map(asTrackedStatus(showId));
     }
 
-    private static Func1<ShowSummaries, TrackedStatus> asTrackedStatus(final String showId) {
+    private static Func1<ShowSummaries, TrackedStatus> asTrackedStatus(final ShowId showId) {
         return new Func1<ShowSummaries, TrackedStatus>() {
 
             @Override
@@ -58,31 +55,65 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public void toggleTrackedStatus(String showId) {
+    public void toggleTrackedStatus(ShowId showId) {
         trackedShowsRepo.toggleTrackedStatus(showId);
     }
 
     @Override
-    public void setTrackedStatus(String showId, TrackedStatus trackedStatus) {
+    public void setTrackedStatus(ShowId showId, TrackedStatus trackedStatus) {
         trackedShowsRepo.setTrackedStatus(showId, trackedStatus);
     }
 
-    public Observable<List<GroupedShowSummaries>> getUpcomingShows() {
-        return Observable.empty();
+    @Override
+    public Observable<Watchlist> getWatchlist() {
+        return getMyShows().first()
+                .flatMap(Function.<ShowSummary>emitEachElement())
+                .flatMap(new Func1<ShowSummary, Observable<WatchlistItem>>() {
+                    @Override
+                    public Observable<WatchlistItem> call(ShowSummary showSummary) {
+                        return getSeasons(showSummary.getId(), showSummary.getName())
+                                .concatMap(Function.<Season>emitEachElement())
+                                .concatMap(Function.<Episode>emitEachElement())
+                                .filter(onlyUnwatchedEpisodes())
+                                .take(5)
+                                .toList()
+                                .map(asWatchListItem());
+                    }
+                })
+                .toList()
+                .map(asWatchlist());
+    }
+
+    private static Func1<List<WatchlistItem>, Watchlist> asWatchlist() {
+        return new Func1<List<WatchlistItem>, Watchlist>() {
+            @Override
+            public Watchlist call(List<WatchlistItem> watchlistItems) {
+                return new Watchlist(watchlistItems);
+            }
+        };
+    }
+
+    private static Func1<List<Episode>, WatchlistItem> asWatchListItem() {
+        return new Func1<List<Episode>, WatchlistItem>() {
+            @Override
+            public WatchlistItem call(List<Episode> episodes) {
+                return new WatchlistItem(episodes.get(0).getShowName(), new Episodes(episodes));
+            }
+        };
+    }
+
+    private static Func1<Episode, Boolean> onlyUnwatchedEpisodes() {
+        return new Func1<Episode, Boolean>() {
+            @Override
+            public Boolean call(Episode episode) {
+                // TODO: if the episode has been marked as watched, return false!
+                return true;
+            }
+        };
     }
 
     @Override
-    public Observable<List<GroupedShowSummaries>> getRecentShows() {
-        return Observable.empty();
-    }
-
-    @Override
-    public Observable<List<ShowsInGenre>> getDiscoverShows() {
-        return showsInGenreRepo.getDiscoverShowsList();
-    }
-
-    @Override
-    public Observable<Show> getShow(String id) {
+    public Observable<Show> getShow(ShowId id) {
         return showRepo.getShowDetails(id);
     }
 
@@ -102,13 +133,13 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public Observable<Season> getSeason(String showId, int seasonNumber) {
-        return seasonsRepo.getSeason(showId, seasonNumber);
+    public Observable<Season> getSeason(ShowId showId, int seasonNumber) {
+        return Observable.empty();
     }
 
     @Override
-    public Observable<Seasons> getSeasons(String showId) {
-        return seasonsRepo.getSeasons(showId);
+    public Observable<Seasons> getSeasons(ShowId showId, String showName) {
+        return showRepo.getSeasons(showId, showName);
     }
 
     @Override

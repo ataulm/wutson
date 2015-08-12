@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 
 import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.Season;
-import com.ataulm.wutson.model.Seasons;
 
 class SeasonsPagerAdapter extends ViewPagerAdapter {
 
@@ -30,7 +28,7 @@ class SeasonsPagerAdapter extends ViewPagerAdapter {
     protected View getView(ViewGroup container, int position) {
         RecyclerView view = (RecyclerView) layoutInflater.inflate(R.layout.view_season_page, container, false);
         view.setLayoutManager(new LinearLayoutManager(container.getContext()));
-        RecyclerView.Adapter adapter = new SeasonAdapter(seasons.get(position), listener, layoutInflater);
+        RecyclerView.Adapter adapter = new EpisodeSummaryAdapter(seasons.get(position), listener, layoutInflater);
         adapter.setHasStableIds(true);
         view.setAdapter(adapter);
         return view;

@@ -1,6 +1,7 @@
 package com.ataulm.wutson.seasons;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,10 +9,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.model.Episode;
+import com.ataulm.wutson.episodes.Episode;
 import com.bumptech.glide.Glide;
 
-public class EpisodeSummaryView extends RelativeLayout {
+public class EpisodeSummaryView extends CardView {
 
     private ImageView posterImageView;
     private TextView episodeNameTextView;
@@ -23,28 +24,34 @@ public class EpisodeSummaryView extends RelativeLayout {
 
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
         View.inflate(getContext(), R.layout.merge_episode_summary, this);
         posterImageView = (ImageView) findViewById(R.id.episode_summary_image_poster);
         episodeNameTextView = (TextView) findViewById(R.id.episode_summary_text_episode_name);
         episodeNumberTextView = (TextView) findViewById(R.id.episode_summary_text_episode_air_date);
     }
 
-    void display(final Episode episode, final OnClickEpisodeListener listener) {
-        setOnClickListener(new OnClickListener() {
+    void display(Episode episode) {
+        updateStillPoster(episode);
+        updateAirDate(episode);
+    }
 
-            @Override
-            public void onClick(View v) {
-                listener.onClick(episode);
-            }
-
-        });
-
+    private void updateStillPoster(Episode episode) {
         Glide.with(getContext())
                 .load(episode.getStillPath().toString())
                 .centerCrop()
+                .error(R.drawable.ic_season_or_episode_placeholder)
                 .into(posterImageView);
         episodeNameTextView.setText(episode.getName());
-        episodeNumberTextView.setText(episode.getAirDate());
+    }
+
+    private void updateAirDate(Episode episode) {
+        if (episode.getAirDate().isValid()) {
+            episodeNumberTextView.setText(episode.getAirDate().toString());
+            episodeNumberTextView.setVisibility(VISIBLE);
+        } else {
+            episodeNumberTextView.setVisibility(GONE);
+        }
     }
 
 }

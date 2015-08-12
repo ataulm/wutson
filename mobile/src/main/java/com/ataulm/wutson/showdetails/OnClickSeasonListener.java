@@ -1,6 +1,6 @@
 package com.ataulm.wutson.showdetails;
 
-import com.ataulm.wutson.model.Show;
+import com.ataulm.wutson.shows.Show;
 
 public interface OnClickSeasonListener {
 

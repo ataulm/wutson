@@ -1,24 +1,30 @@
 package com.ataulm.wutson.rx;
 
-import android.util.Log;
+import com.ataulm.wutson.Log;
 
 import rx.Observer;
 
 public class LoggingObserver<T> implements Observer<T> {
 
+    private final Log log;
+
+    public LoggingObserver(Log log) {
+        this.log = log;
+    }
+
     @Override
     public void onCompleted() {
-        Log.d(getClass().getCanonicalName(), "onCompleted()");
+        log.debug(getClass().getCanonicalName(), "onCompleted()");
     }
 
     @Override
     public void onError(Throwable e) {
-        Log.e(getClass().getCanonicalName(), "onError(): " + e.getMessage(), e);
+        log.error(getClass().getCanonicalName(), "onError(): " + e.getMessage(), e);
     }
 
     @Override
     public void onNext(T t) {
-        Log.d(getClass().getCanonicalName(), "onNext(t): " + t);
+        log.debug(getClass().getCanonicalName(), "onNext(t): " + t);
     }
 
 }

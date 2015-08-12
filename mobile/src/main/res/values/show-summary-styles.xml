@@ -18,6 +18,8 @@
     <item name="textFont">robotoRegular</item>
   </style>
 
-  <style name="ShowSummary.Overflow" />
+  <style name="ShowSummary.Overflow">
+    <item name="android:background">@drawable/card_foreground</item>
+  </style>
 
 </resources>

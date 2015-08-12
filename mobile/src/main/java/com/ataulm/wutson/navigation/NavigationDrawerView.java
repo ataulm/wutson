@@ -11,8 +11,11 @@ import com.ataulm.wutson.R;
 
 public class NavigationDrawerView extends LinearLayout {
 
+    private final LayoutInflater layoutInflater;
+
     public NavigationDrawerView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -26,27 +29,34 @@ public class NavigationDrawerView extends LinearLayout {
         throw DeveloperError.methodCannotBeCalledOutsideThisClass();
     }
 
-    public void setupDrawerWith(final OnNavigationClickListener onNavigationClickListener, NavigationDrawerItem selectedItem) {
-        LayoutInflater inflater = LayoutInflater.from(getContext());
+    public void setupDrawerWith(final OnNavigationClickListener onNavigationClickListener, NavigationDrawerItem currentItem) {
         for (final NavigationDrawerItem item : NavigationDrawerItem.values()) {
             if (item == NavigationDrawerItem.SEPARATOR) {
-                inflater.inflate(R.layout.view_navigation_drawer_item_separator, this, true);
-                continue;
+                addSeparatorView();
+            } else {
+                addActionableItemView(onNavigationClickListener, currentItem, item);
+            }
+        }
+    }
+
+    private void addSeparatorView() {
+        layoutInflater.inflate(R.layout.view_navigation_drawer_item_separator, this, true);
+    }
+
+    private void addActionableItemView(final OnNavigationClickListener onNavigationClickListener, NavigationDrawerItem currentItem, final NavigationDrawerItem item) {
+        NavigationDrawerItemView itemView = (NavigationDrawerItemView) layoutInflater.inflate(R.layout.view_navigation_drawer_item, this, false);
+        itemView.bind(item);
+        itemView.setActivated(item == currentItem);
+        itemView.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                onNavigationClickListener.onNavigationClick(item);
             }
 
-            NavigationDrawerItemView itemView = (NavigationDrawerItemView) inflater.inflate(R.layout.view_navigation_drawer_item, this, false);
-            itemView.display(item);
-            itemView.setOnClickListener(new OnClickListener() {
+        });
 
-                @Override
-                public void onClick(View v) {
-                    onNavigationClickListener.onNavigationClick(item);
-                }
-
-            });
-            itemView.setSelected(item == selectedItem);
-            addView(itemView);
-        }
+        addView(itemView);
     }
 
     public interface OnNavigationClickListener {

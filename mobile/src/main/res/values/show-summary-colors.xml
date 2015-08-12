@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <color name="show_summary_title_text">@color/white</color>
-  <color name="show_summary_title_background">@color/black_87pc</color>
+  <color name="show_summary_title_text">@color/white_87pc</color>
+  <color name="show_summary_title_background">@color/black</color>
 
 </resources>

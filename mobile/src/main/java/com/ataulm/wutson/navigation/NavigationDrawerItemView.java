@@ -29,10 +29,10 @@ public class NavigationDrawerItemView extends LinearLayout {
     }
 
     @Override
-    public void setSelected(boolean selected) {
-        super.setSelected(selected);
-        if (selected) {
-            iconImageView.setColorFilter(getResources().getColor(R.color.navigation_drawer_item_icon_color_filter_selected));
+    public void setActivated(boolean activated) {
+        super.setActivated(activated);
+        if (activated) {
+            iconImageView.setColorFilter(getResources().getColor(R.color.navigation_drawer_item_icon_color_filter_activated));
         } else {
             iconImageView.setColorFilter(getResources().getColor(R.color.navigation_drawer_item_icon_color_filter_default));
         }
@@ -43,7 +43,7 @@ public class NavigationDrawerItemView extends LinearLayout {
         throw DeveloperError.methodCannotBeCalledOutsideThisClass();
     }
 
-    void display(NavigationDrawerItem item) {
+    void bind(NavigationDrawerItem item) {
         iconImageView.setImageResource(item.getIconResId());
         titleTextView.setText(item.getTitle());
     }

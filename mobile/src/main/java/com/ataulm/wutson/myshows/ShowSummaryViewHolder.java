@@ -1,5 +1,6 @@
 package com.ataulm.wutson.myshows;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -7,24 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.ToastDisplayer;
-import com.ataulm.wutson.model.ShowSummary;
-import com.ataulm.wutson.discover.OnShowClickListener;
+import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.view.ShowSummaryView;
 
 final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
 
-    private final ToastDisplayer toaster;
-
-    static ShowSummaryViewHolder inflate(ViewGroup parent, ToastDisplayer toaster) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+    static ShowSummaryViewHolder inflate(ViewGroup parent, LayoutInflater layoutInflater) {
         View view = layoutInflater.inflate(R.layout.view_tracked_shows_item, parent, false);
-        return new ShowSummaryViewHolder(view, toaster);
+        return new ShowSummaryViewHolder(view);
     }
 
-    private ShowSummaryViewHolder(View itemView, ToastDisplayer toaster) {
+    private ShowSummaryViewHolder(View itemView) {
         super(itemView);
-        this.toaster = toaster;
     }
 
     void bind(final ShowSummary show, final OnShowClickListener listener) {
@@ -35,26 +30,19 @@ final class ShowSummaryViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.show_summary_menu_item_toggle_favourite:
-                        onClickToggleFavourite(menuItem);
-                        return;
                     case R.id.show_summary_menu_item_stop_tracking:
-                        toaster.display("Stopped tracking " + show.getName());
+                        listener.onClickStopTracking(show);
+                        Snackbar.make(itemView, "Removed " + show.getName(), Snackbar.LENGTH_LONG)
+                                .setAction("UNDO", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        listener.onClickTrack(show);
+                                    }
+                                })
+                                .show();
                         return;
                     default:
                         throw new IllegalArgumentException("Unknown menuItem: " + menuItem.getTitle());
-                }
-            }
-
-            private void onClickToggleFavourite(MenuItem menuItem) {
-                if (menuItem.isChecked()) {
-                    toaster.display("Removed favourite for  " + show.getName());
-                    menuItem.setTitle("Add favourite");
-                    menuItem.setChecked(false);
-                } else {
-                    toaster.display("Favourited " + show.getName() + "!");
-                    menuItem.setTitle("Remove favourite");
-                    menuItem.setChecked(true);
                 }
             }
 

@@ -2,4 +2,5 @@
 <com.ataulm.wutson.navigation.NavigationDrawerItemView xmlns:android="http://schemas.android.com/apk/res/android"
   style="@style/NavigationDrawer.Item.View"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content" />
+  android:layout_height="wrap_content"
+  android:focusable="true" />

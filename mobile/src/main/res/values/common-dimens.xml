@@ -7,6 +7,7 @@
   <dimen name="tab_strip_offset_left">46dp</dimen>
   <dimen name="tab_strip_indicator_height">2dp</dimen>
 
+  <!--deprecated - use real cardview like ShowDetails - Season and resources in common-styles-->
   <dimen name="card_corner_radius">2dp</dimen>
   <dimen name="card_min_padding_left">2dp</dimen>
   <dimen name="card_min_padding_top">1dp</dimen>

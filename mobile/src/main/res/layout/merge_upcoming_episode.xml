@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+      android:id="@+id/upcoming_episode_image_poster"
+      android:layout_width="150dp"
+      android:layout_height="match_parent"
+      android:scaleType="centerCrop"
+      android:contentDescription="@null"
+      android:background="@android:color/white" />
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:paddingLeft="16dp"
+      android:orientation="vertical">
+
+      <com.ataulm.wutson.view.WutsonTextView
+        android:id="@+id/upcoming_episode_text_show_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black_87pc"
+        android:textSize="14sp"
+        app:textFont="robotoMedium" />
+
+      <com.ataulm.wutson.view.WutsonTextView
+        android:id="@+id/upcoming_episode_text_episode_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black_87pc"
+        android:textSize="12sp"
+        app:textFont="robotoRegular" />
+
+      <com.ataulm.wutson.view.WutsonTextView
+        android:id="@+id/upcoming_episode_text_air_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/black_54pc"
+        android:textSize="12sp"
+        app:textFont="robotoRegular" />
+    </LinearLayout>
+
+  </LinearLayout>
+
+</merge>

@@ -8,11 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.view.AppBarWidget;
 
 public abstract class WutsonActivity extends ActionBarActivity {
 
+    private AppBarWidget appBarWidget;
     private Navigator navigator;
-    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,25 +24,39 @@ public abstract class WutsonActivity extends ActionBarActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
-        if (toolbar == null) {
-            throw new IllegalStateException("Toolbar expected in layout with id: R.id.app_bar");
+        if (hasNoAppBar()) {
+            return;
         }
-        setAppBar(toolbar);
+
+        appBarWidget = (AppBarWidget) findViewById(R.id.app_bar);
+        if (appBarWidget == null) {
+            throw new IllegalStateException("AppBarWidget expected in layout with id: R.id.app_bar");
+        }
+        setAppBar(appBarWidget.getToolbar());
     }
 
     protected Navigator navigate() {
         return navigator;
     }
 
+    protected AppBarWidget getAppBarWidget() {
+        return appBarWidget;
+    }
+
     protected void setAppBar(Toolbar toolbar) {
-        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        if (hasNoAppBar()) {
+            return;
+        }
+        toolbar.setNavigationIcon(getNavigationIcon());
         super.setSupportActionBar(toolbar);
     }
 
+    protected int getNavigationIcon() {
+        return R.drawable.ic_action_back;
+    }
+
     protected Toolbar getToolbar() {
-        return toolbar;
+        return appBarWidget.getToolbar();
     }
 
     @Override
@@ -62,6 +77,10 @@ public abstract class WutsonActivity extends ActionBarActivity {
     @Override
     public ActionBar getActionBar() {
         throw new IllegalStateException("I thought we were using support android.support.v7.widget.Toolbar");
+    }
+
+    protected boolean hasNoAppBar() {
+        return false;
     }
 
 }

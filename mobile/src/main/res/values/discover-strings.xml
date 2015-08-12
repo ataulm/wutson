@@ -2,5 +2,7 @@
 <resources>
 
   <string name="discover_label">@string/discover</string>
+  <string name="discover_show_summary_start_track_show_content_description">@string/start_tracking_x_button_format</string>
+  <string name="discover_show_summary_stop_track_show_content_description">@string/stop_tracking_x_button_format</string>
 
 </resources>

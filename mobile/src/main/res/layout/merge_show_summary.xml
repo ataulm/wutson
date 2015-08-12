@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  tools:ignore="RtlHardcoded">
 
   <ImageView
     android:id="@+id/show_summary_image_poster"
@@ -26,11 +28,14 @@
     <ImageView
       android:id="@id/show_summary_button_overflow"
       style="@style/ShowSummary.Overflow"
-      android:layout_width="48dp"
-      android:layout_height="48dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_alignParentRight="true"
-      android:src="@drawable/ic_show_summary_overflow"
-      android:visibility="gone" />
+      android:layout_marginTop="@dimen/show_summary_overflow_margin_top"
+      android:layout_marginRight="@dimen/show_summary_overflow_margin_right"
+      android:src="@drawable/ic_overflow"
+      android:visibility="gone"
+      android:contentDescription="@string/show_summary_overflow_content_description" />
 
   </RelativeLayout>
 </merge>
