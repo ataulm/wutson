@@ -133,8 +133,8 @@ public class WutsonDataRepository implements DataRepository {
     }
 
     @Override
-    public Observable<Season> getSeason(ShowId showId, int seasonNumber) {
-        return Observable.empty();
+    public Observable<Season> getSeason(ShowId showId, int seasonNumber, String showName) {
+        return showRepo.getSeason(showId, seasonNumber, showName);
     }
 
     @Override

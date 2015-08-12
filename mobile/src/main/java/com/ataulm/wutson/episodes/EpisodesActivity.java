@@ -55,16 +55,20 @@ public class EpisodesActivity extends WutsonActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setTitle(getShowName() + " - Season " + seasonNumber);
         Drawable navigationIcon = getToolbar().getNavigationIcon();
         if (navigationIcon != null) {
             navigationIcon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         }
 
-        episodesSubscription = Jabber.dataRepository().getSeason(showId, seasonNumber)
+        episodesSubscription = Jabber.dataRepository().getSeason(showId, seasonNumber, getShowName())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
+    }
+
+    private String getShowName() {
+        return "Foo Bar"; // TODO: add to intent extras. Ensure all extras are always optional.
     }
 
     @Override
@@ -94,10 +98,6 @@ public class EpisodesActivity extends WutsonActivity {
             if (shouldResetPagePosition) {
                 shouldResetPagePosition = false;
                 pager.setCurrentItem(adapter.positionOfEpisodeNumber(episodeNumber));
-            }
-            if (season.size() > 0) {
-                setTitle(season.get(0).getShowName());
-                getSupportActionBar().setDisplayShowTitleEnabled(true);
             }
         }
 

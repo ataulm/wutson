@@ -238,4 +238,23 @@ public class ShowRepository {
         };
     }
 
+    public Observable<Season> getSeason(ShowId showId, final int seasonNumber, String showName) {
+        return getSeasons(showId, showName)
+                .flatMap(findSeasonWithNumber(seasonNumber));
+    }
+
+    private static Func1<Seasons, Observable<Season>> findSeasonWithNumber(final int seasonNumber) {
+        return new Func1<Seasons, Observable<Season>>() {
+            @Override
+            public Observable<Season> call(Seasons seasons) {
+                for (Season season : seasons) {
+                    if (season.getSeasonNumber() == seasonNumber) {
+                        return Observable.just(season);
+                    }
+                }
+                return Observable.empty();
+            }
+        };
+    }
+
 }
