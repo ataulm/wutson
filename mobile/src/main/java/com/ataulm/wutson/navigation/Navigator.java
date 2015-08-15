@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.ColorInt;
 
 import com.ataulm.wutson.discover.DiscoverActivity;
 import com.ataulm.wutson.episodes.EpisodeNumber;
+import com.ataulm.wutson.episodes.EpisodeActivityExtras;
 import com.ataulm.wutson.myshows.MyShowsActivity;
 import com.ataulm.wutson.search.SearchActivity;
 import com.ataulm.wutson.seasons.SeasonsActivity;
@@ -69,10 +71,6 @@ public class Navigator {
                 .putExtra(SeasonsActivity.EXTRA_SHOW_ACCENT_COLOR, accentColor));
     }
 
-    public void toEpisodeDetails(ShowId showId, EpisodeNumber episodeNumber) {
-        toEpisodeDetails(showId, "", episodeNumber, 0);
-    }
-
     public void toEpisodeDetails(ShowId showId, String showTitle, EpisodeNumber episodeNumber, @ColorInt int accentColor) {
         Uri uri = BASE_URI.buildUpon()
                 .appendPath("show").appendPath(showId.toString())
@@ -80,9 +78,8 @@ public class Navigator {
                 .appendPath("episode").appendPath(String.valueOf(episodeNumber.getEpisode()))
                 .build();
 
-        start(view(uri, MIME_TYPE_EPISODES_DIR)
-                .putExtra(ShowDetailsActivity.EXTRA_SHOW_TITLE, showTitle)
-                .putExtra(ShowDetailsActivity.EXTRA_SHOW_ACCENT_COLOR, accentColor));
+        Bundle extras = new EpisodeActivityExtras(showTitle, accentColor).asBundle();
+        start(view(uri, MIME_TYPE_EPISODES_DIR).putExtras(extras));
     }
 
     public void toSearchFor(String query) {
