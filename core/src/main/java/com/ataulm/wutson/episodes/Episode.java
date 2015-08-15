@@ -7,23 +7,23 @@ import java.net.URI;
 public class Episode {
 
     private final SimpleDate airDate;
-    private final EpisodeNumber episodeNumber;
+    private final SeasonEpisodeNumber seasonEpisodeNumber;
     private final String name;
     private final String overview;
     private final URI stillPath;
     private final String showName;
 
-    public Episode(SimpleDate airDate, EpisodeNumber episodeNumber, String name, String overview, URI stillPath, String showName) {
+    public Episode(SimpleDate airDate, SeasonEpisodeNumber seasonEpisodeNumber, String name, String overview, URI stillPath, String showName) {
         this.airDate = airDate;
-        this.episodeNumber = episodeNumber;
+        this.seasonEpisodeNumber = seasonEpisodeNumber;
         this.name = name;
         this.overview = overview;
         this.stillPath = stillPath;
         this.showName = showName;
     }
 
-    public EpisodeNumber getEpisodeNumber() {
-        return episodeNumber;
+    public SeasonEpisodeNumber getSeasonEpisodeNumber() {
+        return seasonEpisodeNumber;
     }
 
     public URI getStillPath() {
@@ -50,7 +50,7 @@ public class Episode {
     public String toString() {
         return Episode.class.getSimpleName() + ": [" +
                 showName + " | " +
-                episodeNumber +
+                seasonEpisodeNumber +
                 airDate + "]";
     }
 

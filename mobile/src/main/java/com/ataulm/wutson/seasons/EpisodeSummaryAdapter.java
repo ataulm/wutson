@@ -34,7 +34,7 @@ class EpisodeSummaryAdapter extends RecyclerView.Adapter<EpisodeSummaryAdapter.E
 
     @Override
     public long getItemId(int position) {
-        return season.get(position).getEpisodeNumber().getEpisode();
+        return season.get(position).getSeasonEpisodeNumber().getEpisode();
     }
 
     @Override

@@ -36,7 +36,7 @@ class EpisodesPagerAdapter extends ViewPagerAdapter {
         view.setEpisodeName(episode.getName());
         view.setEpisodePoster(episode.getStillPath());
         view.setAccentColor(accentColor);
-        view.setEpisodeNumber(episode.getEpisodeNumber().getSeason(), episode.getEpisodeNumber().getEpisode());
+        view.setEpisodeNumber(episode.getSeasonEpisodeNumber().getSeason(), episode.getSeasonEpisodeNumber().getEpisode());
         view.setEpisodeDescription(episode.getOverview());
         return view;
     }
@@ -51,7 +51,7 @@ class EpisodesPagerAdapter extends ViewPagerAdapter {
 
     int positionOfEpisodeNumber(int episodeNumber) {
         for (int i = 0; i < season.size(); i++) {
-            if (season.get(i).getEpisodeNumber().getEpisode() == episodeNumber) {
+            if (season.get(i).getSeasonEpisodeNumber().getEpisode() == episodeNumber) {
                 return i;
             }
         }

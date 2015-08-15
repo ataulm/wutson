@@ -1,7 +1,7 @@
 package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.episodes.Episode;
-import com.ataulm.wutson.episodes.EpisodeNumber;
+import com.ataulm.wutson.episodes.SeasonEpisodeNumber;
 import com.ataulm.wutson.repository.persistence.JsonRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.seasons.Season;
@@ -219,7 +219,7 @@ public class ShowRepository {
                 SimpleDate airDate = SimpleDate.from(gsonShowEpisode.firstAiredDate);
                 return new Episode(
                         airDate,
-                        new EpisodeNumber(gsonShowEpisode.season, gsonShowEpisode.number),
+                        new SeasonEpisodeNumber(gsonShowEpisode.season, gsonShowEpisode.number),
                         gsonShowEpisode.title,
                         gsonShowEpisode.overview,
                         gsonShowEpisode.images.screenshot.medium == null ? URI.create("") : URI.create(gsonShowEpisode.images.screenshot.medium),

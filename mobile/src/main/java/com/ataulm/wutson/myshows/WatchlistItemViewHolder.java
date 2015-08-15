@@ -53,7 +53,7 @@ final class WatchlistItemViewHolder extends RecyclerView.ViewHolder {
             UpcomingEpisodeWidget upcomingEpisodeWidget = upcomingEpisodeWidgets.get(i);
             Episode episode = episodes.get(i);
             upcomingEpisodeWidget.setAirDate(episode.getAirDate().toString());
-            upcomingEpisodeWidget.setEpisodeNumber(episode.getEpisodeNumber().toString());
+            upcomingEpisodeWidget.setEpisodeNumber(episode.getSeasonEpisodeNumber().toString());
             upcomingEpisodeWidget.setPoster(episode.getStillPath());
             upcomingEpisodeWidget.setShowName(episode.getShowName());
             upcomingEpisodeWidget.setVisibility(View.VISIBLE);
