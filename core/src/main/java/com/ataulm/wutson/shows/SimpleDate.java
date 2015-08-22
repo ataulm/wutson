@@ -31,7 +31,7 @@ public final class SimpleDate {
         }
 
         Calendar instance = Calendar.getInstance();
-        instance.set(year, month, dayOfMonth);
+        instance.set(year, month - 1, dayOfMonth);
         Date date = new Date(instance.getTimeInMillis());
         return new SimpleDate(date);
     }
