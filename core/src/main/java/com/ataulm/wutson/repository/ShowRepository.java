@@ -110,10 +110,32 @@ public class ShowRepository {
     private Observable<GsonShowSeasonList> gsonShowSeasonsFromNetwork(ShowId showId) {
         return traktApi.getShowSeasons(showId.toString())
                 .flatMap(Function.<GsonShowSeason>emitEachElement())
+                .map(removeEmptyEpisodes())
                 .filter(onlySeasonsWithEpisodes())
                 .toList()
                 .map(asGsonShowSeasonList())
                 .doOnNext(saveShowSeasonsAsJsonTo(jsonRepository, showId, gson));
+    }
+
+    private Func1<GsonShowSeason, GsonShowSeason> removeEmptyEpisodes() {
+        return new Func1<GsonShowSeason, GsonShowSeason>() {
+            @Override
+            public GsonShowSeason call(GsonShowSeason gsonShowSeason) {
+                List<GsonShowEpisode> nonEmptyEpisodes = new ArrayList<>();
+                for (GsonShowEpisode episode : gsonShowSeason.episodes) {
+                    if (episode.firstAiredDate != null && !episode.firstAiredDate.isEmpty()) {
+                        nonEmptyEpisodes.add(episode);
+                    }
+                }
+                GsonShowSeason sanitisedGsonShowSeason = new GsonShowSeason();
+                sanitisedGsonShowSeason.ids = gsonShowSeason.ids;
+                sanitisedGsonShowSeason.images = gsonShowSeason.images;
+                sanitisedGsonShowSeason.number = gsonShowSeason.number;
+                sanitisedGsonShowSeason.overview = gsonShowSeason.overview;
+                sanitisedGsonShowSeason.episodes = nonEmptyEpisodes;
+                return sanitisedGsonShowSeason;
+            }
+        };
     }
 
     private static Func1<List<GsonShowSeason>, GsonShowSeasonList> asGsonShowSeasonList() {
