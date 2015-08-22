@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.R;
-import com.ataulm.wutson.showdetails.AppBarExpander;
+import com.ataulm.wutson.view.AppBarExpander;
 
 class SeasonsPagerAdapter extends ViewPagerAdapter {
 

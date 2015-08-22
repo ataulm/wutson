@@ -14,9 +14,8 @@ import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
-import com.ataulm.wutson.showdetails.AppBarExpander;
-import com.ataulm.wutson.shows.Show;
 import com.ataulm.wutson.shows.ShowId;
+import com.ataulm.wutson.view.AppBarExpander;
 import com.novoda.landingstrip.LandingStrip;
 
 import rx.Subscription;
