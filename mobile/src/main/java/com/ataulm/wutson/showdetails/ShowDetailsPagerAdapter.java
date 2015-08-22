@@ -83,6 +83,7 @@ class ShowDetailsPagerAdapter extends ViewPagerAdapter {
         LinearLayoutManager layoutManager = new LinearLayoutManager(detailsRecyclerView.getContext());
         layoutManager.setStackFromEnd(true);
         detailsRecyclerView.setLayoutManager(layoutManager);
+        detailsRecyclerView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
         return view;
     }
 
