@@ -13,26 +13,29 @@ import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.shows.discover.DiscoverShows;
+import com.ataulm.wutson.view.AppBarExpander;
 
 final class DiscoverShowsPagerAdapter extends ViewPagerAdapter {
 
     private final LayoutInflater layoutInflater;
     private final DiscoverShowSummaryInteractionListener listener;
+    private final AppBarExpander appBarExpander;
     private final int spanCount;
     private final int itemSpacingPx;
 
     private DiscoverShows discoverShows;
 
-    static DiscoverShowsPagerAdapter newInstance(Context context, DiscoverShowSummaryInteractionListener listener) {
+    static DiscoverShowsPagerAdapter newInstance(Context context, DiscoverShowSummaryInteractionListener listener, AppBarExpander appBarExpander) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         int spanCount = context.getResources().getInteger(R.integer.discover_shows_span_count);
         int itemSpacingPx = context.getResources().getDimensionPixelSize(R.dimen.discover_shows_item_spacing);
-        return new DiscoverShowsPagerAdapter(layoutInflater, listener, spanCount, itemSpacingPx);
+        return new DiscoverShowsPagerAdapter(layoutInflater, listener, appBarExpander, spanCount, itemSpacingPx);
     }
 
-    private DiscoverShowsPagerAdapter(LayoutInflater layoutInflater, DiscoverShowSummaryInteractionListener listener, int spanCount, int itemSpacingPx) {
+    private DiscoverShowsPagerAdapter(LayoutInflater layoutInflater, DiscoverShowSummaryInteractionListener listener, AppBarExpander appBarExpander, int spanCount, int itemSpacingPx) {
         this.layoutInflater = layoutInflater;
         this.listener = listener;
+        this.appBarExpander = appBarExpander;
         this.spanCount = spanCount;
         this.itemSpacingPx = itemSpacingPx;
     }
@@ -44,8 +47,24 @@ final class DiscoverShowsPagerAdapter extends ViewPagerAdapter {
 
     @Override
     protected View getView(ViewGroup viewGroup, int position) {
-        RecyclerView recyclerView = (RecyclerView) layoutInflater.inflate(R.layout.view_discover_page, viewGroup, false);
-        recyclerView.setLayoutManager(new FocusBlockingGridLayoutManager(viewGroup.getContext(), spanCount));
+        final RecyclerView recyclerView = (RecyclerView) layoutInflater.inflate(R.layout.view_discover_page, viewGroup, false);
+        recyclerView.setLayoutManager(new FocusBlockingGridLayoutManager(viewGroup.getContext(), spanCount) {
+            @Override
+            public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
+                if (!recyclerView.isInTouchMode()) {
+                    onScrollWhenInNonTouchMode(dy);
+                }
+                return super.scrollVerticallyBy(dy, recycler, state);
+            }
+
+            private void onScrollWhenInNonTouchMode(int dy) {
+                if (dy > 0) {
+                    appBarExpander.collapseAppBar();
+                } else {
+                    appBarExpander.expandAppBar();
+                }
+            }
+        });
         recyclerView.addItemDecoration(SpacesItemDecoration.newInstance(itemSpacingPx, itemSpacingPx, spanCount));
 
         ShowSummaries showSummaries = discoverShows.getShowSummaries(position);

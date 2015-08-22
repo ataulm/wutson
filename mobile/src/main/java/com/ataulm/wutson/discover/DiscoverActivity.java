@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
+import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 import com.ataulm.wutson.shows.ShowSummary;
@@ -82,7 +83,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
         public void onNext(DiscoverShows discoverShows) {
             super.onNext(discoverShows);
             if (viewPager.getAdapter() == null) {
-                adapter = DiscoverShowsPagerAdapter.newInstance(DiscoverActivity.this, new ClickListener());
+                adapter = DiscoverShowsPagerAdapter.newInstance(DiscoverActivity.this, new ClickListener(), DiscoverActivity.this);
                 adapter.update(discoverShows);
                 viewPager.setAdapter(adapter);
                 ((LandingStrip) findViewById(R.id.tab_strip)).attach(viewPager);
