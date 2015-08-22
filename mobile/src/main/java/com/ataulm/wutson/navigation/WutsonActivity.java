@@ -8,9 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.view.AppBarExpander;
 import com.ataulm.wutson.view.AppBarWidget;
 
-public abstract class WutsonActivity extends ActionBarActivity {
+public abstract class WutsonActivity extends ActionBarActivity implements AppBarExpander {
 
     private AppBarWidget appBarWidget;
     private Navigator navigator;
@@ -49,6 +50,18 @@ public abstract class WutsonActivity extends ActionBarActivity {
         }
         toolbar.setNavigationIcon(getNavigationIcon());
         super.setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public void expandAppBar() {
+        boolean animate = true;
+        getAppBarWidget().setExpanded(true, animate);
+    }
+
+    @Override
+    public void collapseAppBar() {
+        boolean animate = true;
+        getAppBarWidget().setExpanded(false, animate);
     }
 
     protected int getNavigationIcon() {

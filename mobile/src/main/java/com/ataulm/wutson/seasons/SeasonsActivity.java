@@ -15,14 +15,13 @@ import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 import com.ataulm.wutson.shows.ShowId;
-import com.ataulm.wutson.view.AppBarExpander;
 import com.novoda.landingstrip.LandingStrip;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeListener, AppBarExpander {
+public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeListener {
 
     public static final String EXTRA_SHOW_TITLE = BuildConfig.APPLICATION_ID + ".seasons_show_title";
     public static final String EXTRA_SHOW_ACCENT_COLOR = BuildConfig.APPLICATION_ID + ".show_accent_color";
@@ -105,18 +104,6 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
             seasonSubscription.unsubscribe();
         }
         super.onDestroy();
-    }
-
-    @Override
-    public void expandAppBar() {
-        boolean animate = true;
-        getAppBarWidget().setExpanded(true, animate);
-    }
-
-    @Override
-    public void collapseAppBar() {
-        boolean animate = true;
-        getAppBarWidget().setExpanded(false, animate);
     }
 
     @Override
