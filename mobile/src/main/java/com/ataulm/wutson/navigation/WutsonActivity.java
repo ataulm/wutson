@@ -3,7 +3,7 @@ package com.ataulm.wutson.navigation;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -11,7 +11,7 @@ import com.ataulm.wutson.R;
 import com.ataulm.wutson.view.AppBarExpander;
 import com.ataulm.wutson.view.AppBarWidget;
 
-public abstract class WutsonActivity extends ActionBarActivity implements AppBarExpander {
+public abstract class WutsonActivity extends AppCompatActivity implements AppBarExpander {
 
     private AppBarWidget appBarWidget;
     private Navigator navigator;

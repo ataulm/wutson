@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.NavigationDrawerItem;
-import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.navigation.WutsonTopLevelActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
 import com.ataulm.wutson.shows.ShowSummary;
