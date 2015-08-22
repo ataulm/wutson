@@ -9,25 +9,47 @@ import android.view.ViewGroup;
 
 import com.ataulm.vpa.ViewPagerAdapter;
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.showdetails.AppBarExpander;
 
 class SeasonsPagerAdapter extends ViewPagerAdapter {
 
     private final Seasons seasons;
     private final OnClickEpisodeListener listener;
+    private final AppBarExpander appBarExpander;
     private final LayoutInflater layoutInflater;
     private final Resources resources;
 
-    SeasonsPagerAdapter(Seasons seasons, OnClickEpisodeListener listener, LayoutInflater layoutInflater, Resources resources) {
+    SeasonsPagerAdapter(Seasons seasons, OnClickEpisodeListener listener, AppBarExpander appBarExpander, LayoutInflater layoutInflater, Resources resources) {
         this.seasons = seasons;
         this.listener = listener;
+        this.appBarExpander = appBarExpander;
         this.layoutInflater = layoutInflater;
         this.resources = resources;
     }
 
     @Override
     protected View getView(ViewGroup container, int position) {
-        RecyclerView view = (RecyclerView) layoutInflater.inflate(R.layout.view_season_page, container, false);
-        view.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        final RecyclerView view = (RecyclerView) layoutInflater.inflate(R.layout.view_season_page, container, false);
+        view.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+        view.setLayoutManager(new LinearLayoutManager(container.getContext()) {
+
+            @Override
+            public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
+                if (!view.isInTouchMode()) {
+                    onScrollWhenInNonTouchMode(dy);
+                }
+                return super.scrollVerticallyBy(dy, recycler, state);
+            }
+
+            private void onScrollWhenInNonTouchMode(int dy) {
+                if (dy > 0) {
+                    appBarExpander.collapseAppBar();
+                } else {
+                    appBarExpander.expandAppBar();
+                }
+            }
+
+        });
         RecyclerView.Adapter adapter = new EpisodeSummaryAdapter(seasons.get(position), listener, layoutInflater);
         adapter.setHasStableIds(true);
         view.setAdapter(adapter);

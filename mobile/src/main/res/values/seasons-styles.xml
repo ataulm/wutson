@@ -9,7 +9,6 @@
     <item name="android:paddingRight">@dimen/seasons_padding_right</item>
     <item name="android:paddingBottom">@dimen/seasons_padding_bottom</item>
     <item name="android:clipToPadding">false</item>
-    <item name="android:descendantFocusability">afterDescendants</item>
   </style>
 
   <style name="Seasons.Episode" />

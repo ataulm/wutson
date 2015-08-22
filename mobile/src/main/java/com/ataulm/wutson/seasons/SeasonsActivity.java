@@ -14,6 +14,8 @@ import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.navigation.WutsonActivity;
 import com.ataulm.wutson.rx.LoggingObserver;
+import com.ataulm.wutson.showdetails.AppBarExpander;
+import com.ataulm.wutson.shows.Show;
 import com.ataulm.wutson.shows.ShowId;
 import com.novoda.landingstrip.LandingStrip;
 
@@ -21,7 +23,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeListener {
+public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeListener, AppBarExpander {
 
     public static final String EXTRA_SHOW_TITLE = BuildConfig.APPLICATION_ID + ".seasons_show_title";
     public static final String EXTRA_SHOW_ACCENT_COLOR = BuildConfig.APPLICATION_ID + ".show_accent_color";
@@ -107,6 +109,18 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
     }
 
     @Override
+    public void expandAppBar() {
+        boolean animate = true;
+        getAppBarWidget().setExpanded(true, animate);
+    }
+
+    @Override
+    public void collapseAppBar() {
+        boolean animate = true;
+        getAppBarWidget().setExpanded(false, animate);
+    }
+
+    @Override
     public void onClick(Episode episode) {
         navigate().toEpisodeDetails(showId, getShowTitle(), episode.getSeasonEpisodeNumber(), getAccentColor());
     }
@@ -119,7 +133,7 @@ public class SeasonsActivity extends WutsonActivity implements OnClickEpisodeLis
 
         @Override
         public void onNext(Seasons seasons) {
-            SeasonsPagerAdapter adapter = new SeasonsPagerAdapter(seasons, SeasonsActivity.this, getLayoutInflater(), getResources());
+            SeasonsPagerAdapter adapter = new SeasonsPagerAdapter(seasons, SeasonsActivity.this, SeasonsActivity.this, getLayoutInflater(), getResources());
             pager.setAdapter(adapter);
             tabs.attach(pager);
             if (shouldResetPagePosition) {
