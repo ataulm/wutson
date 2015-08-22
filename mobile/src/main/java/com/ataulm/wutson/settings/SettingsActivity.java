@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import android.widget.Toast;
 
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.R;
@@ -105,7 +104,7 @@ public class SettingsActivity extends WutsonActivity {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             return new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.data_sources)
-                    .setMessage(R.string.tmdb_attribution)
+                    .setMessage(R.string.trakt_attribution)
                     .create();
         }
 
