@@ -110,6 +110,7 @@ public class ShowRepository {
     private Observable<GsonShowSeasonList> gsonShowSeasonsFromNetwork(ShowId showId) {
         return traktApi.getShowSeasons(showId.toString())
                 .flatMap(Function.<GsonShowSeason>emitEachElement())
+                .filter(onlySeasonsWithEpisodes())
                 .map(removeEmptyEpisodes())
                 .filter(onlySeasonsWithEpisodes())
                 .toList()
