@@ -5,15 +5,21 @@
 
   <style name="EpisodeSummary.Poster" />
 
+  <style name="EpisodeSummary.EpisodeNumber">
+    <item name="android:textSize">@dimen/episode_summary_episode_number_text</item>
+    <item name="android:textColor">@color/episode_summary_episode_number_text</item>
+    <item name="textFont">robotoMedium</item>
+  </style>
+
   <style name="EpisodeSummary.EpisodeName">
-    <item name="android:textSize">@dimen/season_summary_season_number_text</item>
-    <item name="android:textColor">@color/season_summary_season_number_text</item>
+    <item name="android:textSize">@dimen/episode_summary_name_text</item>
+    <item name="android:textColor">@color/episode_summary_name_text</item>
     <item name="textFont">robotoMedium</item>
   </style>
 
   <style name="EpisodeSummary.EpisodeAirDate">
-    <item name="android:textSize">@dimen/season_summary_episode_count_text</item>
-    <item name="android:textColor">@color/season_summary_episode_count_text</item>
+    <item name="android:textSize">@dimen/episode_summary_air_date_text</item>
+    <item name="android:textColor">@color/episode_summary_air_date_text</item>
     <item name="textFont">robotoRegular</item>
   </style>
 

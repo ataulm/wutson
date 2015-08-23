@@ -4,16 +4,25 @@
   <dimen name="episode_summary_poster_width">150dp</dimen>
   <dimen name="episode_summary_poster_height">96dp</dimen>
 
-  <dimen name="episode_summary_episode_name_margin_left">16dp</dimen>
-  <dimen name="episode_summary_episode_name_margin_top">8dp</dimen>
-  <dimen name="episode_summary_episode_name_margin_right">16dp</dimen>
-  <dimen name="episode_summary_episode_name_margin_bottom">0dp</dimen>
-  <dimen name="episode_summary_episode_name_text">16sp</dimen>
+  <dimen name="episode_summary_text_margin_top">8dp</dimen>
 
-  <dimen name="episode_summary_episode_air_date_margin_left">0dp</dimen>
-  <dimen name="episode_summary_episode_air_date_margin_top">4dp</dimen>
-  <dimen name="episode_summary_episode_air_date_margin_right">16dp</dimen>
-  <dimen name="episode_summary_episode_air_date_margin_bottom">8dp</dimen>
-  <dimen name="episode_summary_episode_air_date_text">12sp</dimen>
+  <dimen name="episode_summary_episode_number_margin_left">16dp</dimen>
+  <dimen name="episode_summary_episode_number_margin_top">@dimen/episode_summary_text_margin_top</dimen>
+  <dimen name="episode_summary_episode_number_margin_right">16dp</dimen>
+  <dimen name="episode_summary_episode_number_margin_bottom">0dp</dimen>
+  <dimen name="episode_summary_episode_number_text">12sp</dimen>
+
+  <dimen name="episode_summary_name_margin_left">16dp</dimen>
+  <dimen name="episode_summary_name_margin_top">0dp</dimen>
+  <dimen name="episode_summary_name_padding_top_if_episode_number_not_present">@dimen/episode_summary_text_margin_top</dimen>
+  <dimen name="episode_summary_name_margin_right">16dp</dimen>
+  <dimen name="episode_summary_name_margin_bottom">0dp</dimen>
+  <dimen name="episode_summary_name_text">16sp</dimen>
+
+  <dimen name="episode_summary_air_date_margin_left">0dp</dimen>
+  <dimen name="episode_summary_air_date_margin_top">4dp</dimen>
+  <dimen name="episode_summary_air_date_margin_right">16dp</dimen>
+  <dimen name="episode_summary_air_date_margin_bottom">8dp</dimen>
+  <dimen name="episode_summary_air_date_text">12sp</dimen>
 
 </resources>

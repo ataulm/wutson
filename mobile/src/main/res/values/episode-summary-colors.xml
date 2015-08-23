@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <color name="episode_summary_episode_number_text">@color/black_50pc</color>
+  <color name="episode_summary_name_text">@color/black_87pc</color>
+  <color name="episode_summary_air_date_text">@color/black_50pc</color>
+
+</resources>

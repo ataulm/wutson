@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="episode_summary_season_number_episode_number_format">@string/s_x_e_x_format</string>
+
+</resources>

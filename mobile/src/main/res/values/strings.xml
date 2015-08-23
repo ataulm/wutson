@@ -19,6 +19,7 @@
   <string name="more_options_button">More options button</string>
   <string name="start_tracking_x_button_format">Start tracking %1$s button</string>
   <string name="stop_tracking_x_button_format">Stop tracking %1$s button</string>
+  <string name="s_x_e_x_format">S%1$02dE%2$02d</string>
   <string name="season_x_format">Season %1$d</string>
   <string name="x_episodes_format">%1$d episodes</string>
   <string name="overview">Overview</string>
