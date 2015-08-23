@@ -56,6 +56,9 @@ public class EpisodesActivity extends WutsonActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
+
+        getAppBarWidget().requestFocus();
+        pager.setNextFocusUpId(R.id.app_bar);
     }
 
     private void updateTitle() {

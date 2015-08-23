@@ -6,14 +6,14 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
 
-final class HeaderSpaceDetailsViewHolder extends DetailsViewHolder {
+final class HeaderSpaceDetailViewHolder extends DetailViewHolder {
 
-    public static HeaderSpaceDetailsViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
+    public static HeaderSpaceDetailViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
         View view = layoutInflater.inflate(R.layout.view_show_details_item_header_space, parent, false);
-        return new HeaderSpaceDetailsViewHolder(view);
+        return new HeaderSpaceDetailViewHolder(view);
     }
 
-    private HeaderSpaceDetailsViewHolder(View itemView) {
+    private HeaderSpaceDetailViewHolder(View itemView) {
         super(itemView);
     }
 

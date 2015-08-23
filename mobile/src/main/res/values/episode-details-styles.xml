@@ -3,4 +3,9 @@
 
   <style name="Episodes" />
 
+  <style name="Episodes.RecyclerView">
+    <item name="android:paddingBottom">16dp</item>
+    <item name="android:clipToPadding">false</item>
+  </style>
+
 </resources>

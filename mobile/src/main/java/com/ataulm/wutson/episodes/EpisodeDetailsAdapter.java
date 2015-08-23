@@ -1,24 +1,24 @@
-package com.ataulm.wutson.showdetails.view;
+package com.ataulm.wutson.episodes;
 
+import android.support.annotation.ColorInt;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.DeveloperError;
 
-public class DetailsAdapter extends RecyclerView.Adapter<DetailViewHolder> {
+public class EpisodeDetailsAdapter extends RecyclerView.Adapter<DetailViewHolder> {
 
+    private final Details details;
     private final LayoutInflater layoutInflater;
 
-    private Details details;
+    @ColorInt
+    private final int accentColor;
 
-    public DetailsAdapter(LayoutInflater layoutInflater) {
-        this.layoutInflater = layoutInflater;
-    }
-
-    public void update(Details details) {
+    public EpisodeDetailsAdapter(Details details, LayoutInflater layoutInflater, @ColorInt int accentColor) {
         this.details = details;
-        notifyDataSetChanged();
+        this.layoutInflater = layoutInflater;
+        this.accentColor = accentColor;
     }
 
     @Override
@@ -27,12 +27,12 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailViewHolder> {
         switch (type) {
             case HEADER_SPACE:
                 return HeaderSpaceDetailViewHolder.newInstance(layoutInflater, parent);
+            case NAME:
+                return NameViewHolder.newInstance(layoutInflater, parent, accentColor);
+            case EPISODE_NUMBER:
+                return EpisodeNumberViewHolder.newInstance(layoutInflater, parent, accentColor);
             case OVERVIEW:
                 return OverviewDetailViewHolder.newInstance(layoutInflater, parent);
-            case CAST_TITLE:
-                return CastTitleDetailViewHolder.newInstance(layoutInflater, parent);
-            case CHARACTER:
-                return CharacterDetailViewHolder.newInstance(layoutInflater, parent);
             default:
                 throw DeveloperError.because("no viewholder for: " + type);
         }
@@ -46,9 +46,6 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (details == null) {
-            return 0;
-        }
         return details.size();
     }
 

@@ -3,9 +3,9 @@ package com.ataulm.wutson.showdetails.view;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public abstract class DetailsViewHolder extends RecyclerView.ViewHolder {
+public abstract class DetailViewHolder extends RecyclerView.ViewHolder {
 
-    protected DetailsViewHolder(View itemView) {
+    protected DetailViewHolder(View itemView) {
         super(itemView);
     }
 

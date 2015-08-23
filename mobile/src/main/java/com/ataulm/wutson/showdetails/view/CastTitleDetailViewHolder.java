@@ -6,14 +6,14 @@ import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
 
-public final class CastTitleDetailsViewHolder extends DetailsViewHolder {
+public final class CastTitleDetailViewHolder extends DetailViewHolder {
 
-    public static CastTitleDetailsViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
+    public static CastTitleDetailViewHolder newInstance(LayoutInflater layoutInflater, ViewGroup parent) {
         View view = layoutInflater.inflate(R.layout.view_show_details_item_cast_title, parent, false);
-        return new CastTitleDetailsViewHolder(view);
+        return new CastTitleDetailViewHolder(view);
     }
 
-    private CastTitleDetailsViewHolder(View itemView) {
+    private CastTitleDetailViewHolder(View itemView) {
         super(itemView);
     }
 

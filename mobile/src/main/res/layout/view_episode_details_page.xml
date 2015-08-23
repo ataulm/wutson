@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ataulm.wutson.episodes.EpisodeDetailsView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent" />
+  android:layout_height="match_parent">
+
+  <com.ataulm.wutson.view.CrossfadeImageView
+    android:id="@+id/episode_details_image_poster"
+    android:layout_width="match_parent"
+    android:layout_height="202dp"
+    android:contentDescription="@null"
+    android:scaleType="centerCrop"
+    android:background="@color/black_87pc" />
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/episode_details_recycler_view"
+    style="@style/Episodes.RecyclerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+</FrameLayout>
