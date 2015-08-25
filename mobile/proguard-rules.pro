@@ -1,11 +1,17 @@
 # Retrofit
 -keepattributes *Annotation*
 -keep class retrofit.** { *; }
--keep class com.ataulm.wutson.tmdb.gson.** { *; }
 -keepclassmembernames interface * {
     @retrofit.http.* <methods>;
 }
 -dontwarn com.google.appengine.**
+
+# Retrofit - can be removed when updating to v2
+-dontwarn retrofit.client.ApacheClient$GenericEntityHttpRequest
+-dontwarn retrofit.client.ApacheClient$GenericHttpRequest
+-dontwarn retrofit.client.ApacheClient$TypedOutputEntity
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
 
 # Okio (OkHTTP)
 -dontwarn java.nio.file.**
