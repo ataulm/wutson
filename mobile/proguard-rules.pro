@@ -6,6 +6,13 @@
 }
 -dontwarn com.google.appengine.**
 
+# Retrofit - can be removed when updating to v2
+-dontwarn retrofit.client.ApacheClient$GenericEntityHttpRequest
+-dontwarn retrofit.client.ApacheClient$GenericHttpRequest
+-dontwarn retrofit.client.ApacheClient$TypedOutputEntity
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
+
 # Okio (OkHTTP)
 -dontwarn java.nio.file.**
 -dontwarn org.codehaus.mojo.animal_sniffer.**
