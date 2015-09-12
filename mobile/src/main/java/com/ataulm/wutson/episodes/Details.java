@@ -17,7 +17,17 @@ public class Details {
         details.add(new HeaderSpaceDetail());
         details.add(new NameDetail(episode.getName()));
         details.add(new EpisodeNumberDetail(episode.getSeasonEpisodeNumber()));
+        details.addAll(extractOverviewFrom(episode));
 
+        return new Details(details);
+    }
+
+    private static List<Detail> extractOverviewFrom(Episode episode) {
+        if (episode.getOverview() == null || episode.getOverview().trim().isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<Detail> details = new ArrayList<>();
         String[] paragraphs = episode.getOverview().split("\n");
         for (String paragraph : paragraphs) {
             if (paragraph.trim().isEmpty()) {
@@ -25,8 +35,7 @@ public class Details {
             }
             details.add(new OverviewDetail(paragraph));
         }
-
-        return new Details(details);
+        return details;
     }
 
     Details(List<Detail> details) {
