@@ -17,6 +17,19 @@ public class SqliteJsonRepository implements JsonRepository {
     }
 
     @Override
+    public long readTrendingShowsCreatedDate() {
+        String[] projection = {TrendingShowsColumn.JSON.columnName()};
+        Cursor cursor = contentResolver.query(TRENDING_SHOWS.uri(), projection, null, null, null);
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return 0;
+        }
+        long json = TrendingShowsColumn.readCreatedFrom(cursor);
+        cursor.close();
+        return json;
+    }
+
+    @Override
     public String readTrendingShowsList() {
         String[] projection = {TrendingShowsColumn.JSON.columnName()};
         Cursor cursor = contentResolver.query(TRENDING_SHOWS.uri(), projection, null, null, null);
@@ -33,6 +46,19 @@ public class SqliteJsonRepository implements JsonRepository {
     public void writeTrendingShowsList(String json) {
         ContentValues contentValues = TrendingShowsColumn.write(Timestamp.now().asLong(), json);
         contentResolver.insert(TRENDING_SHOWS.uri(), contentValues);
+    }
+
+    @Override
+    public long readPopularShowsCreatedDate() {
+        String[] projection = {PopularShowsColumn.JSON.columnName()};
+        Cursor cursor = contentResolver.query(POPULAR_SHOWS.uri(), projection, null, null, null);
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return 0;
+        }
+        long json = PopularShowsColumn.readCreatedFrom(cursor);
+        cursor.close();
+        return json;
     }
 
     @Override

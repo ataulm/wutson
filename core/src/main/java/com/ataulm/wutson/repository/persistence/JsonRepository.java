@@ -4,13 +4,17 @@ import com.ataulm.wutson.shows.ShowId;
 
 public interface JsonRepository {
 
+    long readTrendingShowsCreatedDate();
+
     String readTrendingShowsList();
 
     void writeTrendingShowsList(String json);
 
-    String readPopularShowsList();
+    long readPopularShowsCreatedDate();
 
     void writePopularShowsList(String json);
+
+    String readPopularShowsList();
 
     String readShowDetails(ShowId showId);
 
