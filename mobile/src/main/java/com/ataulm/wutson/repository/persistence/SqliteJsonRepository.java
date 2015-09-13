@@ -44,7 +44,7 @@ public class SqliteJsonRepository implements JsonRepository {
 
     @Override
     public void writeTrendingShowsList(String json) {
-        ContentValues contentValues = TrendingShowsColumn.write(Timestamp.now().asLong(), json);
+        ContentValues contentValues = TrendingShowsColumn.write(Timestamp.now().asMillis(), json);
         contentResolver.insert(TRENDING_SHOWS.uri(), contentValues);
     }
 
@@ -76,7 +76,7 @@ public class SqliteJsonRepository implements JsonRepository {
 
     @Override
     public void writePopularShowsList(String json) {
-        ContentValues contentValues = PopularShowsColumn.write(Timestamp.now().asLong(), json);
+        ContentValues contentValues = PopularShowsColumn.write(Timestamp.now().asMillis(), json);
         contentResolver.insert(POPULAR_SHOWS.uri(), contentValues);
     }
 
@@ -97,7 +97,7 @@ public class SqliteJsonRepository implements JsonRepository {
 
     @Override
     public void writeShowDetails(ShowId showId, String json) {
-        ContentValues contentValues = ShowDetailsColumn.write(Timestamp.now().asLong(), showId.toString(), json);
+        ContentValues contentValues = ShowDetailsColumn.write(Timestamp.now().asMillis(), showId.toString(), json);
         contentResolver.insert(SHOW_DETAILS.uri(), contentValues);
     }
 
@@ -118,7 +118,7 @@ public class SqliteJsonRepository implements JsonRepository {
 
     @Override
     public void writeSeasons(ShowId showId, String json) {
-        ContentValues contentValues = SeasonColumn.write(Timestamp.now().asLong(), showId.toString(), json);
+        ContentValues contentValues = SeasonColumn.write(Timestamp.now().asMillis(), showId.toString(), json);
         contentResolver.insert(SEASONS.uri(), contentValues);
     }
 

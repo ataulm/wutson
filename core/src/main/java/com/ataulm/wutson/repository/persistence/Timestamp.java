@@ -12,7 +12,7 @@ public class Timestamp {
         this.millis = millis;
     }
 
-    long asLong() {
+    long asMillis() {
         return millis;
     }
 
