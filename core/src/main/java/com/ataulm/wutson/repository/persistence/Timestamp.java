@@ -6,7 +6,7 @@ public class Timestamp {
 
     private final long millis;
 
-    static Timestamp now() {
+    public static Timestamp now() {
         return new Timestamp(System.currentTimeMillis());
     }
 

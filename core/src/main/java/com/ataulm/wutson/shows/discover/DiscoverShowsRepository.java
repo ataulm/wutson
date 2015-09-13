@@ -1,6 +1,7 @@
 package com.ataulm.wutson.shows.discover;
 
 import com.ataulm.wutson.repository.persistence.JsonRepository;
+import com.ataulm.wutson.repository.persistence.Timestamp;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.ShowSummaries;
@@ -26,6 +27,7 @@ import static com.ataulm.wutson.rx.Function.jsonTo;
 
 public class DiscoverShowsRepository {
 
+    private static final int HOURS_TIL_STALE_DATA = 36;
     private final TraktApi traktApi;
     private final JsonRepository jsonRepository;
     private final Gson gson;
@@ -74,7 +76,13 @@ public class DiscoverShowsRepository {
 
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext(jsonRepository.readPopularShowsList());
+                Timestamp timestamp = new Timestamp(jsonRepository.readPopularShowsCreatedDate());
+                long hours = timestamp.differenceInHours(Timestamp.now());
+
+                if (hours < HOURS_TIL_STALE_DATA) {
+                    subscriber.onNext(jsonRepository.readPopularShowsList());
+                }
+
                 subscriber.onCompleted();
             }
 
@@ -109,7 +117,13 @@ public class DiscoverShowsRepository {
 
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext(jsonRepository.readTrendingShowsList());
+                Timestamp timestamp = new Timestamp(jsonRepository.readTrendingShowsCreatedDate());
+                long hours = timestamp.differenceInHours(Timestamp.now());
+
+                if (hours < HOURS_TIL_STALE_DATA) {
+                    subscriber.onNext(jsonRepository.readPopularShowsList());
+                }
+
                 subscriber.onCompleted();
             }
 
