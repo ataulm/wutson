@@ -5,11 +5,11 @@
 
   <com.ataulm.wutson.view.CrossfadeImageView
     android:id="@+id/episode_details_image_poster"
+    style="@style/Episodes.Poster"
     android:layout_width="match_parent"
     android:layout_height="202dp"
     android:contentDescription="@null"
-    android:scaleType="centerCrop"
-    android:background="@color/black_87pc" />
+    android:scaleType="centerCrop" />
 
   <android.support.v7.widget.RecyclerView
     android:id="@+id/episode_details_recycler_view"

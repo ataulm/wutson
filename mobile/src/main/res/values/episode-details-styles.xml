@@ -3,6 +3,10 @@
 
   <style name="Episodes" />
 
+  <style name="Episodes.Poster">
+    <item name="android:background">@color/episode_poster_background</item>
+  </style>
+
   <style name="Episodes.RecyclerView">
     <item name="android:paddingBottom">16dp</item>
     <item name="android:clipToPadding">false</item>

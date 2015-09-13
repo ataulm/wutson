@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <color name="season_summary_poster_background">@color/silver</color>
   <color name="season_summary_season_number_text">@color/black_87pc</color>
   <color name="season_summary_episode_count_text">@color/black_50pc</color>
 

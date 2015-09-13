@@ -3,7 +3,9 @@
 
   <style name="SeasonSummary" />
 
-  <style name="SeasonSummary.Poster" />
+  <style name="SeasonSummary.Poster">
+    <item name="android:background">@color/season_summary_poster_background</item>
+  </style>
 
   <style name="SeasonSummary.SeasonNumber">
     <item name="android:textSize">@dimen/season_summary_season_number_text</item>

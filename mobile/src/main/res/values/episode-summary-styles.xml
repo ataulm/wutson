@@ -3,7 +3,9 @@
 
   <style name="EpisodeSummary" />
 
-  <style name="EpisodeSummary.Poster" />
+  <style name="EpisodeSummary.Poster">
+    <item name="android:background">@color/episode_summary_poster_background</item>
+  </style>
 
   <style name="EpisodeSummary.EpisodeNumber">
     <item name="android:textSize">@dimen/episode_summary_episode_number_text</item>
