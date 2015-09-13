@@ -37,16 +37,25 @@ public class DiscoverShowsRepository {
     }
 
     public Observable<DiscoverShows> getDiscoverShows() {
-        Observable<GsonPopularShowList> gsonPopularShowsListObservable = Observable.concat(gsonPopularShowsListFromDisk(), gsonPopularShowsListFromNetwork())
-                .first();
+        Observable<DiscoverShows> disk = getDiscoverShowsFromDisk();
+        Observable<DiscoverShows> network = getDiscoverShowsFromNetwork();
+        return Observable.concat(disk, network).first();
+    }
 
-        Observable<GsonTrendingShowList> gsonTrendingShowsListObservable = Observable.concat(gsonTrendingShowsListFromDisk(), gsonTrendingShowsListFromNetwork())
-                .first();
+    private Observable<DiscoverShows> getDiscoverShowsFromDisk() {
+        return getDiscoverShows(gsonPopularShowsListFromDisk(), gsonTrendingShowsListFromDisk());
+    }
 
-        Observable<ShowSummaries> popularShowsObservable = showSummariesFromPopularShowsList(gsonPopularShowsListObservable);
-        Observable<ShowSummaries> trendingShowsObservable = showSummariesFromTrendingShowsList(gsonTrendingShowsListObservable);
+    public Observable<DiscoverShows> getDiscoverShowsFromNetwork() {
+        return getDiscoverShows(gsonPopularShowsListFromNetwork(), gsonTrendingShowsListFromNetwork());
+    }
 
-        return Observable.zip(popularShowsObservable, trendingShowsObservable, asDiscoverShows());
+    private static Observable<DiscoverShows> getDiscoverShows(Observable<GsonPopularShowList> popularShowsObservable, Observable<GsonTrendingShowList> trendingShowsObservable) {
+        return Observable.zip(
+                showSummariesFromPopularShowsList(popularShowsObservable),
+                showSummariesFromTrendingShowsList(trendingShowsObservable),
+                asDiscoverShows()
+        );
     }
 
     private Observable<GsonPopularShowList> gsonPopularShowsListFromDisk() {
