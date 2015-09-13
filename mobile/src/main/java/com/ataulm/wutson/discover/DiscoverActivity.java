@@ -3,6 +3,8 @@ package com.ataulm.wutson.discover;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.jabber.Jabber;
@@ -41,6 +43,25 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_discover, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.discover_menu_item_refresh) {
+            subscription.unsubscribe();
+            subscription = Jabber.discoverShowsRepository().getDiscoverShowsFromNetwork()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
