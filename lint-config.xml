@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
 
+  <!--This doesn't mean contentDescriptions shouldn't be set - it's just almost always set programmatically-->
+  <issue id="ContentDescription" severity="ignore" />
   <issue id="MissingTranslation" severity="ignore" />
   <issue id="IconMissingDensityFolder" severity="ignore" />
   <issue id="RtlSymmetry" severity="ignore" />
