@@ -40,8 +40,8 @@ android {
         applicationId "com.ataulm.wutson2"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 19
-        versionName 'pre-release'
+        versionCode 20
+        versionName 'Pre-release'
 
         Calendar instance = Calendar.getInstance()
         instance.setTimeInMillis(System.currentTimeMillis())
