@@ -2,6 +2,7 @@ package com.ataulm.wutson.jabber;
 
 import android.content.Context;
 
+import com.ataulm.wutson.Log;
 import com.ataulm.wutson.repository.DataRepository;
 import com.ataulm.wutson.repository.ShowRepository;
 import com.ataulm.wutson.repository.TrackedShowsRepository;
@@ -17,6 +18,7 @@ final class Repositories {
 
     private final Context context;
     private final TraktApi traktApi;
+    private final Log log;
 
     private DiscoverShowsRepository discoverShows;
     private SearchRepository searchRepository;
@@ -26,20 +28,21 @@ final class Repositories {
     @Deprecated // TODO no more super repo! Aim to get rid of this in favour of a more specific repos - MyShowsRepository, TraktRepo?
     private WutsonDataRepository dataRepository;
 
-    static Repositories newInstance(Context context, TraktApi traktApi) {
-        return new Repositories(context.getApplicationContext(), traktApi);
+    static Repositories newInstance(Context context, TraktApi traktApi, Log log) {
+        return new Repositories(context.getApplicationContext(), traktApi, log);
     }
 
-    private Repositories(Context context, TraktApi traktApi) {
+    private Repositories(Context context, TraktApi traktApi, Log log) {
         this.context = context;
         this.traktApi = traktApi;
+        this.log = log;
     }
 
     public DiscoverShowsRepository discoverShows() {
         if (discoverShows == null) {
             JsonRepository jsonRepository = jsonRepository();
             Gson gson = gson();
-            discoverShows = new DiscoverShowsRepository(traktApi, jsonRepository, gson);
+            discoverShows = new DiscoverShowsRepository(traktApi, jsonRepository, gson, log);
         }
         return discoverShows;
     }

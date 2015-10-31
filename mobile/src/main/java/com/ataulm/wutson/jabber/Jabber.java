@@ -44,7 +44,7 @@ public final class Jabber {
         if (instance.repositories == null) {
             Client client = newClient();
             TraktApi traktApi = newTraktApi(instance.traktApiKey, log(), client);
-            instance.repositories = Repositories.newInstance(instance.context, traktApi);
+            instance.repositories = Repositories.newInstance(instance.context, traktApi, log());
         }
         return instance.repositories;
     }

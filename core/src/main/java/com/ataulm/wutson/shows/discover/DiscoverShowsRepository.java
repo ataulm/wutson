@@ -1,5 +1,6 @@
 package com.ataulm.wutson.shows.discover;
 
+import com.ataulm.wutson.Log;
 import com.ataulm.wutson.repository.persistence.JsonRepository;
 import com.ataulm.wutson.repository.persistence.Timestamp;
 import com.ataulm.wutson.rx.Function;
@@ -31,11 +32,13 @@ public class DiscoverShowsRepository {
     private final TraktApi traktApi;
     private final JsonRepository jsonRepository;
     private final Gson gson;
+    private final Log log;
 
-    public DiscoverShowsRepository(TraktApi traktApi, JsonRepository jsonRepository, Gson gson) {
+    public DiscoverShowsRepository(TraktApi traktApi, JsonRepository jsonRepository, Gson gson, Log log) {
         this.traktApi = traktApi;
         this.jsonRepository = jsonRepository;
         this.gson = gson;
+        this.log = log;
     }
 
     public Observable<DiscoverShows> getDiscoverShows() {
@@ -52,7 +55,7 @@ public class DiscoverShowsRepository {
         return getDiscoverShows(gsonPopularShowsListFromNetwork(), gsonTrendingShowsListFromNetwork());
     }
 
-    private static Observable<DiscoverShows> getDiscoverShows(Observable<GsonPopularShowList> popularShowsObservable, Observable<GsonTrendingShowList> trendingShowsObservable) {
+    private Observable<DiscoverShows> getDiscoverShows(Observable<GsonPopularShowList> popularShowsObservable, Observable<GsonTrendingShowList> trendingShowsObservable) {
         return Observable.zip(
                 showSummariesFromPopularShowsList(popularShowsObservable),
                 showSummariesFromTrendingShowsList(trendingShowsObservable),
@@ -121,7 +124,8 @@ public class DiscoverShowsRepository {
                 long hours = timestamp.differenceInHours(Timestamp.now());
 
                 if (hours < HOURS_TIL_STALE_DATA) {
-                    subscriber.onNext(jsonRepository.readPopularShowsList());
+                    String t = jsonRepository.readTrendingShowsList();
+                    subscriber.onNext(t);
                 }
 
                 subscriber.onCompleted();
@@ -147,16 +151,27 @@ public class DiscoverShowsRepository {
                 .flatMap(Function.<GsonShowSummary>emitEachElement())
                 .map(asShowSummary())
                 .toList()
+                .filter(onlyNonEmpty())
                 .map(asShowSummaries());
     }
 
-    private static Observable<ShowSummaries> showSummariesFromTrendingShowsList(Observable<GsonTrendingShowList> shows) {
+    private Observable<ShowSummaries> showSummariesFromTrendingShowsList(Observable<GsonTrendingShowList> shows) {
         return shows
                 .flatMap(Function.<GsonTrendingShow>emitEachElement())
                 .map(extractGsonShowSummary())
                 .map(asShowSummary())
                 .toList()
+                .filter(onlyNonEmpty())
                 .map(asShowSummaries());
+    }
+
+    private static Func1<List, Boolean> onlyNonEmpty() {
+        return new Func1<List, Boolean>() {
+            @Override
+            public Boolean call(List list) {
+                return !list.isEmpty();
+            }
+        };
     }
 
     private static Func1<GsonTrendingShow, GsonShowSummary> extractGsonShowSummary() {
@@ -176,9 +191,11 @@ public class DiscoverShowsRepository {
                 URI posterUri = gsonShowSummary.images.poster.thumb == null ? URI.create("") : URI.create(gsonShowSummary.images.poster.thumb);
                 URI backdropUri = gsonShowSummary.images.poster.medium == null ? URI.create("") : URI.create(gsonShowSummary.images.poster.medium);
                 return new ShowSummary(id, gsonShowSummary.title, posterUri, backdropUri);
+
             }
         };
     }
+
 
     private static Func1<List<ShowSummary>, ShowSummaries> asShowSummaries() {
         return new Func1<List<ShowSummary>, ShowSummaries>() {
