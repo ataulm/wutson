@@ -35,11 +35,11 @@ public class LinearLayoutWithForeground extends LinearLayout {
         }
     }
 
-    public Drawable getForeground() {
+    public Drawable getForegroundCompat() {
         return foreground;
     }
 
-    public void setForeground(Drawable foreground) {
+    public void setForegroundCompat(Drawable foreground) {
         if (this.foreground == foreground) {
             return;
         }

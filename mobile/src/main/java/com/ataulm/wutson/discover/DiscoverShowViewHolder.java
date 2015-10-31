@@ -85,7 +85,8 @@ class DiscoverShowViewHolder extends RecyclerView.ViewHolder {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((LinearLayoutWithForeground) itemView).getForeground()
+                ((LinearLayoutWithForeground) itemView)
+                        .getForegroundCompat()
                         .setHotspot(event.getX(), event.getY());
                 return false;
             }
