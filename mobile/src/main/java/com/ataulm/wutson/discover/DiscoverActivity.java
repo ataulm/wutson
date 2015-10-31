@@ -54,7 +54,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.discover_menu_item_refresh) {
-            subscription.unsubscribe();
+            unsubscribeFrom(subscription);
             subscription = Jabber.discoverShowsRepository().getDiscoverShowsFromNetwork()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -62,6 +62,12 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private static void unsubscribeFrom(Subscription subscription) {
+        if (!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
     }
 
     @Override
@@ -78,9 +84,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
 
     @Override
     protected void onDestroy() {
-        if (!subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
-        }
+        unsubscribeFrom(subscription);
         super.onDestroy();
     }
 
