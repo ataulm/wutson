@@ -49,6 +49,7 @@ android {
         buildConfigField "String", "BUILD_TIME", "\"$buildTime\""
         buildConfigField "String", "TRAKT_API_KEY", "\"$traktApiKey\""
         buildConfigField "String", "TRAKT_API_SECRET", "\"$traktApiSecret\""
+        buildConfigField "String", "TRAKT_REDIRECT_URI", "\"http://com.ataulm.wutson2.trakt\""
     }
 
     signingConfigs {

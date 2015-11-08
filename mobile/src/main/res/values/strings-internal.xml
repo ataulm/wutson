@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="account_name">Wutson</string>
+  <string name="account_label">Wutson (with Trakt login)</string>
+  <string name="account_type">com.ataulm.wutson2.trakt</string>
+</resources>
