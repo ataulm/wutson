@@ -56,7 +56,7 @@ public final class WutsonAccountManager {
 
     public void addAccount(Account account, AccessToken accessToken, RefreshToken refreshToken) {
         Bundle userData = new Bundle();
-        userData.putLong(WutsonAccountManager.KEY_TOKEN_EXPIRY, accessToken.getExpiry());
+        userData.putString(WutsonAccountManager.KEY_TOKEN_EXPIRY, String.valueOf(accessToken.getExpiry()));
         accountManager.addAccountExplicitly(account, refreshToken.toString(), userData);
         accountManager.setAuthToken(account, account.type, accessToken.toString());
     }
