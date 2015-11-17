@@ -20,6 +20,7 @@ public class NavigationDrawerView extends LinearLayout {
 
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
         super.setOrientation(VERTICAL);
         View.inflate(getContext(), R.layout.merge_navigation_drawer, this);
     }
