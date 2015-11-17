@@ -29,13 +29,17 @@ public class NavigationDrawerView extends LinearLayout {
         throw DeveloperError.methodCannotBeCalledOutsideThisClass();
     }
 
-    public void setupDrawerWith(final OnNavigationClickListener onNavigationClickListener, NavigationDrawerItem currentItem) {
-        for (final NavigationDrawerItem item : NavigationDrawerItem.values()) {
-            if (item == NavigationDrawerItem.SEPARATOR) {
-                addSeparatorView();
-            } else {
-                addActionableItemView(onNavigationClickListener, currentItem, item);
-            }
+    public void setupDrawerWith(OnNavigationClickListener clickListener, NavigationDrawerItem currentItem) {
+        for (NavigationDrawerItem item : NavigationDrawerItem.values()) {
+            addItem(clickListener, currentItem, item);
+        }
+    }
+
+    private void addItem(OnNavigationClickListener clickListener, NavigationDrawerItem currentItem, NavigationDrawerItem item) {
+        if (item == NavigationDrawerItem.SEPARATOR) {
+            addSeparatorView();
+        } else {
+            addActionableItemView(clickListener, currentItem, item);
         }
     }
 
