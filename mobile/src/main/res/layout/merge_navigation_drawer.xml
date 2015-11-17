@@ -3,10 +3,27 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <com.ataulm.wutson.view.WidthBasedCorrectAspectRatioImageView
+  <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:contentDescription="@null"
-    android:src="@drawable/navigation_drawer_header" />
+    android:layout_height="wrap_content">
+
+    <com.ataulm.wutson.view.WidthBasedCorrectAspectRatioImageView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:contentDescription="@null"
+      android:src="@drawable/navigation_drawer_header" />
+
+    <com.ataulm.wutson.view.WutsonTextView
+      android:id="@+id/navigation_drawer_header_name"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      android:gravity="center_vertical"
+      android:background="@color/black"
+      android:layout_gravity="bottom"
+      android:textColor="@color/white" />
+
+  </FrameLayout>
 
 </merge>

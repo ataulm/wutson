@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.auth.WutsonAccountManager;
 import com.ataulm.wutson.jabber.Jabber;
 
 public abstract class WutsonTopLevelActivity extends WutsonActivity {
@@ -18,8 +19,16 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private ViewGroup content;
+    private NavigationDrawerView navigationDrawerView;
+    private WutsonAccountManager accountManager;
 
     protected abstract NavigationDrawerItem getNavigationDrawerItem();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        accountManager = WutsonAccountManager.newInstance(this);
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -67,8 +76,23 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
         });
 
-        final NavigationDrawerView navigationDrawerView = (NavigationDrawerView) drawerLayout.findViewById(R.id.drawer_list);
+        navigationDrawerView = (NavigationDrawerView) drawerLayout.findViewById(R.id.drawer_list);
         navigationDrawerView.setupDrawerWith(new NavigationDrawerView.OnNavigationClickListener() {
+
+            @Override
+            public void onSignInClick() {
+                if (!accountManager.isSignedIn()) {
+                    accountManager.startAddAccountProcess(WutsonTopLevelActivity.this);
+                }
+            }
+
+            @Override
+            public void onSignOutClick() {
+                if (accountManager.isSignedIn()) {
+                    accountManager.signOut();
+                    resetNavigationDrawerAccountName();
+                }
+            }
 
             @Override
             public void onNavigationClick(NavigationDrawerItem item) {
@@ -104,6 +128,21 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
+    }
+
+    @SuppressWarnings("ConstantConditions") // isSignedIn() will check null
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (accountManager.isSignedIn()) {
+            navigationDrawerView.setAccountName("Signed in as: " + accountManager.getAccount().name);
+        } else {
+            resetNavigationDrawerAccountName();
+        }
+    }
+
+    private void resetNavigationDrawerAccountName() {
+        navigationDrawerView.setAccountName("Sign in");
     }
 
     @Override

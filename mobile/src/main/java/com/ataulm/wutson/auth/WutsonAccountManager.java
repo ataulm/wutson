@@ -2,8 +2,11 @@ package com.ataulm.wutson.auth;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.AccountManagerFuture;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -69,6 +72,28 @@ public final class WutsonAccountManager {
 
     public void startAddAccountProcess(Activity activity) {
         accountManager.addAccount(accountType, null, null, null, activity, null, null);
+    }
+
+    public boolean isSignedIn() {
+        return getAccount() != null;
+    }
+
+    public void signOut() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            removeAccount();
+        } else {
+            removeAccountOldApis();
+        }
+    }
+
+    @SuppressWarnings("deprecation") // only deprecated in API 22+
+    private AccountManagerFuture<Boolean> removeAccountOldApis() {
+        return accountManager.removeAccount(getAccount(), null, null);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+    private boolean removeAccount() {
+        return accountManager.removeAccountExplicitly(getAccount());
     }
 
 }
