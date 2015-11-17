@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.R;
 
+import java.util.concurrent.TimeUnit;
+
 public final class WutsonAccountManager {
 
     public static final String KEY_TOKEN_EXPIRY = BuildConfig.APPLICATION_ID + ".KEY_TOKEN_EXPIRY";
@@ -43,8 +45,7 @@ public final class WutsonAccountManager {
 
     public boolean needToRefreshAccessToken(Account account, String authTokenType) {
         AccessToken accessToken = getAccessTokenFor(account, authTokenType);
-        // TODO: accessToken expiry is seconds since epoch so clearly this will fail hard.
-        return accessToken.isEmpty() || System.currentTimeMillis() >= accessToken.getExpiry();
+        return accessToken.isEmpty() || TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) >= accessToken.getExpiry();
     }
 
     public AccessToken getAccessTokenFor(Account account, String authTokenType) {
