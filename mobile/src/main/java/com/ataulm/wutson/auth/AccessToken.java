@@ -1,6 +1,8 @@
 package com.ataulm.wutson.auth;
 
-class AccessToken {
+public class AccessToken {
+
+    public static final AccessToken EMPTY = new AccessToken(null, -1);
 
     private final String token;
     private final long expiryInSecondsSinceEpoch;

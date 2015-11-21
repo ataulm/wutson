@@ -81,14 +81,18 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
             @Override
             public void onSignInClick() {
-                if (!accountManager.isSignedIn()) {
+                if (userIsSignedIn()) {
                     accountManager.startAddAccountProcess(WutsonTopLevelActivity.this);
                 }
             }
 
+            private boolean userIsSignedIn() {
+                return accountManager.getAccount() != null;
+            }
+
             @Override
             public void onSignOutClick() {
-                if (accountManager.isSignedIn()) {
+                if (userIsSignedIn()) {
                     accountManager.signOut();
                     resetNavigationDrawerAccountName();
                 }
@@ -130,11 +134,10 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
         actionBarDrawerToggle.syncState();
     }
 
-    @SuppressWarnings("ConstantConditions") // isSignedIn() will check null
     @Override
     protected void onResume() {
         super.onResume();
-        if (accountManager.isSignedIn()) {
+        if (accountManager.getAccount() != null) {
             navigationDrawerView.setAccountName("Signed in as: " + accountManager.getAccount().name);
         } else {
             resetNavigationDrawerAccountName();

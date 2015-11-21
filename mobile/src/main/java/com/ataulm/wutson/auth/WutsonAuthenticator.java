@@ -10,17 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.ataulm.wutson.BuildConfig;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import rx.functions.Func1;
 
@@ -53,17 +42,17 @@ public class WutsonAuthenticator extends SimpleAbstractAccountAuthenticator {
 
     @Override
     public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options) throws NetworkErrorException {
-        if (accountManager.isMissingRefreshTokenFor(account)) {
+        if (accountManager.getRefreshToken().isEmpty()) {
             return bundleThatWillPromptUserLogin(response);
         }
 
-        if (accountManager.needToRefreshAccessToken(account, authTokenType)) {
-            AccessToken refreshedToken = refreshAccessTokenResponseFor(account);
-            accountManager.setAuthToken(account, refreshedToken);
-            return authTokenBundleFrom(account, refreshedToken);
+        if (accountManager.needToRefreshAccessToken()) {
+            AccessToken newAccessToken = fetchNewAccessToken();
+            accountManager.setAuthToken(account, newAccessToken);
+            return authTokenBundleFrom(account, newAccessToken);
         }
 
-        return authTokenBundleFrom(account, authTokenType);
+        return authTokenBundleFrom(account);
     }
 
     private Bundle bundleThatWillPromptUserLogin(AccountAuthenticatorResponse response) {
@@ -77,8 +66,8 @@ public class WutsonAuthenticator extends SimpleAbstractAccountAuthenticator {
         return result;
     }
 
-    private AccessToken refreshAccessTokenResponseFor(Account account) {
-        RefreshToken refreshToken = accountManager.getRefreshTokenFor(account);
+    private AccessToken fetchNewAccessToken() {
+        RefreshToken refreshToken = accountManager.getRefreshToken();
         return new TraktOAuthTokenRequester()
                 .getAccessTokenInExchangeFor(refreshToken)
                 .map(new Func1<TraktOAuthTokenResponse, AccessToken>() {
@@ -110,12 +99,12 @@ public class WutsonAuthenticator extends SimpleAbstractAccountAuthenticator {
         return userData;
     }
 
-    private Bundle authTokenBundleFrom(Account account, String authTokenType) {
+    private Bundle authTokenBundleFrom(Account account) {
         Bundle bundle = new Bundle();
         bundle.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
         bundle.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
 
-        AccessToken accessToken = accountManager.getAccessTokenFor(account, authTokenType);
+        AccessToken accessToken = accountManager.getAccessToken();
         bundle.putString(AccountManager.KEY_AUTHTOKEN, accessToken.toString());
         return bundle;
     }

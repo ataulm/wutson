@@ -7,6 +7,7 @@ import com.ataulm.wutson.AndroidLog;
 import com.ataulm.wutson.BuildConfig;
 import com.ataulm.wutson.Log;
 import com.ataulm.wutson.ToastDisplayer;
+import com.ataulm.wutson.auth.WutsonAccountManager;
 import com.ataulm.wutson.repository.DataRepository;
 import com.ataulm.wutson.shows.discover.DiscoverShowsRepository;
 import com.ataulm.wutson.shows.myshows.SearchRepository;
@@ -29,6 +30,7 @@ public final class Jabber {
 
     private Repositories repositories;
     private ToastDisplayer toastDisplayer;
+    private WutsonAccountManager accountManager;
     private Log log;
 
     public static void init(Application application, String traktApiKey) {
@@ -65,6 +67,13 @@ public final class Jabber {
         boolean enableLogs = BuildConfig.DEBUG;
         TraktApiFactory traktApiFactory = TraktApiFactory.newInstance(traktApiKey, client, enableLogs, log);
         return traktApiFactory.createApi();
+    }
+
+    private static WutsonAccountManager accountManager() {
+        if (instance.accountManager == null) {
+            instance.accountManager = WutsonAccountManager.newInstance(instance.context);
+        }
+        return instance.accountManager;
     }
 
     private static Client newClient() {

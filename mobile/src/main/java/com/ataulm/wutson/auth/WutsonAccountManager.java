@@ -21,37 +21,48 @@ public final class WutsonAccountManager {
 
     private final AccountManager accountManager;
     private final String accountType;
+    private final String authTokenType;
 
     public static WutsonAccountManager newInstance(Context context) {
         AccountManager accountManager = AccountManager.get(context.getApplicationContext());
         String accountType = context.getString(R.string.account_type);
-        return new WutsonAccountManager(accountManager, accountType);
+        String authTokenType = accountType; // RETRO: if I use something else, it doesn't work :/ getAccessToken returns null
+        return new WutsonAccountManager(accountManager, accountType, authTokenType);
     }
 
-    private WutsonAccountManager(AccountManager accountManager, String accountType) {
+    private WutsonAccountManager(AccountManager accountManager, String accountType, String authTokenType) {
         this.accountManager = accountManager;
         this.accountType = accountType;
+        this.authTokenType = authTokenType;
+    }
+
+    public void startAddAccountProcess(Activity activity) {
+        accountManager.addAccount(accountType, authTokenType, null, null, activity, null, null);
     }
 
     public void setAuthToken(Account account, AccessToken accessToken) {
         accountManager.setAuthToken(account, account.type, accessToken.toString());
     }
 
-    public boolean isMissingRefreshTokenFor(Account account) {
-        return getRefreshTokenFor(account).isEmpty();
-    }
-
-    public RefreshToken getRefreshTokenFor(Account account) {
+    public RefreshToken getRefreshToken() {
+        Account account = getAccount();
+        if (account == null) {
+            return RefreshToken.EMPTY;
+        }
         String secretRefreshToken = accountManager.getPassword(account);
         return new RefreshToken(secretRefreshToken);
     }
 
-    public boolean needToRefreshAccessToken(Account account, String authTokenType) {
-        AccessToken accessToken = getAccessTokenFor(account, authTokenType);
+    public boolean needToRefreshAccessToken() {
+        AccessToken accessToken = getAccessToken();
         return accessToken.isEmpty() || TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) >= accessToken.getExpiry();
     }
 
-    public AccessToken getAccessTokenFor(Account account, String authTokenType) {
+    public AccessToken getAccessToken() {
+        Account account = getAccount();
+        if (account == null) {
+            return AccessToken.EMPTY;
+        }
         String token = accountManager.peekAuthToken(account, authTokenType);
         long tokenExpiry = Long.parseLong(accountManager.getUserData(account, KEY_TOKEN_EXPIRY));
         return new AccessToken(token, tokenExpiry);
@@ -68,14 +79,6 @@ public final class WutsonAccountManager {
     public Account getAccount() {
         Account[] wutsonAccounts = accountManager.getAccountsByType(accountType);
         return wutsonAccounts.length == 0 ? null : wutsonAccounts[0];
-    }
-
-    public void startAddAccountProcess(Activity activity) {
-        accountManager.addAccount(accountType, null, null, null, activity, null, null);
-    }
-
-    public boolean isSignedIn() {
-        return getAccount() != null;
     }
 
     public void signOut() {

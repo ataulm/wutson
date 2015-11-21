@@ -2,6 +2,8 @@ package com.ataulm.wutson.auth;
 
 class RefreshToken {
 
+    public static final RefreshToken EMPTY = new RefreshToken(null);
+
     private final String token;
 
     public RefreshToken(String token) {
