@@ -99,4 +99,8 @@ public final class WutsonAccountManager {
         return accountManager.removeAccountExplicitly(getAccount());
     }
 
+    public void invalidateAccessToken() {
+        accountManager.invalidateAuthToken(accountType, getAccessToken().toString());
+    }
+
 }

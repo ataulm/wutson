@@ -14,7 +14,13 @@ import com.ataulm.wutson.shows.myshows.SearchRepository;
 import com.ataulm.wutson.trakt.TraktApi;
 import com.ataulm.wutson.trakt.TraktApiFactory;
 import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
 
 import retrofit.client.Client;
 import retrofit.client.OkClient;
@@ -78,6 +84,7 @@ public final class Jabber {
 
     private static Client newClient() {
         OkHttpClient client = new OkHttpClient();
+        client.interceptors().add(new AddAuthorizationHeaderInterceptor(accountManager()));
         Cache cache = new Cache(instance.context.getCacheDir(), MAX_CACHE_SIZE_BYTES);
         return new OkClient(client.setCache(cache));
     }
@@ -94,6 +101,30 @@ public final class Jabber {
             instance.log = new AndroidLog();
         }
         return instance.log;
+    }
+
+    private static class AddAuthorizationHeaderInterceptor implements Interceptor {
+
+        private final WutsonAccountManager accountManager;
+
+        AddAuthorizationHeaderInterceptor(WutsonAccountManager accountManager) {
+            this.accountManager = accountManager;
+        }
+
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer " + accountManager.getAccessToken().toString())
+                    .build();
+
+            Response response = chain.proceed(request);
+            if (response.code() == HttpURLConnection.HTTP_FORBIDDEN) {
+                accountManager.invalidateAccessToken();
+            }
+
+            return response;
+        }
+
     }
 
 }
