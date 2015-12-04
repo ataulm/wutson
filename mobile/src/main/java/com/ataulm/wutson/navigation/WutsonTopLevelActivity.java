@@ -81,7 +81,7 @@ public abstract class WutsonTopLevelActivity extends WutsonActivity {
 
             @Override
             public void onSignInClick() {
-                if (userIsSignedIn()) {
+                if (!userIsSignedIn()) {
                     accountManager.startAddAccountProcess(WutsonTopLevelActivity.this);
                 }
             }
