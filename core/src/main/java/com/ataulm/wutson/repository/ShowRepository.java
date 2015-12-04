@@ -6,6 +6,7 @@ import com.ataulm.wutson.repository.persistence.JsonRepository;
 import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.seasons.Season;
 import com.ataulm.wutson.seasons.Seasons;
+import com.ataulm.wutson.shows.Actor;
 import com.ataulm.wutson.shows.Cast;
 import com.ataulm.wutson.shows.Character;
 import com.ataulm.wutson.shows.Show;
@@ -15,6 +16,7 @@ import com.ataulm.wutson.trakt.GsonShowDetails;
 import com.ataulm.wutson.trakt.GsonShowEpisode;
 import com.ataulm.wutson.trakt.GsonShowSeason;
 import com.ataulm.wutson.trakt.GsonShowSeasonList;
+import com.ataulm.wutson.trakt.JsonShowPeople;
 import com.ataulm.wutson.trakt.TraktApi;
 import com.google.gson.Gson;
 
@@ -66,15 +68,17 @@ public class ShowRepository {
     }
 
     private static Observable<String> fetchJsonShowDetailsFrom(final JsonRepository jsonRepository, final ShowId showId) {
-        return Observable.create(new Observable.OnSubscribe<String>() {
+        return Observable.create(
+                new Observable.OnSubscribe<String>() {
 
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext(jsonRepository.readShowDetails(showId));
-                subscriber.onCompleted();
-            }
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        subscriber.onNext(jsonRepository.readShowDetails(showId));
+                        subscriber.onCompleted();
+                    }
 
-        });
+                }
+        );
     }
 
     private static Action1<GsonShowDetails> saveShowDetailsAsJsonTo(final JsonRepository jsonRepository, final ShowId showId, final Gson gson) {
@@ -96,15 +100,17 @@ public class ShowRepository {
     }
 
     private static Observable<String> fetchJsonShowSeasonsFrom(final JsonRepository jsonRepository, final ShowId showId) {
-        return Observable.create(new Observable.OnSubscribe<String>() {
+        return Observable.create(
+                new Observable.OnSubscribe<String>() {
 
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext(jsonRepository.readSeasons(showId));
-                subscriber.onCompleted();
-            }
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        subscriber.onNext(jsonRepository.readSeasons(showId));
+                        subscriber.onCompleted();
+                    }
 
-        });
+                }
+        );
     }
 
     private Observable<GsonShowSeasonList> gsonShowSeasonsFromNetwork(ShowId showId) {
@@ -204,7 +210,8 @@ public class ShowRepository {
                         title,
                         gsonShowSeason.number,
                         gsonShowSeason.episodes == null ? 0 : gsonShowSeason.episodes.size(),
-                        gsonShowSeason.images.poster.medium == null ? URI.create("") : URI.create(gsonShowSeason.images.poster.medium));
+                        gsonShowSeason.images.poster.medium == null ? URI.create("") : URI.create(gsonShowSeason.images.poster.medium)
+                );
             }
 
         };
@@ -277,6 +284,91 @@ public class ShowRepository {
                 }
                 return Observable.empty();
             }
+        };
+    }
+
+    public Observable<Cast> getCast(ShowId showId) {
+        return traktApi.getPeople(showId.toString())
+                .filter(onlyNonEmptyCast())
+                .map(extractJsonCast())
+                .flatMap(Function.<JsonShowPeople.Character>emitEachElement())
+                .filter(onlyValidCharacters())
+                .map(asCharacter())
+                .toList()
+                .map(asCast());
+    }
+
+    private static Func1<JsonShowPeople.Character, Boolean> onlyValidCharacters() {
+        return new Func1<JsonShowPeople.Character, Boolean>() {
+
+            @Override
+            public Boolean call(JsonShowPeople.Character character) {
+                if (character == null) {
+                    return false;
+                }
+
+                if (character.character == null || character.character.isEmpty() || character.person == null || character.person.images == null) {
+                    return false;
+                }
+
+                JsonShowPeople.Images images = character.person.images;
+                if (images.headshot == null || images.headshot.thumb == null || images.headshot.thumb.isEmpty()) {
+                    return false;
+                }
+
+                return true;
+            }
+
+        };
+    }
+
+    private static Func1<JsonShowPeople, Boolean> onlyNonEmptyCast() {
+        return new Func1<JsonShowPeople, Boolean>() {
+
+            @Override
+            public Boolean call(JsonShowPeople jsonShowPeople) {
+                if (jsonShowPeople == null || jsonShowPeople.cast == null || jsonShowPeople.cast.isEmpty()) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+        };
+    }
+
+    private static Func1<List<Character>, Cast> asCast() {
+        return new Func1<List<Character>, Cast>() {
+
+            @Override
+            public Cast call(List<Character> characters) {
+                return new Cast(characters);
+            }
+
+        };
+    }
+
+    private static Func1<JsonShowPeople.Character, Character> asCharacter() {
+        return new Func1<JsonShowPeople.Character, Character>() {
+
+            @Override
+            public Character call(JsonShowPeople.Character character) {
+                JsonShowPeople.Images images = character.person.images;
+                Actor actor = new Actor(character.person.name, URI.create(images.headshot.thumb));
+                return new Character(character.character, actor);
+            }
+
+        };
+    }
+
+    private static Func1<JsonShowPeople, JsonShowPeople.Cast> extractJsonCast() {
+        return new Func1<JsonShowPeople, JsonShowPeople.Cast>() {
+
+            @Override
+            public JsonShowPeople.Cast call(JsonShowPeople jsonShowPeople) {
+                return jsonShowPeople.cast;
+            }
+
         };
     }
 
