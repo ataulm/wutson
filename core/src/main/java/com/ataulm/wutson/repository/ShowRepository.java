@@ -30,6 +30,7 @@ import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func2;
+import rx.functions.Func3;
 
 import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
 import static com.ataulm.wutson.rx.Function.jsonTo;
@@ -53,7 +54,10 @@ public class ShowRepository {
         Observable<GsonShowSeasonList> gsonShowSeasonsObservable = Observable.concat(gsonShowSeasonsFromDisk(showId), gsonShowSeasonsFromNetwork(showId))
                 .first();
 
-        return Observable.zip(gsonShowDetailsObservable, gsonShowSeasonsObservable, asShow());
+        // TODO: persist the cast
+        Observable<Cast> cast = getCast(showId);
+
+        return Observable.zip(gsonShowDetailsObservable, gsonShowSeasonsObservable, cast, asShow());
     }
 
     private Observable<GsonShowDetails> gsonShowDetailsFromDisk(ShowId showId) {
@@ -177,10 +181,10 @@ public class ShowRepository {
         };
     }
 
-    private static Func2<GsonShowDetails, GsonShowSeasonList, Show> asShow() {
-        return new Func2<GsonShowDetails, GsonShowSeasonList, Show>() {
+    private static Func3<GsonShowDetails, GsonShowSeasonList, Cast, Show> asShow() {
+        return new Func3<GsonShowDetails, GsonShowSeasonList, Cast, Show>() {
             @Override
-            public Show call(GsonShowDetails gsonShowDetails, GsonShowSeasonList gsonShowSeasonList) {
+            public Show call(GsonShowDetails gsonShowDetails, GsonShowSeasonList gsonShowSeasonList, Cast cast) {
                 ShowId id = new ShowId(gsonShowDetails.ids.trakt);
                 String title = gsonShowDetails.title;
 
@@ -198,7 +202,7 @@ public class ShowRepository {
                         gsonShowDetails.overview == null ? "" : gsonShowDetails.overview.trim(),
                         posterUri,
                         backdropUri,
-                        new Cast(Collections.<Character>emptyList()),
+                        cast,
                         seasonSummaries
                 );
             }
@@ -287,7 +291,7 @@ public class ShowRepository {
         };
     }
 
-    public Observable<Cast> getCast(ShowId showId) {
+    private Observable<Cast> getCast(ShowId showId) {
         return traktApi.getPeople(showId.toString())
                 .filter(onlyNonEmptyCast())
                 .map(extractJsonCast())
