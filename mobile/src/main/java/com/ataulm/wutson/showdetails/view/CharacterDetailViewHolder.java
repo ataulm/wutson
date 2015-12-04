@@ -3,6 +3,7 @@ package com.ataulm.wutson.showdetails.view;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ataulm.wutson.R;
 
@@ -20,7 +21,7 @@ public final class CharacterDetailViewHolder extends DetailViewHolder {
     @Override
     public void bind(Detail detail) {
         // TODO: bind character view
-        ((CharacterDetail) detail).getCharacter();
+        ((TextView) itemView).setText(((CharacterDetail) detail).getCharacter().getName());
     }
 
 }

@@ -4,4 +4,5 @@
   android:layout_height="wrap_content"
   android:text="This is a character"
   android:background="@android:color/white"
+  android:textColor="@android:color/black"
   android:focusable="true" />
