@@ -7,4 +7,8 @@
   <color name="show_details_overview_text">@color/black_54pc</color>
   <color name="show_details_overview_background">@color/white</color>
 
+  <color name="show_details_cast_title_background">@color/white</color>
+  <color name="show_details_cast_title_text">@color/black_54pc</color>
+  <color name="show_details_cast_title_divider_background">@color/white_2</color>
+
 </resources>

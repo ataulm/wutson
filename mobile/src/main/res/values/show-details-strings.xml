@@ -2,5 +2,6 @@
 <resources>
 
   <string name="show_details_label">@string/app_name</string>
+  <string name="show_details_item_cast_title">@string/cast</string>
 
 </resources>

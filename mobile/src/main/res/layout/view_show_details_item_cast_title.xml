@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:text="Cast"
-  android:background="@android:color/white" />
+  android:orientation="vertical">
+
+  <View
+    style="@style/ShowDetails.CastTitleDivider"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/show_details_cast_title_divider_height" />
+
+  <com.ataulm.wutson.view.WutsonTextView
+    style="@style/ShowDetails.CastTitle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/show_details_item_cast_title" />
+
+</LinearLayout>

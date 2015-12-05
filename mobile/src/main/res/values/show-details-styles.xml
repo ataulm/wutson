@@ -14,12 +14,24 @@
     <item name="textFont">robotoRegular</item>
   </style>
 
+  <style name="ShowDetails.CastTitleDivider">
+    <item name="android:background">@color/show_details_cast_title_divider_background</item>
+  </style>
+
   <style name="ShowDetails.CastTitle">
-    <!--TODO: CastTitle styles-->
+    <item name="android:background">@color/show_details_cast_title_background</item>
+    <item name="android:textColor">@color/show_details_cast_title_text</item>
+    <item name="android:textSize">@dimen/show_details_cast_title_text</item>
+    <item name="android:paddingTop">@dimen/show_details_cast_title_padding_left</item>
+    <item name="android:paddingLeft">@dimen/show_details_cast_title_padding_top</item>
+    <item name="android:paddingRight">@dimen/show_details_cast_title_padding_right</item>
+    <item name="android:paddingBottom">@dimen/show_details_cast_title_padding_bottom</item>
+    <item name="textFont">robotoMedium</item>
   </style>
 
   <style name="ShowDetails.Character">
-    <!--TODO: Character styles-->
+    <item name="android:background">@color/white</item>
+    <item name="android:textColor">@color/black</item>
   </style>
 
   <style name="ShowDetails.SeasonsList">

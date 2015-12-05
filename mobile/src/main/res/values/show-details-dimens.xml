@@ -33,4 +33,12 @@
   <dimen name="show_details_seasons_list_item_margin_right">6dp</dimen>
   <dimen name="show_details_seasons_list_item_margin_bottom">2dp</dimen>
 
+  <dimen name="show_details_cast_title_divider_height">1dp</dimen>
+
+  <dimen name="show_details_cast_title_padding_left">16dp</dimen>
+  <dimen name="show_details_cast_title_padding_top">16dp</dimen>
+  <dimen name="show_details_cast_title_padding_right">16dp</dimen>
+  <dimen name="show_details_cast_title_padding_bottom">16dp</dimen>
+  <dimen name="show_details_cast_title_text">13sp</dimen>
+
 </resources>
