@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  style="@style/ShowDetails.Character.View"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:text="This is a character"
-  android:background="@android:color/white"
-  android:textColor="@android:color/black"
-  android:focusable="true" />
+  android:focusable="true"
+  android:orientation="horizontal"
+  tools:ignore="RtlHardcoded">
+
+  <com.ataulm.wutson.view.RoundImageView
+    android:id="@+id/show_details_item_character_image_headshot"
+    android:layout_width="@dimen/show_details_character_headshot_width"
+    android:layout_height="@dimen/show_details_character_headshot_height"
+    android:layout_gravity="center" />
+
+  <LinearLayout
+    style="@style/ShowDetails.Character.Names"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="100"
+    android:layout_marginLeft="@dimen/show_details_character_names_margin_left"
+    android:layout_marginRight="@dimen/show_details_character_names_margin_right"
+    android:orientation="vertical">
+
+    <com.ataulm.wutson.view.WutsonTextView
+      android:id="@+id/show_details_item_character_text_actor"
+      style="@style/ShowDetails.Character.ActorName"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:text="Peter Dinklage" />
+
+    <com.ataulm.wutson.view.WutsonTextView
+      android:id="@+id/show_details_item_character_text_character"
+      style="@style/ShowDetails.Character.CharacterName"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:text="Tyrion Lannister" />
+
+  </LinearLayout>
+
+</LinearLayout>

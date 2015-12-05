@@ -29,9 +29,28 @@
     <item name="textFont">robotoMedium</item>
   </style>
 
-  <style name="ShowDetails.Character">
-    <item name="android:background">@color/white</item>
-    <item name="android:textColor">@color/black</item>
+  <style name="ShowDetails.Character" />
+
+  <style name="ShowDetails.Character.View">
+    <item name="android:background">@color/show_details_character_background</item>
+    <item name="android:paddingLeft">@dimen/show_details_character_padding_left</item>
+    <item name="android:paddingRight">@dimen/show_details_character_padding_right</item>
+    <item name="android:paddingBottom">@dimen/show_details_character_padding_bottom</item>
+  </style>
+
+  <style name="ShowDetails.Character.Names">
+    <item name="android:gravity">center_vertical</item>
+  </style>
+
+  <style name="ShowDetails.Character.ActorName">
+    <item name="android:textColor">@color/show_details_character_actor_name_text</item>
+    <item name="android:textSize">@dimen/show_details_character_actor_name_text</item>
+    <item name="textFont">robotoRegular</item>
+  </style>
+
+  <style name="ShowDetails.Character.CharacterName">
+    <item name="android:textColor">@color/show_details_character_character_name_text</item>
+    <item name="android:textSize">@dimen/show_details_character_character_name_text</item>
   </style>
 
   <style name="ShowDetails.SeasonsList">
@@ -44,7 +63,8 @@
     <item name="android:descendantFocusability">afterDescendants</item>
   </style>
 
-  <style name="ShowDetails.SeasonsListItem" parent="Wutson.CardView">
+  <style name="ShowDetails.SeasonsListItem"
+    parent="Wutson.CardView">
     <item name="android:paddingLeft">@dimen/show_details_seasons_list_item_padding_left</item>
     <item name="android:paddingTop">@dimen/show_details_seasons_list_item_padding_top</item>
     <item name="android:paddingRight">@dimen/show_details_seasons_list_item_padding_right</item>

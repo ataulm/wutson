@@ -11,4 +11,8 @@
   <color name="show_details_cast_title_text">@color/black_54pc</color>
   <color name="show_details_cast_title_divider_background">@color/white_2</color>
 
+  <color name="show_details_character_background">@color/white</color>
+  <color name="show_details_character_actor_name_text">@color/black_87pc</color>
+  <color name="show_details_character_character_name_text">@color/black_54pc</color>
+
 </resources>
