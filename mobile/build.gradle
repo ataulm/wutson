@@ -40,7 +40,7 @@ android {
         applicationId "com.ataulm.wutson2"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 20
+        versionCode 21
         versionName 'Pre-release'
 
         Calendar instance = Calendar.getInstance()
