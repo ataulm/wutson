@@ -14,9 +14,9 @@ import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.SimpleDate;
 import com.ataulm.wutson.trakt.GsonShowDetails;
 import com.ataulm.wutson.trakt.GsonShowEpisode;
+import com.ataulm.wutson.trakt.GsonShowPeople;
 import com.ataulm.wutson.trakt.GsonShowSeason;
 import com.ataulm.wutson.trakt.GsonShowSeasonList;
-import com.ataulm.wutson.trakt.JsonShowPeople;
 import com.ataulm.wutson.trakt.TraktApi;
 import com.google.gson.Gson;
 
@@ -29,7 +29,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.functions.Func2;
 import rx.functions.Func3;
 
 import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
@@ -54,10 +53,30 @@ public class ShowRepository {
         Observable<GsonShowSeasonList> gsonShowSeasonsObservable = Observable.concat(gsonShowSeasonsFromDisk(showId), gsonShowSeasonsFromNetwork(showId))
                 .first();
 
-        // TODO: persist the cast
-        Observable<Cast> cast = getCast(showId);
+        Observable<GsonShowPeople> gsonShowPeopleObservable = Observable.concat(gsonShowPeopleFromDisk(showId), gsonShowPeopleFromNetwork(showId));
 
-        return Observable.zip(gsonShowDetailsObservable, gsonShowSeasonsObservable, cast, asShow());
+        Observable<Cast> castObservable = gsonShowPeopleObservable.first()
+                .filter(onlyNonEmptyCast())
+                .map(extractJsonCast())
+                .flatMap(Function.<GsonShowPeople.Character>emitEachElement())
+                .filter(onlyValidCharacters())
+                .map(asCharacter())
+                .toList()
+                .map(asCast());
+        ;
+
+        return Observable.zip(gsonShowDetailsObservable, gsonShowSeasonsObservable, castObservable, asShow());
+    }
+
+    private Observable<? extends GsonShowPeople> gsonShowPeopleFromDisk(ShowId showId) {
+        return fetchJsonShowPeopleFrom(jsonRepository, showId)
+                .filter(ignoreEmptyStrings())
+                .map(jsonTo(GsonShowPeople.class, gson));
+    }
+
+    private Observable<? extends GsonShowPeople> gsonShowPeopleFromNetwork(ShowId showId) {
+        return traktApi.getShowPeople(showId.toString())
+                .doOnNext(saveShowPeopleAsJsonTo(jsonRepository, showId, gson));
     }
 
     private Observable<GsonShowDetails> gsonShowDetailsFromDisk(ShowId showId) {
@@ -69,6 +88,20 @@ public class ShowRepository {
     private Observable<GsonShowDetails> gsonShowDetailsFromNetwork(ShowId showId) {
         return traktApi.getShowDetails(showId.toString())
                 .doOnNext(saveShowDetailsAsJsonTo(jsonRepository, showId, gson));
+    }
+
+    private static Observable<String> fetchJsonShowPeopleFrom(final JsonRepository jsonRepository, final ShowId showId) {
+        return Observable.create(
+                new Observable.OnSubscribe<String>() {
+
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        subscriber.onNext(jsonRepository.readShowPeople(showId));
+                        subscriber.onCompleted();
+                    }
+
+                }
+        );
     }
 
     private static Observable<String> fetchJsonShowDetailsFrom(final JsonRepository jsonRepository, final ShowId showId) {
@@ -83,6 +116,18 @@ public class ShowRepository {
 
                 }
         );
+    }
+
+    private static Action1<GsonShowPeople> saveShowPeopleAsJsonTo(final JsonRepository jsonRepository, final ShowId showId, final Gson gson) {
+        return new Action1<GsonShowPeople>() {
+
+            @Override
+            public void call(GsonShowPeople gsonShowPeople) {
+                String json = gson.toJson(gsonShowPeople, GsonShowPeople.class);
+                jsonRepository.writeShowPeople(showId, json);
+            }
+
+        };
     }
 
     private static Action1<GsonShowDetails> saveShowDetailsAsJsonTo(final JsonRepository jsonRepository, final ShowId showId, final Gson gson) {
@@ -291,22 +336,11 @@ public class ShowRepository {
         };
     }
 
-    private Observable<Cast> getCast(ShowId showId) {
-        return traktApi.getPeople(showId.toString())
-                .filter(onlyNonEmptyCast())
-                .map(extractJsonCast())
-                .flatMap(Function.<JsonShowPeople.Character>emitEachElement())
-                .filter(onlyValidCharacters())
-                .map(asCharacter())
-                .toList()
-                .map(asCast());
-    }
-
-    private static Func1<JsonShowPeople.Character, Boolean> onlyValidCharacters() {
-        return new Func1<JsonShowPeople.Character, Boolean>() {
+    private static Func1<GsonShowPeople.Character, Boolean> onlyValidCharacters() {
+        return new Func1<GsonShowPeople.Character, Boolean>() {
 
             @Override
-            public Boolean call(JsonShowPeople.Character character) {
+            public Boolean call(GsonShowPeople.Character character) {
                 if (character == null) {
                     return false;
                 }
@@ -315,7 +349,7 @@ public class ShowRepository {
                     return false;
                 }
 
-                JsonShowPeople.Images images = character.person.images;
+                GsonShowPeople.Images images = character.person.images;
                 if (images.headshot == null || images.headshot.thumb == null || images.headshot.thumb.isEmpty()) {
                     return false;
                 }
@@ -326,12 +360,12 @@ public class ShowRepository {
         };
     }
 
-    private static Func1<JsonShowPeople, Boolean> onlyNonEmptyCast() {
-        return new Func1<JsonShowPeople, Boolean>() {
+    private static Func1<GsonShowPeople, Boolean> onlyNonEmptyCast() {
+        return new Func1<GsonShowPeople, Boolean>() {
 
             @Override
-            public Boolean call(JsonShowPeople jsonShowPeople) {
-                if (jsonShowPeople == null || jsonShowPeople.cast == null || jsonShowPeople.cast.isEmpty()) {
+            public Boolean call(GsonShowPeople gsonShowPeople) {
+                if (gsonShowPeople == null || gsonShowPeople.cast == null || gsonShowPeople.cast.isEmpty()) {
                     return false;
                 } else {
                     return true;
@@ -352,12 +386,12 @@ public class ShowRepository {
         };
     }
 
-    private static Func1<JsonShowPeople.Character, Character> asCharacter() {
-        return new Func1<JsonShowPeople.Character, Character>() {
+    private static Func1<GsonShowPeople.Character, Character> asCharacter() {
+        return new Func1<GsonShowPeople.Character, Character>() {
 
             @Override
-            public Character call(JsonShowPeople.Character character) {
-                JsonShowPeople.Images images = character.person.images;
+            public Character call(GsonShowPeople.Character character) {
+                GsonShowPeople.Images images = character.person.images;
                 Actor actor = new Actor(character.person.name, URI.create(images.headshot.thumb));
                 return new Character(character.character, actor);
             }
@@ -365,12 +399,12 @@ public class ShowRepository {
         };
     }
 
-    private static Func1<JsonShowPeople, JsonShowPeople.Cast> extractJsonCast() {
-        return new Func1<JsonShowPeople, JsonShowPeople.Cast>() {
+    private static Func1<GsonShowPeople, GsonShowPeople.Cast> extractJsonCast() {
+        return new Func1<GsonShowPeople, GsonShowPeople.Cast>() {
 
             @Override
-            public JsonShowPeople.Cast call(JsonShowPeople jsonShowPeople) {
-                return jsonShowPeople.cast;
+            public GsonShowPeople.Cast call(GsonShowPeople gsonShowPeople) {
+                return gsonShowPeople.cast;
             }
 
         };

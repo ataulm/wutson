@@ -10,6 +10,7 @@ enum DatabaseTable {
     POPULAR_SHOWS,
     TRACKED_SHOWS,
     SHOW_DETAILS,
+    SHOW_PEOPLE,
     SEASONS;
 
     Uri uri() {

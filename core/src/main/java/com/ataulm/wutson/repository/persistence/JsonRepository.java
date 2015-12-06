@@ -20,6 +20,10 @@ public interface JsonRepository {
 
     void writeShowDetails(ShowId showId, String json);
 
+    String readShowPeople(ShowId showId);
+
+    void writeShowPeople(ShowId showId, String json);
+
     String readSeasons(ShowId showId);
 
     void writeSeasons(ShowId showId, String json);

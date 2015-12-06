@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class JsonShowPeople {
+public class GsonShowPeople {
 
     @SerializedName("cast")
     public Cast cast;

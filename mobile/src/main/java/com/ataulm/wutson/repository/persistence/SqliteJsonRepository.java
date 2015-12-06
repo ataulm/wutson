@@ -102,6 +102,27 @@ public class SqliteJsonRepository implements JsonRepository {
     }
 
     @Override
+    public String readShowPeople(ShowId showId) {
+        String[] projection = {ShowPeopleColumn.JSON.columnName()};
+        String selection = ShowPeopleColumn.TRAKT_SHOW_ID.columnName() + "=?";
+        String[] selectionArgs = {showId.toString()};
+        Cursor cursor = contentResolver.query(SHOW_PEOPLE.uri(), projection, selection, selectionArgs, null);
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            return "";
+        }
+        String json = ShowPeopleColumn.readJsonFrom(cursor);
+        cursor.close();
+        return json;
+    }
+
+    @Override
+    public void writeShowPeople(ShowId showId, String json) {
+        ContentValues contentValues = ShowPeopleColumn.write(Timestamp.now().asMillis(), showId.toString(), json);
+        contentResolver.insert(SHOW_PEOPLE.uri(), contentValues);
+    }
+
+    @Override
     public String readSeasons(ShowId showId) {
         String[] projection = {SeasonColumn.JSON.columnName()};
         String selection = SeasonColumn.TRAKT_SHOW_ID.columnName() + "=?";
