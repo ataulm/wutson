@@ -37,3 +37,5 @@
 -keep public class com.ataulm.wutson.view.AppBarWidget$** {
     public *;
 }
+
+-keep class com.ataulm.wutson.trakt.** { *; }
