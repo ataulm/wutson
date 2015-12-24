@@ -22,6 +22,7 @@ import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func2;
+import rx.schedulers.Schedulers;
 
 import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
 import static com.ataulm.wutson.rx.Function.jsonTo;
@@ -44,7 +45,8 @@ public class DiscoverShowsRepository {
     public Observable<DiscoverShows> getDiscoverShows() {
         Observable<DiscoverShows> disk = getDiscoverShowsFromDisk();
         Observable<DiscoverShows> network = getDiscoverShowsFromNetwork();
-        return Observable.concat(disk, network).first();
+        return Observable.concat(disk, network).first()
+                .subscribeOn(Schedulers.io());
     }
 
     private Observable<DiscoverShows> getDiscoverShowsFromDisk() {
@@ -52,7 +54,8 @@ public class DiscoverShowsRepository {
     }
 
     public Observable<DiscoverShows> getDiscoverShowsFromNetwork() {
-        return getDiscoverShows(gsonPopularShowsListFromNetwork(), gsonTrendingShowsListFromNetwork());
+        return getDiscoverShows(gsonPopularShowsListFromNetwork(), gsonTrendingShowsListFromNetwork())
+                .subscribeOn(Schedulers.io());
     }
 
     private Observable<DiscoverShows> getDiscoverShows(Observable<GsonPopularShowList> popularShowsObservable, Observable<GsonTrendingShowList> trendingShowsObservable) {
