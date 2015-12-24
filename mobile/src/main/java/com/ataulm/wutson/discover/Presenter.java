@@ -43,6 +43,9 @@ final class Presenter {
         }
     }
 
+    /**
+     * @return true if page changed, else false
+     */
     public boolean showFirstPage() {
         if (viewPager.getCurrentItem() == 0) {
             return false;
