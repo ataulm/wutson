@@ -29,4 +29,23 @@ public class DiscoverShows {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        DiscoverShows that = (DiscoverShows) o;
+
+        return shows.equals(that.shows);
+    }
+
+    @Override
+    public int hashCode() {
+        return shows.hashCode();
+    }
+
 }

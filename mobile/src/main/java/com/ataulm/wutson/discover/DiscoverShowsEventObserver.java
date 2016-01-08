@@ -41,7 +41,6 @@ class DiscoverShowsEventObserver extends LoggingObserver<Event<DiscoverShows>> {
         Optional<DiscoverShows> data = event.getData();
         if (data.isPresent()) {
             DiscoverShows discoverShows = data.get();
-            // TODO: guard against loading same data twice here? or in presenter?
             presenter.present(discoverShows);
         }
     }

@@ -15,6 +15,8 @@ final class Presenter {
     private final ViewPager viewPager;
     private final DiscoverShowsPagerAdapter adapter;
 
+    private DiscoverShows discoverShows;
+
     static Presenter newInstance(final DiscoverActivity activity, final DiscoverNavigator navigator) {
         LandingStrip tabStrip = (LandingStrip) activity.findViewById(R.id.tab_strip);
         View loadingView = activity.findViewById(R.id.loading);
@@ -49,6 +51,10 @@ final class Presenter {
     }
 
     public void present(DiscoverShows discoverShows) {
+        if (discoverShows == null || discoverShows.equals(this.discoverShows)) {
+            return;
+        }
+
         adapter.update(discoverShows);
 
         if (viewPager.getAdapter() == null) {
