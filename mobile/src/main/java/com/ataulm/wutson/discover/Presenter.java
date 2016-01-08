@@ -1,6 +1,7 @@
 package com.ataulm.wutson.discover;
 
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.shows.ShowSummary;
@@ -10,11 +11,13 @@ import com.novoda.landingstrip.LandingStrip;
 final class Presenter {
 
     private final LandingStrip tabStrip;
+    private final View loadingView;
     private final ViewPager viewPager;
     private final DiscoverShowsPagerAdapter adapter;
 
     static Presenter newInstance(final DiscoverActivity activity, final DiscoverNavigator navigator) {
         LandingStrip tabStrip = (LandingStrip) activity.findViewById(R.id.tab_strip);
+        View loadingView = activity.findViewById(R.id.loading);
         ViewPager viewPager = (ViewPager) activity.findViewById(R.id.discover_pager_genres);
         DiscoverShowSummaryInteractionListener interactionListener = new DiscoverShowSummaryInteractionListener() {
 
@@ -25,13 +28,24 @@ final class Presenter {
 
         };
         DiscoverShowsPagerAdapter adapter = DiscoverShowsPagerAdapter.newInstance(activity, interactionListener, activity);
-        return new Presenter(tabStrip, viewPager, adapter);
+        return new Presenter(tabStrip, loadingView, viewPager, adapter);
     }
 
-    private Presenter(LandingStrip tabStrip, ViewPager viewPager, DiscoverShowsPagerAdapter adapter) {
+    private Presenter(LandingStrip tabStrip, View loadingView, ViewPager viewPager, DiscoverShowsPagerAdapter adapter) {
         this.tabStrip = tabStrip;
+        this.loadingView = loadingView;
         this.viewPager = viewPager;
         this.adapter = adapter;
+    }
+
+    public void showLoadingView() {
+        loadingView.setVisibility(View.VISIBLE);
+        viewPager.setVisibility(View.GONE);
+    }
+
+    public void hideLoadingView() {
+        loadingView.setVisibility(View.GONE);
+        viewPager.setVisibility(View.VISIBLE);
     }
 
     public void present(DiscoverShows discoverShows) {
