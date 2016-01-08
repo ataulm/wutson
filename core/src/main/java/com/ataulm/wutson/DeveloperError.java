@@ -18,4 +18,8 @@ public final class DeveloperError extends RuntimeException {
         return new DeveloperError(reason);
     }
 
+    public static DeveloperError onUnexpectedSwitchCase(Object unhandledCase) {
+        return new DeveloperError("Unexpected switch case: " + unhandledCase);
+    }
+
 }
