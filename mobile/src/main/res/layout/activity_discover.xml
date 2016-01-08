@@ -19,7 +19,8 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:text="Loading"
-      android:gravity="center" />
+      android:gravity="center"
+      android:visibility="gone" />
 
     <View style="@style/AppBarShadow" />
 
