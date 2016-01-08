@@ -12,7 +12,6 @@ import com.ataulm.wutson.shows.ShowId;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class DiscoverActivity extends WutsonTopLevelActivity {
 
