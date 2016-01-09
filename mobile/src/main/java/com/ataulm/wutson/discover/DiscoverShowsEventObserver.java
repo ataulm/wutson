@@ -20,7 +20,18 @@ class DiscoverShowsEventObserver extends LoggingObserver<Event<DiscoverShows>> {
     public void onNext(Event<DiscoverShows> event) {
         super.onNext(event);
         presentLatestDataFrom(event);
+        reactToTypeOf(event);
+    }
 
+    private void presentLatestDataFrom(Event<DiscoverShows> event) {
+        Optional<DiscoverShows> data = event.getData();
+        if (data.isPresent()) {
+            DiscoverShows discoverShows = data.get();
+            presenter.present(discoverShows);
+        }
+    }
+
+    private void reactToTypeOf(Event<DiscoverShows> event) {
         switch (event.getType()) {
             case LOADING:
                 // RETRO: atm this will obscure the content
@@ -34,14 +45,6 @@ class DiscoverShowsEventObserver extends LoggingObserver<Event<DiscoverShows>> {
                 break;
             default:
                 throw DeveloperError.onUnexpectedSwitchCase(event.getType());
-        }
-    }
-
-    private void presentLatestDataFrom(Event<DiscoverShows> event) {
-        Optional<DiscoverShows> data = event.getData();
-        if (data.isPresent()) {
-            DiscoverShows discoverShows = data.get();
-            presenter.present(discoverShows);
         }
     }
 
