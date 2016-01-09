@@ -4,6 +4,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.ataulm.wutson.R;
+import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.shows.discover.DiscoverShows;
 import com.novoda.landingstrip.LandingStrip;
@@ -14,6 +15,7 @@ final class Presenter {
     private final View loadingView;
     private final ViewPager viewPager;
     private final DiscoverShowsPagerAdapter adapter;
+    private final ToastDisplayer toaster;
 
     private DiscoverShows discoverShows;
 
@@ -30,14 +32,16 @@ final class Presenter {
 
         };
         DiscoverShowsPagerAdapter adapter = DiscoverShowsPagerAdapter.newInstance(activity, interactionListener, activity);
-        return new Presenter(tabStrip, loadingView, viewPager, adapter);
+        ToastDisplayer toaster = new ToastDisplayer(activity);
+        return new Presenter(tabStrip, loadingView, viewPager, adapter, toaster);
     }
 
-    private Presenter(LandingStrip tabStrip, View loadingView, ViewPager viewPager, DiscoverShowsPagerAdapter adapter) {
+    private Presenter(LandingStrip tabStrip, View loadingView, ViewPager viewPager, DiscoverShowsPagerAdapter adapter, ToastDisplayer toaster) {
         this.tabStrip = tabStrip;
         this.loadingView = loadingView;
         this.viewPager = viewPager;
         this.adapter = adapter;
+        this.toaster = toaster;
     }
 
     public void onLoadStart() {
@@ -62,6 +66,11 @@ final class Presenter {
             viewPager.setAdapter(adapter);
             tabStrip.attach(viewPager);
         }
+    }
+
+    public void onError(Throwable error) {
+        // RETRO: don't toast and be selective about which errors (and in which cases) to notify user about
+        toaster.display("Something went wrong");
     }
 
     /**

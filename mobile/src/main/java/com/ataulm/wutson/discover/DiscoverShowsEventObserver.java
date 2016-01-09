@@ -27,7 +27,7 @@ class DiscoverShowsEventObserver extends LoggingObserver<Event<DiscoverShows>> {
                 presenter.onLoadStart();
                 break;
             case ERROR:
-                // TODO: notify user if appropriate
+                presenter.onError(event.getError().get());
                 break;
             case IDLE:
                 presenter.onLoadStop();
