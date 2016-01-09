@@ -10,7 +10,23 @@ import rx.subjects.BehaviorSubject;
 
 public class EventFunctions {
 
-    public static <T> Func1<T, Event<T>> asIdleEventWithData() {
+    public static <T> Observable.Transformer<T, Event<T>> asEventsForwardedTo(final BehaviorSubject<Event<T>> subject) {
+        return new Observable.Transformer<T, Event<T>>() {
+
+            @Override
+            public Observable<Event<T>> call(Observable<T> dataObservable) {
+                return dataObservable
+                        .doOnSubscribe(EventFunctions.sendLoadingEventTo(subject))
+                        .map(EventFunctions.<T>asIdleEventWithData())
+                        .onErrorReturn(EventFunctions.sendErrorEventTo(subject))
+                        .switchIfEmpty(EventFunctions.sendIdleEventTo(subject))
+                        .lift(Functions.<Event<T>>swallowOnCompleteEvents());
+            }
+
+        };
+    }
+
+    private static <T> Func1<T, Event<T>> asIdleEventWithData() {
         return new Func1<T, Event<T>>() {
 
             @Override
@@ -21,7 +37,7 @@ public class EventFunctions {
         };
     }
 
-    public static <T> Observable<Event<T>> sendIdleEventTo(final BehaviorSubject<Event<T>> subject) {
+    private static <T> Observable<Event<T>> sendIdleEventTo(final BehaviorSubject<Event<T>> subject) {
         return Observable.create(
                 new Observable.OnSubscribe<Event<T>>() {
 
@@ -40,7 +56,7 @@ public class EventFunctions {
         );
     }
 
-    public static <T> Func1<Throwable, Event<T>> sendErrorEventTo(final BehaviorSubject<Event<T>> subject) {
+    private static <T> Func1<Throwable, Event<T>> sendErrorEventTo(final BehaviorSubject<Event<T>> subject) {
         return new Func1<Throwable, Event<T>>() {
 
             @Override
@@ -57,7 +73,7 @@ public class EventFunctions {
         };
     }
 
-    public static <T> Action0 sendLoadingEventTo(final BehaviorSubject<Event<T>> subject) {
+    private static <T> Action0 sendLoadingEventTo(final BehaviorSubject<Event<T>> subject) {
         return new Action0() {
 
             @Override
