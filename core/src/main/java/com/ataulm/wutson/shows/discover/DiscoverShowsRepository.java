@@ -5,6 +5,7 @@ import com.ataulm.wutson.repository.event.Event;
 import com.ataulm.wutson.repository.persistence.JsonRepository;
 import com.ataulm.wutson.repository.persistence.Timestamp;
 import com.ataulm.wutson.rx.Function;
+import com.ataulm.wutson.rx.EventFunctions;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.shows.ShowSummary;
@@ -56,54 +57,12 @@ public class DiscoverShowsRepository {
     }
 
     private void refreshDiscoverShows(boolean forceLoadFromNetwork) {
-        final Event<DiscoverShows> cachedEvent = subject.getValue();
-        if (cachedEvent != null && cachedEvent.getData().isPresent()) {
-            subject.onNext(Event.loading(cachedEvent.getData().get()));
-        } else {
-            subject.onNext(Event.<DiscoverShows>loading());
-        }
         Observable<DiscoverShows> discoverShows = forceLoadFromNetwork ? getDiscoverShowsFromNetwork() : getDiscoverShows();
         discoverShows
-                .map(
-                        new Func1<DiscoverShows, Event<DiscoverShows>>() {
-
-                            @Override
-                            public Event<DiscoverShows> call(DiscoverShows discoverShows) {
-                                return Event.idle(discoverShows);
-                            }
-
-                        }
-                )
-                .switchIfEmpty(
-                        Observable.create(
-                                new Observable.OnSubscribe<Event<DiscoverShows>>() {
-                                    @Override
-                                    public void call(Subscriber<? super Event<DiscoverShows>> subscriber) {
-                                        if (cachedEvent != null && cachedEvent.getData().isPresent()) {
-                                            subject.onNext(Event.idle(cachedEvent.getData().get()));
-                                        } else {
-                                            subject.onNext(Event.<DiscoverShows>idle());
-                                        }
-                                    }
-
-                                }
-                        )
-                )
-                .onErrorReturn(
-                        new Func1<Throwable, Event<DiscoverShows>>() {
-
-                            @Override
-                            public Event<DiscoverShows> call(Throwable throwable) {
-                                if (cachedEvent != null && cachedEvent.getData().isPresent()) {
-                                    return Event.error(cachedEvent.getData().get(), throwable);
-                                } else {
-                                    return Event.error(throwable);
-                                }
-
-                            }
-
-                        }
-                )
+                .doOnSubscribe(EventFunctions.sendLoadingEventTo(subject))
+                .map(EventFunctions.<DiscoverShows>asIdleEventWithData())
+                .onErrorReturn(EventFunctions.sendErrorEventTo(subject))
+                .switchIfEmpty(EventFunctions.sendIdleEventTo(subject))
                 .lift(Function.<Event<DiscoverShows>>swallowOnCompleteEvents())
                 .subscribe(subject);
     }
