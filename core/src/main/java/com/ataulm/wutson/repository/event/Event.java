@@ -1,5 +1,7 @@
 package com.ataulm.wutson.repository.event;
 
+import com.ataulm.wutson.DeveloperError;
+
 public class Event<T> {
 
     private final Type type;
@@ -27,6 +29,9 @@ public class Event<T> {
     }
 
     public static <T> Event<T> error(T data, Throwable error) {
+        if (error == null) {
+            throw DeveloperError.because("Error events must contain an error.");
+        }
         return new Event<>(Type.ERROR, Optional.of(data), Optional.of(error));
     }
 
