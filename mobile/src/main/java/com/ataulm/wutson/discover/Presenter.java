@@ -55,6 +55,7 @@ final class Presenter {
             return;
         }
 
+        this.discoverShows = discoverShows;
         adapter.update(discoverShows);
 
         if (viewPager.getAdapter() == null) {
