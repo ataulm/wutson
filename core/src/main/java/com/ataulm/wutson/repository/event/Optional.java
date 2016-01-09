@@ -37,4 +37,27 @@ public final class Optional<T> {
         return data;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Optional<?> optional = (Optional<?>) o;
+
+        if (data != null ? !data.equals(optional.data) : optional.data != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return data != null ? data.hashCode() : 0;
+    }
+
 }

@@ -53,6 +53,38 @@ public class Event<T> {
         return error;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Event<?> event = (Event<?>) o;
+
+        if (type != event.type) {
+            return false;
+        }
+        if (!data.equals(event.data)) {
+            return false;
+        }
+        if (!error.equals(event.error)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = type.hashCode();
+        result = 31 * result + data.hashCode();
+        result = 31 * result + error.hashCode();
+        return result;
+    }
+
     public enum Type {
 
         LOADING,
