@@ -24,13 +24,13 @@ class DiscoverShowsEventObserver extends LoggingObserver<Event<DiscoverShows>> {
         switch (event.getType()) {
             case LOADING:
                 // RETRO: atm this will obscure the content
-                presenter.showLoadingView();
+                presenter.onLoadStart();
                 break;
             case ERROR:
                 // TODO: notify user if appropriate
                 break;
             case IDLE:
-                presenter.hideLoadingView();
+                presenter.onLoadStop();
                 break;
             default:
                 throw DeveloperError.onUnexpectedSwitchCase(event.getType());

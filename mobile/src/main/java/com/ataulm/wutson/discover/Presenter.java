@@ -40,12 +40,12 @@ final class Presenter {
         this.adapter = adapter;
     }
 
-    public void showLoadingView() {
+    public void onLoadStart() {
         loadingView.setVisibility(View.VISIBLE);
         viewPager.setVisibility(View.GONE);
     }
 
-    public void hideLoadingView() {
+    public void onLoadStop() {
         loadingView.setVisibility(View.GONE);
         viewPager.setVisibility(View.VISIBLE);
     }
