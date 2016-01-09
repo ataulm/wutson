@@ -40,9 +40,9 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
                 }
         );
 
-        subscription = Jabber.discoverShowsRepository().getDiscoverShows()
+        subscription = Jabber.discoverShowsRepository().getDiscoverShowsEvents()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DiscoverShowsObserver(presenter));
+                .subscribe(new DiscoverShowsEventObserver(presenter));
     }
 
     @Override
@@ -54,10 +54,7 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.discover_menu_item_refresh) {
-            unsubscribeFrom(subscription);
-            subscription = Jabber.discoverShowsRepository().getDiscoverShowsFromNetwork()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DiscoverShowsObserver(presenter));
+            Jabber.discoverShowsRepository().refreshDiscoverShows();
             return true;
         }
         return super.onOptionsItemSelected(item);

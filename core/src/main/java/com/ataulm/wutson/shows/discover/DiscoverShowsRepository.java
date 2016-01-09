@@ -1,6 +1,7 @@
 package com.ataulm.wutson.shows.discover;
 
 import com.ataulm.wutson.Log;
+import com.ataulm.wutson.repository.event.Event;
 import com.ataulm.wutson.repository.persistence.JsonRepository;
 import com.ataulm.wutson.repository.persistence.Timestamp;
 import com.ataulm.wutson.rx.Function;
@@ -23,6 +24,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
+import rx.subjects.BehaviorSubject;
 
 import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
 import static com.ataulm.wutson.rx.Function.jsonTo;
@@ -34,15 +36,79 @@ public class DiscoverShowsRepository {
     private final JsonRepository jsonRepository;
     private final Gson gson;
     private final Log log;
+    private final BehaviorSubject<Event<DiscoverShows>> subject;
 
     public DiscoverShowsRepository(TraktApi traktApi, JsonRepository jsonRepository, Gson gson, Log log) {
         this.traktApi = traktApi;
         this.jsonRepository = jsonRepository;
         this.gson = gson;
         this.log = log;
+        this.subject = BehaviorSubject.create();
     }
 
-    public Observable<DiscoverShows> getDiscoverShows() {
+    public Observable<Event<DiscoverShows>> getDiscoverShowsEvents() {
+        refreshDiscoverShows(false);
+        return subject;
+    }
+
+    public void refreshDiscoverShows() {
+        refreshDiscoverShows(true);
+    }
+
+    private void refreshDiscoverShows(boolean forceLoadFromNetwork) {
+        final Event<DiscoverShows> cachedEvent = subject.getValue();
+        if (cachedEvent != null && cachedEvent.getData().isPresent()) {
+            subject.onNext(Event.loading(cachedEvent.getData().get()));
+        } else {
+            subject.onNext(Event.<DiscoverShows>loading());
+        }
+        Observable<DiscoverShows> discoverShows = forceLoadFromNetwork ? getDiscoverShowsFromNetwork() : getDiscoverShows();
+        discoverShows
+                .map(
+                        new Func1<DiscoverShows, Event<DiscoverShows>>() {
+
+                            @Override
+                            public Event<DiscoverShows> call(DiscoverShows discoverShows) {
+                                return Event.idle(discoverShows);
+                            }
+
+                        }
+                )
+                .switchIfEmpty(
+                        Observable.create(
+                                new Observable.OnSubscribe<Event<DiscoverShows>>() {
+                                    @Override
+                                    public void call(Subscriber<? super Event<DiscoverShows>> subscriber) {
+                                        if (cachedEvent != null && cachedEvent.getData().isPresent()) {
+                                            subject.onNext(Event.idle(cachedEvent.getData().get()));
+                                        } else {
+                                            subject.onNext(Event.<DiscoverShows>idle());
+                                        }
+                                    }
+
+                                }
+                        )
+                )
+                .onErrorReturn(
+                        new Func1<Throwable, Event<DiscoverShows>>() {
+
+                            @Override
+                            public Event<DiscoverShows> call(Throwable throwable) {
+                                if (cachedEvent != null && cachedEvent.getData().isPresent()) {
+                                    return Event.error(cachedEvent.getData().get(), throwable);
+                                } else {
+                                    return Event.error(throwable);
+                                }
+
+                            }
+
+                        }
+                )
+                .lift(Function.<Event<DiscoverShows>>swallowOnCompleteEvents())
+                .subscribe(subject);
+    }
+
+    private Observable<DiscoverShows> getDiscoverShows() {
         Observable<DiscoverShows> disk = getDiscoverShowsFromDisk();
         Observable<DiscoverShows> network = getDiscoverShowsFromNetwork();
         return Observable.concat(disk, network).first()
@@ -198,7 +264,6 @@ public class DiscoverShowsRepository {
             }
         };
     }
-
 
     private static Func1<List<ShowSummary>, ShowSummaries> asShowSummaries() {
         return new Func1<List<ShowSummary>, ShowSummaries>() {
