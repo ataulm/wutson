@@ -4,8 +4,8 @@ import com.ataulm.wutson.Log;
 import com.ataulm.wutson.repository.event.Event;
 import com.ataulm.wutson.repository.persistence.JsonRepository;
 import com.ataulm.wutson.repository.persistence.Timestamp;
-import com.ataulm.wutson.rx.Function;
 import com.ataulm.wutson.rx.EventFunctions;
+import com.ataulm.wutson.rx.Functions;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.ShowSummaries;
 import com.ataulm.wutson.shows.ShowSummary;
@@ -27,8 +27,8 @@ import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
-import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
-import static com.ataulm.wutson.rx.Function.jsonTo;
+import static com.ataulm.wutson.rx.Functions.ignoreEmptyStrings;
+import static com.ataulm.wutson.rx.Functions.jsonTo;
 
 public class DiscoverShowsRepository {
 
@@ -63,7 +63,7 @@ public class DiscoverShowsRepository {
                 .map(EventFunctions.<DiscoverShows>asIdleEventWithData())
                 .onErrorReturn(EventFunctions.sendErrorEventTo(subject))
                 .switchIfEmpty(EventFunctions.sendIdleEventTo(subject))
-                .lift(Function.<Event<DiscoverShows>>swallowOnCompleteEvents())
+                .lift(Functions.<Event<DiscoverShows>>swallowOnCompleteEvents())
                 .subscribe(subject);
     }
 
@@ -176,7 +176,7 @@ public class DiscoverShowsRepository {
 
     private static Observable<ShowSummaries> showSummariesFromPopularShowsList(Observable<GsonPopularShowList> shows) {
         return shows
-                .flatMap(Function.<GsonShowSummary>emitEachElement())
+                .flatMap(Functions.<GsonShowSummary>emitEachElement())
                 .map(asShowSummary())
                 .toList()
                 .filter(onlyNonEmpty())
@@ -185,7 +185,7 @@ public class DiscoverShowsRepository {
 
     private Observable<ShowSummaries> showSummariesFromTrendingShowsList(Observable<GsonTrendingShowList> shows) {
         return shows
-                .flatMap(Function.<GsonTrendingShow>emitEachElement())
+                .flatMap(Functions.<GsonTrendingShow>emitEachElement())
                 .map(extractGsonShowSummary())
                 .map(asShowSummary())
                 .toList()

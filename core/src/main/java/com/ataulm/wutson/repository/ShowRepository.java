@@ -3,7 +3,7 @@ package com.ataulm.wutson.repository;
 import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.episodes.SeasonEpisodeNumber;
 import com.ataulm.wutson.repository.persistence.JsonRepository;
-import com.ataulm.wutson.rx.Function;
+import com.ataulm.wutson.rx.Functions;
 import com.ataulm.wutson.seasons.Season;
 import com.ataulm.wutson.seasons.Seasons;
 import com.ataulm.wutson.shows.Actor;
@@ -31,8 +31,8 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func3;
 
-import static com.ataulm.wutson.rx.Function.ignoreEmptyStrings;
-import static com.ataulm.wutson.rx.Function.jsonTo;
+import static com.ataulm.wutson.rx.Functions.ignoreEmptyStrings;
+import static com.ataulm.wutson.rx.Functions.jsonTo;
 
 public class ShowRepository {
 
@@ -58,7 +58,7 @@ public class ShowRepository {
         Observable<Cast> castObservable = gsonShowPeopleObservable.first()
                 .filter(onlyNonEmptyCast())
                 .map(extractJsonCast())
-                .flatMap(Function.<GsonShowPeople.Character>emitEachElement())
+                .flatMap(Functions.<GsonShowPeople.Character>emitEachElement())
                 .filter(onlyValidCharacters())
                 .map(asCharacter())
                 .toList()
@@ -164,7 +164,7 @@ public class ShowRepository {
 
     private Observable<GsonShowSeasonList> gsonShowSeasonsFromNetwork(ShowId showId) {
         return traktApi.getShowSeasons(showId.toString())
-                .flatMap(Function.<GsonShowSeason>emitEachElement())
+                .flatMap(Functions.<GsonShowSeason>emitEachElement())
                 .filter(onlySeasonsWithEpisodes())
                 .map(removeEmptyEpisodes())
                 .filter(onlySeasonsWithEpisodes())
@@ -269,7 +269,7 @@ public class ShowRepository {
     public Observable<Seasons> getSeasons(ShowId showId, String showName) {
         return Observable.concat(gsonShowSeasonsFromDisk(showId), gsonShowSeasonsFromNetwork(showId))
                 .first()
-                .flatMap(Function.<GsonShowSeason>emitEachElement())
+                .flatMap(Functions.<GsonShowSeason>emitEachElement())
                 .map(asSeason(showName))
                 .toList()
                 .map(asSeasons());

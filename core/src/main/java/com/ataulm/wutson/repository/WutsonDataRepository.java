@@ -2,7 +2,7 @@ package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.episodes.Episodes;
-import com.ataulm.wutson.rx.Function;
+import com.ataulm.wutson.rx.Functions;
 import com.ataulm.wutson.seasons.Season;
 import com.ataulm.wutson.seasons.Seasons;
 import com.ataulm.wutson.shows.Actor;
@@ -67,13 +67,13 @@ public class WutsonDataRepository implements DataRepository {
     @Override
     public Observable<Watchlist> getWatchlist() {
         return getMyShows().first()
-                .flatMap(Function.<ShowSummary>emitEachElement())
+                .flatMap(Functions.<ShowSummary>emitEachElement())
                 .flatMap(new Func1<ShowSummary, Observable<WatchlistItem>>() {
                     @Override
                     public Observable<WatchlistItem> call(ShowSummary showSummary) {
                         return getSeasons(showSummary.getId(), showSummary.getName())
-                                .concatMap(Function.<Season>emitEachElement())
-                                .concatMap(Function.<Episode>emitEachElement())
+                                .concatMap(Functions.<Season>emitEachElement())
+                                .concatMap(Functions.<Episode>emitEachElement())
                                 .filter(onlyUnwatchedEpisodes())
                                 .take(5)
                                 .toList()

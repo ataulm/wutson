@@ -7,9 +7,9 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
 
-public final class Function {
+public final class Functions {
 
-    private Function() {
+    private Functions() {
         throw DeveloperError.nonInstantiableClass();
     }
 
