@@ -13,6 +13,7 @@
   <string name="nav_drawer_close_content_description">Close navigation drawer</string>
   <string name="discover">Discover</string>
   <string name="refresh">Refresh</string>
+  <string name="search">Search</string>
   <string name="my_shows">My Shows</string>
   <string name="all">All</string>
   <string name="watchlist">Watchlist</string>

@@ -11,7 +11,6 @@ import com.ataulm.wutson.discover.DiscoverActivity;
 import com.ataulm.wutson.episodes.EpisodesUri;
 import com.ataulm.wutson.episodes.SeasonEpisodeNumber;
 import com.ataulm.wutson.episodes.EpisodeActivityExtras;
-import com.ataulm.wutson.myshows.MyShowsActivity;
 import com.ataulm.wutson.search.SearchActivity;
 import com.ataulm.wutson.seasons.SeasonsActivity;
 import com.ataulm.wutson.settings.SettingsActivity;
@@ -30,13 +29,6 @@ public class Navigator {
 
     public Navigator(Activity activity) {
         this.activity = activity;
-    }
-
-    public void toMyShows() {
-        Intent intent = new Intent(activity, MyShowsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
-        activity.overridePendingTransition(0, 0);
     }
 
     public void toDiscover() {
@@ -76,6 +68,12 @@ public class Navigator {
         EpisodesUri episodesUri = new EpisodesUri(showId, seasonEpisodeNumber);
         Bundle extras = new EpisodeActivityExtras(showTitle, accentColor).asBundle();
         start(view(episodesUri.buildUriUpon(BASE_URI), MIME_TYPE_EPISODES_DIR).putExtras(extras));
+    }
+
+    public void toSearch() {
+        Intent intent = new Intent(activity, SearchActivity.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
     }
 
     public void toSearchFor(String query) {

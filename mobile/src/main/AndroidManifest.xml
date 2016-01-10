@@ -18,12 +18,6 @@
     <activity android:name=".auth.OAuthSignInActivity" />
 
     <activity
-      android:name="com.ataulm.wutson.myshows.MyShowsActivity"
-      android:label="@string/my_shows_label"
-      android:theme="@style/Wutson.Theme.MyShows"
-      android:launchMode="singleTop" />
-
-    <activity
       android:name="com.ataulm.wutson.discover.DiscoverActivity"
       android:label="@string/discover_label"
       android:theme="@style/Wutson.Theme.Discover"
@@ -71,7 +65,8 @@
 
     <activity
       android:name="com.ataulm.wutson.search.SearchActivity"
-      android:launchMode="singleTop">
+      android:launchMode="singleTop"
+      android:theme="@style/Wutson.Theme.Search">
       <intent-filter>
         <action android:name="android.intent.action.SEARCH" />
       </intent-filter>

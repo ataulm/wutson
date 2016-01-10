@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-  <color name="search_result_foreground_pressed">@color/black_54pc</color>
-  <color name="search_result_foreground_focused">@color/black_25pc</color>
-  <color name="search_result_foreground_default">@color/transparent</color>
-
-</resources>

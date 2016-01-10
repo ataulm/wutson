@@ -3,14 +3,16 @@
 
   <style name="Wutson" />
 
-  <style name="Wutson.Theme" parent="Theme.AppCompat.NoActionBar">
+  <style name="Wutson.Theme"
+    parent="Theme.AppCompat.NoActionBar">
     <item name="android:windowBackground">@color/mineshaft</item>
     <item name="colorPrimary">@color/white</item>
     <item name="toolbarNavigationButtonStyle">@style/Wutson.ToolbarNavigationButton</item>
     <item name="appBarBackground">@color/black</item>
   </style>
 
-  <style name="Wutson.ToolbarNavigationButton" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+  <style name="Wutson.ToolbarNavigationButton"
+    parent="Widget.AppCompat.Toolbar.Button.Navigation">
     <item name="android:background">@drawable/app_bar_action_background</item>
   </style>
 
@@ -34,5 +36,7 @@
   </style>
 
   <style name="Wutson.Theme.Settings" />
+
+  <style name="Wutson.Theme.Search" />
 
 </resources>

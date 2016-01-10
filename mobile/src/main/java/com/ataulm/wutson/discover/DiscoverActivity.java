@@ -53,11 +53,16 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.discover_menu_item_refresh) {
-            Jabber.discoverShowsRepository().refreshDiscoverShows();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.discover_menu_item_search:
+                navigate().toSearch();
+                return true;
+            case R.id.discover_menu_item_refresh:
+                Jabber.discoverShowsRepository().refreshDiscoverShows();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     private static void unsubscribeFrom(Subscription subscription) {
