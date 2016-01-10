@@ -3,12 +3,6 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
-    android:id="@+id/discover_menu_item_search"
-    android:icon="@drawable/ic_action_star"
-    android:title="@string/discover_menu_item_search"
-    app:showAsAction="ifRoom" />
-
-  <item
     android:id="@+id/discover_menu_item_refresh"
     android:title="@string/discover_menu_item_refresh"
     app:showAsAction="never" />
