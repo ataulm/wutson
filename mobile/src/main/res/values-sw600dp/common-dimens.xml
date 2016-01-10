@@ -2,5 +2,6 @@
 <resources>
 
   <dimen name="app_bar_height">64dp</dimen>
+  <dimen name="app_bar_height_with_tab_strip">128dp</dimen>
 
 </resources>

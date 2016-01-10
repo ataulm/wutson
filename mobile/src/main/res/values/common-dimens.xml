@@ -2,6 +2,7 @@
 <resources>
 
   <dimen name="app_bar_height">56dp</dimen>
+  <dimen name="app_bar_height_with_tab_strip">112dp</dimen>
 
   <dimen name="tab_strip_offset_left">46dp</dimen>
   <dimen name="tab_strip_indicator_height">2dp</dimen>
