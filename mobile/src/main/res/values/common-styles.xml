@@ -2,8 +2,6 @@
 <resources>
 
   <style name="AppBarShadow">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">@dimen/app_bar_shadow_height</item>
     <item name="android:background">@drawable/app_bar_shadow</item>
   </style>
 

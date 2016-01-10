@@ -10,7 +10,7 @@
     android:layout_height="wrap_content"
     app:mergeLayoutId="@layout/merge_app_bar_with_tab_strip" />
 
-  <FrameLayout
+  <com.ataulm.wutson.view.AppBarShadowContentFrame
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,8 +19,6 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
 
-    <View style="@style/AppBarShadow" />
-
-  </FrameLayout>
+  </com.ataulm.wutson.view.AppBarShadowContentFrame>
 
 </LinearLayout>

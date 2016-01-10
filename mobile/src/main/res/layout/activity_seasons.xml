@@ -4,7 +4,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <FrameLayout
+  <com.ataulm.wutson.view.AppBarShadowContentFrame
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="com.ataulm.wutson.view.AppBarWidget$ScrollingViewBehavior">
@@ -14,9 +14,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
 
-    <View style="@style/AppBarShadow" />
-
-  </FrameLayout>
+  </com.ataulm.wutson.view.AppBarShadowContentFrame>
 
   <com.ataulm.wutson.view.AppBarWidget
     android:layout_width="match_parent"
