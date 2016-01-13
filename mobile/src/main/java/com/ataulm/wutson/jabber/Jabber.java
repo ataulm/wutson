@@ -58,7 +58,7 @@ public final class Jabber {
     }
 
     public static DiscoverShowsRepository discoverShowsRepository() {
-        return repositories().discoverShows();
+        return repositories().discoverShowsRepository();
     }
 
     public static ShowRepository showRepository() {

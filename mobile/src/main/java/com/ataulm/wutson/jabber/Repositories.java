@@ -20,7 +20,7 @@ final class Repositories {
     private final TraktApi traktApi;
     private final Log log;
 
-    private DiscoverShowsRepository discoverShows;
+    private DiscoverShowsRepository discoverShowsRepository;
     private ShowRepository showRepository;
     private SearchRepository searchRepository;
     private JsonRepository jsonRepository;
@@ -39,13 +39,13 @@ final class Repositories {
         this.log = log;
     }
 
-    public DiscoverShowsRepository discoverShows() {
-        if (discoverShows == null) {
+    public DiscoverShowsRepository discoverShowsRepository() {
+        if (discoverShowsRepository == null) {
             JsonRepository jsonRepository = jsonRepository();
             Gson gson = gson();
-            discoverShows = new DiscoverShowsRepository(traktApi, jsonRepository, gson, log);
+            discoverShowsRepository = new DiscoverShowsRepository(traktApi, jsonRepository, gson, log);
         }
-        return discoverShows;
+        return discoverShowsRepository;
     }
 
     public ShowRepository showRepository() {
