@@ -4,6 +4,8 @@ import com.ataulm.wutson.Log;
 import com.ataulm.wutson.repository.event.Event;
 import com.ataulm.wutson.repository.persistence.JsonRepository;
 import com.ataulm.wutson.repository.persistence.Timestamp;
+import com.ataulm.wutson.rx.EventFunctions;
+import com.ataulm.wutson.rx.EventProxyObserver;
 import com.ataulm.wutson.rx.Functions;
 import com.ataulm.wutson.shows.ShowId;
 import com.ataulm.wutson.shows.ShowSummaries;
@@ -26,7 +28,6 @@ import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
-import static com.ataulm.wutson.rx.EventFunctions.asEventsForwardedTo;
 import static com.ataulm.wutson.rx.Functions.ignoreEmptyStrings;
 import static com.ataulm.wutson.rx.Functions.jsonTo;
 
@@ -58,8 +59,9 @@ public class DiscoverShowsRepository {
 
     private void refreshDiscoverShows(boolean forceLoadFromNetwork) {
         Observable<DiscoverShows> discoverShows = forceLoadFromNetwork ? getDiscoverShowsFromNetwork() : getDiscoverShows();
-        discoverShows.compose(asEventsForwardedTo(subject))
-                .subscribe(subject);
+        discoverShows
+                .compose(EventFunctions.<DiscoverShows>asEvents())
+                .subscribe(new EventProxyObserver<>(subject, log));
     }
 
     private Observable<DiscoverShows> getDiscoverShows() {
