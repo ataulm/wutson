@@ -2,7 +2,9 @@ package com.ataulm.wutson.repository;
 
 import com.ataulm.wutson.episodes.Episode;
 import com.ataulm.wutson.episodes.SeasonEpisodeNumber;
+import com.ataulm.wutson.repository.event.Event;
 import com.ataulm.wutson.repository.persistence.JsonRepository;
+import com.ataulm.wutson.rx.EventFunctions;
 import com.ataulm.wutson.rx.Functions;
 import com.ataulm.wutson.seasons.Season;
 import com.ataulm.wutson.seasons.Seasons;
@@ -44,6 +46,11 @@ public class ShowRepository {
         this.traktApi = traktApi;
         this.jsonRepository = jsonRepository;
         this.gson = gson;
+    }
+
+    public Observable<Event<Show>> getShowDetailsEvents(ShowId showId) {
+        return getShowDetails(showId)
+                .compose(EventFunctions.<Show>asEvents());
     }
 
     public Observable<Show> getShowDetails(ShowId showId) {
