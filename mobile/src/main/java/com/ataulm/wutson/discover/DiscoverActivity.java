@@ -52,8 +52,24 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.showTabs();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.discover_menu_item_search:
+                presenter.hideTabs(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        navigate().toSearch();
+                    }
+
+                });
+                return true;
             case R.id.discover_menu_item_refresh:
                 Jabber.discoverShowsRepository().refreshDiscoverShows();
                 return true;

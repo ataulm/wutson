@@ -1,5 +1,6 @@
 package com.ataulm.wutson.discover;
 
+import android.animation.Animator;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -7,9 +8,14 @@ import com.ataulm.wutson.R;
 import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.shows.ShowSummary;
 import com.ataulm.wutson.shows.discover.DiscoverShows;
+import com.ataulm.wutson.view.SimpleAnimatorListener;
 import com.novoda.landingstrip.LandingStrip;
 
 final class Presenter {
+
+    private static final float TAB_STRIP_ALPHA_SHOW = 1;
+    private static final float TAB_STRIP_TRANSLATION_Y_SHOW = 0;
+    private static final float TAB_STRIP_ALPHA_HIDE = 0;
 
     private final LandingStrip tabStrip;
     private final View loadingView;
@@ -82,6 +88,51 @@ final class Presenter {
         }
         viewPager.setCurrentItem(0);
         return true;
+    }
+
+    public void hideTabs(Runnable runnable) {
+        animateHideTabs(runnable);
+    }
+
+    private void animateHideTabs(final Runnable onAnimationEndAction) {
+        if (tabStrip.getTranslationY() != TAB_STRIP_TRANSLATION_Y_SHOW) {
+            return;
+        }
+        tabStrip.animate()
+                .translationY(-tabStrip.getHeight())
+                .alpha(TAB_STRIP_ALPHA_HIDE)
+                .setListener(
+                        new SimpleAnimatorListener() {
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                tabStrip.setVisibility(View.INVISIBLE);
+                                onAnimationEndAction.run();
+                            }
+
+                        }
+                );
+    }
+
+    public void showTabs() {
+        if (tabStrip.getTranslationY() == TAB_STRIP_TRANSLATION_Y_SHOW) {
+            return;
+        }
+        tabStrip.animate()
+                .translationY(TAB_STRIP_TRANSLATION_Y_SHOW)
+                .alpha(TAB_STRIP_ALPHA_SHOW)
+                .setListener(
+                        new SimpleAnimatorListener() {
+
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+                                super.onAnimationStart(animation);
+                                tabStrip.setVisibility(View.VISIBLE);
+                            }
+
+                        }
+                );
     }
 
 }
