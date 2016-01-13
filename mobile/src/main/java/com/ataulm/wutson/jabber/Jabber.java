@@ -10,6 +10,7 @@ import com.ataulm.wutson.ToastDisplayer;
 import com.ataulm.wutson.auth.AddAuthorizationHeaderInterceptor;
 import com.ataulm.wutson.auth.WutsonAccountManager;
 import com.ataulm.wutson.repository.DataRepository;
+import com.ataulm.wutson.repository.ShowRepository;
 import com.ataulm.wutson.shows.discover.DiscoverShowsRepository;
 import com.ataulm.wutson.shows.myshows.SearchRepository;
 import com.ataulm.wutson.trakt.TraktApi;
@@ -58,6 +59,10 @@ public final class Jabber {
 
     public static DiscoverShowsRepository discoverShowsRepository() {
         return repositories().discoverShows();
+    }
+
+    public static ShowRepository showRepository() {
+        return repositories().showRepository();
     }
 
     public static SearchRepository searchRepository() {

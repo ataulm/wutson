@@ -21,6 +21,7 @@ final class Repositories {
     private final Log log;
 
     private DiscoverShowsRepository discoverShows;
+    private ShowRepository showRepository;
     private SearchRepository searchRepository;
     private JsonRepository jsonRepository;
     private Gson gson;
@@ -45,6 +46,15 @@ final class Repositories {
             discoverShows = new DiscoverShowsRepository(traktApi, jsonRepository, gson, log);
         }
         return discoverShows;
+    }
+
+    public ShowRepository showRepository() {
+        if (showRepository == null) {
+            JsonRepository jsonRepository = jsonRepository();
+            Gson gson = gson();
+            showRepository = new ShowRepository(traktApi, jsonRepository, gson);
+        }
+        return showRepository;
     }
 
     public SearchRepository search() {
