@@ -46,13 +46,11 @@ final class Presenter {
 
     public void onLoadStart() {
         loadingView.setVisibility(View.VISIBLE);
-        tabStrip.setVisibility(View.GONE);
         viewPager.setVisibility(View.GONE);
     }
 
     public void onLoadStop() {
         loadingView.setVisibility(View.GONE);
-        tabStrip.setVisibility(View.VISIBLE);
         viewPager.setVisibility(View.VISIBLE);
     }
 
