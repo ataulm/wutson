@@ -16,6 +16,7 @@ final class Presenter {
     private static final float TAB_STRIP_ALPHA_SHOW = 1;
     private static final float TAB_STRIP_TRANSLATION_Y_SHOW = 0;
     private static final float TAB_STRIP_ALPHA_HIDE = 0;
+    private static final int ACTIVITY_TRANSITION_DELAY_MILLIS = 100;
 
     private final LandingStrip tabStrip;
     private final View loadingView;
@@ -95,10 +96,8 @@ final class Presenter {
     }
 
     private void animateHideTabs(final Runnable onAnimationEndAction) {
-        if (tabStrip.getTranslationY() != TAB_STRIP_TRANSLATION_Y_SHOW) {
-            return;
-        }
         tabStrip.animate()
+                .setStartDelay(0)
                 .translationY(-tabStrip.getHeight())
                 .alpha(TAB_STRIP_ALPHA_HIDE)
                 .setListener(
@@ -116,10 +115,8 @@ final class Presenter {
     }
 
     public void showTabs() {
-        if (tabStrip.getTranslationY() == TAB_STRIP_TRANSLATION_Y_SHOW) {
-            return;
-        }
         tabStrip.animate()
+                .setStartDelay(ACTIVITY_TRANSITION_DELAY_MILLIS)
                 .translationY(TAB_STRIP_TRANSLATION_Y_SHOW)
                 .alpha(TAB_STRIP_ALPHA_SHOW)
                 .setListener(
