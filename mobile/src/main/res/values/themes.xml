@@ -37,6 +37,9 @@
 
   <style name="Wutson.Theme.Settings" />
 
-  <style name="Wutson.Theme.Search" />
+  <style name="Wutson.Theme.Search">
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+  </style>
 
 </resources>

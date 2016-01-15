@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <com.ataulm.wutson.view.AppBarShadowContentFrame
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/app_bar_height">
+
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/search_with_suggestions_rv_suggestions"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#d8d8d8" />
+
+  </com.ataulm.wutson.view.AppBarShadowContentFrame>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/app_bar_height"
+    android:orientation="horizontal"
+    android:background="#eeeeee">
+
+    <ImageView
+      android:id="@+id/search_with_suggestions_button_up"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:background="@android:color/holo_orange_dark" />
+
+    <com.ataulm.wutson.view.WutsonEditText
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="100" />
+
+    <ImageView
+      android:id="@+id/search_with_suggestions_button_voice"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:background="@android:color/holo_orange_dark" />
+
+  </LinearLayout>
+
+</merge>

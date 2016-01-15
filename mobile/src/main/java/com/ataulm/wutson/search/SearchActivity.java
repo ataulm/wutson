@@ -1,8 +1,12 @@
 package com.ataulm.wutson.search;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.util.AttributeSet;
+import android.widget.FrameLayout;
 
 import com.ataulm.wutson.R;
 import com.ataulm.wutson.ToastDisplayer;
@@ -19,6 +23,13 @@ public class SearchActivity extends WutsonActivity {
 
         toaster = new ToastDisplayer(this);
         handleIntent(getIntent());
+
+        SearchWithSuggestionsView searchWithSuggestionsView = (SearchWithSuggestionsView) findViewById(R.id.search_with_suggestions);
+        searchWithSuggestionsView.setAlpha(0);
+        searchWithSuggestionsView.animate()
+                .setStartDelay(50)
+                .setDuration(500)
+                .alpha(1);
     }
 
     @Override

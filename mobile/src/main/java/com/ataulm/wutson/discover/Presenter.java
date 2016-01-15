@@ -115,6 +115,11 @@ final class Presenter {
     }
 
     public void showTabs() {
+        if (tabStrip.getAlpha() == TAB_STRIP_ALPHA_SHOW) {
+            tabStrip.setAlpha(TAB_STRIP_ALPHA_HIDE);
+            tabStrip.setTranslationY(-tabStrip.getHeight());
+        }
+
         tabStrip.animate()
                 .setStartDelay(ACTIVITY_TRANSITION_DELAY_MILLIS)
                 .translationY(TAB_STRIP_TRANSLATION_Y_SHOW)
