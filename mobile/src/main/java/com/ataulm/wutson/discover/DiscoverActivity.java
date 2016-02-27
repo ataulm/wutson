@@ -92,12 +92,17 @@ public class DiscoverActivity extends WutsonTopLevelActivity {
 
     @Override
     public void onBackPressed() {
-        if (closeNavigationDrawer()) {
+        boolean backPressConsumed = closeNavigationDrawer();
+        if (backPressConsumed) {
             return;
         }
-        if (presenter.showFirstPage()) {
+
+        backPressConsumed = presenter.showFirstPage();
+
+        if (backPressConsumed) {
             return;
         }
+
         super.onBackPressed();
     }
 
