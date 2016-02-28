@@ -12,9 +12,24 @@ import static org.fest.assertions.api.Assertions.assertThat;
 public class ConverterShould {
 
     private static final String DEFAULT_TITLE = "any_title";
+    private static final String DEFAULT_OVERVIEW = "overview for " + DEFAULT_TITLE;
     private static final String DEFAULT_ID = "any_id";
 
     Converter converter = new Converter();
+
+    @Test
+    public void returnNullWhenIdIsNull() {
+        GsonSearchResult gsonResult = givenGsonResultWithId(null);
+        SearchResult result = converter.convert(gsonResult);
+        assertThat(result).isNull();
+    }
+
+    @Test
+    public void returnNullWhenIdIsEmpty() {
+        GsonSearchResult gsonResult = givenGsonResultWithId("");
+        SearchResult result = converter.convert(gsonResult);
+        assertThat(result).isNull();
+    }
 
     @Test
     public void returnNullWhenTitleIsNull() {
@@ -31,32 +46,45 @@ public class ConverterShould {
     }
 
     @Test
-    public void returnNullWhenIdIsNull() {
-        GsonSearchResult gsonResult = givenGsonResultWithId(null);
+    public void returnResultWithAbsentOverviewWhenOverviewIsNull() {
+        GsonSearchResult gsonResult = givenGsonResultWithOverview(null);
         SearchResult result = converter.convert(gsonResult);
-        assertThat(result).isNull();
+        assertThat(result.overview().isPresent()).isFalse();
     }
 
     @Test
-    public void returnNullWhenIdIsEmpty() {
-        GsonSearchResult gsonResult = givenGsonResultWithId("");
+    public void returnResultWithAbsentOverviewWhenOverviewIsEmpty() {
+        GsonSearchResult gsonResult = givenGsonResultWithOverview("");
         SearchResult result = converter.convert(gsonResult);
-        assertThat(result).isNull();
+        assertThat(result.overview().isPresent()).isFalse();
+    }
+
+    @Test
+    public void returnResultWithOverviewWhenOverviewIsPresent() {
+        String overview = "hellooo";
+
+        GsonSearchResult gsonResult = givenGsonResultWithOverview(overview);
+        SearchResult result = converter.convert(gsonResult);
+        assertThat(result.overview().get()).isEqualTo(overview);
     }
 
     private GsonSearchResult givenGsonResultWithId(String id) {
-        return gsonResult(id, DEFAULT_TITLE);
+        return gsonResult(id, DEFAULT_TITLE, DEFAULT_OVERVIEW);
     }
 
     private static GsonSearchResult givenGsonResultWithTitle(String title) {
-        return gsonResult(DEFAULT_ID, title);
+        return gsonResult(DEFAULT_ID, title, DEFAULT_OVERVIEW);
     }
 
-    private static GsonSearchResult gsonResult(String traktId, String title) {
+    private GsonSearchResult givenGsonResultWithOverview(String overview) {
+        return gsonResult(DEFAULT_ID, DEFAULT_TITLE, overview);
+    }
+
+    private static GsonSearchResult gsonResult(String traktId, String title, String overview) {
         GsonSearchResult result = new GsonSearchResult();
         result.show = new GsonSearchResult.Show();
         result.show.title = title;
-        result.show.overview = "overview for " + title;
+        result.show.overview = overview;
 
         result.show.ids = new GsonEpisodeIds();
         result.show.ids.imdb = "imdb id";

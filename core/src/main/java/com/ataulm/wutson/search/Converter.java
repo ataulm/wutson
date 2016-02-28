@@ -24,13 +24,20 @@ class Converter {
             return null;
         }
 
-        Optional<String> overview = Optional.from(gsonSearchResult.show.overview);
+        Optional<String> overview = overview(gsonSearchResult.show.overview);
         Optional<URI> posterUri = posterUri(gsonSearchResult.show.images);
         return SearchResult.newInstance(showId, name, overview, posterUri);
     }
 
     private boolean nullOrEmpty(@Nullable String input) {
         return input == null || input.isEmpty();
+    }
+
+    private Optional<String> overview(String overview) {
+        if (nullOrEmpty(overview)) {
+            return Optional.absent();
+        }
+        return Optional.of(overview);
     }
 
     private Optional<URI> posterUri(GsonSearchResult.Show.Images images) {
