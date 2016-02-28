@@ -1,6 +1,4 @@
-package com.ataulm.wutson.repository.event;
-
-import com.ataulm.wutson.DeveloperError;
+package com.ataulm.wutson;
 
 public final class Optional<T> {
 

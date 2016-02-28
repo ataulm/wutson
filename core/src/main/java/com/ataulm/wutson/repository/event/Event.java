@@ -1,6 +1,7 @@
 package com.ataulm.wutson.repository.event;
 
 import com.ataulm.wutson.DeveloperError;
+import com.ataulm.wutson.Optional;
 
 public class Event<T> {
 

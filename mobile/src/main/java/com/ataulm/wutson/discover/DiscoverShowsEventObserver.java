@@ -3,7 +3,7 @@ package com.ataulm.wutson.discover;
 import com.ataulm.wutson.DeveloperError;
 import com.ataulm.wutson.jabber.Jabber;
 import com.ataulm.wutson.repository.event.Event;
-import com.ataulm.wutson.repository.event.Optional;
+import com.ataulm.wutson.Optional;
 import com.ataulm.wutson.rx.LoggingObserver;
 import com.ataulm.wutson.shows.discover.DiscoverShows;
 
