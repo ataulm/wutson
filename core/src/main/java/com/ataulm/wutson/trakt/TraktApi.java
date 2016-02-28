@@ -21,4 +21,7 @@ public interface TraktApi {
     @GET("/shows/{id}/seasons?extended=images,episodes,full")
     Observable<GsonShowSeasonList> getShowSeasons(@Path("id") String showId);
 
+    @GET("/search?type=show&query={query}")
+    Observable<GsonSearchTvResults> getSearchTvResults(@Path("query") String query);
+
 }
