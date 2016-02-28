@@ -24,6 +24,15 @@ public final class Functions {
         };
     }
 
+    public static <T> Func1<T, Boolean> onlyNonNull() {
+        return new Func1<T, Boolean>() {
+            @Override
+            public Boolean call(T t) {
+                return t != null;
+            }
+        };
+    }
+
     public static <T> Func1<Iterable<T>, Observable<T>> emitEachElement() {
         return new Func1<Iterable<T>, Observable<T>>() {
 

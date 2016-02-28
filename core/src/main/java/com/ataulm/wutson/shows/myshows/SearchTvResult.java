@@ -1,5 +1,6 @@
 package com.ataulm.wutson.shows.myshows;
 
+import com.ataulm.wutson.Optional;
 import com.ataulm.wutson.shows.ShowId;
 
 import java.net.URI;
@@ -8,16 +9,14 @@ public class SearchTvResult {
 
     private final ShowId id;
     private final String name;
-    private final String overview;
-    private final URI posterUri;
-    private final URI backdropUri;
+    private final Optional<String> overview;
+    private final Optional<URI> posterUri;
 
-    public SearchTvResult(ShowId id, String name, String overview, URI posterUri, URI backdropUri) {
+    public SearchTvResult(ShowId id, String name, Optional<String> overview, Optional<URI> posterUri) {
         this.id = id;
         this.name = name;
         this.overview = overview;
         this.posterUri = posterUri;
-        this.backdropUri = backdropUri;
     }
 
     public ShowId getId() {
@@ -28,16 +27,12 @@ public class SearchTvResult {
         return name;
     }
 
-    public String getOverview() {
+    public Optional<String> getOverview() {
         return overview;
     }
 
-    public URI getPosterUri() {
+    public Optional<URI> getPosterUri() {
         return posterUri;
-    }
-
-    public URI getBackdropUri() {
-        return backdropUri;
     }
 
 }

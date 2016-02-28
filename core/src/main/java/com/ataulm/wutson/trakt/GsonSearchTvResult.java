@@ -18,6 +18,12 @@ public class GsonSearchTvResult {
         @SerializedName("images")
         public Show.Images images;
 
+        @SerializedName("title")
+        public String title;
+
+        @SerializedName("overview")
+        public String overview;
+
         public static class Images {
 
             @SerializedName("poster")
