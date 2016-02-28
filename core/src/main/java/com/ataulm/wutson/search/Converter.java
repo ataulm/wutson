@@ -44,8 +44,12 @@ class Converter {
         if (images == null || images.poster == null) {
             return Optional.absent();
         }
+        String fullPosterUrl = images.poster.full;
+        if (nullOrEmpty(fullPosterUrl)) {
+            return Optional.absent();
+        }
         try {
-            return Optional.of(new URI(images.poster.full));
+            return Optional.of(new URI(fullPosterUrl));
         } catch (URISyntaxException e) {
             return Optional.absent();
         }

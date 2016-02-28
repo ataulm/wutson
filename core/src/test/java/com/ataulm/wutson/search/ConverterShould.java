@@ -14,6 +14,7 @@ public class ConverterShould {
     private static final String DEFAULT_TITLE = "any_title";
     private static final String DEFAULT_OVERVIEW = "overview for " + DEFAULT_TITLE;
     private static final String DEFAULT_ID = "any_id";
+    private static final String DEFAULT_FULL_POSTER_URL = "www.foo.com/foo_full.jpg";
 
     Converter converter = new Converter();
 
@@ -60,27 +61,53 @@ public class ConverterShould {
     }
 
     @Test
-    public void returnResultWithOverviewWhenOverviewIsPresent() {
+    public void returnResultWithOverviewWhenOverviewIsGiven() {
         String overview = "hellooo";
 
         GsonSearchResult gsonResult = givenGsonResultWithOverview(overview);
         SearchResult result = converter.convert(gsonResult);
+        assertThat(result.overview().isPresent()).isTrue();
         assertThat(result.overview().get()).isEqualTo(overview);
     }
 
+    @Test
+    public void returnResultWithAbsentPosterUriWhenFullPosterUrlIsNull() {
+        GsonSearchResult gsonResult = givenGsonResultWithFullPosterUrl(null);
+        SearchResult result = converter.convert(gsonResult);
+        assertThat(result.posterUri().isPresent()).isFalse();
+    }
+
+    @Test
+    public void returnResultWithAbsentPosterUriWhenFullPosterUriIsEmpty() {
+        GsonSearchResult gsonResult = givenGsonResultWithFullPosterUrl("");
+        SearchResult result = converter.convert(gsonResult);
+        assertThat(result.posterUri().isPresent()).isFalse();
+    }
+
+    @Test
+    public void returnResultWithAbsentPosterUriWhenFullPosterUriViolatesRfc2396() {
+        GsonSearchResult gsonResult = givenGsonResultWithFullPosterUrl("string violating RFC 2396");
+        SearchResult result = converter.convert(gsonResult);
+        assertThat(result.posterUri().isPresent()).isFalse();
+    }
+
     private GsonSearchResult givenGsonResultWithId(String id) {
-        return gsonResult(id, DEFAULT_TITLE, DEFAULT_OVERVIEW);
+        return gsonResult(id, DEFAULT_TITLE, DEFAULT_OVERVIEW, DEFAULT_FULL_POSTER_URL);
     }
 
     private static GsonSearchResult givenGsonResultWithTitle(String title) {
-        return gsonResult(DEFAULT_ID, title, DEFAULT_OVERVIEW);
+        return gsonResult(DEFAULT_ID, title, DEFAULT_OVERVIEW, DEFAULT_FULL_POSTER_URL);
     }
 
     private GsonSearchResult givenGsonResultWithOverview(String overview) {
-        return gsonResult(DEFAULT_ID, DEFAULT_TITLE, overview);
+        return gsonResult(DEFAULT_ID, DEFAULT_TITLE, overview, DEFAULT_FULL_POSTER_URL);
     }
 
-    private static GsonSearchResult gsonResult(String traktId, String title, String overview) {
+    private GsonSearchResult givenGsonResultWithFullPosterUrl(String fullPosterUrl) {
+        return gsonResult(DEFAULT_ID, DEFAULT_TITLE, DEFAULT_OVERVIEW, fullPosterUrl);
+    }
+
+    private static GsonSearchResult gsonResult(String traktId, String title, String overview, String fullPosterUrl) {
         GsonSearchResult result = new GsonSearchResult();
         result.show = new GsonSearchResult.Show();
         result.show.title = title;
@@ -92,7 +119,7 @@ public class ConverterShould {
 
         result.show.images = new GsonSearchResult.Show.Images();
         result.show.images.poster = new GsonImage();
-        result.show.images.poster.full = "www.foo.com/foo_full.jpg";
+        result.show.images.poster.full = fullPosterUrl;
         result.show.images.poster.medium = "www.foo.com/foo_medium.jpg";
         result.show.images.poster.thumb = "www.foo.com/foo_thumb.jpg";
         return result;
