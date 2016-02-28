@@ -11,6 +11,9 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ConverterShould {
 
+    private static final String DEFAULT_TITLE = "any_title";
+    private static final String DEFAULT_ID = "any_id";
+
     Converter converter = new Converter();
 
     @Test
@@ -27,7 +30,29 @@ public class ConverterShould {
         assertThat(result).isNull();
     }
 
+    @Test
+    public void returnNullWhenIdIsNull() {
+        GsonSearchResult gsonResult = givenGsonResultWithId(null);
+        SearchResult result = converter.convert(gsonResult);
+        assertThat(result).isNull();
+    }
+
+    @Test
+    public void returnNullWhenIdIsEmpty() {
+        GsonSearchResult gsonResult = givenGsonResultWithId("");
+        SearchResult result = converter.convert(gsonResult);
+        assertThat(result).isNull();
+    }
+
+    private GsonSearchResult givenGsonResultWithId(String id) {
+        return gsonResult(id, DEFAULT_TITLE);
+    }
+
     private static GsonSearchResult givenGsonResultWithTitle(String title) {
+        return gsonResult(DEFAULT_ID, title);
+    }
+
+    private static GsonSearchResult gsonResult(String traktId, String title) {
         GsonSearchResult result = new GsonSearchResult();
         result.show = new GsonSearchResult.Show();
         result.show.title = title;
@@ -35,7 +60,7 @@ public class ConverterShould {
 
         result.show.ids = new GsonEpisodeIds();
         result.show.ids.imdb = "imdb id";
-        result.show.ids.trakt = "trakt id";
+        result.show.ids.trakt = traktId;
 
         result.show.images = new GsonSearchResult.Show.Images();
         result.show.images.poster = new GsonImage();
