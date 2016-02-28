@@ -26,7 +26,7 @@ class Converter {
 
         Optional<String> overview = Optional.from(gsonSearchResult.show.overview);
         Optional<URI> posterUri = posterUri(gsonSearchResult.show.images);
-        return new SearchResult(showId, name, overview, posterUri);
+        return SearchResult.newInstance(showId, name, overview, posterUri);
     }
 
     private boolean nullOrEmpty(@Nullable String input) {

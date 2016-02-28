@@ -2,37 +2,26 @@ package com.ataulm.wutson.shows.myshows;
 
 import com.ataulm.wutson.Optional;
 import com.ataulm.wutson.shows.ShowId;
+import com.google.auto.value.AutoValue;
 
 import java.net.URI;
 
-public class SearchResult {
+@AutoValue
+public abstract class SearchResult {
 
-    private final ShowId id;
-    private final String name;
-    private final Optional<String> overview;
-    private final Optional<URI> posterUri;
-
-    public SearchResult(ShowId id, String name, Optional<String> overview, Optional<URI> posterUri) {
-        this.id = id;
-        this.name = name;
-        this.overview = overview;
-        this.posterUri = posterUri;
+    public static SearchResult newInstance(ShowId id, String name, Optional<String> overview, Optional<URI> posterUri) {
+        return new AutoValue_SearchResult(id, name, overview, posterUri);
     }
 
-    public ShowId getId() {
-        return id;
+    SearchResult() {
     }
 
-    public String getName() {
-        return name;
-    }
+    public abstract ShowId id();
 
-    public Optional<String> getOverview() {
-        return overview;
-    }
+    public abstract String name();
 
-    public Optional<URI> getPosterUri() {
-        return posterUri;
-    }
+    public abstract Optional<String> overview();
+
+    public abstract Optional<URI> posterUri();
 
 }
