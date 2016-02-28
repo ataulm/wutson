@@ -28,20 +28,7 @@ public class GsonShowEpisode {
     public static class Images {
 
         @SerializedName("screenshot")
-        public Images.Screenshot screenshot;
-
-        public static class Screenshot {
-
-            @SerializedName("full")
-            public String full;
-
-            @SerializedName("medium")
-            public String medium;
-
-            @SerializedName("thumb")
-            public String thumb;
-
-        }
+        public GsonImage screenshot;
 
     }
 
