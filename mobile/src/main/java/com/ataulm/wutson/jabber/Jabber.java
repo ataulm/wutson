@@ -11,8 +11,9 @@ import com.ataulm.wutson.auth.AddAuthorizationHeaderInterceptor;
 import com.ataulm.wutson.auth.WutsonAccountManager;
 import com.ataulm.wutson.repository.DataRepository;
 import com.ataulm.wutson.repository.ShowRepository;
+import com.ataulm.wutson.search.Converter;
+import com.ataulm.wutson.search.SearchDataSource;
 import com.ataulm.wutson.shows.discover.DiscoverShowsRepository;
-import com.ataulm.wutson.shows.myshows.SearchRepository;
 import com.ataulm.wutson.trakt.TraktApi;
 import com.ataulm.wutson.trakt.TraktApiFactory;
 import com.squareup.okhttp.Cache;
@@ -31,6 +32,8 @@ public final class Jabber {
     private final String traktApiKey;
 
     private Repositories repositories;
+    private SearchDataSource searchDataSource;
+    private TraktApi traktApi;
     private ToastDisplayer toastDisplayer;
     private WutsonAccountManager accountManager;
     private Log log;
@@ -46,11 +49,24 @@ public final class Jabber {
 
     private static Repositories repositories() {
         if (instance.repositories == null) {
-            Client client = newClient();
-            TraktApi traktApi = newTraktApi(instance.traktApiKey, log(), client);
-            instance.repositories = Repositories.newInstance(instance.context, traktApi, log());
+            instance.repositories = Repositories.newInstance(instance.context, traktApi(), log());
         }
         return instance.repositories;
+    }
+
+    private static TraktApi traktApi() {
+        if (instance.traktApi == null) {
+            Client client = newClient();
+            instance.traktApi = newTraktApi(instance.traktApiKey, log(), client);
+        }
+        return instance.traktApi;
+    }
+
+    public static SearchDataSource searchDataSource() {
+        if (instance.searchDataSource == null) {
+            instance.searchDataSource = new SearchDataSource(traktApi(), new Converter());
+        }
+        return instance.searchDataSource;
     }
 
     public static DataRepository dataRepository() {
@@ -63,10 +79,6 @@ public final class Jabber {
 
     public static ShowRepository showRepository() {
         return repositories().showRepository();
-    }
-
-    public static SearchRepository searchRepository() {
-        return repositories().search();
     }
 
     private static TraktApi newTraktApi(String traktApiKey, Log log, Client client) {

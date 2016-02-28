@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-class Converter {
+public class Converter {
 
     @Nullable
     public SearchResult convert(GsonSearchResult gsonSearchResult) {

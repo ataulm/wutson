@@ -10,7 +10,6 @@ import com.ataulm.wutson.repository.WutsonDataRepository;
 import com.ataulm.wutson.repository.persistence.JsonRepository;
 import com.ataulm.wutson.repository.persistence.SqliteJsonRepository;
 import com.ataulm.wutson.shows.discover.DiscoverShowsRepository;
-import com.ataulm.wutson.shows.myshows.SearchRepository;
 import com.ataulm.wutson.trakt.TraktApi;
 import com.google.gson.Gson;
 
@@ -22,7 +21,6 @@ final class Repositories {
 
     private DiscoverShowsRepository discoverShowsRepository;
     private ShowRepository showRepository;
-    private SearchRepository searchRepository;
     private JsonRepository jsonRepository;
     private Gson gson;
 
@@ -55,13 +53,6 @@ final class Repositories {
             showRepository = new ShowRepository(traktApi, jsonRepository, gson);
         }
         return showRepository;
-    }
-
-    public SearchRepository search() {
-        if (searchRepository == null) {
-            searchRepository = new SearchRepository();
-        }
-        return searchRepository;
     }
 
     private JsonRepository jsonRepository() {
