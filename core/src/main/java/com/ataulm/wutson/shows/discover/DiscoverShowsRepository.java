@@ -28,7 +28,7 @@ import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
-import static com.ataulm.wutson.rx.Functions.ignoreEmptyStrings;
+import static com.ataulm.wutson.rx.Functions.onlyNonEmptyStrings;
 import static com.ataulm.wutson.rx.Functions.jsonTo;
 
 public class DiscoverShowsRepository {
@@ -90,7 +90,7 @@ public class DiscoverShowsRepository {
 
     private Observable<GsonPopularShowList> gsonPopularShowsListFromDisk() {
         return fetchJsonPopularShowsListFrom(jsonRepository)
-                .filter(ignoreEmptyStrings())
+                .filter(onlyNonEmptyStrings())
                 .map(jsonTo(GsonPopularShowList.class, gson));
     }
 
@@ -131,7 +131,7 @@ public class DiscoverShowsRepository {
 
     private Observable<GsonTrendingShowList> gsonTrendingShowsListFromDisk() {
         return fetchJsonTrendingShowsListFrom(jsonRepository)
-                .filter(ignoreEmptyStrings())
+                .filter(onlyNonEmptyStrings())
                 .map(jsonTo(GsonTrendingShowList.class, gson));
     }
 

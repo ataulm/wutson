@@ -13,7 +13,7 @@ public final class Functions {
         throw DeveloperError.nonInstantiableClass();
     }
 
-    public static Func1<String, Boolean> ignoreEmptyStrings() {
+    public static Func1<String, Boolean> onlyNonEmptyStrings() {
         return new Func1<String, Boolean>() {
 
             @Override

@@ -33,7 +33,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func3;
 
-import static com.ataulm.wutson.rx.Functions.ignoreEmptyStrings;
+import static com.ataulm.wutson.rx.Functions.onlyNonEmptyStrings;
 import static com.ataulm.wutson.rx.Functions.jsonTo;
 
 public class ShowRepository {
@@ -77,7 +77,7 @@ public class ShowRepository {
 
     private Observable<? extends GsonShowPeople> gsonShowPeopleFromDisk(ShowId showId) {
         return fetchJsonShowPeopleFrom(jsonRepository, showId)
-                .filter(ignoreEmptyStrings())
+                .filter(onlyNonEmptyStrings())
                 .map(jsonTo(GsonShowPeople.class, gson));
     }
 
@@ -88,7 +88,7 @@ public class ShowRepository {
 
     private Observable<GsonShowDetails> gsonShowDetailsFromDisk(ShowId showId) {
         return fetchJsonShowDetailsFrom(jsonRepository, showId)
-                .filter(ignoreEmptyStrings())
+                .filter(onlyNonEmptyStrings())
                 .map(jsonTo(GsonShowDetails.class, gson));
     }
 
@@ -151,7 +151,7 @@ public class ShowRepository {
 
     private Observable<GsonShowSeasonList> gsonShowSeasonsFromDisk(ShowId showId) {
         return fetchJsonShowSeasonsFrom(jsonRepository, showId)
-                .filter(ignoreEmptyStrings())
+                .filter(onlyNonEmptyStrings())
                 .map(jsonTo(GsonShowSeasonList.class, gson));
     }
 
