@@ -2,7 +2,7 @@ package com.ataulm.wutson.trakt;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GsonSearchTvResult {
+public class GsonSearchResult {
 
     @SerializedName("score")
     public String score;

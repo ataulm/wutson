@@ -7,7 +7,7 @@ public class SearchRepository {
     public SearchRepository() {
     }
 
-    public Observable<SearchTvResults> searchFor(String query) {
+    public Observable<SearchResults> searchFor(String query) {
         return Observable.empty();
     }
 

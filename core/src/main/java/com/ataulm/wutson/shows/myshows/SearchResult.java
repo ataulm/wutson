@@ -5,14 +5,14 @@ import com.ataulm.wutson.shows.ShowId;
 
 import java.net.URI;
 
-public class SearchTvResult {
+public class SearchResult {
 
     private final ShowId id;
     private final String name;
     private final Optional<String> overview;
     private final Optional<URI> posterUri;
 
-    public SearchTvResult(ShowId id, String name, Optional<String> overview, Optional<URI> posterUri) {
+    public SearchResult(ShowId id, String name, Optional<String> overview, Optional<URI> posterUri) {
         this.id = id;
         this.name = name;
         this.overview = overview;

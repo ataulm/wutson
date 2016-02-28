@@ -3,9 +3,9 @@ package com.ataulm.wutson.search;
 import com.ataulm.wutson.repository.event.Event;
 import com.ataulm.wutson.rx.EventFunctions;
 import com.ataulm.wutson.rx.Functions;
-import com.ataulm.wutson.shows.myshows.SearchTvResult;
-import com.ataulm.wutson.shows.myshows.SearchTvResults;
-import com.ataulm.wutson.trakt.GsonSearchTvResult;
+import com.ataulm.wutson.shows.myshows.SearchResult;
+import com.ataulm.wutson.shows.myshows.SearchResults;
+import com.ataulm.wutson.trakt.GsonSearchResult;
 import com.ataulm.wutson.trakt.TraktApi;
 
 import java.util.List;
@@ -25,34 +25,38 @@ public class SearchDataSource {
         this.converter = converter;
     }
 
-    public Observable<Event<SearchTvResults>> query(String query) {
-        return findTvSearchResultFor(query).compose(EventFunctions.<SearchTvResults>asEvents());
+    public Observable<Event<SearchResults>> getSearchResultsEvents(String query) {
+        return getSearchResults(query).compose(EventFunctions.<SearchResults>asEvents());
     }
 
-    private Observable<SearchTvResults> findTvSearchResultFor(String query) {
-        return api.getSearchTvResults(query)
-                .flatMap(Functions.<GsonSearchTvResult>emitEachElement())
-                .map(convertToSearchTvResult(converter))
+    private Observable<SearchResults> getSearchResults(String query) {
+        return api.getSearchResults(query)
+                .flatMap(Functions.<GsonSearchResult>emitEachElement())
+                .map(convertToSearchResult(converter))
                 .filter(onlyNonNull())
                 .toList()
-                .map(collectAsSearchTvResults());
+                .map(collectAsSearchResults());
     }
 
-    private static Func1<GsonSearchTvResult, SearchTvResult> convertToSearchTvResult(final Converter converter) {
-        return new Func1<GsonSearchTvResult, SearchTvResult>() {
+    private static Func1<GsonSearchResult, SearchResult> convertToSearchResult(final Converter converter) {
+        return new Func1<GsonSearchResult, SearchResult>() {
+
             @Override
-            public SearchTvResult call(GsonSearchTvResult gsonSearchTvResult) {
-                return converter.convert(gsonSearchTvResult);
+            public SearchResult call(GsonSearchResult gsonSearchResult) {
+                return converter.convert(gsonSearchResult);
             }
+
         };
     }
 
-    private static Func1<List<SearchTvResult>, SearchTvResults> collectAsSearchTvResults() {
-        return new Func1<List<SearchTvResult>, SearchTvResults>() {
+    private static Func1<List<SearchResult>, SearchResults> collectAsSearchResults() {
+        return new Func1<List<SearchResult>, SearchResults>() {
+
             @Override
-            public SearchTvResults call(List<SearchTvResult> searchTvResults) {
-                return new SearchTvResults(searchTvResults);
+            public SearchResults call(List<SearchResult> searchResults) {
+                return new SearchResults(searchResults);
             }
+
         };
     }
 
