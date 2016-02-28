@@ -14,7 +14,7 @@ public class Event<T> {
     }
 
     public static <T> Event<T> loading(T data) {
-        return new Event<>(Type.LOADING, Optional.of(data), Optional.<Throwable>absent());
+        return new Event<>(Type.LOADING, Optional.from(data), Optional.<Throwable>absent());
     }
 
     public static <T> Event<T> idle() {
@@ -22,7 +22,7 @@ public class Event<T> {
     }
 
     public static <T> Event<T> idle(T data) {
-        return new Event<>(Type.IDLE, Optional.of(data), Optional.<Throwable>absent());
+        return new Event<>(Type.IDLE, Optional.from(data), Optional.<Throwable>absent());
     }
 
     public static <T> Event<T> error(Throwable error) {
@@ -33,7 +33,7 @@ public class Event<T> {
         if (error == null) {
             throw DeveloperError.because("Error events must contain an error.");
         }
-        return new Event<>(Type.ERROR, Optional.of(data), Optional.of(error));
+        return new Event<>(Type.ERROR, Optional.from(data), Optional.of(error));
     }
 
     private Event(Type type, Optional<T> data, Optional<Throwable> error) {

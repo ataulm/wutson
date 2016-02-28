@@ -13,9 +13,17 @@ public final class Optional<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> Optional<T> of(T data) {
+    public static <T> Optional<T> from(T data) {
         if (data == null) {
             return ABSENT;
+        }
+        return new Optional<>(data);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Optional<T> of(T data) {
+        if (data == null) {
+            throw DeveloperError.because("Data cannot be null. Use Optional.from(maybeNullData).");
         }
         return new Optional<>(data);
     }
